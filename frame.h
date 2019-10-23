@@ -4,6 +4,8 @@
 // ------------- Includes -------------
 
 #include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 // ------------- Macros -------------
 
@@ -29,7 +31,7 @@ typedef struct {
 // Axis unaligned parallelepiped and tetrahedron structure
 typedef struct {
 
-  frameType type;
+  FrameType type;
   double orig[FRAME_NB_DIM];
   double comp[FRAME_NB_DIM][FRAME_NB_DIM];
 
@@ -43,12 +45,12 @@ typedef struct {
 
 // ------------- Functions declaration -------------
 
-// Print the AABB 'this' on stdout
+// Print the AABB 'that' on stdout
 // Output format is (min[0], min[1], min[2])-(max[0], max[1], max[2])
-AABBPrint(const AABB* const this);
+void AABBPrint(const AABB* const that);
 
-// Update the inverse components of the Frame 'this'
-void FrameUpdateInv(Frame* const this);
+// Update the inverse components of the Frame 'that'
+void FrameUpdateInv(Frame* const that);
 
 // Project the Frame 'Q' in the Frame 'P' 's coordinates system and 
 // memorize the result in the Frame 'Qp'
@@ -57,12 +59,12 @@ void FrameImportFrame(
   const Frame* const Q, 
         Frame* const Qp);
 
-// Export the AABB 'bdgBox' from 'this' 's coordinates system to
+// Export the AABB 'bdgBox' from 'that' 's coordinates system to
 // the real coordinates system and update 'bdgBox' with the resulting
 // AABB
 void FrameExportBdgBox(
-  const Frame* const this,
-   const AABB* const bdgBox) {
+  const Frame* const that,
+   const AABB* const bdgBox,
          AABB* const bdgBoxProj);
 
 #endif

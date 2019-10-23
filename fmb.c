@@ -1,5 +1,11 @@
 #include "fmb.h"
 
+// ------------- Macros -------------
+
+// Return 1.0 if v is positive, -1.0 if v is negative, 0.0 else
+#define sgn(v) (((0.0 < (v)) ? 1.0 : 0.0) - (((v) < 0.0) ? 1.0 : 0.0))
+
+
 void ElimVar( const int indexVar, const double* A, const double* N, const int& NbIneq, const int& NbVar, double* Ap, double* Np, int& NbIneqp) {
 
   int i,j,k,l;
@@ -271,3 +277,50 @@ bool TestCollisionBetween( Frame& P, Frame& Q, AABB& Co , AABB& Cop ) {
 
   return true;
 }
+
+void GetBound(
+  AABB& Co, 
+  const int Nb, 
+  double* A, 
+  double *N, 
+  int indexVar) {
+
+  int i;
+
+  Co.Min[indexVar]=0.0;
+  Co.Max[indexVar]=1.0;
+
+  for ( i=0; i<Nb; ++i ) {
+    
+    if ( fabs( A[i])>EPSILON ) {
+
+      N[i]=N[i]/fabs( A[i]);
+
+    }
+
+  }
+  for ( i=0; i<Nb; ++i ) {
+
+    if ( A[i]>EPSILON ) {
+
+      if ( Co.Max[indexVar]>N[i]) {
+
+        Co.Max[indexVar]=N[i];
+
+      }
+
+    }
+    if ( A[i]<-1.0*EPSILON ) {
+
+      if ( Co.Min[indexVar]<-1.0*N[i]) {
+
+        Co.Min[indexVar]=-1.0*N[i];
+
+      }
+
+    }
+
+  }
+
+}
+
