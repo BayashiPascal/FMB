@@ -5,53 +5,283 @@
 // Return 1.0 if v is positive, -1.0 if v is negative, 0.0 else
 #define sgn(v) (((0.0 < (v)) ? 1.0 : 0.0) - (((v) < 0.0) ? 1.0 : 0.0))
 
+#define FST_VAR 0
+#define SND_VAR 1
+#define THD_VAR 2
 
-void ElimVar( const int indexVar, const double* A, const double* N, const int& NbIneq, const int& NbVar, double* Ap, double* Np, int& NbIneqp) {
+#define EPSILON 0.0000001 //0.001
 
-  int i,j,k,l;
+// ------------- Functions declaration -------------
 
-  NbIneqp=0;
-  for ( i=0; i<NbIneq; ++i ) {
+// Check if the inequality system 'M'.X<='Y' is certainly inconsistent. 
+// Dimensions of the system to be checked are given by 'nbRows'
+// and 'nbCols'
+// ('M' arrangement is [iRow][iCol])
+// If the system is certainly inconsistent return true, else return false
+bool CheckInconsistency(
+  const double (*M)[FRAME_NB_DIM], 
+  const double* Y, 
+     const int NbRows, 
+     const int NbCols);
 
-    if ( fabs( A[i*NbVar+indexVar])<EPSILON ) {
+// Eliminate the 'iVar'-th variable in the system 'M'.X<='Y'
+// using the Fourier-Motzkin method and return
+// the resulting system in 'Mp' and 'Yp', and the number of rows of 
+// the resulting system in 'nbRemainRows'
+void ElimVar(
+     const int iVar, 
+  const double (*M)[FRAME_NB_DIM], 
+  const double* Y, 
+     const int nbRows, 
+     const int nbCols, 
+        double (*Mp)[FRAME_NB_DIM], 
+        double* Yp, 
+    int* const nbRemainRows);
 
-      l=0;
-      for ( j=0; j<NbVar; ++j ) {
+// Get the bounds of the 'iVar'-th variable in the 'nbRows' rows
+// system 'M'.X<='Y' and store them in the 'iVar'-th axis of the
+// AABB 'bdgBox'
+// ('M' arrangement is [iRow][iCol])
+// The system is supposed to have been reduced to only one variable
+// per row, the one in argument, which can be located in a different
+// column than 'iVar'
+// May return inconsistent values (max < min), which would
+// mean the system has no solution
+void GetBound(
+     const int iVar,
+  const double (*M)[FRAME_NB_DIM], 
+  const double* Y, 
+     const int nbRows, 
+   AABB* const bdgBox);
 
-        if ( j!=indexVar ) {
+// ------------- Functions implementation -------------
 
-          Ap[NbIneqp*( NbVar-1 )+l]=A[i*NbVar+j];
-          ++l;
+void PrintMY(
+  const double (*M)[FRAME_NB_DIM], 
+  const double* Y, 
+     const int nbRows,
+     const int nbVar) {
+  for (int iRow = 0; iRow < nbRows; ++iRow) {
+    for (int iCol = 0; iCol < nbVar; ++iCol) {
+      printf("%f ", M[iRow][iCol]);
+    }
+    printf("| %f\n", Y[iRow]);
+  }
+}
 
-        }
+void PrintM(
+  const double (*M)[FRAME_NB_DIM], 
+     const int nbRows) {
+  for (int iRow = 0; iRow < nbRows; ++iRow) {
+    for (int iCol = 0; iCol < FRAME_NB_DIM; ++iCol) {
+      printf("%f ", M[iRow][iCol]);
+    }
+    printf("\n");
+  }
+}
+
+
+// Check if the inequality system 'M'.X<='Y' is certainly inconsistent. 
+// Dimensions of the system to be checked are given by 'nbRows'
+// and 'nbCols'
+// ('M' 's arrangement is [iRow][iCol])
+// If the system is certainly inconsistent return false, else
+// return true
+bool CheckInconsistency(
+  const double (*M)[FRAME_NB_DIM], 
+  const double* Y, 
+     const int nbRows, 
+     const int nbCols) {
+
+  // TODO nbCols is always equal to 1 here ? 
+  // if true optimization possible
+
+  // Loop on rows
+  for (int iRow = nbRows; 
+       iRow--;) {
+
+    // Declare a variable to memorize the sum of the negative 
+    // coefficients in the row
+    double sumNegCoeff = 0.0;
+    
+    // Declare a variable to memorize if all the coefficients
+    // are >= 0.0
+    bool allPositive = true;
+
+    // Declare a variable to memorize if all the coefficients
+    // are null
+    bool allNull = true;
+
+    // Shortcuts
+    const double* MRow = M[iRow];
+
+    // Loop on columns
+    for (int iCol = nbCols; 
+         iCol--;) {
+
+      // If the coefficient is negative
+      if (MRow[iCol] < -1.0 * EPSILON) {
+
+        // Memorize that at least one coefficient is not positive
+        allPositive = false;
+
+        // Memorize that at least one coefficient is not null
+        allNull = false;
+
+        // Update the sum of the negative coefficient
+        sumNegCoeff += MRow[iCol];
+
+      // Else, if the coefficient is positive
+      } else if (MRow[iCol] > EPSILON) {
+
+        // Memorize that at least one coefficient is not null
+        allNull = false;
 
       }
-      Np[NbIneqp]=N[i];
-      ++NbIneqp;
+
+    }
+
+    // If at least one coefficient is not null
+    if (allNull == false) {
+
+      // If all the coefficients are positive and the right side of the 
+      // inequality is negative
+      if (allPositive == true && 
+          Y[iRow] < 0.0) {
+
+        // As X is in [0,1], the system is inconsistent
+        return true;
+
+      }
+
+      // If the right side of the inequality if lower than the sum of 
+      // negative coefficients in the row
+      if (Y[iRow] < sumNegCoeff) {
+
+        // As X is in [0,1], the system is inconsistent
+        return true;
+
+      }
+
+    // Else all coefficients are null, if the right side is null
+    // or negative
+    } else if (Y[iRow] <= 0.0) {
+
+      // The system is inconsistent
+      return true;
 
     }
 
   }
 
-  for ( i=0; i<NbIneq-1; ++i ) {
+  // Haven't found any inconsistencies
+  return false;
 
-    for ( j=i+1; j<NbIneq; ++j ) {
+}
 
-      if ( ( sgn( A[i*NbVar+indexVar]) != sgn( A[j*NbVar+indexVar]) ) && fabs( A[i*NbVar+indexVar])>EPSILON && fabs( A[j*NbVar+indexVar])>EPSILON ) {
+// Eliminate the 'iVar'-th variable in the system 'M'.X<='Y'
+// using the Fourier-Motzkin method and return
+// the resulting system in 'Mp' and 'Yp', and the number of rows of 
+// the resulting system in 'nbRemainRows'
+// ('M' arrangement is [iRow][iCol])
+void ElimVar(
+     const int iVar, 
+  const double (*M)[FRAME_NB_DIM], 
+  const double* Y, 
+     const int nbRows, 
+     const int nbCols, 
+        double (*Mp)[FRAME_NB_DIM], 
+        double* Yp, 
+    int* const nbRemainRows) {
 
-        l=0;
-        for ( k=0; k<NbVar; ++k ) {
+  // Initialize the number of rows in the result system
+  *nbRemainRows = 0;
+  
+  // First we copy and compress the rows where the eliminated
+  // variable is null
+  
+  // Loop on rows of the input system
+  for (int iRow = 0; 
+       iRow < nbRows; 
+       ++iRow) {
 
-          if ( k!=indexVar ) {
+    // Shortcut
+    const double* MiRow = M[iRow];
 
-            Ap[NbIneqp*( NbVar-1 )+l]=A[i*NbVar+k]/fabs( A[i*NbVar+indexVar])+A[j*NbVar+k]/fabs( A[j*NbVar+indexVar]);
-            ++l;
+    // If the coefficient of the eliminated variable is null on
+    // this row
+    if (fabs(M[iRow][iVar]) < EPSILON) {
+
+      // Shortcut
+      double* MpnbRemainRows = Mp[*nbRemainRows];
+
+      // Copy this row into the result system excluding the eliminated
+      // variable
+      for (int iCol = 0, jCol = 0; 
+           iCol < nbCols; 
+           ++iCol) {
+
+        if (iCol != iVar) {
+
+          MpnbRemainRows[jCol] = MiRow[iCol];
+          ++jCol;
+
+        }
+
+      }
+      Yp[*nbRemainRows] = Y[iRow];
+
+      // Increment the nb of rows into the result system
+      ++(*nbRemainRows);
+
+    }
+
+  }
+
+  // Then we process the rows where the eliminated variable is not null
+  
+  // For each row except the last one
+  for (int iRow = 0; 
+       iRow < nbRows - 1; 
+       ++iRow) {
+
+    // For each following rows
+    for (int jRow = iRow + 1; 
+         jRow < nbRows; 
+         ++jRow) {
+
+      // TODO shortcuts fabs(M[iRow][iVar])
+      
+      // If coefficients of the eliminated variable in the two rows have
+      // different signs and are not null
+      if (sgn(M[iRow][iVar]) != sgn(M[jRow][iVar]) && 
+          fabs(M[iRow][iVar]) > EPSILON && 
+          fabs(M[jRow][iVar]) > EPSILON) {
+
+        // Add the sum of the two normed (relative to the eliminated
+        // variable) rows into the result system. This actually
+        // eliminate the variable while keeping the constraints on
+        // others variables
+        for (int iCol = 0, jCol = 0; 
+             iCol < nbCols; 
+             ++iCol ) {
+
+          if (iCol != iVar) {
+
+            Mp[*nbRemainRows][jCol] = 
+              M[iRow][iCol] / fabs(M[iRow][iVar]) + 
+              M[jRow][iCol] / fabs(M[jRow][iVar]);
+            ++jCol;
 
           }
 
         }
-        Np[NbIneqp]=N[i]/fabs( A[i*NbVar+indexVar])+N[j]/fabs( A[j*NbVar+indexVar]);
-        ++NbIneqp;
+        Yp[*nbRemainRows] = 
+          Y[iRow] / fabs(M[iRow][iVar]) +
+          Y[jRow] / fabs(M[jRow][iVar]);
+
+        // Increment the nb of rows into the result system
+        ++(*nbRemainRows);
 
       }
 
@@ -61,260 +291,64 @@ void ElimVar( const int indexVar, const double* A, const double* N, const int& N
 
 }
 
-bool ConfirmSolution( AABB& Co, Frame& Q ) {
-
-  double x;
-  double y;
-  double z;
-  double val;
-  int i, a, b ,c;
-
-
-  for ( a=0; a<2; ++a ) {
-
-    for ( b=0; b<2; ++b ) {
-
-      for ( c=0; c<2; ++c ) {
-
-        x=(double)(1-a);
-        y=(double)(1-b);
-        z=(double)(1-c);
-		val=0.0;
-		
-        for ( i=0; i<3; ++i ) {
-
-	        val+=Q.A[i]+(x*Co.Min[0]+(1.0-x)*Co.Max[0])*Q.U[i]+(y*Co.Min[1]+(1.0-y)*Co.Max[1])*Q.V[i]+(z*Co.Min[2]+(1.0-z)*Co.Max[2])*Q.W[i];
-
-        }
-
-		if ( val<1.0 ) {
-			return true;
-		}
-
-      }
-
-    }
-
-  }
-
-	return false;	
-
-}
-
-bool TestTrivialCases ( double* A, double* N, int NbEq, int NbParam ) {
-	int i,j;
-	double val;
-	int sp, n;
-	
-	for (i=0; i<NbEq; ++i) {
-		val=0.0;
-		sp=1;
-		n=0;
-		for (j=0; j<NbParam; ++j) {
-			if (fabs(A[i*NbParam+j])<EPSILON) {
-				n++;
-			} else {
-				if (A[i*NbParam+j]<0.0) {
-					sp=0;
-					val+=A[i*NbParam+j];
-				}
-			}
-		}
-		if (n!=NbParam) {
-			if (sp==1 && N[i]<0.0) {
-				return false;
-			}
-			if (N[i]<val) {
-				return false;
-			}
-		}
-	}
-	return true;
-}
-
-bool TestCollisionBetween( Frame& P, Frame& Q, AABB& Co , AABB& Cop ) {
-
-  int i;
-  double N[100];
-  double A[300];
-  double Ap[2000];
-  double Np[1000];
-  double App[1000];
-  double Npp[1000];
-  int NbEq;
-  int Nb;
-  int Nbp;
-  Frame Qp;
-
-  NbEq=6;
-
-  ChangeBasis( P, Q, Qp );
-
-  for ( i=0; i<3; ++i ) {
-
-    N[2*i]=1.0-Qp.A[i];
-    A[6*i]=Qp.U[i]; 
-    A[6*i+1]=Qp.V[i]; 
-    A[6*i+2]=Qp.W[i];
-    N[2*i+1]=Qp.A[i];
-    A[6*i+3]=-1.0*Qp.U[i]; 
-    A[6*i+4]=-1.0*Qp.V[i]; 
-    A[6*i+5]=-1.0*Qp.W[i];
-
-  }
-
-  for ( i=0; i<3; ++i ) {
-    N[NbEq]=1.0;
-    A[NbEq*3]=0.0;
-    A[NbEq*3+1]=0.0;
-    A[NbEq*3+2]=0.0;
-    A[NbEq*3+i]=1.0;
-    NbEq++;    
-    N[NbEq]=0.0;
-    A[NbEq*3]=0.0;
-    A[NbEq*3+1]=0.0;
-    A[NbEq*3+2]=0.0;
-    A[NbEq*3+i]=-1.0;
-    NbEq++;
-  }
-  
-  if ( Q.type==1 ) {
-
-    N[NbEq]=1.0;
-    A[NbEq*3]=1.0;
-    A[NbEq*3+1]=1.0;
-    A[NbEq*3+2]=1.0;
-    NbEq++;
-
-  }
-
-  if ( P.type==1 ) {
-
-    N[NbEq]=1.0-Qp.A[0]-Qp.A[1]-Qp.A[2];
-    A[NbEq*3]=Qp.U[0]+Qp.V[0]+Qp.W[0];
-    A[NbEq*3+1]=Qp.U[1]+Qp.V[1]+Qp.W[1];
-    A[NbEq*3+2]=Qp.U[2]+Qp.V[2]+Qp.W[2];
-    NbEq++;
-
-  }
-
-	if (TestTrivialCases ( A, N, NbEq, 3 )==false) {
-		return false;
-	}	
-
-  ElimVar( 0, A, N, NbEq, 3, Ap, Np, Nb );
-
-	if (TestTrivialCases ( Ap, Np, Nb, 2 )==false) {
-		return false;
-	}	
-  ElimVar( 0, Ap, Np, Nb, 2, App, Npp, Nbp );
-
-	if (TestTrivialCases ( App, Npp, Nbp, 1 )==false) {
-		return false;
-	}	
-  GetBound( Co, Nbp, App, Npp, 2 );
-
-  if ( Co.Min[2]>=Co.Max[2]) {
-
-    return false;
-
-  }
-
-  ElimVar( 1, Ap, Np, Nb, 2, App, Npp, Nbp );
-	if (TestTrivialCases ( App, Npp, Nbp, 1 )==false) {
-		return false;
-	}	
-  GetBound( Co, Nbp, App, Npp, 1 );
-
-  if ( Co.Min[1]>=Co.Max[1]) {
-
-    return false;
-
-  }
-
-  ElimVar( 1, A, N, NbEq, 3, Ap, Np, Nb );
-	if (TestTrivialCases ( Ap, Np, Nb, 2 )==false) {
-		return false;
-	}	
-  ElimVar( 1, Ap, Np, Nb, 2, App, Npp, Nbp );
-	if (TestTrivialCases ( App, Npp, Nbp, 1 )==false) {
-		return false;
-	}	
-  GetBound( Co, Nbp, App, Npp, 0 );
-
-  if ( Co.Min[0]>=Co.Max[0]) {
-
-    return false;
-
-  }
-
-	if ( Q.type==1 ) {
-		if ( Co.Min[0]+Co.Min[1]+Co.Min[2]>=1.0 ) {
-			return false;
-		}
-	}
-
-	if ( P.type==1 && ConfirmSolution( Co, Qp )==false ) {
-		return false;
-	}
-
-  FrameExportBdgBox( Q, Co, Cop );
-
-  for ( i=0; i<3; ++i ) {
-
-    if ( Cop.Min[i]<P.BdgArea.Min[i]) {
-
-      Cop.Min[i]=P.BdgArea.Min[i];
-
-    }
-    if ( Co.Max[i]>P.BdgArea.Max[i]) {
-
-      Cop.Max[i]=P.BdgArea.Max[i];
-
-    }
-
-  }
-
-  return true;
-}
-
+// Get the bounds of the 'iVar'-th variable in the 'nbRows' rows
+// system 'M'.X<='Y' and store them in the 'iVar'-th axis of the
+// AABB 'bdgBox'
+// ('M' arrangement is [iRow][iCol])
+// The system is supposed to have been reduced to only one variable
+// per row, the one in argument
+// May return inconsistent values (max < min), which would
+// mean the system has no solution
 void GetBound(
-  AABB& Co, 
-  const int Nb, 
-  double* A, 
-  double *N, 
-  int indexVar) {
+     const int iVar,
+  const double (*M)[FRAME_NB_DIM], 
+  const double* Y, 
+     const int nbRows, 
+   AABB* const bdgBox) {
 
-  int i;
+  // Shortcuts
+  double* min = bdgBox->min + iVar;
+  double* max = bdgBox->max + iVar;
 
-  Co.Min[indexVar]=0.0;
-  Co.Max[indexVar]=1.0;
+  // Initialize the bounds to there maximum maximum and minimum minimum
+  *min = 0.0;
+  *max = 1.0;
 
-  for ( i=0; i<Nb; ++i ) {
-    
-    if ( fabs( A[i])>EPSILON ) {
+  // Loop on rows
+  for (int jRow = 0; 
+       jRow < nbRows; 
+       ++jRow) {
 
-      N[i]=N[i]/fabs( A[i]);
+    // Shortcut
+    double MjRowiVar = M[jRow][0];
 
-    }
+    // If this row has been reduced to the variable in argument
+    // and it has a strictly positive coefficient
+    if (MjRowiVar > EPSILON) {
 
-  }
-  for ( i=0; i<Nb; ++i ) {
+      // Get the scaled value of Y for this row
+      double y = Y[jRow] / MjRowiVar;
 
-    if ( A[i]>EPSILON ) {
+      // If the value is lower than the current maximum bound
+      if (*max > y) {
 
-      if ( Co.Max[indexVar]>N[i]) {
-
-        Co.Max[indexVar]=N[i];
+        // Update the maximum bound
+        *max = y;
 
       }
 
-    }
-    if ( A[i]<-1.0*EPSILON ) {
+    // Else, if this row has been reduced to the variable in argument
+    // and it has a strictly negative coefficient
+    } else if (MjRowiVar < -1.0 * EPSILON) {
 
-      if ( Co.Min[indexVar]<-1.0*N[i]) {
+      // Get the scaled value of Y for this row
+      double y = Y[jRow] / MjRowiVar;
 
-        Co.Min[indexVar]=-1.0*N[i];
+      // If the value is greater than the current minimum bound
+      if (*min < y) {
+
+        // Update the minimum bound
+        *min = y;
 
       }
 
@@ -324,3 +358,570 @@ void GetBound(
 
 }
 
+// Test for intersection between Frame 'that' and Frame 'tho'
+// Return true if the two Frames are intersecting, else false
+// If the Frame are intersecting the AABB of the intersection
+// is stored into 'bdgBox', else 'bdgBox' is not modified
+// If 'bdgBox' is null, the result AABB is not memorized (to use if
+// unnecessary and want to speed up the algorithm)
+// The resulting AABB may be larger than the smallest possible AABB
+// The resulting AABB of FMBTestIntersection(A,B) may be different
+// of the resulting AABB of FMBTestIntersection(B,A)
+bool FMBTestIntersection(
+  const Frame* const that, 
+  const Frame* const tho, 
+         AABB* const bdgBox) {
+
+  // Get the projection of the Frame 'tho' in Frame 'that' coordinates
+  // system
+  Frame thoProj;
+  FrameImportFrame(that, tho, &thoProj);
+
+//printf("thoProj:\n");
+//FramePrint(&thoProj);
+//printf("\n--\n");
+
+  // Declare two variables to memorize the system to be solved M.X <= Y
+  // (M arrangement is [iRow][iCol])
+  double M[4 * FRAME_NB_DIM + 2][FRAME_NB_DIM];
+  double Y[4 * FRAME_NB_DIM + 2];
+
+  // Shortcuts
+  double (*thoProjComp)[FRAME_NB_DIM] = thoProj.comp;
+  double *thoProjOrig = thoProj.orig;
+
+  // For the first 2 * FRAME_NB_DIM rows of the system
+  for (int iStepRow = FRAME_NB_DIM;
+       iStepRow--;) {
+
+    // Shortcuts
+    int iRow = 2 * iStepRow;
+    int iNextRow = iRow + 1;
+    double* MRow = M[iRow];
+    double* MNextRow = M[iNextRow];
+
+    // For each column of the system
+    for (int iCol = FRAME_NB_DIM;
+         iCol--;) {
+
+      MRow[iCol] = thoProjComp[iCol][iStepRow];
+      MNextRow[iCol] = -1.0 * MRow[iCol];
+
+    }
+
+    Y[iRow] = 1.0 - thoProjOrig[iStepRow];
+    Y[iNextRow] = thoProjOrig[iStepRow];
+
+  }
+
+  // For the following 2 * FRAME_NB_DIM rows of the system
+  for (int iStepRow = FRAME_NB_DIM;
+       iStepRow--;) {
+  // TODO: this loop can be commonalized with the previous one
+  
+    // Shortcuts
+    int iRow = 2 * (iStepRow + FRAME_NB_DIM);
+    int iNextRow = iRow + 1;
+    double* MRow = M[iRow];
+    double* MNextRow = M[iNextRow];
+
+    // For each column of the system
+    for (int iCol = FRAME_NB_DIM;
+         iCol--;) {
+
+      // If it's on the diagonal 
+      if (iStepRow == iCol) {
+
+        MRow[iCol] = 1.0;
+        MNextRow[iCol] = -1.0;
+
+      // Else it's not on the diagonal
+      } else {
+
+        MRow[iCol] = 0.0;
+        MNextRow[iCol] = 0.0;
+
+      }
+
+    }
+
+    Y[iRow] = 1.0;
+    Y[iNextRow] = 0.0;
+
+  }
+
+  // Declare a variable to memorize the total number of rows in the
+  // system. It may vary depending on the type of Frames
+  int nbRows = 4 * FRAME_NB_DIM;
+
+  // If the first frame is a Tetrahedron
+  if (that->type == FrameTetrahedron) {
+
+    // Shortcut
+    double* MRow = M[nbRows];
+
+    Y[nbRows] = 1.0;
+
+    // For each column of the system
+    for (int iCol = FRAME_NB_DIM;
+         iCol--;) {
+
+      MRow[iCol] = 0.0;
+
+      // For each component
+      for (int iAxis = FRAME_NB_DIM;
+           iAxis--;) {
+
+        MRow[iCol] += thoProjComp[iCol][iAxis];
+
+      }
+
+      Y[nbRows] -= thoProjOrig[iCol];
+
+    }
+
+    // Update the number of rows in the system
+    ++nbRows;
+
+  }
+
+  // If the second frame is a Tetrahedron
+  if (tho->type == FrameTetrahedron) {
+
+    // Shortcut
+    double* MRow = M[nbRows];
+
+    // For each column of the system
+    for (int iCol = FRAME_NB_DIM;
+         iCol--;) {
+
+      MRow[iCol] =  1.0;
+
+    }
+
+    Y[nbRows] = 1.0;
+
+    // Update the number of rows in the system
+    ++nbRows;
+
+  }
+
+  // Check the inconsistency of the system
+  bool inconsistency = 
+    CheckInconsistency( 
+      M, 
+      Y, 
+      nbRows, 
+      FRAME_NB_DIM);
+
+  // If the system is inconsistent
+  if (inconsistency == true) {
+
+    // The two Frames are not in intersection
+    return false;
+
+  }
+
+  // Solve the system
+
+  // Declare a AABB to memorize the bounding box of the intersection
+  // in the coordinates system of that
+  AABB bdgBoxLocal;
+  
+  // Declare variables to eliminate the first variable
+  // The number of rows is set conservatively, one may try to reduce
+  // them if needed  
+  double Mp[4 * FRAME_NB_DIM + 2 + 50][FRAME_NB_DIM];
+  double Yp[4 * FRAME_NB_DIM + 2 + 50];
+  int nbRowsP;
+
+  // Eliminate the first variable
+  ElimVar(
+    FST_VAR,
+    M, 
+    Y, 
+    nbRows, 
+    FRAME_NB_DIM,
+    Mp, 
+    Yp, 
+    &nbRowsP);
+
+  // Check the inconsistency of the system
+  inconsistency = 
+    CheckInconsistency( 
+      Mp, 
+      Yp, 
+      nbRowsP, 
+      FRAME_NB_DIM - 1); // nbRemainCols
+
+  // If the system is inconsistent
+  if (inconsistency == true) {
+
+    // The two Frames are not in intersection
+    return false;
+
+  }
+
+  #if FRAME_NB_DIM == 3
+
+    // Declare variables to eliminate the second variable
+    // The number of rows is set conservatively, one may try to reduce
+    // them if needed  
+    double Mpp[4 * FRAME_NB_DIM + 2 + 500][FRAME_NB_DIM];
+    double Ypp[4 * FRAME_NB_DIM + 2 + 500];
+    int nbRowsPP;
+
+    // Eliminate the second variable (which is the first in the new system)
+    ElimVar(
+      FST_VAR,
+      Mp, 
+      Yp, 
+      nbRowsP, 
+      FRAME_NB_DIM - 1,
+      Mpp, 
+      Ypp, 
+      &nbRowsPP);
+
+    // Check the inconsistency of the system
+    inconsistency = 
+      CheckInconsistency( 
+        Mpp, 
+        Ypp, 
+        nbRowsPP, 
+        FRAME_NB_DIM - 2);
+
+    // If the system is inconsistent
+    if (inconsistency == true) {
+
+      // The two Frames are not in intersection
+      return false;
+
+    }
+
+    // Get the bounds for the remaining third variable
+    GetBound(
+      THD_VAR,
+      Mpp,
+      Ypp,
+      nbRowsPP,
+      &bdgBoxLocal);
+
+    // If the bounds are inconstent
+    if (bdgBoxLocal.min[THD_VAR] >= bdgBoxLocal.max[THD_VAR]) {
+
+      // The two Frames are not in intersection
+      return false;
+
+    }
+
+    // Eliminate the third variable (which is second first in the new
+    // system)
+    ElimVar(
+      SND_VAR,
+      Mp, 
+      Yp, 
+      nbRowsP, 
+      FRAME_NB_DIM - 1,
+      Mpp, 
+      Ypp, 
+      &nbRowsPP);
+
+    // Check the inconsistency of the resulting system
+    inconsistency = 
+      CheckInconsistency( 
+        Mpp, 
+        Ypp, 
+        nbRowsPP, 
+        FRAME_NB_DIM - 2);
+
+    // If the resulting system is inconsistent
+    if (inconsistency == true) {
+
+      // The two Frames are not in intersection
+      return false;
+
+    }
+
+    // Get the bounds for the remaining second variable
+    GetBound(
+      SND_VAR,
+      Mpp,
+      Ypp,
+      nbRowsPP,
+      &bdgBoxLocal);
+
+    // If the bounds are inconstent
+    if (bdgBoxLocal.min[SND_VAR] >= bdgBoxLocal.max[SND_VAR]) {
+
+      // The two Frames are not in intersection
+      return false;
+
+    }
+
+    // Now starts again from the initial systems and eliminate the 
+    // second and third variables to get the bounds of the first variable
+    ElimVar(
+      SND_VAR,
+      M, 
+      Y, 
+      nbRows, 
+      FRAME_NB_DIM,
+      Mp, 
+      Yp, 
+      &nbRowsP);
+
+    inconsistency = 
+      CheckInconsistency( 
+        Mp, 
+        Yp, 
+        nbRowsP, 
+        FRAME_NB_DIM - 1);
+    if (inconsistency == true) {
+      return false;
+    }
+
+    ElimVar(
+      SND_VAR,
+      Mp, 
+      Yp, 
+      nbRowsP, 
+      FRAME_NB_DIM - 1,
+      Mpp, 
+      Ypp, 
+      &nbRowsPP);
+
+    inconsistency = 
+      CheckInconsistency( 
+        Mpp, 
+        Ypp, 
+        nbRowsPP, 
+        FRAME_NB_DIM - 2);
+    if (inconsistency == true) {
+      return false;
+    }
+
+    GetBound(
+      FST_VAR,
+      Mpp,
+      Ypp,
+      nbRowsPP,
+      &bdgBoxLocal);
+
+    if (bdgBoxLocal.min[FST_VAR] >= bdgBoxLocal.max[FST_VAR]) {
+      return false;
+    }
+
+  #elif FRAME_NB_DIM == 2
+
+//PrintMY(M, Y, nbRows, 2);
+//printf("--\n");
+//PrintMY(Mp, Yp, nbRowsP, 1);
+
+    // Get the bounds for the remaining second variable
+    GetBound(
+      SND_VAR,
+      Mp,
+      Yp,
+      nbRowsP,
+      &bdgBoxLocal);
+
+    // If the bounds are inconstent
+    if (bdgBoxLocal.min[SND_VAR] >= bdgBoxLocal.max[SND_VAR]) {
+
+      // The two Frames are not in intersection
+      return false;
+
+    }
+
+    // Now starts again from the initial systems and eliminate the 
+    // second variable to get the bounds of the first variable
+    ElimVar(
+      SND_VAR,
+      M, 
+      Y, 
+      nbRows, 
+      FRAME_NB_DIM,
+      Mp, 
+      Yp, 
+      &nbRowsP);
+    inconsistency = 
+      CheckInconsistency( 
+        Mp, 
+        Yp, 
+        nbRowsP, 
+        FRAME_NB_DIM - 1);
+    if (inconsistency == true) {
+      return false;
+    }
+
+//printf("--\n");
+//PrintMY(Mp, Yp, nbRowsP, 1);
+
+    GetBound(
+      FST_VAR,
+      Mp,
+      Yp,
+      nbRowsP,
+      &bdgBoxLocal);
+
+//printf("--\nbdgBoxLocal:\n");
+//AABBPrint(&bdgBoxLocal);printf("\n");
+
+    if (bdgBoxLocal.min[FST_VAR] >= bdgBoxLocal.max[FST_VAR]) {
+      return false;
+    }
+
+  #else
+
+    printf("Not implemented for dimension %d\n", FRAME_NB_DIM);
+    exit(0);
+
+  #endif
+  
+  // Check the solution to discard false positive in case of tetrahedrons
+/*
+  // If the second Frame is a tetrahedron
+  if ( tho->type == FrameTetrahedron ) {
+
+    // Shortcut
+    // TODO this shortcut should be used earlier
+    const double* const min = bdgBoxLocal.min;
+
+    // If the tetrahedron constraint is not satisfied
+#if FRAME_NB_DIM == 3
+
+    if (min[FST_VAR] + min[SND_VAR] + min[THD_VAR] >= 1.0) {
+
+#elif FRAME_NB_DIM == 2
+
+    if (min[FST_VAR] + min[SND_VAR] >= 1.0) {
+
+#else
+
+    printf("Not implemented for dimension %d\n", FRAME_NB_DIM);
+    exit(0);
+    if (true) {
+
+#endif
+
+      // The two Frames are not in intersection
+      return false;
+
+    }
+
+  }
+
+  if ( that->type == FrameTetrahedron) {
+
+    // Declare a variable to memorize if we have found at least one
+    // corner of the bounding box which respecct the tetrahedron's 
+    // constraint
+    bool satisfied = false;
+
+    // Shotcuts
+    double* bblMin = bdgBoxLocal.min;
+    double* bblMax = bdgBoxLocal.max;
+    double* tpcu = thoProj.comp[0];
+    double* tpcv = thoProj.comp[1];
+#if FRAME_NB_DIM == 3
+    double* tpcw = thoProj.comp[2];
+#endif
+    double* tpo = thoProj.orig;
+
+    // Loop on vertices of the AABB
+    // stop as soon as a corner respecting the constraint has been found
+    int nbVertices = powi(2, FRAME_NB_DIM);
+    for (int iVertex = nbVertices;
+         iVertex-- && satisfied == false;) {
+      
+      // Declare a variable to memorize the coordinates of the vertex in
+      // 'that' 's coordinates system
+      double v[FRAME_NB_DIM];
+      
+      // Calculate the coordinates of the vertex in
+      // 'that' 's coordinates system
+      for (int i = FRAME_NB_DIM;
+           i--;) {
+
+        v[i] = ((iVertex & (1 << i)) ? bblMax[i] : bblMin[i]);
+
+      }
+
+      // Declare a variable to check the tetrahedron constraint
+      double val = 0.0;
+
+      // Loop on axis
+      for (int iAxis = FRAME_NB_DIM; 
+           iAxis--;) {
+
+        // Calculate the constraint
+#if FRAME_NB_DIM == 3
+
+        val += 
+          tpo[iAxis]+
+          v[0] * tpcu[iAxis] +
+          v[1] * tpcv[iAxis] +
+          v[2] * tpcw[iAxis];
+
+#elif FRAME_NB_DIM == 2
+
+        val += 
+          tpo[iAxis]+
+          v[0] * tpcu[iAxis] +
+          v[1] * tpcv[iAxis];
+
+#else
+
+        printf("Not implemented for dimension %d\n", FRAME_NB_DIM);
+        exit(0);
+
+#endif
+
+      }
+
+      // Check the constraint
+      if (val < 1.0) {
+        satisfied = true;
+      }
+
+    }
+  
+  }
+*/
+  // If the user requested the resulting bounding box
+  if (bdgBox != NULL) {
+
+    // Export the local bounding box toward the real coordinates
+    // system
+    FrameExportBdgBox(tho, &bdgBoxLocal, bdgBox);
+
+//printf("bdgBox:\n");AABBPrint(bdgBox);printf("\n");
+//printf("that->bdgBox:\n");AABBPrint(&(that->bdgBox));printf("\n");
+
+    // Clip with the AABB of 'that'
+    double* const min = bdgBox->min;
+    double* const max = bdgBox->max;
+    const double* const thatBdgBoxMin = that->bdgBox.min;
+    const double* const thatBdgBoxMax = that->bdgBox.max;
+    for (int iAxis = FRAME_NB_DIM; 
+         iAxis--;) {
+
+      if (min[iAxis] < thatBdgBoxMin[iAxis]) {
+
+        min[iAxis] = thatBdgBoxMin[iAxis];
+
+      }
+      if (max[iAxis] > thatBdgBoxMax[iAxis]) {
+
+        max[iAxis] = thatBdgBoxMax[iAxis];
+
+      }
+
+    }
+    
+  }
+
+  // If we've reached here the two Frames are intersecting
+  return true;
+
+}

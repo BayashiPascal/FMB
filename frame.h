@@ -9,12 +9,12 @@
 
 // ------------- Macros -------------
 
-#define FRAME_NB_DIM 3
+#define FRAME_NB_DIM 2
 
 // ------------- Enumerations -------------
 
 typedef enum {
-  FrameParallelepiped,
+  FrameCuboid,
   FrameTetrahedron
 } FrameType;
 
@@ -36,7 +36,7 @@ typedef struct {
   double comp[FRAME_NB_DIM][FRAME_NB_DIM];
 
   // AABB of the frame
-  AABB bdgbox;
+  AABB bdgBox;
 
   // Inverted components used during computation
   double invComp[FRAME_NB_DIM][FRAME_NB_DIM];
@@ -49,8 +49,19 @@ typedef struct {
 // Output format is (min[0], min[1], min[2])-(max[0], max[1], max[2])
 void AABBPrint(const AABB* const that);
 
-// Update the inverse components of the Frame 'that'
-void FrameUpdateInv(Frame* const that);
+// Print the Frame 'that' on stdout
+// Output format is (orig[0], orig[1], orig[2])
+// (comp[0][0], comp[0][1], comp[0][2])
+// (comp[1][0], comp[1][1], comp[1][2])
+// (comp[2][0], comp[2][1], comp[2][2])
+void FramePrint(const Frame* const that);
+
+// Create a static Frame structure of FrameType 'type',
+// at position 'orig' with components 'comp' ([iComp][iAxis])
+Frame FrameCreateStatic(
+  const FrameType type,
+     const double orig[FRAME_NB_DIM],
+     const double comp[FRAME_NB_DIM][FRAME_NB_DIM]);
 
 // Project the Frame 'Q' in the Frame 'P' 's coordinates system and 
 // memorize the result in the Frame 'Qp'
@@ -66,5 +77,11 @@ void FrameExportBdgBox(
   const Frame* const that,
    const AABB* const bdgBox,
          AABB* const bdgBoxProj);
+
+// Power function for integer base and exponent
+// Return 'base' ^ 'exp'
+int powi(
+           int base,
+  unsigned int exp);
 
 #endif

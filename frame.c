@@ -2,24 +2,102 @@
 
 // ------------- Macros -------------
 
-#define EPSILON 0.001
+#define EPSILON 0.0000001 //0.001
 
 // ------------- Functions declaration -------------
 
-// Power function for integer base and exponent
-// Return 'base' ^ 'exp'
-int powi(
-           int base,
-  unsigned int exp);
+// Update the inverse components of the Frame 'that'
+void FrameUpdateInv(Frame* const that);
 
 // ------------- Functions implementation -------------
+
+// Create a static Frame structure of FrameType 'type',
+// at position 'orig' with components 'comp' ([iComp][iAxis])
+Frame FrameCreateStatic(
+  const FrameType type,
+     const double orig[FRAME_NB_DIM],
+     const double comp[FRAME_NB_DIM][FRAME_NB_DIM]) {
+
+  // Create the new Frame
+  Frame that;
+  that.type = type;
+  for (int iAxis = FRAME_NB_DIM;
+       iAxis--;) {
+
+    that.orig[iAxis] = orig[iAxis];
+
+    for (int iComp = FRAME_NB_DIM;
+         iComp--;) {
+
+      that.comp[iComp][iAxis] = comp[iComp][iAxis];
+
+    }
+
+  }
+  
+  // Create the bounding box
+  for (int iAxis = FRAME_NB_DIM;
+       iAxis--;) {
+
+    double min = orig[iAxis];
+    double max = orig[iAxis];
+
+    for (int iComp = FRAME_NB_DIM;
+         iComp--;) {
+
+      if (that.type == FrameCuboid) {
+
+        if (that.comp[iComp][iAxis] < 0.0) {
+
+          min += that.comp[iComp][iAxis];
+
+        }
+
+        if (that.comp[iComp][iAxis] > 0.0) {
+
+          max += that.comp[iComp][iAxis];
+
+        }
+
+      } else if (that.type == FrameTetrahedron) {
+
+        if (that.comp[iComp][iAxis] < 0.0 &&
+          min > orig[iAxis] + that.comp[iComp][iAxis]) {
+
+          min = orig[iAxis] + that.comp[iComp][iAxis];
+
+        }
+
+        if (that.comp[iComp][iAxis] > 0.0 &&
+          max < orig[iAxis] + that.comp[iComp][iAxis]) {
+
+          max = orig[iAxis] + that.comp[iComp][iAxis];
+
+        }
+
+      }
+
+    }
+
+    that.bdgBox.min[iAxis] = min;
+    that.bdgBox.max[iAxis] = max;
+
+  }
+  
+
+  // Calculate the inverse matrix 
+  FrameUpdateInv(&that);
+
+  // Return the new Frame
+  return that;
+
+}
 
 // Update the inverse components of the Frame 'that'
 void FrameUpdateInv(Frame* const that) {
 
   // Shortcuts
-  double** tc  = (double**)(that->comp);
-  
+  double (*tc)[FRAME_NB_DIM] = that->comp;
   double (*tic)[FRAME_NB_DIM] = that->invComp;
 
   #if FRAME_NB_DIM == 2
@@ -28,7 +106,7 @@ void FrameUpdateInv(Frame* const that) {
     if (fabs(det) < EPSILON) {
       fprintf(stderr, 
         "FrameUpdateInv: det == 0.0\n");
-      exit(1)
+      exit(1);
     }
 
     tic[0][0] = tc[1][1] / det;
@@ -62,9 +140,9 @@ void FrameUpdateInv(Frame* const that) {
   #else
 
     fprintf(stderr, 
-      "FrameUpdateInv: unimplemented for %d dimension(s)\n",
+      "FrameUpdateInv: not implemented for dimension %d\n",
       FRAME_NB_DIM);
-    exit(1)
+    exit(1);
 
   #endif
 
@@ -109,7 +187,7 @@ void FrameImportFrame(
       for (int k = FRAME_NB_DIM;
            k--;) {
 
-        qpc[j][i] += pi[k][i] * qc[k][j];
+        qpc[j][i] += pi[k][i] * qc[j][k];
 
       }
     }
@@ -125,29 +203,30 @@ void FrameExportBdgBox(
          AABB* const bdgBoxProj) {
 
   // Shortcuts
-  const double*  to    = that->orig;
-  const double*  bbmi  = bdgBox->min;
-  const double*  bbma  = bdgBox->max;
-        double*  bbpmi = bdgBoxProj->min;
-        double*  bbpma = bdgBoxProj->max;
+  const double* to    = that->orig;
+  const double* bbmi  = bdgBox->min;
+  const double* bbma  = bdgBox->max;
+        double* bbpmi = bdgBoxProj->min;
+        double* bbpma = bdgBoxProj->max;
 
-  const double  (*tc)[FRAME_NB_DIM] = that->comp;
+  const double (*tc)[FRAME_NB_DIM] = that->comp;
 
   // Initialise the coordinates of the result AABB with the projection
-  // of the origin of the AABB in argument
+  // of the first corner of the AABB in argument
   for (int i = FRAME_NB_DIM;
        i--;) {
 
-    bbpmi[i] = bbpma[i] = to[i];
+    bbpma[i] = to[i];
 
     for (int j = FRAME_NB_DIM;
          j--;) {
 
-      double v = tc[j][i] * bbmi[j];
-      bbpmi[i] += v;
-      bbpma[i] += v;
+      bbpma[i] += tc[j][i] * bbmi[j];
 
     }
+
+    bbpmi[i] = bbpma[i];
+
   }
 
   // Loop on vertices of the AABB
@@ -170,6 +249,7 @@ void FrameExportBdgBox(
     }
     
     // Declare a variable to memorize the projected coordinates
+    // in real coordinates system
     double w[FRAME_NB_DIM];
     
     // Project the vertex to real coordinates system
@@ -228,6 +308,45 @@ void AABBPrint(const AABB* const that) {
     if (i < FRAME_NB_DIM - 1)
       printf(",");
 
+  }
+  printf(")");
+  
+}
+
+// Print the Frame 'that' on stdout
+// Output format is (orig[0], orig[1], orig[2])
+// (comp[0][0], comp[0][1], comp[0][2])
+// (comp[1][0], comp[1][1], comp[1][2])
+// (comp[2][0], comp[2][1], comp[2][2])
+void FramePrint(const Frame* const that) {
+  if (that->type == FrameTetrahedron) {
+    printf("T");
+  } else if (that->type == FrameCuboid) {
+    printf("C");
+  }
+  printf("(");
+  for (int i = 0;
+       i < FRAME_NB_DIM;
+       ++i) {
+
+    printf("%f", that->orig[i]);
+    if (i < FRAME_NB_DIM - 1)
+      printf(",");
+
+  }
+  for (int j = 0;
+       j < FRAME_NB_DIM;
+       ++j) {
+    printf(") (");
+    for (int i = 0;
+         i < FRAME_NB_DIM;
+         ++i) {
+
+      printf("%f", that->comp[j][i]);
+      if (i < FRAME_NB_DIM - 1)
+        printf(",");
+
+    }
   }
   printf(")");
   
