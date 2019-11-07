@@ -1,7 +1,7 @@
 all : main unitTests validation qualification
 
 BUILD_ARG_DEBUG=-Wall -Og -ggdb -g3
-BUILD_ARG=-O0
+BUILD_ARG=-O3
 LINK_ARG=
 
 main : main.o fmb.o sat.o frame.o Makefile

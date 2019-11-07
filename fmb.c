@@ -3,7 +3,7 @@
 // ------------- Macros -------------
 
 // Return 1.0 if v is positive, -1.0 if v is negative, 0.0 else
-#define sgn(v) (((0.0 < (v)) ? 1.0 : 0.0) - (((v) < 0.0) ? 1.0 : 0.0))
+#define sgn(v) (((0.0 < (v)) ? 1 : 0) - (((v) < 0.0) ? 1 : 0))
 
 #define FST_VAR 0
 #define SND_VAR 1
@@ -12,17 +12,6 @@
 #define EPSILON 0.0000001 //0.001
 
 // ------------- Functions declaration -------------
-
-// Check if the inequality system 'M'.X<='Y' is certainly inconsistent. 
-// Dimensions of the system to be checked are given by 'nbRows'
-// and 'nbCols'
-// ('M' arrangement is [iRow][iCol])
-// If the system is certainly inconsistent return true, else return false
-bool CheckInconsistency(
-  const double (*M)[FRAME_NB_DIM], 
-  const double* Y, 
-     const int NbRows, 
-     const int NbCols);
 
 // Eliminate the 'iVar'-th variable in the system 'M'.X<='Y'
 // using the Fourier-Motzkin method and return
@@ -80,105 +69,6 @@ void PrintM(
     }
     printf("\n");
   }
-}
-
-
-// Check if the inequality system 'M'.X<='Y' is certainly inconsistent. 
-// Dimensions of the system to be checked are given by 'nbRows'
-// and 'nbCols'
-// ('M' 's arrangement is [iRow][iCol])
-// If the system is certainly inconsistent return false, else
-// return true
-bool CheckInconsistency(
-  const double (*M)[FRAME_NB_DIM], 
-  const double* Y, 
-     const int nbRows, 
-     const int nbCols) {
-
-  // TODO nbCols is always equal to 1 here ? 
-  // if true optimization possible
-
-  // Loop on rows
-  for (int iRow = nbRows; 
-       iRow--;) {
-
-    // Declare a variable to memorize the sum of the negative 
-    // coefficients in the row
-    double sumNegCoeff = 0.0;
-    
-    // Declare a variable to memorize if all the coefficients
-    // are >= 0.0
-    bool allPositive = true;
-
-    // Declare a variable to memorize if all the coefficients
-    // are null
-    bool allNull = true;
-
-    // Shortcuts
-    const double* MRow = M[iRow];
-
-    // Loop on columns
-    for (int iCol = nbCols; 
-         iCol--;) {
-
-      // If the coefficient is negative
-      if (MRow[iCol] < -1.0 * EPSILON) {
-
-        // Memorize that at least one coefficient is not positive
-        allPositive = false;
-
-        // Memorize that at least one coefficient is not null
-        allNull = false;
-
-        // Update the sum of the negative coefficient
-        sumNegCoeff += MRow[iCol];
-
-      // Else, if the coefficient is positive
-      } else if (MRow[iCol] > EPSILON) {
-
-        // Memorize that at least one coefficient is not null
-        allNull = false;
-
-      }
-
-    }
-
-    // If at least one coefficient is not null
-    if (allNull == false) {
-
-      // If all the coefficients are positive and the right side of the 
-      // inequality is negative
-      if (allPositive == true && 
-          Y[iRow] < 0.0) {
-
-        // As X is in [0,1], the system is inconsistent
-        return true;
-
-      }
-
-      // If the right side of the inequality if lower than the sum of 
-      // negative coefficients in the row
-      if (Y[iRow] < sumNegCoeff) {
-
-        // As X is in [0,1], the system is inconsistent
-        return true;
-
-      }
-
-    // Else all coefficients are null, if the right side is null
-    // or negative
-    } else if (Y[iRow] <= 0.0) {
-
-      // The system is inconsistent
-      return true;
-
-    }
-
-  }
-
-  // Haven't found any inconsistencies
-  return false;
-
 }
 
 // Eliminate the 'iVar'-th variable in the system 'M'.X<='Y'
@@ -251,17 +141,20 @@ bool ElimVar(
        iRow < nbRows - 1; 
        ++iRow) {
 
+    // Shortcuts
+    int sgnMIRowIVar = sgn(M[iRow][iVar]);
+    double fabsMIRowIVar = fabs(M[iRow][iVar]);
+    double YIRowDivideByFabsMIRowIVar = Y[iRow] / fabsMIRowIVar;
+
     // For each following rows
     for (int jRow = iRow + 1; 
          jRow < nbRows; 
          ++jRow) {
 
-      // TODO shortcuts fabs(M[iRow][iVar])
-      
       // If coefficients of the eliminated variable in the two rows have
       // different signs and are not null
-      if (sgn(M[iRow][iVar]) != sgn(M[jRow][iVar]) && 
-          fabs(M[iRow][iVar]) > EPSILON && 
+      if (sgnMIRowIVar != sgn(M[jRow][iVar]) && 
+          fabsMIRowIVar > EPSILON && 
           fabs(M[jRow][iVar]) > EPSILON) {
 
         // Declare a variable to memorize the sum of the negative 
@@ -287,7 +180,7 @@ bool ElimVar(
           if (iCol != iVar) {
 
             Mp[*nbRemainRows][jCol] = 
-              M[iRow][iCol] / fabs(M[iRow][iVar]) + 
+              M[iRow][iCol] / fabsMIRowIVar + 
               M[jRow][iCol] / fabs(M[jRow][iVar]);
 
             // If the coefficient is negative
@@ -317,7 +210,7 @@ bool ElimVar(
         }
 
         Yp[*nbRemainRows] = 
-          Y[iRow] / fabs(M[iRow][iVar]) +
+          YIRowDivideByFabsMIRowIVar +
           Y[jRow] / fabs(M[jRow][iVar]);
 
         // If at least one coefficient is not null
@@ -769,22 +662,6 @@ bool FMBTestIntersection(
 
   }
 
-  // Check the inconsistency of the system
-  bool inconsistency = 
-    CheckInconsistency( 
-      M, 
-      Y, 
-      nbRows, 
-      FRAME_NB_DIM);
-
-  // If the system is inconsistent
-  if (inconsistency == true) {
-
-    // The two Frames are not in intersection
-    return false;
-
-  }
-
   // Solve the system
 
   // Declare a AABB to memorize the bounding box of the intersection
@@ -799,7 +676,7 @@ bool FMBTestIntersection(
   int nbRowsP;
 
   // Eliminate the first variable
-  inconsistency = 
+  bool inconsistency = 
     ElimVar(
       FST_VAR,
       M, 
@@ -809,14 +686,6 @@ bool FMBTestIntersection(
       Mp, 
       Yp, 
       &nbRowsP);
-
-  // Check the inconsistency of the system
-  /*inconsistency = 
-    CheckInconsistency( 
-      Mp, 
-      Yp, 
-      nbRowsP, 
-      FRAME_NB_DIM - 1);*/ // nbRemainCols
 
   // If the system is inconsistent
   if (inconsistency == true) {
@@ -846,14 +715,6 @@ bool FMBTestIntersection(
         Mpp, 
         Ypp, 
         &nbRowsPP);
-
-    // Check the inconsistency of the system
-    /*inconsistency = 
-      CheckInconsistency( 
-        Mpp, 
-        Ypp, 
-        nbRowsPP, 
-        FRAME_NB_DIM - 2);*/
 
     // If the system is inconsistent
     if (inconsistency == true) {
@@ -892,14 +753,6 @@ bool FMBTestIntersection(
         Ypp, 
         &nbRowsPP);
 
-    // Check the inconsistency of the resulting system
-    /*inconsistency = 
-      CheckInconsistency( 
-        Mpp, 
-        Ypp, 
-        nbRowsPP, 
-        FRAME_NB_DIM - 2);*/
-
     // If the resulting system is inconsistent
     if (inconsistency == true) {
 
@@ -937,12 +790,6 @@ bool FMBTestIntersection(
         Yp, 
         &nbRowsP);
 
-    /*inconsistency = 
-      CheckInconsistency( 
-        Mp, 
-        Yp, 
-        nbRowsP, 
-        FRAME_NB_DIM - 1);*/
     if (inconsistency == true) {
       return false;
     }
@@ -958,12 +805,6 @@ bool FMBTestIntersection(
         Ypp, 
         &nbRowsPP);
 
-    /*inconsistency = 
-      CheckInconsistency( 
-        Mpp, 
-        Ypp, 
-        nbRowsPP, 
-        FRAME_NB_DIM - 2);*/
     if (inconsistency == true) {
       return false;
     }
@@ -1013,12 +854,6 @@ bool FMBTestIntersection(
         Mp, 
         Yp, 
         &nbRowsP);
-    /*inconsistency = 
-      CheckInconsistency( 
-        Mp, 
-        Yp, 
-        nbRowsP, 
-        FRAME_NB_DIM - 1);*/
     if (inconsistency == true) {
       return false;
     }
@@ -1047,116 +882,6 @@ bool FMBTestIntersection(
 
   #endif
   
-  // Check the solution to discard false positive in case of tetrahedrons
-/*
-  // If the second Frame is a tetrahedron
-  if ( tho->type == FrameTetrahedron ) {
-
-    // Shortcut
-    // TODO this shortcut should be used earlier
-    const double* const min = bdgBoxLocal.min;
-
-    // If the tetrahedron constraint is not satisfied
-#if FRAME_NB_DIM == 3
-
-    if (min[FST_VAR] + min[SND_VAR] + min[THD_VAR] >= 1.0) {
-
-#elif FRAME_NB_DIM == 2
-
-    if (min[FST_VAR] + min[SND_VAR] >= 1.0) {
-
-#else
-
-    printf("Not implemented for dimension %d\n", FRAME_NB_DIM);
-    exit(0);
-    if (true) {
-
-#endif
-
-      // The two Frames are not in intersection
-      return false;
-
-    }
-
-  }
-
-  if ( that->type == FrameTetrahedron) {
-
-    // Declare a variable to memorize if we have found at least one
-    // corner of the bounding box which respecct the tetrahedron's 
-    // constraint
-    bool satisfied = false;
-
-    // Shotcuts
-    double* bblMin = bdgBoxLocal.min;
-    double* bblMax = bdgBoxLocal.max;
-    double* tpcu = thoProj.comp[0];
-    double* tpcv = thoProj.comp[1];
-#if FRAME_NB_DIM == 3
-    double* tpcw = thoProj.comp[2];
-#endif
-    double* tpo = thoProj.orig;
-
-    // Loop on vertices of the AABB
-    // stop as soon as a corner respecting the constraint has been found
-    int nbVertices = powi(2, FRAME_NB_DIM);
-    for (int iVertex = nbVertices;
-         iVertex-- && satisfied == false;) {
-      
-      // Declare a variable to memorize the coordinates of the vertex in
-      // 'that' 's coordinates system
-      double v[FRAME_NB_DIM];
-      
-      // Calculate the coordinates of the vertex in
-      // 'that' 's coordinates system
-      for (int i = FRAME_NB_DIM;
-           i--;) {
-
-        v[i] = ((iVertex & (1 << i)) ? bblMax[i] : bblMin[i]);
-
-      }
-
-      // Declare a variable to check the tetrahedron constraint
-      double val = 0.0;
-
-      // Loop on axis
-      for (int iAxis = FRAME_NB_DIM; 
-           iAxis--;) {
-
-        // Calculate the constraint
-#if FRAME_NB_DIM == 3
-
-        val += 
-          tpo[iAxis]+
-          v[0] * tpcu[iAxis] +
-          v[1] * tpcv[iAxis] +
-          v[2] * tpcw[iAxis];
-
-#elif FRAME_NB_DIM == 2
-
-        val += 
-          tpo[iAxis]+
-          v[0] * tpcu[iAxis] +
-          v[1] * tpcv[iAxis];
-
-#else
-
-        printf("Not implemented for dimension %d\n", FRAME_NB_DIM);
-        exit(0);
-
-#endif
-
-      }
-
-      // Check the constraint
-      if (val < 1.0) {
-        satisfied = true;
-      }
-
-    }
-  
-  }
-*/
   // If the user requested the resulting bounding box
   if (bdgBox != NULL) {
 

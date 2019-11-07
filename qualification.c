@@ -12,8 +12,8 @@
 
 #define EPSILON 0.0001
 #define RANGE_AXIS 100.0
-#define NB_TESTS 100
-#define NB_REPEAT 100
+#define NB_TESTS 1000
+#define NB_REPEAT 1000
 
 #define rnd() (float)(rand())/(float)(RAND_MAX)
 
