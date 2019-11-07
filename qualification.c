@@ -23,8 +23,10 @@ typedef struct {
   double comp[FRAME_NB_DIM][FRAME_NB_DIM];
 } Param;
 
-double sum = 0.0;
-unsigned long count = 0;
+double sumInter = 0.0;
+unsigned long countInter = 0;
+double sumNoInter = 0.0;
+unsigned long countNoInter = 0;
 
 void Qualification(
         const Param paramP,
@@ -98,8 +100,17 @@ void Qualification(
     gettimeofday(&stop, NULL);
     double deltausSAT = (double)(stop.tv_usec - start.tv_usec);
 
-    sum += deltausFMB / deltausSAT;
-    ++count;
+    if (isIntersectingSAT[0]) {
+
+      sumInter += deltausFMB / deltausSAT;
+      ++countInter;
+
+    } else {
+
+      sumNoInter += deltausFMB / deltausSAT;
+      ++countNoInter;
+
+    }
 
     for (int i = NB_REPEAT;
          i--;) {
@@ -219,7 +230,14 @@ int main(int argc, char** argv) {
 
   }
 
-  double avg = sum / (double)count;
+  double avgInter = sumInter / (double)countInter;
+  printf("avgInter(timeFMB / timeSAT) = %f\n", avgInter);
+
+  double avgNoInter = sumNoInter / (double)countNoInter;
+  printf("avgNoInter(timeFMB / timeSAT) = %f\n", avgNoInter);
+
+  double avg = 
+    (sumInter + sumNoInter) / (double)(countInter + countNoInter);
   printf("avg(timeFMB / timeSAT) = %f\n", avg);
 
   return 0;
