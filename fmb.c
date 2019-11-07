@@ -28,7 +28,9 @@ bool CheckInconsistency(
 // using the Fourier-Motzkin method and return
 // the resulting system in 'Mp' and 'Yp', and the number of rows of 
 // the resulting system in 'nbRemainRows'
-void ElimVar(
+// Return false if the system becomes inconsistent during elimination,
+// else return true
+bool ElimVar(
      const int iVar, 
   const double (*M)[FRAME_NB_DIM], 
   const double* Y, 
@@ -184,7 +186,9 @@ bool CheckInconsistency(
 // the resulting system in 'Mp' and 'Yp', and the number of rows of 
 // the resulting system in 'nbRemainRows'
 // ('M' arrangement is [iRow][iCol])
-void ElimVar(
+// Return true if the system becomes inconsistent during elimination,
+// else return false
+bool ElimVar(
      const int iVar, 
   const double (*M)[FRAME_NB_DIM], 
   const double* Y, 
@@ -224,11 +228,13 @@ void ElimVar(
         if (iCol != iVar) {
 
           MpnbRemainRows[jCol] = MiRow[iCol];
+
           ++jCol;
 
         }
 
       }
+
       Yp[*nbRemainRows] = Y[iRow];
 
       // Increment the nb of rows into the result system
@@ -258,6 +264,18 @@ void ElimVar(
           fabs(M[iRow][iVar]) > EPSILON && 
           fabs(M[jRow][iVar]) > EPSILON) {
 
+        // Declare a variable to memorize the sum of the negative 
+        // coefficients in the row
+        double sumNegCoeff = 0.0;
+        
+        // Declare a variable to memorize if all the coefficients
+        // are >= 0.0
+        bool allPositive = true;
+
+        // Declare a variable to memorize if all the coefficients
+        // are null
+        bool allNull = true;
+
         // Add the sum of the two normed (relative to the eliminated
         // variable) rows into the result system. This actually
         // eliminate the variable while keeping the constraints on
@@ -271,14 +289,67 @@ void ElimVar(
             Mp[*nbRemainRows][jCol] = 
               M[iRow][iCol] / fabs(M[iRow][iVar]) + 
               M[jRow][iCol] / fabs(M[jRow][iVar]);
+
+            // If the coefficient is negative
+            if (Mp[*nbRemainRows][jCol] < -1.0 * EPSILON) {
+
+              // Memorize that at least one coefficient is not positive
+              allPositive = false;
+
+              // Memorize that at least one coefficient is not null
+              allNull = false;
+
+              // Update the sum of the negative coefficient
+              sumNegCoeff += Mp[*nbRemainRows][jCol];
+
+            // Else, if the coefficient is positive
+            } else if (Mp[*nbRemainRows][jCol] > EPSILON) {
+
+              // Memorize that at least one coefficient is not null
+              allNull = false;
+
+            }
+
             ++jCol;
 
           }
 
         }
+
         Yp[*nbRemainRows] = 
           Y[iRow] / fabs(M[iRow][iVar]) +
           Y[jRow] / fabs(M[jRow][iVar]);
+
+        // If at least one coefficient is not null
+        if (allNull == false) {
+
+          // If all the coefficients are positive and the right side of the 
+          // inequality is negative
+          if (allPositive == true && 
+              Yp[*nbRemainRows] < 0.0) {
+
+            // As X is in [0,1], the system is inconsistent
+            return true;
+
+          }
+
+          // If the right side of the inequality if lower than the sum of 
+          // negative coefficients in the row
+          if (Yp[*nbRemainRows] < sumNegCoeff) {
+
+            // As X is in [0,1], the system is inconsistent
+            return true;
+
+          }
+
+        // Else all coefficients are null, if the right side is null
+        // or negative
+        } else if (Yp[*nbRemainRows] <= 0.0) {
+
+          // The system is inconsistent
+          return true;
+
+        }
 
         // Increment the nb of rows into the result system
         ++(*nbRemainRows);
@@ -288,6 +359,8 @@ void ElimVar(
     }
 
   }
+
+  return false;
 
 }
 
@@ -726,23 +799,24 @@ bool FMBTestIntersection(
   int nbRowsP;
 
   // Eliminate the first variable
-  ElimVar(
-    FST_VAR,
-    M, 
-    Y, 
-    nbRows, 
-    FRAME_NB_DIM,
-    Mp, 
-    Yp, 
-    &nbRowsP);
+  inconsistency = 
+    ElimVar(
+      FST_VAR,
+      M, 
+      Y, 
+      nbRows, 
+      FRAME_NB_DIM,
+      Mp, 
+      Yp, 
+      &nbRowsP);
 
   // Check the inconsistency of the system
-  inconsistency = 
+  /*inconsistency = 
     CheckInconsistency( 
       Mp, 
       Yp, 
       nbRowsP, 
-      FRAME_NB_DIM - 1); // nbRemainCols
+      FRAME_NB_DIM - 1);*/ // nbRemainCols
 
   // If the system is inconsistent
   if (inconsistency == true) {
@@ -762,23 +836,24 @@ bool FMBTestIntersection(
     int nbRowsPP;
 
     // Eliminate the second variable (which is the first in the new system)
-    ElimVar(
-      FST_VAR,
-      Mp, 
-      Yp, 
-      nbRowsP, 
-      FRAME_NB_DIM - 1,
-      Mpp, 
-      Ypp, 
-      &nbRowsPP);
+    inconsistency = 
+      ElimVar(
+        FST_VAR,
+        Mp, 
+        Yp, 
+        nbRowsP, 
+        FRAME_NB_DIM - 1,
+        Mpp, 
+        Ypp, 
+        &nbRowsPP);
 
     // Check the inconsistency of the system
-    inconsistency = 
+    /*inconsistency = 
       CheckInconsistency( 
         Mpp, 
         Ypp, 
         nbRowsPP, 
-        FRAME_NB_DIM - 2);
+        FRAME_NB_DIM - 2);*/
 
     // If the system is inconsistent
     if (inconsistency == true) {
@@ -806,23 +881,24 @@ bool FMBTestIntersection(
 
     // Eliminate the third variable (which is second first in the new
     // system)
-    ElimVar(
-      SND_VAR,
-      Mp, 
-      Yp, 
-      nbRowsP, 
-      FRAME_NB_DIM - 1,
-      Mpp, 
-      Ypp, 
-      &nbRowsPP);
+    inconsistency = 
+      ElimVar(
+        SND_VAR,
+        Mp, 
+        Yp, 
+        nbRowsP, 
+        FRAME_NB_DIM - 1,
+        Mpp, 
+        Ypp, 
+        &nbRowsPP);
 
     // Check the inconsistency of the resulting system
-    inconsistency = 
+    /*inconsistency = 
       CheckInconsistency( 
         Mpp, 
         Ypp, 
         nbRowsPP, 
-        FRAME_NB_DIM - 2);
+        FRAME_NB_DIM - 2);*/
 
     // If the resulting system is inconsistent
     if (inconsistency == true) {
@@ -850,42 +926,44 @@ bool FMBTestIntersection(
 
     // Now starts again from the initial systems and eliminate the 
     // second and third variables to get the bounds of the first variable
-    ElimVar(
-      SND_VAR,
-      M, 
-      Y, 
-      nbRows, 
-      FRAME_NB_DIM,
-      Mp, 
-      Yp, 
-      &nbRowsP);
-
     inconsistency = 
+      ElimVar(
+        SND_VAR,
+        M, 
+        Y, 
+        nbRows, 
+        FRAME_NB_DIM,
+        Mp, 
+        Yp, 
+        &nbRowsP);
+
+    /*inconsistency = 
       CheckInconsistency( 
         Mp, 
         Yp, 
         nbRowsP, 
-        FRAME_NB_DIM - 1);
+        FRAME_NB_DIM - 1);*/
     if (inconsistency == true) {
       return false;
     }
 
-    ElimVar(
-      SND_VAR,
-      Mp, 
-      Yp, 
-      nbRowsP, 
-      FRAME_NB_DIM - 1,
-      Mpp, 
-      Ypp, 
-      &nbRowsPP);
-
     inconsistency = 
+      ElimVar(
+        SND_VAR,
+        Mp, 
+        Yp, 
+        nbRowsP, 
+        FRAME_NB_DIM - 1,
+        Mpp, 
+        Ypp, 
+        &nbRowsPP);
+
+    /*inconsistency = 
       CheckInconsistency( 
         Mpp, 
         Ypp, 
         nbRowsPP, 
-        FRAME_NB_DIM - 2);
+        FRAME_NB_DIM - 2);*/
     if (inconsistency == true) {
       return false;
     }
@@ -925,21 +1003,22 @@ bool FMBTestIntersection(
 
     // Now starts again from the initial systems and eliminate the 
     // second variable to get the bounds of the first variable
-    ElimVar(
-      SND_VAR,
-      M, 
-      Y, 
-      nbRows, 
-      FRAME_NB_DIM,
-      Mp, 
-      Yp, 
-      &nbRowsP);
     inconsistency = 
+      ElimVar(
+        SND_VAR,
+        M, 
+        Y, 
+        nbRows, 
+        FRAME_NB_DIM,
+        Mp, 
+        Yp, 
+        &nbRowsP);
+    /*inconsistency = 
       CheckInconsistency( 
         Mp, 
         Yp, 
         nbRowsP, 
-        FRAME_NB_DIM - 1);
+        FRAME_NB_DIM - 1);*/
     if (inconsistency == true) {
       return false;
     }
