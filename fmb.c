@@ -759,6 +759,14 @@ bool FMBTestIntersection(
       // The two Frames are not in intersection
       return false;
 
+    // Else, if the bounds are consistent here it means
+    // the two Frames are in intersection.
+    // If the user hasn't requested for the resulting bounding box
+    } else if (bdgBox == NULL) {
+
+      // Immediately return true
+      return true;
+
     }
 
     // Get the bounds for the remaining second variable
@@ -839,6 +847,14 @@ bool FMBTestIntersection(
 
       // The two Frames are not in intersection
       return false;
+
+    // Else, if the bounds are consistent here it means
+    // the two Frames are in intersection.
+    // If the user hasn't requested for the resulting bounding box
+    } else if (bdgBox == NULL) {
+
+      // Immediately return true
+      return true;
 
     }
 
