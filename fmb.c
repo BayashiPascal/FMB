@@ -397,56 +397,116 @@ bool FMBTestIntersection(
     // Shortcuts
     int iRow = 2 * iStepRow;
     int iNextRow = iRow + 1;
-    double* MRow = M[iRow];
-    double* MNextRow = M[iNextRow];
+    double* MIRow = M[iRow];
+    double* MINextRow = M[iNextRow];
+    int jRow = 2 * (iStepRow + FRAME_NB_DIM);
+    int jNextRow = jRow + 1;
+    double* MJRow = M[jRow];
+    double* MJNextRow = M[jNextRow];
+
+    // Declare a variable to memorize the sum of the negative 
+    // coefficients in the row
+    double sumNegCoeff[2] = {0.0, 0.0};
+    
+    // Declare a variable to memorize if all the coefficients
+    // are >= 0.0
+    bool allPositive[2] = {true, true};
+
+    // Declare a variable to memorize if all the coefficients
+    // are null
+    bool allNull = true;
 
     // For each column of the system
     for (int iCol = FRAME_NB_DIM;
          iCol--;) {
 
-      MRow[iCol] = thoProjComp[iCol][iStepRow];
-      MNextRow[iCol] = -1.0 * MRow[iCol];
+      MIRow[iCol] = thoProjComp[iCol][iStepRow];
+      MINextRow[iCol] = -1.0 * MIRow[iCol];
+
+      // If it's on the diagonal 
+      if (iStepRow == iCol) {
+
+        MJRow[iCol] = 1.0;
+        MJNextRow[iCol] = -1.0;
+
+      // Else it's not on the diagonal
+      } else {
+
+        MJRow[iCol] = 0.0;
+        MJNextRow[iCol] = 0.0;
+
+      }
+
+      // If the coefficient is negative
+      if (MIRow[iCol] < -1.0 * EPSILON) {
+
+        // Memorize that at least one coefficient is not positive
+        allPositive[0] = false;
+
+        // Memorize that at least one coefficient is not null
+        allNull = false;
+
+        // Update the sum of the negative coefficient
+        sumNegCoeff[0] += MIRow[iCol];
+
+      // Else, if the coefficient is positive
+      } else if (MIRow[iCol] > EPSILON) {
+
+        // Memorize that at least one coefficient is not null
+        allNull = false;
+
+        // Memorize that at least one coefficient is not positive
+        allPositive[1] = false;
+
+        // Update the sum of the negative coefficient
+        sumNegCoeff[1] -= MIRow[iCol];
+
+      }
 
     }
 
     Y[iRow] = 1.0 - thoProjOrig[iStepRow];
     Y[iNextRow] = thoProjOrig[iStepRow];
 
-  }
+    // If at least one coefficient is not null
+    if (allNull == false) {
 
-  // For the following 2 * FRAME_NB_DIM rows of the system
-  for (int iStepRow = FRAME_NB_DIM;
-       iStepRow--;) {
-  // TODO: this loop can be commonalized with the previous one
-  
-    // Shortcuts
-    int iRow = 2 * (iStepRow + FRAME_NB_DIM);
-    int iNextRow = iRow + 1;
-    double* MRow = M[iRow];
-    double* MNextRow = M[iNextRow];
+      // If all the coefficients are positive and the right side of the 
+      // inequality is negative
+      if ((allPositive[0] == true && 
+           Y[iRow] < 0.0) ||
+          (allPositive[1] == true && 
+           Y[iNextRow] < 0.0)) {
 
-    // For each column of the system
-    for (int iCol = FRAME_NB_DIM;
-         iCol--;) {
-
-      // If it's on the diagonal 
-      if (iStepRow == iCol) {
-
-        MRow[iCol] = 1.0;
-        MNextRow[iCol] = -1.0;
-
-      // Else it's not on the diagonal
-      } else {
-
-        MRow[iCol] = 0.0;
-        MNextRow[iCol] = 0.0;
+        // As X is in [0,1], the system is inconsistent,
+        // there is no intersection
+        return false;
 
       }
 
+      // If the right side of the inequality is lower than the sum of 
+      // negative coefficients in the row
+      if (Y[iRow] < sumNegCoeff[0] ||
+          Y[iNextRow] < sumNegCoeff[1]) {
+
+        // As X is in [0,1], the system is inconsistent
+        // there is no intersection
+        return false;
+
+      }
+
+    // Else all coefficients are null, if the right side is null
+    // or negative
+    } else if (Y[iRow] <= 0.0 ||
+               Y[iNextRow] <= 0.0) {
+
+      // The system is inconsistent, there is no intersection
+      return false;
+
     }
 
-    Y[iRow] = 1.0;
-    Y[iNextRow] = 0.0;
+    Y[jRow] = 1.0;
+    Y[jNextRow] = 0.0;
 
   }
 
@@ -456,6 +516,18 @@ bool FMBTestIntersection(
 
   // If the first frame is a Tetrahedron
   if (that->type == FrameTetrahedron) {
+
+    // Declare a variable to memorize the sum of the negative 
+    // coefficients in the row
+    double sumNegCoeff = 0.0;
+    
+    // Declare a variable to memorize if all the coefficients
+    // are >= 0.0
+    bool allPositive = true;
+
+    // Declare a variable to memorize if all the coefficients
+    // are null
+    bool allNull = true;
 
     // Shortcut
     double* MRow = M[nbRows];
@@ -478,6 +550,59 @@ bool FMBTestIntersection(
 
       Y[nbRows] -= thoProjOrig[iCol];
 
+      // If the coefficient is negative
+      if (MRow[iCol] < -1.0 * EPSILON) {
+
+        // Memorize that at least one coefficient is not positive
+        allPositive = false;
+
+        // Memorize that at least one coefficient is not null
+        allNull = false;
+
+        // Update the sum of the negative coefficient
+        sumNegCoeff += MRow[iCol];
+
+      // Else, if the coefficient is positive
+      } else if (MRow[iCol] > EPSILON) {
+
+        // Memorize that at least one coefficient is not null
+        allNull = false;
+
+      }
+
+    }
+
+    // If at least one coefficient is not null
+    if (allNull == false) {
+
+      // If all the coefficients are positive and the right side of the 
+      // inequality is negative
+      if (allPositive == true && 
+           Y[nbRows] < 0.0) {
+
+        // As X is in [0,1], the system is inconsistent,
+        // there is no intersection
+        return false;
+
+      }
+
+      // If the right side of the inequality is lower than the sum of 
+      // negative coefficients in the row
+      if (Y[nbRows] < sumNegCoeff) {
+
+        // As X is in [0,1], the system is inconsistent
+        // there is no intersection
+        return false;
+
+      }
+
+    // Else all coefficients are null, if the right side is null
+    // or negative
+    } else if (Y[nbRows] <= 0.0) {
+
+      // The system is inconsistent, there is no intersection
+      return false;
+
     }
 
     // Update the number of rows in the system
@@ -488,6 +613,18 @@ bool FMBTestIntersection(
   // If the second frame is a Tetrahedron
   if (tho->type == FrameTetrahedron) {
 
+    // Declare a variable to memorize the sum of the negative 
+    // coefficients in the row
+    double sumNegCoeff = 0.0;
+    
+    // Declare a variable to memorize if all the coefficients
+    // are >= 0.0
+    bool allPositive = true;
+
+    // Declare a variable to memorize if all the coefficients
+    // are null
+    bool allNull = true;
+
     // Shortcut
     double* MRow = M[nbRows];
 
@@ -497,9 +634,62 @@ bool FMBTestIntersection(
 
       MRow[iCol] =  1.0;
 
+      // If the coefficient is negative
+      if (MRow[iCol] < -1.0 * EPSILON) {
+
+        // Memorize that at least one coefficient is not positive
+        allPositive = false;
+
+        // Memorize that at least one coefficient is not null
+        allNull = false;
+
+        // Update the sum of the negative coefficient
+        sumNegCoeff += MRow[iCol];
+
+      // Else, if the coefficient is positive
+      } else if (MRow[iCol] > EPSILON) {
+
+        // Memorize that at least one coefficient is not null
+        allNull = false;
+
+      }
+
     }
 
     Y[nbRows] = 1.0;
+
+    // If at least one coefficient is not null
+    if (allNull == false) {
+
+      // If all the coefficients are positive and the right side of the 
+      // inequality is negative
+      if (allPositive == true && 
+           Y[nbRows] < 0.0) {
+
+        // As X is in [0,1], the system is inconsistent,
+        // there is no intersection
+        return false;
+
+      }
+
+      // If the right side of the inequality is lower than the sum of 
+      // negative coefficients in the row
+      if (Y[nbRows] < sumNegCoeff) {
+
+        // As X is in [0,1], the system is inconsistent
+        // there is no intersection
+        return false;
+
+      }
+
+    // Else all coefficients are null, if the right side is null
+    // or negative
+    } else if (Y[nbRows] <= 0.0) {
+
+      // The system is inconsistent, there is no intersection
+      return false;
+
+    }
 
     // Update the number of rows in the system
     ++nbRows;
