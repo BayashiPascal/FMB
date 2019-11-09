@@ -7,11 +7,13 @@
 
 // ------------- Functions declaration -------------
 
+#if FRAME_NB_DIM == 2
 // Test for intersection between 2D Frame 'that' and 2D Frame 'tho'
 // Return true if the two Frames are intersecting, else false
 bool SATTestIntersection2D(
   const Frame* const that, 
   const Frame* const tho);
+#endif
 
 #if FRAME_NB_DIM == 3
 // Test for intersection between 3D Frame 'that' and 3D Frame 'tho'
