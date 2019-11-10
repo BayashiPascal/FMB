@@ -13,7 +13,9 @@
 #define EPSILON 0.0001
 // Range of values for the random generation of Frames
 #define RANGE_AXIS 100.0
-// Nb of tests of the validation
+// Nb of run
+#define NB_RUNS 10
+// Nb of tests per run
 #define NB_TESTS 1000000
 // Nb of times the test is run on one pair of frame, used to 
 // slow down the processus and be able to measure time
@@ -34,11 +36,15 @@ typedef struct {
 } Param;
 
 // Global variables to count nb of tests resulting in intersection
-// and no intersection, and total time of execution for each
-double sumInter = 0.0;
-unsigned long countInter = 0;
-double sumNoInter = 0.0;
-unsigned long countNoInter = 0;
+// and no intersection, and min/max/total time of execution for each
+double minInter;
+double maxInter;
+double sumInter;
+unsigned long countInter;
+double minNoInter;
+double maxNoInter;
+double sumNoInter;
+unsigned long countNoInter;
 
 // Qualification function
 // Takes two Frame definition as input, run the intersection test on 
@@ -123,22 +129,22 @@ void Qualification(
 
 #if FRAME_NB_DIM == 2
 
-    isIntersectingSAT[i] = 
-      SATTestIntersection2D(
-        that, 
-        tho);
+      isIntersectingSAT[i] = 
+        SATTestIntersection2D(
+          that, 
+          tho);
 
 #elif FRAME_NB_DIM == 3
 
-    isIntersectingSAT[i] = 
-      SATTestIntersection3D(
-        that, 
-        tho);
+      isIntersectingSAT[i] = 
+        SATTestIntersection3D(
+          that, 
+          tho);
 
 #else
 
-  printf("Not implemented for dimension %d\n", FRAME_NB_DIM);
-  exit(0);
+      printf("Not implemented for dimension %d\n", FRAME_NB_DIM);
+      exit(0);
 
 #endif
     }
@@ -188,18 +194,47 @@ void Qualification(
 
       }
 
+      // Get the ratio of execution time
+      double ratio = ((double)deltausFMB) / ((double)deltausSAT);
+
       // If the Frames intersect
       if (isIntersectingSAT[0] == true) {
 
         // Update the counters
-        sumInter += ((double)deltausFMB) / ((double)deltausSAT);
+        if (countInter == 0) {
+
+          minInter = ratio;
+          maxInter = ratio;
+
+        } else {
+
+          if (minInter > ratio)
+            minInter = ratio;
+          if (maxInter < ratio)
+            maxInter = ratio;
+
+        }
+        sumInter += ratio;
         ++countInter;
 
       // Else, the Frames do not intersect
       } else {
 
         // Update the counters
-        sumNoInter += ((double)deltausFMB) / ((double)deltausSAT);
+        if (countNoInter == 0) {
+
+          minNoInter = ratio;
+          maxNoInter = ratio;
+
+        } else {
+
+          if (minNoInter > ratio)
+            minNoInter = ratio;
+          if (maxNoInter < ratio)
+            maxNoInter = ratio;
+
+        }
+        sumNoInter += ratio;
         ++countNoInter;
 
       }
@@ -232,106 +267,135 @@ int main(int argc, char** argv) {
   // Initialise the random generator
   srandom(time(NULL));
 
-  // Declare two variables to memozie the arguments to the
-  // Qualification function
-  Param paramP;
-  Param paramQ;
+  // Loop on runs
+  for (int iRun = 0;
+       iRun < NB_RUNS;
+       ++iRun) {
 
-  // Loop on the number of tests
-  for (unsigned long iTest = NB_TESTS;
-       iTest--;) {
+    // Initialize counters
+    minInter = 0.0;
+    maxInter = 0.0;
+    sumInter = 0.0;
+    countInter = 0;
+    minNoInter = 0.0;
+    maxNoInter = 0.0;
+    sumNoInter = 0.0;
+    countNoInter = 0;
 
-    // Create two random Frame definitions
-    Param* param = &paramP;
-    for (int iParam = 2;
-         iParam--;) {
+    // Declare two variables to memozie the arguments to the
+    // Qualification function
+    Param paramP;
+    Param paramQ;
 
-      // 50% chance of being a Cuboid or a Tetrahedron
-      if (rnd() < 0.5)
-        param->type = FrameCuboid;
-      else
-        param->type = FrameTetrahedron;
+    // Loop on the number of tests
+    for (unsigned long iTest = NB_TESTS;
+         iTest--;) {
 
-      for (int iAxis = FRAME_NB_DIM;
-           iAxis--;) {
+      // Create two random Frame definitions
+      Param* param = &paramP;
+      for (int iParam = 2;
+           iParam--;) {
 
-        param->orig[iAxis] = -RANGE_AXIS + 2.0 * rnd() * RANGE_AXIS;
+        // 50% chance of being a Cuboid or a Tetrahedron
+        if (rnd() < 0.5)
+          param->type = FrameCuboid;
+        else
+          param->type = FrameTetrahedron;
 
-        for (int iComp = FRAME_NB_DIM;
-             iComp--;) {
+        for (int iAxis = FRAME_NB_DIM;
+             iAxis--;) {
 
-          param->comp[iComp][iAxis] = 
-            -RANGE_AXIS + 2.0 * rnd() * RANGE_AXIS;
+          param->orig[iAxis] = -RANGE_AXIS + 2.0 * rnd() * RANGE_AXIS;
+
+          for (int iComp = FRAME_NB_DIM;
+               iComp--;) {
+
+            param->comp[iComp][iAxis] = 
+              -RANGE_AXIS + 2.0 * rnd() * RANGE_AXIS;
+
+          }
 
         }
+        
+        param = &paramQ;
 
       }
-      
-      param = &paramQ;
+
+      // Calculate the determinant of the Frames' components matrix
+  #if FRAME_NB_DIM == 2
+
+      double detP = 
+        paramP.comp[0][0] * paramP.comp[1][1] - 
+        paramP.comp[1][0] * paramP.comp[0][1];
+
+      double detQ = 
+        paramQ.comp[0][0] * paramQ.comp[1][1] - 
+        paramQ.comp[1][0] * paramQ.comp[0][1];
+
+  #elif FRAME_NB_DIM == 3
+
+      double detP = 
+        paramP.comp[0][0] * (paramP.comp[1][1] * paramP.comp[2][2]-
+        paramP.comp[1][2] * paramP.comp[2][1]) -
+        paramP.comp[1][0] * (paramP.comp[0][1] * paramP.comp[2][2]- 
+        paramP.comp[0][2] * paramP.comp[2][1]) +
+        paramP.comp[2][0] * (paramP.comp[0][1] * paramP.comp[1][2]- 
+        paramP.comp[0][2] * paramP.comp[1][1]);
+
+      double detQ = 
+        paramQ.comp[0][0] * (paramQ.comp[1][1] * paramQ.comp[2][2]-
+        paramQ.comp[1][2] * paramQ.comp[2][1]) -
+        paramQ.comp[1][0] * (paramQ.comp[0][1] * paramQ.comp[2][2]- 
+        paramQ.comp[0][2] * paramQ.comp[2][1]) +
+        paramQ.comp[2][0] * (paramQ.comp[0][1] * paramQ.comp[1][2]- 
+        paramQ.comp[0][2] * paramQ.comp[1][1]);
+
+  #else
+
+    printf("Not implemented for dimension %d\n", FRAME_NB_DIM);
+    exit(0);
+
+  #endif
+
+      // If the determinants are not null, ie the Frame are not degenerate
+      if (fabs(detP) > EPSILON && fabs(detQ) > EPSILON) {
+
+        // Run the validation on the two Frames
+        Qualification(
+          paramP,
+          paramQ);
+
+      }
 
     }
 
-    // Calculate the determinant of the Frames' components matrix
-#if FRAME_NB_DIM == 2
+    // Display the results
+    if (iRun == 0) {
 
-    double detP = 
-      paramP.comp[0][0] * paramP.comp[1][1] - 
-      paramP.comp[1][0] * paramP.comp[0][1];
-
-    double detQ = 
-      paramQ.comp[0][0] * paramQ.comp[1][1] - 
-      paramQ.comp[1][0] * paramQ.comp[0][1];
-
-#elif FRAME_NB_DIM == 3
-
-    double detP = 
-      paramP.comp[0][0] * (paramP.comp[1][1] * paramP.comp[2][2]-
-      paramP.comp[1][2] * paramP.comp[2][1]) -
-      paramP.comp[1][0] * (paramP.comp[0][1] * paramP.comp[2][2]- 
-      paramP.comp[0][2] * paramP.comp[2][1]) +
-      paramP.comp[2][0] * (paramP.comp[0][1] * paramP.comp[1][2]- 
-      paramP.comp[0][2] * paramP.comp[1][1]);
-
-    double detQ = 
-      paramQ.comp[0][0] * (paramQ.comp[1][1] * paramQ.comp[2][2]-
-      paramQ.comp[1][2] * paramQ.comp[2][1]) -
-      paramQ.comp[1][0] * (paramQ.comp[0][1] * paramQ.comp[2][2]- 
-      paramQ.comp[0][2] * paramQ.comp[2][1]) +
-      paramQ.comp[2][0] * (paramQ.comp[0][1] * paramQ.comp[1][2]- 
-      paramQ.comp[0][2] * paramQ.comp[1][1]);
-
-#else
-
-  printf("Not implemented for dimension %d\n", FRAME_NB_DIM);
-  exit(0);
-
-#endif
-
-    // If the determinants are not null, ie the Frame are not degenerate
-    if (fabs(detP) > EPSILON && fabs(detQ) > EPSILON) {
-
-      // Run the validation on the two Frames
-      Qualification(
-        paramP,
-        paramQ);
+      printf("ratio (timeFMB / timeSAT)\n");
+      printf("run\tcountInter\tcountNoInter\t");
+      printf("minInter\tavgInter\tmaxInter\t");
+      printf("minNoInter\tavgNoInter\tmaxNoInter\t");
+      printf("minTotal\tavgTotal\tmaxTotal\n");
 
     }
+
+    printf("%d\t%lu\t%lu\t", iRun, countInter, countNoInter);
+
+    double avgInter = sumInter / (double)countInter;
+    printf("%f\t%f\t%f\t", minInter, avgInter, maxInter);
+
+    double avgNoInter = sumNoInter / (double)countNoInter;
+    printf("%f\t%f\t%f\t", minNoInter, avgNoInter, maxNoInter);
+
+    double avg = 
+      (sumInter + sumNoInter) / (double)(countInter + countNoInter);
+    printf("%f\t%f\t%f\n", 
+      (minNoInter < minInter ? minNoInter : minInter), 
+      avg,
+      (maxNoInter > maxInter ? maxNoInter : maxInter));
 
   }
-
-  // Display the results
-  
-  double avgInter = sumInter / (double)countInter;
-  printf("avgInter(timeFMB / timeSAT) = %f\n", avgInter);
-
-  double avgNoInter = sumNoInter / (double)countNoInter;
-  printf("avgNoInter(timeFMB / timeSAT) = %f\n", avgNoInter);
-
-  double avg = 
-    (sumInter + sumNoInter) / (double)(countInter + countNoInter);
-  printf("avg(timeFMB / timeSAT) = %f\n", avg);
-
-  printf("Tested %lu intersections and %lu no intersections\n", countInter, countNoInter);
 
   return 0;
 

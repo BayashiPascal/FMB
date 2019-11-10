@@ -39,7 +39,7 @@ clean :
 	rm -f *.o main unitTests validation qualification
 
 latex:
-	latex fmb.tex && dvips fmb.dvi -o fmb.ps
+	pdflatex -synctex=1 -interaction=nonstopmode -shell-escape  fmb.tex
 
 valgrind :
 	valgrind -v --track-origins=yes --leak-check=full \
