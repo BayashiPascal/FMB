@@ -12,8 +12,8 @@
 
 #define EPSILON 0.0001
 #define RANGE_AXIS 100.0
-#define NB_TESTS 1000
-#define NB_REPEAT 1000
+#define NB_TESTS 100000
+#define NB_REPEAT 100
 
 #define rnd() (float)(rand())/(float)(RAND_MAX)
 
@@ -47,7 +47,7 @@ void Qualification(
   Frame* that = &P;
   Frame* tho = &Q;
   
-  for (int iTest = 0;
+  for (unsigned long iTest = 0;
        iTest < 2;
        ++iTest) {
 
@@ -68,7 +68,21 @@ void Qualification(
 
     struct timeval stop;
     gettimeofday(&stop, NULL);
-    double deltausFMB = (double)(stop.tv_usec - start.tv_usec);
+    unsigned long deltausFMB = 0;
+    if (stop.tv_sec < start.tv_sec) {
+      printf("time warps, try again\n");
+      exit(0);
+    }
+    if (stop.tv_sec > start.tv_sec + 1) {
+      printf("deltausFMB >> 1s, decrease NB_REPEAT\n");
+      exit(0);
+    }
+    if (stop.tv_usec < start.tv_usec) {
+      deltausFMB = stop.tv_sec - start.tv_sec;
+      deltausFMB += stop.tv_usec + 1000000 - start.tv_usec;
+    } else {
+      deltausFMB = stop.tv_usec - start.tv_usec;
+    }
 
     bool isIntersectingSAT[NB_REPEAT] = {false};
     gettimeofday(&start, NULL);
@@ -99,19 +113,32 @@ void Qualification(
     }
 
     gettimeofday(&stop, NULL);
-    double deltausSAT = (double)(stop.tv_usec - start.tv_usec);
+    unsigned long deltausSAT = 0;
+    if (stop.tv_sec < start.tv_sec) {
+      printf("time warps, try again\n");
+      exit(0);
+    }
+    if (stop.tv_sec > start.tv_sec + 1) {
+      printf("deltausSAT >> 1s, decrease NB_REPEAT\n");
+      exit(0);
+    }
+    if (stop.tv_usec < start.tv_usec) {
+      deltausSAT = stop.tv_sec - start.tv_sec;
+      deltausSAT += stop.tv_usec + 1000000 - start.tv_usec;
+    } else {
+      deltausSAT = stop.tv_usec - start.tv_usec;
+    }
 
-    // Avoid warp in time
-    if (deltausFMB >= 0 && deltausSAT >= 0) {
+    if (deltausFMB > 0 && deltausSAT > 0) {
 
       if (isIntersectingSAT[0]) {
 
-        sumInter += deltausFMB / deltausSAT;
+        sumInter += ((double)deltausFMB) / ((double)deltausSAT);
         ++countInter;
 
       } else {
 
-        sumNoInter += deltausFMB / deltausSAT;
+        sumNoInter += ((double)deltausFMB) / ((double)deltausSAT);
         ++countNoInter;
 
       }
@@ -139,6 +166,16 @@ void Qualification(
         }
 
       }
+
+    } else if (deltausFMB == 0) {
+
+      printf("deltausFMB == 0, increase NB_REPEAT\n");
+      exit(0);
+
+    } else if (deltausSAT == 0) {
+
+      printf("deltausSAT == 0, increase NB_REPEAT\n");
+      exit(0);
 
     }
 
