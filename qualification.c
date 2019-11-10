@@ -5,33 +5,49 @@
 #include <time.h>
 #include <sys/time.h>
 
-
 // Include FMB and SAT algorithm library
 #include "fmb.h"
 #include "sat.h"
 
+// Espilon for numerical precision
 #define EPSILON 0.0001
+// Range of values for the random generation of Frames
 #define RANGE_AXIS 100.0
+// Nb of tests of the validation
 #define NB_TESTS 1000000
-#define NB_REPEAT 100
+// Nb of times the test is run on one pair of frame, used to 
+// slow down the processus and be able to measure time
+#if FRAME_NB_DIM == 3
+  #define NB_REPEAT 800
+#elif FRAME_NB_DIM == 2
+  #define NB_REPEAT 1500
+#endif
 
+// Helper macro to generate random number in [0.0, 1.0]
 #define rnd() (double)(rand())/(double)(RAND_MAX)
 
+// Helper structure to pass arguments to the Qualification function
 typedef struct {
   FrameType type;
   double orig[FRAME_NB_DIM];
   double comp[FRAME_NB_DIM][FRAME_NB_DIM];
 } Param;
 
+// Global variables to count nb of tests resulting in intersection
+// and no intersection, and total time of execution for each
 double sumInter = 0.0;
 unsigned long countInter = 0;
 double sumNoInter = 0.0;
 unsigned long countNoInter = 0;
 
+// Qualification function
+// Takes two Frame definition as input, run the intersection test on 
+// them with FMB and SAT, and measure the time of execution of each
 void Qualification(
         const Param paramP,
         const Param paramQ) {
 
+  // Create the two Frames
   Frame P = 
     FrameCreateStatic(
       paramP.type,
@@ -44,18 +60,24 @@ void Qualification(
       paramQ.orig,
       paramQ.comp);
 
+  // Helper variables to loop on the pair (that, tho) and (tho, that)
   Frame* that = &P;
   Frame* tho = &Q;
-  
-  for (unsigned long iTest = 0;
-       iTest < 2;
-       ++iTest) {
 
+  // Loop on pairs of Frames
+  for (int iPair = 2;
+       iPair--;) {
+
+    // Declare an array to memorize the results of the repeated
+    // test on the same pair,
+    // to prevent optimization from the compiler to remove the for loop
     bool isIntersectingFMB[NB_REPEAT] = {false};
 
+    // Start measuring time
     struct timeval start;
     gettimeofday(&start, NULL);
 
+    // Run the FMB intersection test
     for (int i = NB_REPEAT;
          i--;) {
 
@@ -66,8 +88,11 @@ void Qualification(
           NULL);
     }
 
+    // Stop measuring time
     struct timeval stop;
     gettimeofday(&stop, NULL);
+
+    // Calculate the delay of execution
     unsigned long deltausFMB = 0;
     if (stop.tv_sec < start.tv_sec) {
       printf("time warps, try again\n");
@@ -84,9 +109,15 @@ void Qualification(
       deltausFMB = stop.tv_usec - start.tv_usec;
     }
 
+    // Declare an array to memorize the results of the repeated
+    // test on the same pair,
+    // to prevent optimization from the compiler to remove the for loop
     bool isIntersectingSAT[NB_REPEAT] = {false};
+
+    // Start measuring time
     gettimeofday(&start, NULL);
 
+    // Run the FMB intersection test
     for (int i = NB_REPEAT;
          i--;) {
 
@@ -112,7 +143,10 @@ void Qualification(
 #endif
     }
 
+    // Stop measuring time
     gettimeofday(&stop, NULL);
+
+    // Calculate the delay of execution
     unsigned long deltausSAT = 0;
     if (stop.tv_sec < start.tv_sec) {
       printf("time warps, try again\n");
@@ -129,56 +163,62 @@ void Qualification(
       deltausSAT = stop.tv_usec - start.tv_usec;
     }
 
-    if (deltausFMB > 0 && deltausSAT > 0) {
+    // If the delays are greater than 10ms
+    if (deltausFMB >= 10 && deltausSAT >= 10) {
 
-      if (isIntersectingSAT[0]) {
+      // If FMB and SAT disagrees
+      if (isIntersectingFMB[0] != isIntersectingSAT[0]) {
 
+        printf("Qualification has failed\n");
+        FramePrint(that);
+        printf(" against ");
+        FramePrint(tho);
+        printf("\n");
+        printf("FMB : ");
+        if (isIntersectingFMB == false)
+          printf("no ");
+        printf("intersection\n");
+        printf("SAT : ");
+        if (isIntersectingSAT == false)
+          printf("no ");
+        printf("intersection\n");
+
+        // Stop the qualification test
+        exit(0);
+
+      }
+
+      // If the Frames intersect
+      if (isIntersectingSAT[0] == true) {
+
+        // Update the counters
         sumInter += ((double)deltausFMB) / ((double)deltausSAT);
         ++countInter;
 
+      // Else, the Frames do not intersect
       } else {
 
+        // Update the counters
         sumNoInter += ((double)deltausFMB) / ((double)deltausSAT);
         ++countNoInter;
 
       }
 
-      for (int i = NB_REPEAT;
-           i--;) {
+    // Else, if time of execution for FMB was less than a 10ms
+    } else if (deltausFMB < 10) {
 
-        if (isIntersectingFMB[i] != isIntersectingSAT[i]) {
-          printf("Validation has failed\n");
-          FramePrint(that);
-          printf(" against ");
-          FramePrint(tho);
-          printf("\n");
-          printf("FMB : ");
-          if (isIntersectingFMB == false) {
-            printf("no ");
-          }
-          printf("intersection\n");
-          printf("SAT : ");
-          if (isIntersectingSAT == false) {
-            printf("no ");
-          }
-          printf("intersection\n");
-          exit(0);
-        }
-
-      }
-
-    } else if (deltausFMB == 0) {
-
-      printf("deltausFMB == 0, increase NB_REPEAT\n");
+      printf("deltausFMB < 10ms, increase NB_REPEAT\n");
       exit(0);
 
-    } else if (deltausSAT == 0) {
+    // Else, if time of execution for SAT was less than a 10ms
+    } else if (deltausSAT < 10) {
 
-      printf("deltausSAT == 0, increase NB_REPEAT\n");
+      printf("deltausSAT < 10ms, increase NB_REPEAT\n");
       exit(0);
 
     }
 
+    // Flip the pair of Frames
     that = &Q;
     tho = &P;
 
@@ -189,26 +229,29 @@ void Qualification(
 // Main function
 int main(int argc, char** argv) {
 
+  // Initialise the random generator
   srandom(time(NULL));
+
+  // Declare two variables to memozie the arguments to the
+  // Qualification function
   Param paramP;
   Param paramQ;
 
+  // Loop on the number of tests
   for (unsigned long iTest = NB_TESTS;
        iTest--;) {
 
+    // Create two random Frame definitions
     Param* param = &paramP;
     for (int iParam = 2;
          iParam--;) {
 
-      if (rnd() < 0.5) {
-
+      // 50% chance of being a Cuboid or a Tetrahedron
+      if (rnd() < 0.5)
         param->type = FrameCuboid;
-
-      } else {
-
+      else
         param->type = FrameTetrahedron;
 
-      }
       for (int iAxis = FRAME_NB_DIM;
            iAxis--;) {
 
@@ -228,6 +271,7 @@ int main(int argc, char** argv) {
 
     }
 
+    // Calculate the determinant of the Frames' components matrix
 #if FRAME_NB_DIM == 2
 
     double detP = 
@@ -263,8 +307,10 @@ int main(int argc, char** argv) {
 
 #endif
 
+    // If the determinants are not null, ie the Frame are not degenerate
     if (fabs(detP) > EPSILON && fabs(detQ) > EPSILON) {
 
+      // Run the validation on the two Frames
       Qualification(
         paramP,
         paramQ);
@@ -273,6 +319,8 @@ int main(int argc, char** argv) {
 
   }
 
+  // Display the results
+  
   double avgInter = sumInter / (double)countInter;
   printf("avgInter(timeFMB / timeSAT) = %f\n", avgInter);
 
@@ -286,4 +334,5 @@ int main(int argc, char** argv) {
   printf("Tested %lu intersections and %lu no intersections\n", countInter, countNoInter);
 
   return 0;
+
 }

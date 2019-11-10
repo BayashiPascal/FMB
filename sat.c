@@ -74,7 +74,7 @@ bool SATTestIntersection2D(
 
       // Loop on Frames
       for (int iFrame = 2;
-          iFrame--;) {
+           iFrame--;) {
       
         // Shortcuts
         const double* frameOrig = frame->orig;
@@ -95,7 +95,8 @@ bool SATTestIntersection2D(
           
           // Get the vertex
           double vertex[2];
-          memcpy(vertex, frameOrig, 2 * sizeof(double));
+          vertex[0] = frameOrig[0];
+          vertex[1] = frameOrig[1];
           switch (iVertex) {
             case 3:
               vertex[0] += frameCompA[0] + frameCompB[0];
@@ -115,25 +116,30 @@ bool SATTestIntersection2D(
 
           // Get the projection of the vertex on the normal of the edge
           // Orientation of the normal doesn't matter, so we
-          // consider here the normal (edge[1], -edge[0])
+          // use arbitrarily the normal (edge[1], -edge[0])
           double proj = vertex[0] * edge[1] - vertex[1] * edge[0];
 
-          // Update the boundaries of the projection of the Frame on
-          // the edge
+          // If it's the first vertex
           if (firstVertex == true) {
 
+              // Initialize the boundaries of the projection of the
+              // Frame on the edge
               bdgBox[0] = proj;
               bdgBox[1] = proj;
+
+              // Update the flag to memorize we did the first vertex
               firstVertex = false;
-            
+
+          // Else, it's not the first vertex
           } else {
 
-            if (bdgBox[0] > proj) {
+            // Update the boundaries of the projection of the Frame on
+            // the edge
+            if (bdgBox[0] > proj)
               bdgBox[0] = proj;
-            }
-            if (bdgBox[1] < proj) {
+
+            if (bdgBox[1] < proj)
               bdgBox[1] = proj;
-            }
 
           }
 
@@ -163,6 +169,7 @@ bool SATTestIntersection2D(
 
   }
 
+  // If we reaches here, it means the two Frames are intersecting
   return true;
 
 }
@@ -180,7 +187,7 @@ bool SATTestIntersection3D(
   double oppEdgesThat[3][3];
   double oppEdgesTho[3][3];
 
-  // Declare a variable to memorize the number of edges, by default 3
+  // Declare two variables to memorize the number of edges, by default 3
   int nbEdgesThat = 3;
   int nbEdgesTho = 3;
 
@@ -242,8 +249,8 @@ bool SATTestIntersection3D(
 
   // Loop to commonalize code when checking SAT based on that's edges
   // and then tho's edges
-  for (int iTest = 2;
-       iTest--;) {
+  for (int iPair = 2;
+       iPair--;) {
 
     // Shortcuts
     FrameType frameType = frame->type;
@@ -322,8 +329,12 @@ bool SATTestIntersection3D(
           that, 
           tho, 
           normFaces[iFace]);
+
+      // If the axis is separating the Frames
       if (isIntersection == false) {
 
+        // The Frames are not in intersection,
+        // terminate the test
         return false;
 
       }
@@ -367,21 +378,27 @@ bool SATTestIntersection3D(
           that, 
           tho, 
           axis);
+
+      // If the axis is separating the Frames
       if (isIntersection == false) {
 
+        // The Frames are not in intersection,
+        // terminate the test
         return false;
 
       }
-      
+
     }
 
   }
 
+  // If we reaches here, it means the two Frames are intersecting
   return true;
 
 }
 
-// Check the intersection constraint along one axis
+// Check the intersection constraint for Frames 'that' and 'tho' 
+// relatively to 'axis'
 bool CheckAxis(
   const Frame* const that,
   const Frame* const tho,
@@ -398,7 +415,7 @@ bool CheckAxis(
 
   // Loop on Frames
   for (int iFrame = 2;
-      iFrame--;) {
+       iFrame--;) {
   
     // Shortcuts
     const double* frameOrig = frame->orig;
@@ -420,7 +437,9 @@ bool CheckAxis(
       
       // Get the vertex
       double vertex[3];
-      memcpy(vertex, frameOrig, 3 * sizeof(double));
+      vertex[0] = frameOrig[0];
+      vertex[1] = frameOrig[1];
+      vertex[2] = frameOrig[2];
       switch (iVertex) {
         case 7:
           vertex[0] += 
@@ -470,22 +489,27 @@ bool CheckAxis(
         vertex[1] * axis[1] + 
         vertex[2] * axis[2];
 
-      // Update the boundaries of the projection of the Frame on
-      // the edge
+      // If it's the first vertex
       if (firstVertex == true) {
 
+          // Initialize the boundaries of the projection of the
+          // Frame on the edge
           bdgBox[0] = proj;
           bdgBox[1] = proj;
+
+          // Update the flag to memorize we did the first vertex
           firstVertex = false;
-        
+
+      // Else, it's not the first vertex
       } else {
 
-        if (bdgBox[0] > proj) {
+        // Update the boundaries of the projection of the Frame on
+        // the edge
+        if (bdgBox[0] > proj)
           bdgBox[0] = proj;
-        }
-        if (bdgBox[1] < proj) {
+
+        if (bdgBox[1] < proj)
           bdgBox[1] = proj;
-        }
 
       }
 
@@ -508,7 +532,9 @@ bool CheckAxis(
 
   }
 
+  // If we reaches here the two Frames are in intersection
   return true;
+
 }
 
 #endif

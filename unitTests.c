@@ -6,72 +6,90 @@
 // Include FMB algorithm library
 #include "fmb.h"
 
+// Epslon for numerical precision
 #define EPSILON 0.0001
 
+// Helper structure to pass arguments to the UnitTest function
 typedef struct {
   FrameType type;
   double orig[FRAME_NB_DIM];
   double comp[FRAME_NB_DIM][FRAME_NB_DIM];
 } Param;
 
+// Unit test function
+// Takes two Frame definitions, the correct answer in term of
+// intersection/no intersection and the correct bounding box
+// Run the FMB intersection detection alogirhtm on the Frames
+// and check against the correct results
 void UnitTest(
         const Param paramP,
         const Param paramQ,
-         const bool answer,
+         const bool correctAnswer,
   const AABB* const correctBdgBox) {
 
+  // Create the two Frames
   Frame P = 
     FrameCreateStatic(
       paramP.type,
       paramP.orig,
       paramP.comp);
-  
+
   Frame Q = 
     FrameCreateStatic(
       paramQ.type,
       paramQ.orig,
       paramQ.comp);
 
+  // Declare a variable to memorize the resulting bounding box
   AABB bdgBox;
+
+  // Helper variables to loop on the pair (that, tho) and (tho, that)
   Frame* that = &P;
   Frame* tho = &Q;
-  
-  for (int iTest = 0;
-       iTest < 2;
-       ++iTest) {
 
+  // Loop on pairs of Frames
+  for (int iPair = 2;
+       iPair--;) {
+
+    // Display the tested frames
     FramePrint(that);
-    printf(" against ");
+    printf("\nagainst\n");
     FramePrint(tho);
+    printf("\n");
 
+    // Run the FMB intersection test
     bool isIntersecting = 
       FMBTestIntersection(
         that, 
         tho, 
         &bdgBox);
 
-    if (isIntersecting != answer) {
+    // If the test hasn't given the expected answer about intersection
+    if (isIntersecting != correctAnswer) {
 
+      // Display information about the failure
       printf(" Failed\n");
       printf("Expected : ");
-      if (answer == false) {
+      if (correctAnswer == false)
         printf("no ");
-      }
       printf("intersection\n");
       printf("Got : ");
-      if (isIntersecting == false) {
+      if (isIntersecting == false)
         printf("no ");
-      }
       printf("intersection\n");
       exit(0);
 
+    // Else, the test has given the expected answer about intersection
     } else {
 
+      // If the Frames were intersecting
       if (isIntersecting == true) {
 
+        // Check the bounding box
         bool flag = true;
         for (int i = FRAME_NB_DIM;
              i--;) {
+
           if (bdgBox.min[i] > correctBdgBox->min[i] + EPSILON ||
               bdgBox.max[i] < correctBdgBox->max[i] - EPSILON) {
 
@@ -81,31 +99,42 @@ void UnitTest(
 
         }
 
+        // If the bounding box is the expected one
         if (flag == true) {
 
-          printf(" Succeed\n");
+          // Display information
+          printf("Succeed\n");
 
+        // Else, the bounding box wasn't the expected one
         } else {
 
-          printf(" Failed\n");
+          // Display information
+          printf("Failed\n");
           printf("Expected : ");
           AABBPrint(correctBdgBox);
           printf("\n");
           printf("     Got : ");
           AABBPrint(&bdgBox);
           printf("\n");
+
+          // Terminate the unit tests
           exit(0);
 
         }
 
+      // Else the Frames were not intersected,
+      // no need to check the bounding box
       } else {
 
+        // Display information
         printf(" Succeed\n");
 
       }
 
     }
+    printf("\n");
 
+    // Flip the pair of Frames
     that = &Q;
     tho = &P;
 
@@ -116,9 +145,15 @@ void UnitTest(
 // Main function
 int main(int argc, char** argv) {
 
+  // Declare two variables to memozie the arguments to the
+  // Validation function
   Param paramP;
   Param paramQ;
+
+  // Declare a variable to memorize the correct bounding box
   AABB correctBdgBox;
+
+  // Execute the unit test on various cases
 
 #if FRAME_NB_DIM == 3
 
@@ -972,8 +1007,9 @@ int main(int argc, char** argv) {
   exit(0);
 
 #endif
-  
+
+  // If we reached here, it means all the unit tests succeed
   printf("All unit tests have succeed.\n");
-  
+
   return 0;
 }

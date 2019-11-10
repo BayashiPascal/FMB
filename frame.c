@@ -2,7 +2,7 @@
 
 // ------------- Macros -------------
 
-#define EPSILON 0.0000001 //0.001
+#define EPSILON 0.0000001
 
 // ------------- Functions declaration -------------
 
@@ -12,7 +12,8 @@ void FrameUpdateInv(Frame* const that);
 // ------------- Functions implementation -------------
 
 // Create a static Frame structure of FrameType 'type',
-// at position 'orig' with components 'comp' ([iComp][iAxis])
+// at position 'orig' with components 'comp' 
+// arrangement is comp[iComp][iAxis]
 Frame FrameCreateStatic(
   const FrameType type,
      const double orig[FRAME_NB_DIM],

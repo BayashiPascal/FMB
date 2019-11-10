@@ -1,11 +1,9 @@
 all : main unitTests validation qualification
 
-BUILD_ARG_DEBUG=-Wall -Og -ggdb -g3
 BUILD_ARG=-O3
-LINK_ARG=
 
 main : main.o fmb.o sat.o frame.o Makefile
-	gcc -o main main.o fmb.o sat.o frame.o $(LINK_ARG)
+	gcc -o main main.o fmb.o sat.o frame.o
 
 main.o : main.c fmb.h frame.h Makefile
 	gcc -c main.c $(BUILD_ARG)
@@ -47,10 +45,3 @@ valgrind :
 	valgrind -v --track-origins=yes --leak-check=full \
 	--gen-suppressions=yes --show-leak-kinds=all ./main
 
-valgrind_unitTests :
-	valgrind -v --track-origins=yes --leak-check=full \
-	--gen-suppressions=yes --show-leak-kinds=all ./unitTests
-
-valgrind_validation :
-	valgrind -v --track-origins=yes --leak-check=full \
-	--gen-suppressions=yes --show-leak-kinds=all ./validation

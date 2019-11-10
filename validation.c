@@ -8,7 +8,7 @@
 #include "fmb.h"
 #include "sat.h"
 
-// Espilon for numerical precisino
+// Espilon for numerical precision
 #define EPSILON 0.0001
 // Range of values for the random generation of Frames
 #define RANGE_AXIS 100.0
@@ -157,15 +157,10 @@ int main(int argc, char** argv) {
          iParam--;) {
 
       // 50% chance of being a Cuboid or a Tetrahedron
-      if (rnd() < 0.5) {
-
+      if (rnd() < 0.5)
         param->type = FrameCuboid;
-
-      } else {
-
+      else
         param->type = FrameTetrahedron;
-
-      }
 
       for (int iAxis = FRAME_NB_DIM;
            iAxis--;) {
@@ -186,7 +181,7 @@ int main(int argc, char** argv) {
 
     }
 
-    // Calculate the determinant of the Frames' component matrix
+    // Calculate the determinant of the Frames' components matrix
 #if FRAME_NB_DIM == 2
 
     double detP = 

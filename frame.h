@@ -9,7 +9,7 @@
 
 // ------------- Macros -------------
 
-#define FRAME_NB_DIM 3
+#define FRAME_NB_DIM 2
 
 // ------------- Enumerations -------------
 
@@ -22,25 +22,19 @@ typedef enum {
 
 // Axis aligned bounding box structure
 typedef struct {
-
   double min[FRAME_NB_DIM];
   double max[FRAME_NB_DIM];
-
 } AABB;
 
 // Axis unaligned parallelepiped and tetrahedron structure
 typedef struct {
-
   FrameType type;
   double orig[FRAME_NB_DIM];
   double comp[FRAME_NB_DIM][FRAME_NB_DIM];
-
   // AABB of the frame
   AABB bdgBox;
-
   // Inverted components used during computation
   double invComp[FRAME_NB_DIM][FRAME_NB_DIM];
-
 } Frame;
 
 // ------------- Functions declaration -------------
