@@ -12,10 +12,10 @@
 
 #define EPSILON 0.0001
 #define RANGE_AXIS 100.0
-#define NB_TESTS 100000
+#define NB_TESTS 1000000
 #define NB_REPEAT 100
 
-#define rnd() (float)(rand())/(float)(RAND_MAX)
+#define rnd() (double)(rand())/(double)(RAND_MAX)
 
 typedef struct {
   FrameType type;
@@ -282,6 +282,8 @@ int main(int argc, char** argv) {
   double avg = 
     (sumInter + sumNoInter) / (double)(countInter + countNoInter);
   printf("avg(timeFMB / timeSAT) = %f\n", avg);
+
+  printf("Tested %lu intersections and %lu no intersections\n", countInter, countNoInter);
 
   return 0;
 }

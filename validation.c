@@ -4,55 +4,68 @@
 #include <stdbool.h>
 #include <time.h>
 
-
 // Include FMB and SAT algorithm library
 #include "fmb.h"
 #include "sat.h"
 
+// Espilon for numerical precisino
 #define EPSILON 0.0001
+// Range of values for the random generation of Frames
 #define RANGE_AXIS 100.0
+// Nb of tests of the validation
 #define NB_TESTS 1000000
 
-#define rnd() (float)(rand())/(float)(RAND_MAX)
+// Helper macro to generate random number in [0.0, 1.0]
+#define rnd() (double)(rand())/(double)(RAND_MAX)
 
+// Global variables to count nb of tests resulting in intersection
+// and no intersection
 unsigned long int nbInter;
 unsigned long int nbNoInter;
 
+// Helper structure to pass arguments to the Validation function
 typedef struct {
   FrameType type;
   double orig[FRAME_NB_DIM];
   double comp[FRAME_NB_DIM][FRAME_NB_DIM];
 } Param;
 
+// Validation function
+// Takes two Frame definition as input, run the intersection test on 
+// them with FMB and SAT, and check the results are identical
 void Validation(
-        const Param paramP,
-        const Param paramQ) {
+  const Param paramP,
+  const Param paramQ) {
 
+  // Create the two Frames
   Frame P = 
     FrameCreateStatic(
       paramP.type,
       paramP.orig,
       paramP.comp);
-  
+
   Frame Q = 
     FrameCreateStatic(
       paramQ.type,
       paramQ.orig,
       paramQ.comp);
 
+  // Helper variables to loop on the pair (that, tho) and (tho, that)
   Frame* that = &P;
   Frame* tho = &Q;
-  
-  for (int iTest = 0;
-       iTest < 2;
-       ++iTest) {
 
+  // Loop on pairs of Frames
+  for (int iPair = 2;
+       iPair--;) {
+
+    // Test intersection with FMB
     bool isIntersectingFMB = 
       FMBTestIntersection(
         that, 
         tho, 
         NULL);
 
+    // Test intersection with SAT
 #if FRAME_NB_DIM == 2
 
     bool isIntersectingSAT = 
@@ -69,36 +82,49 @@ void Validation(
 
 #else
 
-  printf("Not implemented for dimension %d\n", FRAME_NB_DIM);
-  exit(0);
+    printf("Not implemented for dimension %d\n", FRAME_NB_DIM);
+    exit(0);
 
 #endif
 
+    // If the results are different
     if (isIntersectingFMB != isIntersectingSAT) {
+
+      // Print the disagreement
       printf("Validation has failed\n");
       FramePrint(that);
       printf(" against ");
       FramePrint(tho);
       printf("\n");
       printf("FMB : ");
-      if (isIntersectingFMB == false) {
+      if (isIntersectingFMB == false)
         printf("no ");
-      }
       printf("intersection\n");
       printf("SAT : ");
-      if (isIntersectingSAT == false) {
+      if (isIntersectingSAT == false)
         printf("no ");
-      }
       printf("intersection\n");
+
+      // Stop the validation
       exit(0);
-    }
-    
-    if (isIntersectingFMB == true) {
-      nbInter++;
-    } else {
-      nbNoInter++;
+
     }
 
+    // If the Frames are in intersection
+    if (isIntersectingFMB == true) {
+
+      // Update the number of intersection
+      nbInter++;
+
+    // If the Frames are not in intersection
+    } else {
+
+      // Update the number of no intersection
+      nbNoInter++;
+
+    }
+
+    // Flip the pair of Frames
     that = &Q;
     tho = &P;
 
@@ -109,20 +135,28 @@ void Validation(
 // Main function
 int main(int argc, char** argv) {
 
+  // Initialise the random generator
   srandom(time(NULL));
+
+  // Declare two variables to memozie the arguments to the
+  // Validation function
   Param paramP;
   Param paramQ;
 
+  // Initialize the number of intersection and no intersection
   nbInter = 0;
   nbNoInter = 0;
 
+  // Loop on the tests
   for (unsigned long iTest = NB_TESTS;
        iTest--;) {
 
+    // Create two random Frame definitions
     Param* param = &paramP;
     for (int iParam = 2;
          iParam--;) {
 
+      // 50% chance of being a Cuboid or a Tetrahedron
       if (rnd() < 0.5) {
 
         param->type = FrameCuboid;
@@ -132,6 +166,7 @@ int main(int argc, char** argv) {
         param->type = FrameTetrahedron;
 
       }
+
       for (int iAxis = FRAME_NB_DIM;
            iAxis--;) {
 
@@ -146,11 +181,12 @@ int main(int argc, char** argv) {
         }
 
       }
-      
+
       param = &paramQ;
 
     }
 
+    // Calculate the determinant of the Frames' component matrix
 #if FRAME_NB_DIM == 2
 
     double detP = 
@@ -186,8 +222,10 @@ int main(int argc, char** argv) {
 
 #endif
 
+    // If the determinants are not null, ie the Frame are not degenerate
     if (fabs(detP) > EPSILON && fabs(detQ) > EPSILON) {
 
+      // Run the validation on the two Frames
       Validation(
         paramP,
         paramQ);
@@ -196,9 +234,11 @@ int main(int argc, char** argv) {
 
   }
 
+  // If we reached it means the validation was successfull
+  // Print results
   printf("Validation has succeed.\n");
   printf("Tested %lu intersections ", nbInter);
   printf("and %lu no intersections\n", nbNoInter);
-  
+
   return 0;
 }
