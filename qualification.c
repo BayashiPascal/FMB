@@ -14,7 +14,7 @@
 // Range of values for the random generation of Frames
 #define RANGE_AXIS 100.0
 // Nb of run
-#define NB_RUNS 10
+#define NB_RUNS 1
 // Nb of tests per run
 #define NB_TESTS 1000000
 // Nb of times the test is run on one pair of frame, used to 

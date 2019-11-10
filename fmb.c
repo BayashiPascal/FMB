@@ -91,50 +91,7 @@ bool ElimVar(
   // Initialize the number of rows in the result system
   *nbRemainRows = 0;
   
-  // First we copy and compress the rows where the eliminated
-  // variable is null
-  
-  // Loop on rows of the input system
-  for (int iRow = 0; 
-       iRow < nbRows; 
-       ++iRow) {
-
-    // Shortcut
-    const double* MiRow = M[iRow];
-
-    // If the coefficient of the eliminated variable is null on
-    // this row
-    if (fabs(M[iRow][iVar]) < EPSILON) {
-
-      // Shortcut
-      double* MpnbRemainRows = Mp[*nbRemainRows];
-
-      // Copy this row into the result system excluding the eliminated
-      // variable
-      for (int iCol = 0, jCol = 0; 
-           iCol < nbCols; 
-           ++iCol) {
-
-        if (iCol != iVar) {
-
-          MpnbRemainRows[jCol] = MiRow[iCol];
-
-          ++jCol;
-
-        }
-
-      }
-
-      Yp[*nbRemainRows] = Y[iRow];
-
-      // Increment the nb of rows into the result system
-      ++(*nbRemainRows);
-
-    }
-
-  }
-
-  // Then we process the rows where the eliminated variable is not null
+  // First we process the rows where the eliminated variable is not null
   
   // For each row except the last one
   for (int iRow = 0; 
@@ -248,6 +205,49 @@ bool ElimVar(
         ++(*nbRemainRows);
 
       }
+
+    }
+
+  }
+
+  // Then we copy and compress the rows where the eliminated
+  // variable is null
+  
+  // Loop on rows of the input system
+  for (int iRow = 0; 
+       iRow < nbRows; 
+       ++iRow) {
+
+    // Shortcut
+    const double* MiRow = M[iRow];
+
+    // If the coefficient of the eliminated variable is null on
+    // this row
+    if (fabs(M[iRow][iVar]) < EPSILON) {
+
+      // Shortcut
+      double* MpnbRemainRows = Mp[*nbRemainRows];
+
+      // Copy this row into the result system excluding the eliminated
+      // variable
+      for (int iCol = 0, jCol = 0; 
+           iCol < nbCols; 
+           ++iCol) {
+
+        if (iCol != iVar) {
+
+          MpnbRemainRows[jCol] = MiRow[iCol];
+
+          ++jCol;
+
+        }
+
+      }
+
+      Yp[*nbRemainRows] = Y[iRow];
+
+      // Increment the nb of rows into the result system
+      ++(*nbRemainRows);
 
     }
 
