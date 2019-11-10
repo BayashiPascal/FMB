@@ -51,10 +51,11 @@ void Qualification(
        iTest < 2;
        ++iTest) {
 
+    bool isIntersectingFMB[NB_REPEAT] = {false};
+
     struct timeval start;
     gettimeofday(&start, NULL);
 
-    bool isIntersectingFMB[NB_REPEAT] = {false};
     for (int i = NB_REPEAT;
          i--;) {
 
@@ -69,9 +70,9 @@ void Qualification(
     gettimeofday(&stop, NULL);
     double deltausFMB = (double)(stop.tv_usec - start.tv_usec);
 
+    bool isIntersectingSAT[NB_REPEAT] = {false};
     gettimeofday(&start, NULL);
 
-    bool isIntersectingSAT[NB_REPEAT] = {false};
     for (int i = NB_REPEAT;
          i--;) {
 
@@ -100,38 +101,43 @@ void Qualification(
     gettimeofday(&stop, NULL);
     double deltausSAT = (double)(stop.tv_usec - start.tv_usec);
 
-    if (isIntersectingSAT[0]) {
+    // Avoid warp in time
+    if (deltausFMB >= 0 && deltausSAT >= 0) {
 
-      sumInter += deltausFMB / deltausSAT;
-      ++countInter;
+      if (isIntersectingSAT[0]) {
 
-    } else {
+        sumInter += deltausFMB / deltausSAT;
+        ++countInter;
 
-      sumNoInter += deltausFMB / deltausSAT;
-      ++countNoInter;
+      } else {
 
-    }
+        sumNoInter += deltausFMB / deltausSAT;
+        ++countNoInter;
 
-    for (int i = NB_REPEAT;
-         i--;) {
+      }
 
-      if (isIntersectingFMB[i] != isIntersectingSAT[i]) {
-        printf("Validation has failed\n");
-        FramePrint(that);
-        printf(" against ");
-        FramePrint(tho);
-        printf("\n");
-        printf("FMB : ");
-        if (isIntersectingFMB == false) {
-          printf("no ");
+      for (int i = NB_REPEAT;
+           i--;) {
+
+        if (isIntersectingFMB[i] != isIntersectingSAT[i]) {
+          printf("Validation has failed\n");
+          FramePrint(that);
+          printf(" against ");
+          FramePrint(tho);
+          printf("\n");
+          printf("FMB : ");
+          if (isIntersectingFMB == false) {
+            printf("no ");
+          }
+          printf("intersection\n");
+          printf("SAT : ");
+          if (isIntersectingSAT == false) {
+            printf("no ");
+          }
+          printf("intersection\n");
+          exit(0);
         }
-        printf("intersection\n");
-        printf("SAT : ");
-        if (isIntersectingSAT == false) {
-          printf("no ");
-        }
-        printf("intersection\n");
-        exit(0);
+
       }
 
     }

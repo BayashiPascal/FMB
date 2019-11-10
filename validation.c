@@ -15,6 +15,9 @@
 
 #define rnd() (float)(rand())/(float)(RAND_MAX)
 
+unsigned long int nbInter;
+unsigned long int nbNoInter;
+
 typedef struct {
   FrameType type;
   double orig[FRAME_NB_DIM];
@@ -89,6 +92,12 @@ void Validation(
       printf("intersection\n");
       exit(0);
     }
+    
+    if (isIntersectingFMB == true) {
+      nbInter++;
+    } else {
+      nbNoInter++;
+    }
 
     that = &Q;
     tho = &P;
@@ -103,6 +112,9 @@ int main(int argc, char** argv) {
   srandom(time(NULL));
   Param paramP;
   Param paramQ;
+
+  nbInter = 0;
+  nbNoInter = 0;
 
   for (unsigned long iTest = NB_TESTS;
        iTest--;) {
@@ -185,6 +197,8 @@ int main(int argc, char** argv) {
   }
 
   printf("Validation has succeed.\n");
+  printf("Tested %lu intersections ", nbInter);
+  printf("and %lu no intersections\n", nbNoInter);
   
   return 0;
 }
