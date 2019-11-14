@@ -29,6 +29,157 @@ In this paper I introduce how to perform intersection detection of pair of cuboi
 
 \section{Definition}
 
+In this paper I'll use the term "Frame" to speak indifferently of cuboid and tetrahedron.\\
+
+The two Frames are represented as a vector origin and a number of component vectors equal to the dimension $D$ of the space where live the Frames. Each vector is of dimension equal to $D$.\\
+
+Lets call $\mathbb{A}$ and $\mathbb{B}$ the two Frames tested for intersection. If $A$ and $B$ are two cuboids:
+\begin{equation}
+\mathbb{A}=\left\lbrace\overrightarrow{X}\in[0.0,1.0]^D,\overrightarrow{O_\mathbb{A}}+C_\mathbb{A}.\overrightarrow{X}\right\rbrace
+\end{equation}
+\begin{equation}
+\mathbb{B}=\left\lbrace\overrightarrow{X}\in[0.0,1.0]^D,\overrightarrow{O_\mathbb{B}}+C_\mathbb{B}.\vec{X}\right\rbrace
+\end{equation}
+where $O_\mathbb{A}$ is the origin of $\mathbb{A}$ and $C_\mathbb{A}$ is the matrix of the components of $A$ (one component per column). Idem for $\overrightarrow{O_\mathbb{B}}$ and $C_\mathbb{B}$.\\
+
+If $\mathbb{A}$ and $\mathbb{B}$ are two tetrahedrons:
+\begin{equation}
+\mathbb{A}=\left\lbrace\overrightarrow{X}\in[0.0,1.0]^D,\sum_{i=0}^{D-1}Xi\le1.0,\overrightarrow{O_\mathbb{A}}+C_\mathbb{A}.\overrightarrow{X}\right\rbrace
+\end{equation}
+\begin{equation}
+\mathbb{B}=\left\lbrace\overrightarrow{X}\in[0.0,1.0]^D,\sum_{i=0}^{D-1}Xi\le1.0,\overrightarrow{O_\mathbb{B}}+C_\mathbb{B}.\overrightarrow{X}\right\rbrace
+\end{equation}
+
+I'll assume the Frames are well formed, i.e. their components matrix is invertible. It is then possible to express $\mathbb{B}$ in $\mathbb{A}$'s coordinates system, noted as $\mathbb{B}_\mathbb{A}$. If $\mathbb{B}$ is a cuboid:
+\begin{equation}
+\mathbb{B}_\mathbb{A}=\left\lbrace\overrightarrow{X}\in[0.0,1.0]^D,C_\mathbb{A}^{-1}.(\overrightarrow{O_\mathbb{B}}-\overrightarrow{O_\mathbb{A}}+C_\mathbb{B}.\overrightarrow{X})\right\rbrace
+\end{equation}
+
+If $\mathbb{B}$ is a tetrahedron:
+\begin{equation}
+\mathbb{B}_\mathbb{A}=\left\lbrace\overrightarrow{X}\in[0.0,1.0]^D,\sum_{i=0}^{D-1}Xi\le1.0,C_\mathbb{A}^{-1}.(\overrightarrow{O_\mathbb{B}}-\overrightarrow{O_\mathbb{A}}+C_\mathbb{B}.\overrightarrow{X})\right\rbrace
+\end{equation}
+
+$\mathbb{A}$ in its own coordinates system becomes, for a cuboid:
+\begin{equation}
+\mathbb{A}=\left\lbrace\overrightarrow{X}\in[0.0,1.0]^D\right\rbrace
+\end{equation}
+and for a tetrahedron:
+\begin{equation}
+\mathbb{A}=\left\lbrace\overrightarrow{X}\in[0.0,1.0]^D,\sum_{i=0}^{D-1}Xi\le1.0\right\rbrace
+\end{equation}
+
+The intersection of $\mathbb{A}$ and $\mathbb{B}$ in $\mathbb{B}$'s coordinates sytem, can then be expressed as follow.\\
+
+If $\mathbb{A}$ and $\mathbb{B}$ are two cuboids:
+\begin{equation}
+\left\lbrace\overrightarrow{X}\in[0.0,1.0]^D,C_\mathbb{A}^{-1}.(\overrightarrow{O_\mathbb{B}}-\overrightarrow{O_\mathbb{A}}+C_\mathbb{B}.\overrightarrow{X})\cap[0.0,1.0]^D\right\rbrace
+\end{equation}
+
+If $\mathbb{A}$ is a cuboid and $\mathbb{B}$ is a tetrahedron:
+\begin{equation}
+\left\lbrace\overrightarrow{X}\in[0.0,1.0]^D,\sum_{i=0}^{D-1}Xi\le1.0,C_\mathbb{A}^{-1}.(\overrightarrow{O_\mathbb{B}}-\overrightarrow{O_\mathbb{A}}+C_\mathbb{B}.\overrightarrow{X})\cap[0.0,1.0]^D\right\rbrace
+\end{equation}
+
+If $\mathbb{A}$ is a tetrahedron and $\mathbb{B}$ is a cuboid:
+\begin{equation}
+\left\lbrace
+\begin{array}{c}
+\overrightarrow{X}\in[0.0,1.0]^D,C_\mathbb{A}^{-1}.(\overrightarrow{O_\mathbb{B}}-\overrightarrow{O_\mathbb{A}}+C_\mathbb{B}.\overrightarrow{X})\cap[0.0,1.0]^D\\
+\sum_{i=0}^{D-1}\left(C_\mathbb{A}^{-1}.(\overrightarrow{O_\mathbb{B}}-\overrightarrow{O_\mathbb{A}}+C_\mathbb{B}.\overrightarrow{X})\right)_i\le1.0\\
+\end{array}
+\right\rbrace
+\end{equation}
+
+If $\mathbb{A}$ and $\mathbb{B}$ are two tetrahedrons:
+\begin{equation}
+\left\lbrace
+\begin{array}{c}
+\overrightarrow{X}\in[0.0,1.0]^D,\sum_{i=0}^{D-1}Xi\le1.0\\
+C_\mathbb{A}^{-1}.(\overrightarrow{O_\mathbb{B}}-\overrightarrow{O_\mathbb{A}}+C_\mathbb{B}.\overrightarrow{X})\cap[0.0,1.0]^D\\
+\sum_{i=0}^{D-1}\left(C_\mathbb{A}^{-1}.(\overrightarrow{O_\mathbb{B}}-\overrightarrow{O_\mathbb{A}}+C_\mathbb{B}.\overrightarrow{X})\right)_i\le1.0\\
+\end{array}
+\right\rbrace
+\end{equation}
+
+These can in turn be expressed as systems of linear inequations as follows, given the two shortcuts $\overrightarrow{O_{\mathbb{B}_\mathbb{A}}}=C_\mathbb{A}^{-1}.(\overrightarrow{O_\mathbb{B}}-\overrightarrow{O_\mathbb{A}})$ and $C_{\mathbb{B}_\mathbb{A}}=C_\mathbb{A}^{-1}.C_{\mathbb{B}}$, and the notation $M_{rc}$ for the element at column $c$ and row $r$ of the matrix $M$.
+
+If $\mathbb{A}$ and $\mathbb{B}$ are two cuboids:
+\begin{equation}
+\left\lbrace
+\begin{array}{c}
+X_0\le1.0\\
+-X_0\le0.0\\
+...\\
+X_{D-1}\le1.0\\
+-X_{D-1}\le0.0\\
+\sum_{i=0}^{D-1}C_{\mathbb{B}_\mathbb{A}0i}X_i\le1.0-O_{\mathbb{B}_\mathbb{A}0}\\
+-\sum_{i=0}^{D-1}C_{\mathbb{B}_\mathbb{A}0i}X_i\le-O_{\mathbb{B}_\mathbb{A}0}\\
+...\\
+\sum_{i=0}^{D-1}C_{\mathbb{B}_\mathbb{A}(D-1)i}X_i\le1.0-O_{\mathbb{B}_\mathbb{A}(D-1)}\\
+-\sum_{i=0}^{D-1}C_{\mathbb{B}_\mathbb{A}(D-1)i}X_i\le-O_{\mathbb{B}_\mathbb{A}(D-1)}
+\end{array}
+\right.
+\end{equation}
+
+If $\mathbb{A}$ is a cuboid and $\mathbb{B}$ is a tetrahedron:
+\begin{equation}
+\left\lbrace
+\begin{array}{c}
+X_0\le1.0\\
+-X_0\le0.0\\
+...\\
+X_{D-1}\le1.0\\
+-X_{D-1}\le0.0\\
+\sum_{i=0}^{D-1}C_{\mathbb{B}_\mathbb{A}0i}X_i\le1.0-O_{\mathbb{B}_\mathbb{A}0}\\
+-\sum_{i=0}^{D-1}C_{\mathbb{B}_\mathbb{A}0i}X_i\le-O_{\mathbb{B}_\mathbb{A}0}\\
+...\\
+\sum_{i=0}^{D-1}C_{\mathbb{B}_\mathbb{A}(D-1)i}X_i\le1.0-O_{\mathbb{B}_\mathbb{A}(D-1)}\\
+-\sum_{i=0}^{D-1}C_{\mathbb{B}_\mathbb{A}(D-1)i}X_i\le-O_{\mathbb{B}_\mathbb{A}(D-1)}\\
+\sum_{i=0}^{D-1}Xi\le1.0
+\end{array}
+\right.
+\end{equation}
+
+If $\mathbb{A}$ is a tetrahedron and $\mathbb{B}$ is a cuboid:
+\begin{equation}
+\left\lbrace
+\begin{array}{c}
+X_0\le1.0\\
+-X_0\le0.0\\
+...\\
+X_{D-1}\le1.0\\
+-X_{D-1}\le0.0\\
+\sum_{i=0}^{D-1}C_{\mathbb{B}_\mathbb{A}0i}X_i\le1.0-O_{\mathbb{B}_\mathbb{A}0}\\
+-\sum_{i=0}^{D-1}C_{\mathbb{B}_\mathbb{A}0i}X_i\le-O_{\mathbb{B}_\mathbb{A}0}\\
+...\\
+\sum_{i=0}^{D-1}C_{\mathbb{B}_\mathbb{A}(D-1)i}X_i\le1.0-O_{\mathbb{B}_\mathbb{A}(D-1)}\\
+-\sum_{i=0}^{D-1}C_{\mathbb{B}_\mathbb{A}(D-1)i}X_i\le-O_{\mathbb{B}_\mathbb{A}(D-1)}\\
+\sum_{j=0}^{D-1}\left(\sum_{i=0}^{D-1}\left(C_{\mathbb{B}_\mathbb{A}ji}\right)X_i\right)\le1.0-\sum_{i=0}^{D-1}O_{\mathbb{B}_\mathbb{A}i}
+\end{array}
+\right.
+\end{equation}
+
+If $\mathbb{A}$ and $\mathbb{B}$ are two tetrahedrons:
+\begin{equation}
+\left\lbrace
+\begin{array}{c}
+X_0\le1.0\\
+-X_0\le0.0\\
+...\\
+X_{D-1}\le1.0\\
+-X_{D-1}\le0.0\\
+\sum_{i=0}^{D-1}C_{\mathbb{B}_\mathbb{A}0i}X_i\le1.0-O_{\mathbb{B}_\mathbb{A}0}\\
+-\sum_{i=0}^{D-1}C_{\mathbb{B}_\mathbb{A}0i}X_i\le-O_{\mathbb{B}_\mathbb{A}0}\\
+...\\
+\sum_{i=0}^{D-1}C_{\mathbb{B}_\mathbb{A}(D-1)i}X_i\le1.0-O_{\mathbb{B}_\mathbb{A}(D-1)}\\
+-\sum_{i=0}^{D-1}C_{\mathbb{B}_\mathbb{A}(D-1)i}X_i\le-O_{\mathbb{B}_\mathbb{A}(D-1)}\\
+\sum_{i=0}^{D-1}Xi\le1.0\\
+\sum_{j=0}^{D-1}\left(\sum_{i=0}^{D-1}\left(C_{\mathbb{B}_\mathbb{A}ji}\right)X_i\right)\le1.0-\sum_{i=0}^{D-1}O_{\mathbb{B}_\mathbb{A}i}
+\end{array}
+\right.
+\end{equation}
+
 \section{Solution}
 
 \subsection{Fourier-Motzkin elimination method}
@@ -90,13 +241,29 @@ The same method is then applied on this new system to eliminate the second varia
 \end{equation}
 If this inequality has no solution, then neither the system $\mathcal{I}$. If it has a solution, the minimum and maximum are the bounding values for the variable $x_n$. One can get a particular solution to the system $\mathcal{I}$ by choosing a value for $x_n$ between these bounding values, which allow us to set a particular value for the variable $x_{n-1}$, and so on back up to $x_1$. 
 
+\subsection{Application of the Fourier-Motzkin method to the intersection problem}
+
+The Fourier-Motzkin method can be directly applied to obtain the bounds of each variable, if the system has a solution. If the system has no solution, the method will eventually reach an inconsistent inequality.\\
+
+The solution returned by the system resolution is expressed in the Frame B coordinates system. One can get the coordinates in 
+
 \section{Algorithm}
 
 In this section I introduce the algorithm of the solution of the previous section.\\
 
+\subsection{2D case}
+
 \begin{scriptsize}
 \begin{ttfamily}
-\verbatiminput{algorithm.txt}
+\verbatiminput{../algorithm2D.txt}
+\end{ttfamily}
+\end{scriptsize}
+
+\subsection{3D case}
+
+\begin{scriptsize}
+\begin{ttfamily}
+\verbatiminput{../algorithm3D.txt}
 \end{ttfamily}
 \end{scriptsize}
 
@@ -110,7 +277,7 @@ In this section I introduce an implementation of the algorithm of the previous s
 
 \begin{scriptsize}
 \begin{ttfamily}
-\verbatiminput{frame.h}
+\verbatiminput{../frame.h}
 \end{ttfamily}
 \end{scriptsize}
 
@@ -118,7 +285,7 @@ In this section I introduce an implementation of the algorithm of the previous s
 
 \begin{scriptsize}
 \begin{ttfamily}
-\verbatiminput{frame.c}
+\verbatiminput{../frame.c}
 \end{ttfamily}
 \end{scriptsize}
 
@@ -128,7 +295,7 @@ In this section I introduce an implementation of the algorithm of the previous s
 
 \begin{scriptsize}
 \begin{ttfamily}
-\verbatiminput{fmb.h}
+\verbatiminput{../fmb.h}
 \end{ttfamily}
 \end{scriptsize}
 
@@ -136,7 +303,7 @@ In this section I introduce an implementation of the algorithm of the previous s
 
 \begin{scriptsize}
 \begin{ttfamily}
-\verbatiminput{fmb.c}
+\verbatiminput{../fmb.c}
 \end{ttfamily}
 \end{scriptsize}
 
@@ -144,7 +311,7 @@ In this section I introduce an implementation of the algorithm of the previous s
 
 \begin{scriptsize}
 \begin{ttfamily}
-\verbatiminput{main.c}
+\verbatiminput{../main.c}
 \end{ttfamily}
 \end{scriptsize}
 
@@ -158,7 +325,7 @@ In this section I introduce the code I've used to validate the algorithm and its
 
 \begin{scriptsize}
 \begin{ttfamily}
-\verbatiminput{unitTests.c}
+\verbatiminput{../unitTests.c}
 \end{ttfamily}
 \end{scriptsize}
 
@@ -166,7 +333,7 @@ In this section I introduce the code I've used to validate the algorithm and its
 
 \begin{scriptsize}
 \begin{ttfamily}
-\verbatiminput{validation.c}
+\verbatiminput{../validation.c}
 \end{ttfamily}
 \end{scriptsize}
 
@@ -184,7 +351,7 @@ In this section I introduce the code I've used to qualify the algorithm and its 
 
 \begin{scriptsize}
 \begin{ttfamily}
-\verbatiminput{qualification.c}
+\verbatiminput{../qualification.c}
 \end{ttfamily}
 \end{scriptsize}
 
@@ -247,7 +414,7 @@ In this section I introduce the code of the implementation of the SAT algorithm,
 
 \begin{scriptsize}
 \begin{ttfamily}
-\verbatiminput{sat.h}
+\verbatiminput{../sat.h}
 \end{ttfamily}
 \end{scriptsize}
 
@@ -255,7 +422,7 @@ In this section I introduce the code of the implementation of the SAT algorithm,
 
 \begin{scriptsize}
 \begin{ttfamily}
-\verbatiminput{sat.c}
+\verbatiminput{../sat.c}
 \end{ttfamily}
 \end{scriptsize}
 
@@ -265,7 +432,7 @@ In this section I introduce the Makefile used to compile the code given in the p
 
 \begin{scriptsize}
 \begin{ttfamily}
-\verbatiminput{Makefile}
+\verbatiminput{../Makefile}
 \end{ttfamily}
 \end{scriptsize}
 

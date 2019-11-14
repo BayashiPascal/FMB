@@ -173,8 +173,8 @@ bool ElimVar(
         // If at least one coefficient is not null
         if (allNull == false) {
 
-          // If all the coefficients are positive and the right side of the 
-          // inequality is negative
+          // If all the coefficients are positive and the right side of
+          // the inequality is negative
           if (allPositive == true && 
               Yp[*nbRemainRows] < 0.0) {
 

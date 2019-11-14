@@ -38,9 +38,6 @@ frame.o : frame.c frame.h Makefile
 clean : 
 	rm -f *.o main unitTests validation qualification
 
-latex:
-	pdflatex -synctex=1 -interaction=nonstopmode -shell-escape  fmb.tex
-
 valgrind :
 	valgrind -v --track-origins=yes --leak-check=full \
 	--gen-suppressions=yes --show-leak-kinds=all ./main
