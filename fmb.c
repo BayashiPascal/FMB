@@ -356,20 +356,141 @@ bool FMBTestIntersection(
   double (*thoProjComp)[FRAME_NB_DIM] = thoProj.comp;
   double *thoProjOrig = thoProj.orig;
 
-  // For the first 2 * FRAME_NB_DIM rows of the system
-  for (int iStepRow = FRAME_NB_DIM;
-       iStepRow--;) {
+  // Variable to memorise the current row in the system
+  int iRow = 0;
+
+  // Shortcuts
+  double* MIRow;
+
+  // Constraints O + C.X >= 0.0
+  for (;
+       iRow < FRAME_NB_DIM;
+       ++iRow) {
 
     // Shortcuts
-    int iRow = 2 * iStepRow;
-    int iNextRow = iRow + 1;
-    double* MIRow = M[iRow];
-    double* MINextRow = M[iNextRow];
-    int jRow = 2 * (iStepRow + FRAME_NB_DIM);
-    int jNextRow = jRow + 1;
-    double* MJRow = M[jRow];
-    double* MJNextRow = M[jNextRow];
+    MIRow = M[iRow];
 
+    // For each column of the system
+    bool allPositive = true;
+    double sumNeg = 0.0;
+    for (int iCol = FRAME_NB_DIM;
+         iCol--;) {
+
+      MIRow[iCol] = -1.0 * thoProjComp[iCol][iRow];
+      if (MIRow[iCol] < 0.0) {
+        sumNeg += MIRow[iCol];
+        allPositive = false;
+      }
+      
+    }
+    if (thoProjOrig[iRow] < 0.0) {
+      if (allPositive == true)
+        return false;
+      if (thoProjOrig[iRow] < sumNeg)
+        return false;
+    }
+    Y[iRow] = thoProjOrig[iRow];
+  }
+  
+  if (that->type == FrameCuboid) {
+
+    // Constraints O + C.X <= 1.0
+    for (int jRow = 0;
+         jRow < FRAME_NB_DIM;
+         ++jRow, ++iRow) {
+
+      // Shortcuts
+      MIRow = M[iRow];
+      double* MJRow = M[jRow];
+
+      // For each column of the system
+      bool allPositive = true;
+      double sumNeg = 0.0;
+      for (int iCol = FRAME_NB_DIM;
+           iCol--;) {
+
+        MIRow[iCol] = -1.0 * MJRow[iCol];
+        if (MIRow[iCol] < 0.0) {
+          sumNeg += MIRow[iCol];
+          allPositive = false;
+        }
+        
+      }
+      Y[iRow] = 1.0 - thoProjOrig[jRow];
+      if (Y[iRow] < 0.0) {
+        if (allPositive == true)
+          return false;
+        if (Y[iRow] < sumNeg)
+          return false;
+      }
+    }
+
+  }
+
+  // Constraints x_i >= 0.0
+  for (int jRow = 0;
+       jRow < FRAME_NB_DIM;
+       ++jRow, ++iRow) {
+
+    // Shortcuts
+    MIRow = M[iRow];
+
+    // For each column of the system
+    for (int iCol = FRAME_NB_DIM;
+         iCol--;) {
+      // If it's on the diagonal 
+      if (jRow == iCol) {
+
+        MIRow[iCol] = -1.0;
+
+      // Else it's not on the diagonal
+      } else {
+
+        MIRow[iCol] = 0.0;
+
+      }
+      
+    }
+    Y[iRow] = 0.0;
+
+  }
+
+  if (tho->type == FrameCuboid) {
+
+    // Constraints x_i <= 1.0
+    for (int jRow = 0;
+         jRow < FRAME_NB_DIM;
+         ++jRow, ++iRow) {
+
+      // Shortcuts
+      MIRow = M[iRow];
+
+      // For each column of the system
+      for (int iCol = FRAME_NB_DIM;
+           iCol--;) {
+        // If it's on the diagonal 
+        if (jRow == iCol) {
+
+          MIRow[iCol] = 1.0;
+
+        // Else it's not on the diagonal
+        } else {
+
+          MIRow[iCol] = 0.0;
+
+        }
+
+      }
+      Y[iRow] = 1.0;
+
+    }
+
+  }
+
+
+
+
+/*
     // Declare a variable to memorize the sum of the negative 
     // coefficients in the row
     double sumNegCoeff[2] = {0.0, 0.0};
@@ -474,11 +595,11 @@ bool FMBTestIntersection(
     Y[jRow] = 1.0;
     Y[jNextRow] = 0.0;
 
-  }
+  }*/
 
   // Declare a variable to memorize the total number of rows in the
   // system. It may vary depending on the type of Frames
-  int nbRows = 4 * FRAME_NB_DIM;
+  int nbRows = iRow;
 
   // If the first frame is a Tetrahedron
   if (that->type == FrameTetrahedron) {

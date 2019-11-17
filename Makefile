@@ -1,6 +1,7 @@
 all : main unitTests validation qualification
 
 BUILD_ARG=-O3
+BUILD_ARG_=-ggdb
 
 main : main.o fmb.o sat.o frame.o Makefile
 	gcc -o main main.o fmb.o sat.o frame.o

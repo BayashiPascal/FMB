@@ -9,7 +9,7 @@
 
 // ------------- Macros -------------
 
-#define FRAME_NB_DIM 3
+#define FRAME_NB_DIM 2
 
 // ------------- Enumerations -------------
 
