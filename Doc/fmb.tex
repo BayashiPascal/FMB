@@ -38,7 +38,7 @@ Lets call $\mathbb{A}$ and $\mathbb{B}$ the two Frames tested for intersection. 
 \mathbb{A}=\left\lbrace\overrightarrow{X}\in[0.0,1.0]^D,\overrightarrow{O_\mathbb{A}}+C_\mathbb{A}.\overrightarrow{X}\right\rbrace
 \end{equation}
 \begin{equation}
-\mathbb{B}=\left\lbrace\overrightarrow{X}\in[0.0,1.0]^D,\overrightarrow{O_\mathbb{B}}+C_\mathbb{B}.\vec{X}\right\rbrace
+\mathbb{B}=\left\lbrace\overrightarrow{X}\in[0.0,1.0]^D,\overrightarrow{O_\mathbb{B}}+C_\mathbb{B}.\overrightarrow{X}\right\rbrace
 \end{equation}
 where $O_\mathbb{A}$ is the origin of $\mathbb{A}$ and $C_\mathbb{A}$ is the matrix of the components of $A$ (one component per column). Idem for $\overrightarrow{O_\mathbb{B}}$ and $C_\mathbb{B}$.\\
 
@@ -126,10 +126,8 @@ If $\mathbb{A}$ is a cuboid and $\mathbb{B}$ is a tetrahedron:
 \begin{equation}
 \left\lbrace
 \begin{array}{c}
-X_0\le1.0\\
 -X_0\le0.0\\
 ...\\
-X_{D-1}\le1.0\\
 -X_{D-1}\le0.0\\
 \sum_{i=0}^{D-1}C_{\mathbb{B}_\mathbb{A}0i}X_i\le1.0-O_{\mathbb{B}_\mathbb{A}0}\\
 -\sum_{i=0}^{D-1}C_{\mathbb{B}_\mathbb{A}0i}X_i\le-O_{\mathbb{B}_\mathbb{A}0}\\
@@ -150,7 +148,6 @@ X_0\le1.0\\
 ...\\
 X_{D-1}\le1.0\\
 -X_{D-1}\le0.0\\
-\sum_{i=0}^{D-1}C_{\mathbb{B}_\mathbb{A}0i}X_i\le1.0-O_{\mathbb{B}_\mathbb{A}0}\\
 -\sum_{i=0}^{D-1}C_{\mathbb{B}_\mathbb{A}0i}X_i\le-O_{\mathbb{B}_\mathbb{A}0}\\
 ...\\
 \sum_{i=0}^{D-1}C_{\mathbb{B}_\mathbb{A}(D-1)i}X_i\le1.0-O_{\mathbb{B}_\mathbb{A}(D-1)}\\
@@ -164,12 +161,9 @@ If $\mathbb{A}$ and $\mathbb{B}$ are two tetrahedrons:
 \begin{equation}
 \left\lbrace
 \begin{array}{c}
-X_0\le1.0\\
 -X_0\le0.0\\
 ...\\
-X_{D-1}\le1.0\\
 -X_{D-1}\le0.0\\
-\sum_{i=0}^{D-1}C_{\mathbb{B}_\mathbb{A}0i}X_i\le1.0-O_{\mathbb{B}_\mathbb{A}0}\\
 -\sum_{i=0}^{D-1}C_{\mathbb{B}_\mathbb{A}0i}X_i\le-O_{\mathbb{B}_\mathbb{A}0}\\
 ...\\
 \sum_{i=0}^{D-1}C_{\mathbb{B}_\mathbb{A}(D-1)i}X_i\le1.0-O_{\mathbb{B}_\mathbb{A}(D-1)}\\
@@ -245,11 +239,22 @@ If this inequality has no solution, then neither the system $\mathcal{I}$. If it
 
 The Fourier-Motzkin method can be directly applied to obtain the bounds of each variable, if the system has a solution. If the system has no solution, the method will eventually reach an inconsistent inequality.\\
 
-The solution returned by the system resolution is expressed in the Frame B coordinates system. One can get the coordinates in 
+One solution $\overrightarrow{S}$ within the bounds obtained by the resolution of the system is expressed in the Frame $\mathbb{B}$'s coordinates system. One can get the equivalent coordinates $\overrightarrow{S'}$ in the real world's coordinates system as follow:
+\begin{equation}
+\overrightarrow{S'}=\overrightarrow{O_\mathbb{B}}+C_\mathbb{B}.\overrightarrow{S}
+\end{equation}
 
-\section{Algorithm}
+Only one inconsistent inequality is sufficient to prove the absence of solution, and then the non intersection of the Frames. One shall check the inconsistence of each inequality as soon as possible during the resolution of the system to optimize the speed of the algorithm.\\
 
-In this section I introduce the algorithm of the solution of the previous section.\\
+A suficient condition for one inequality $\sum_ia_iX_i\le Y$ to be inconsistent is, given that $\forall i,X_i\in[0.0,1.0]$:
+\begin{equation}
+Y<\sum_{i\in I^-}a_i
+\end{equation}
+where $I^-=\left\lbrace i, a_i<0.0\right\rbrace$.\\
+
+\section{Algorithms}
+
+In this section I introduce the algorithms of the solution of the previous section for the cases 2D and 3D.\\
 
 \subsection{2D case}
 
@@ -269,7 +274,7 @@ In this section I introduce the algorithm of the solution of the previous sectio
 
 \section{Implementation}
 
-In this section I introduce an implementation of the algorithm of the previous section in the C language.\\
+In this section I introduce an implementation of the algorithms of the previous section in the C language.\\
 
 \subsection{Frames}
 

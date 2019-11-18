@@ -1,10 +1,10 @@
 \contentsline {section}{\numberline {1}Definition}{3}
-\contentsline {section}{\numberline {2}Solution}{6}
-\contentsline {subsection}{\numberline {2.1}Fourier-Motzkin elimination method}{6}
+\contentsline {section}{\numberline {2}Solution}{5}
+\contentsline {subsection}{\numberline {2.1}Fourier-Motzkin elimination method}{5}
 \contentsline {subsection}{\numberline {2.2}Application of the Fourier-Motzkin method to the intersection problem}{7}
-\contentsline {section}{\numberline {3}Algorithm}{7}
-\contentsline {subsection}{\numberline {3.1}2D case}{7}
-\contentsline {subsection}{\numberline {3.2}3D case}{7}
+\contentsline {section}{\numberline {3}Algorithms}{7}
+\contentsline {subsection}{\numberline {3.1}2D case}{8}
+\contentsline {subsection}{\numberline {3.2}3D case}{8}
 \contentsline {section}{\numberline {4}Implementation}{8}
 \contentsline {subsection}{\numberline {4.1}Frames}{8}
 \contentsline {subsubsection}{\numberline {4.1.1}Header}{8}
@@ -24,10 +24,10 @@
 \contentsline {subsection}{\numberline {6.1}Code}{53}
 \contentsline {subsection}{\numberline {6.2}Results}{60}
 \contentsline {subsubsection}{\numberline {6.2.1}2D}{60}
-\contentsline {subsubsection}{\numberline {6.2.2}3D}{62}
-\contentsline {section}{\numberline {7}Conclusion}{63}
+\contentsline {subsubsection}{\numberline {6.2.2}3D}{61}
+\contentsline {section}{\numberline {7}Conclusion}{62}
 \contentsline {section}{\numberline {8}Annex}{63}
 \contentsline {subsection}{\numberline {8.1}SAT implementation}{63}
 \contentsline {subsubsection}{\numberline {8.1.1}Header}{63}
-\contentsline {subsubsection}{\numberline {8.1.2}Body}{64}
-\contentsline {subsection}{\numberline {8.2}Makefile}{73}
+\contentsline {subsubsection}{\numberline {8.1.2}Body}{63}
+\contentsline {subsection}{\numberline {8.2}Makefile}{72}
