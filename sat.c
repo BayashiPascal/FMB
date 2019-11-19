@@ -6,25 +6,22 @@
 
 // ------------- Functions declaration -------------
 
-#if FRAME_NB_DIM == 3
 // Check the intersection constraint along one axis
-bool CheckAxis(
-  const Frame* const that,
-  const Frame* const tho,
+bool CheckAxis3D(
+  const Frame3D* const that,
+  const Frame3D* const tho,
   const double* const axis);
-#endif
 
 // ------------- Functions implementation -------------
 
-#if FRAME_NB_DIM == 2
 // Test for intersection between 2D Frame 'that' and 2D Frame 'tho'
 // Return true if the two Frames are intersecting, else false
 bool SATTestIntersection2D(
-  const Frame* const that, 
-  const Frame* const tho) {
+  const Frame2D* const that, 
+  const Frame2D* const tho) {
 
   // Declare a variable to loop on Frames and commonalize code
-  const Frame* frameEdge = that;
+  const Frame2D* frameEdge = that;
 
   // Loop to commonalize code when checking SAT based on that's edges
   // and then tho's edges
@@ -69,7 +66,7 @@ bool SATTestIntersection2D(
       double bdgBoxB[2];
 
       // Declare two variables to loop on Frames and commonalize code
-      const Frame* frame = that;
+      const Frame2D* frame = that;
       double* bdgBox = bdgBoxA;
 
       // Loop on Frames
@@ -173,14 +170,12 @@ bool SATTestIntersection2D(
   return true;
 
 }
-#endif
 
-#if FRAME_NB_DIM == 3
 // Test for intersection between 3D Frame 'that' and 3D Frame 'tho'
 // Return true if the two Frames are intersecting, else false
 bool SATTestIntersection3D(
-  const Frame* const that, 
-  const Frame* const tho) {
+  const Frame3D* const that, 
+  const Frame3D* const tho) {
 
   // Declare two variables to memorize the opposite edges in case
   // of tetrahedron
@@ -244,7 +239,7 @@ bool SATTestIntersection3D(
   }
   
   // Declare variables to loop on Frames and commonalize code
-  const Frame* frame = that;
+  const Frame3D* frame = that;
   const double (*oppEdgesA)[3] = oppEdgesThat;
 
   // Loop to commonalize code when checking SAT based on that's edges
@@ -325,7 +320,7 @@ bool SATTestIntersection3D(
 
       // Check against the current face's normal
       bool isIntersection = 
-        CheckAxis(
+        CheckAxis3D(
           that, 
           tho, 
           normFaces[iFace]);
@@ -374,7 +369,7 @@ bool SATTestIntersection3D(
       
       // Check against the cross product of the two edges
       bool isIntersection = 
-        CheckAxis(
+        CheckAxis3D(
           that, 
           tho, 
           axis);
@@ -399,9 +394,9 @@ bool SATTestIntersection3D(
 
 // Check the intersection constraint for Frames 'that' and 'tho' 
 // relatively to 'axis'
-bool CheckAxis(
-  const Frame* const that,
-  const Frame* const tho,
+bool CheckAxis3D(
+  const Frame3D* const that,
+  const Frame3D* const tho,
   const double* const axis) {
   
   // Declare variables to memorize the boundaries of projection
@@ -410,7 +405,7 @@ bool CheckAxis(
   double bdgBoxB[2];
 
   // Declare two variables to loop on Frames and commonalize code
-  const Frame* frame = that;
+  const Frame3D* frame = that;
   double* bdgBox = bdgBoxA;
 
   // Loop on Frames
@@ -537,4 +532,3 @@ bool CheckAxis(
 
 }
 
-#endif

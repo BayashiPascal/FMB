@@ -4,66 +4,53 @@
 #include <stdbool.h>
 
 // Include FMB algorithm library
-#include "fmb.h"
+#include "fmb2d.h"
+#include "fmb3d.h"
 
 // Main function
 int main(int argc, char** argv) {
 
+  // ----------- 3D -------------
+
   // Create the two objects to be tested for intersection
-#if FRAME_NB_DIM == 3
-  double origP[FRAME_NB_DIM] = {0.0, 0.0, 0.0};
-  double compP[FRAME_NB_DIM][FRAME_NB_DIM] = {
+  double origP3D[3] = {0.0, 0.0, 0.0};
+  double compP3D[3][3] = {
     {1.0, 0.0, 0.0},  // First component
     {0.0, 1.0, 0.0},  // Second component
     {0.0, 0.0, 1.0}}; // Third component
-#elif FRAME_NB_DIM == 2
-  double origP[FRAME_NB_DIM] = {0.0, 0.0};
-  double compP[FRAME_NB_DIM][FRAME_NB_DIM] = {
-    {1.0, 0.0},  // First component
-    {0.0, 1.0}}; // Second component
-#else
-  printf("Not implemented for dimension %d\n", FRAME_NB_DIM);
-  exit(0);
-#endif
-  Frame P = 
-    FrameCreateStatic(
+  Frame3D P3D = 
+    Frame3DCreateStatic(
       FrameTetrahedron,
-      origP,
-      compP);
+      origP3D,
+      compP3D);
  
-#if FRAME_NB_DIM == 3
-  double origQ[FRAME_NB_DIM] = {0.5, 0.5, 0.5};
-  double compQ[FRAME_NB_DIM][FRAME_NB_DIM] = {
+  double origQ3D[3] = {0.5, 0.5, 0.5};
+  double compQ3D[3][3] = {
     {2.0, 0.0, 0.0},
     {0.0, 2.0, 0.0},
     {0.0, 0.0, 2.0}};
-#elif FRAME_NB_DIM == 2
-  double origQ[FRAME_NB_DIM] = {0.5, 0.5};
-  double compQ[FRAME_NB_DIM][FRAME_NB_DIM] = {
-    {-1.0, 0.0},
-    {0.0, -1.0}};
-#else
-  printf("Not implemented for dimension %d\n", FRAME_NB_DIM);
-  exit(0);
-#endif
-  Frame Q = 
-    FrameCreateStatic(
+  Frame3D Q3D = 
+    Frame3DCreateStatic(
       FrameTetrahedron,
-      origQ,
-      compQ);
+      origQ3D,
+      compQ3D);
 
   // Declare a variable to memorize the result of the intersection
   // detection
-  AABB bdgBox;
+  AABB3D bdgBox3D;
 
   // Test for intersection between P and Q
-  bool isIntersecting = FMBTestIntersection(&P, &Q, &bdgBox);
+  bool isIntersecting3D = 
+    FMBTestIntersection3D(
+      &P3D, 
+      &Q3D, 
+      &bdgBox3D);
 
   // If the two objects are intersecting
-  if (isIntersecting) {
+  if (isIntersecting3D) {
 
     printf("Intersection detected in AABB ");
-    AABBPrint(&bdgBox);
+    AABB3DPrint(&bdgBox3D);
     printf("\n");
 
   // Else, the two objects are not intersecting
@@ -72,6 +59,58 @@ int main(int argc, char** argv) {
     printf("No intersection.\n");
 
   }
+
+
+  // ----------- 2D -------------
+
+  // Create the two objects to be tested for intersection
+  double origP2D[2] = {0.0, 0.0};
+  double compP2D[2][2] = {
+    {1.0, 0.0},  // First component
+    {0.0, 1.0}}; // Second component
+  Frame2D P2D = 
+    Frame2DCreateStatic(
+      FrameTetrahedron,
+      origP2D,
+      compP2D);
+ 
+  double origQ2D[2] = {0.5, 0.5};
+  double compQ2D[2][2] = {
+    {-1.0, 0.0},
+    {0.0, -1.0}};
+  Frame2D Q2D = 
+    Frame2DCreateStatic(
+      FrameTetrahedron,
+      origQ2D,
+      compQ2D);
+
+  // Declare a variable to memorize the result of the intersection
+  // detection
+  AABB2D bdgBox2D;
+
+  // Test for intersection between P and Q
+  bool isIntersecting2D = 
+    FMBTestIntersection2D(
+      &P2D, 
+      &Q2D, 
+      &bdgBox2D);
+
+  // If the two objects are intersecting
+  if (isIntersecting2D) {
+
+    printf("Intersection detected in AABB ");
+    AABB2DPrint(&bdgBox2D);
+    printf("\n");
+
+  // Else, the two objects are not intersecting
+  } else {
+
+    printf("No intersection.\n");
+
+  }
+
+
+
 
   return 0;
 }

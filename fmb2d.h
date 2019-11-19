@@ -1,5 +1,5 @@
-#ifndef __FMB_H_
-#define __FMB_H_
+#ifndef __FMB2D_H_
+#define __FMB2D_H_
 
 #include <stdbool.h>
 #include "frame.h"
@@ -15,9 +15,9 @@
 // The resulting AABB may be larger than the smallest possible AABB
 // The resulting AABB of FMBTestIntersection(A,B) may be different
 // of the resulting AABB of FMBTestIntersection(B,A)
-bool FMBTestIntersection(
-  const Frame* const that, 
-  const Frame* const tho, 
-         AABB* const bdgBox);
+bool FMBTestIntersection2D(
+  const Frame2D* const that, 
+  const Frame2D* const tho, 
+         AABB2D* const bdgBox);
 
 #endif
