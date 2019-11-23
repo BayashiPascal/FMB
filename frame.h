@@ -33,6 +33,7 @@ typedef struct {
 typedef struct {
   FrameType type;
   double orig[2];
+  double speed[2];
   double comp[2][2];
   // AABB of the frame
   AABB2D bdgBox;
@@ -43,6 +44,7 @@ typedef struct {
 typedef struct {
   FrameType type;
   double orig[3];
+  double speed[3];
   double comp[3][3];
   // AABB of the frame
   AABB3D bdgBox;

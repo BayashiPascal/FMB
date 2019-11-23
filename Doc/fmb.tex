@@ -27,7 +27,9 @@ In this paper I introduce how to perform intersection detection of pair of cuboi
 \newpage
 \tableofcontents
 
-\section{Definition}
+\section{Definition of the problem}
+
+\subsection{Static case}
 
 In this paper I'll use the term "Frame" to speak indifferently of cuboid and tetrahedron.\\
 
@@ -62,31 +64,36 @@ If $\mathbb{B}$ is a tetrahedron:
 
 $\mathbb{A}$ in its own coordinates system becomes, for a cuboid:
 \begin{equation}
-\mathbb{A}=\left\lbrace\overrightarrow{X}\in[0.0,1.0]^D\right\rbrace
+\mathbb{A}_\mathbb{A}=\left\lbrace\overrightarrow{X}\in[0.0,1.0]^D\right\rbrace
 \end{equation}
 and for a tetrahedron:
 \begin{equation}
-\mathbb{A}=\left\lbrace\overrightarrow{X}\in[0.0,1.0]^D,\sum_{i=0}^{D-1}Xi\le1.0\right\rbrace
+\mathbb{A}_\mathbb{A}=\left\lbrace\overrightarrow{X}\in[0.0,1.0]^D,\sum_{i=0}^{D-1}Xi\le1.0\right\rbrace
 \end{equation}
 
-The intersection of $\mathbb{A}$ and $\mathbb{B}$ in $\mathbb{B}$'s coordinates sytem, can then be expressed as follow.\\
+The intersection of $\mathbb{A}$ and $\mathbb{B}$ in $\mathbb{A}$'s coordinates sytem, can then be expressed as follow.\\
 
 If $\mathbb{A}$ and $\mathbb{B}$ are two cuboids:
 \begin{equation}
-\left\lbrace\overrightarrow{X}\in[0.0,1.0]^D,C_\mathbb{A}^{-1}.(\overrightarrow{O_\mathbb{B}}-\overrightarrow{O_\mathbb{A}}+C_\mathbb{B}.\overrightarrow{X})\cap[0.0,1.0]^D\right\rbrace
+\left\lbrace\overrightarrow{X}\in[0.0,1.0]^D,C_\mathbb{A}^{-1}.\left(\overrightarrow{O_\mathbb{B}}-\overrightarrow{O_\mathbb{A}}+C_\mathbb{B}.\overrightarrow{X}\right)\cap[0.0,1.0]^D\right\rbrace
 \end{equation}
 
 If $\mathbb{A}$ is a cuboid and $\mathbb{B}$ is a tetrahedron:
 \begin{equation}
-\left\lbrace\overrightarrow{X}\in[0.0,1.0]^D,\sum_{i=0}^{D-1}Xi\le1.0,C_\mathbb{A}^{-1}.(\overrightarrow{O_\mathbb{B}}-\overrightarrow{O_\mathbb{A}}+C_\mathbb{B}.\overrightarrow{X})\cap[0.0,1.0]^D\right\rbrace
+\left\lbrace
+\begin{array}{c}
+\overrightarrow{X}\in[0.0,1.0]^D,\sum_{i=0}^{D-1}Xi\le1.0,\\
+C_\mathbb{A}^{-1}.\left(\overrightarrow{O_\mathbb{B}}-\overrightarrow{O_\mathbb{A}}+C_\mathbb{B}.\overrightarrow{X}\right)\cap[0.0,1.0]^D
+\end{array}
+\right\rbrace
 \end{equation}
 
 If $\mathbb{A}$ is a tetrahedron and $\mathbb{B}$ is a cuboid:
 \begin{equation}
 \left\lbrace
 \begin{array}{c}
-\overrightarrow{X}\in[0.0,1.0]^D,C_\mathbb{A}^{-1}.(\overrightarrow{O_\mathbb{B}}-\overrightarrow{O_\mathbb{A}}+C_\mathbb{B}.\overrightarrow{X})\cap[0.0,1.0]^D\\
-\sum_{i=0}^{D-1}\left(C_\mathbb{A}^{-1}.(\overrightarrow{O_\mathbb{B}}-\overrightarrow{O_\mathbb{A}}+C_\mathbb{B}.\overrightarrow{X})\right)_i\le1.0\\
+\overrightarrow{X}\in[0.0,1.0]^D,C_\mathbb{A}^{-1}.\left(\overrightarrow{O_\mathbb{B}}-\overrightarrow{O_\mathbb{A}}+C_\mathbb{B}.\overrightarrow{X}\right)\cap[0.0,1.0]^D\\
+\sum_{i=0}^{D-1}\left(C_\mathbb{A}^{-1}.\left(\overrightarrow{O_\mathbb{B}}-\overrightarrow{O_\mathbb{A}}+C_\mathbb{B}.\overrightarrow{X}\right)\right)_i\le1.0\\
 \end{array}
 \right\rbrace
 \end{equation}
@@ -97,7 +104,7 @@ If $\mathbb{A}$ and $\mathbb{B}$ are two tetrahedrons:
 \begin{array}{c}
 \overrightarrow{X}\in[0.0,1.0]^D,\sum_{i=0}^{D-1}Xi\le1.0\\
 C_\mathbb{A}^{-1}.(\overrightarrow{O_\mathbb{B}}-\overrightarrow{O_\mathbb{A}}+C_\mathbb{B}.\overrightarrow{X})\cap[0.0,1.0]^D\\
-\sum_{i=0}^{D-1}\left(C_\mathbb{A}^{-1}.(\overrightarrow{O_\mathbb{B}}-\overrightarrow{O_\mathbb{A}}+C_\mathbb{B}.\overrightarrow{X})\right)_i\le1.0\\
+\sum_{i=0}^{D-1}\left(C_\mathbb{A}^{-1}.\left(\overrightarrow{O_\mathbb{B}}-\overrightarrow{O_\mathbb{A}}+C_\mathbb{B}.\overrightarrow{X}\right)\right)_i\le1.0\\
 \end{array}
 \right\rbrace
 \end{equation}
@@ -173,6 +180,104 @@ If $\mathbb{A}$ and $\mathbb{B}$ are two tetrahedrons:
 \end{array}
 \right.
 \end{equation}
+
+\subsection{Dynamic case}
+
+If the frames $\mathbb{A}$ and $\mathbb{B}$ are moving linearly along the vectors $\overrightarrow{V_\mathbb{A}}$ and $\overrightarrow{V_\mathbb{B}}$ respectively during the interval of time $t\in[0.0,1.0]$, the above definition of the problem is modified as follow.\\
+
+If $A$ and $B$ are two cuboids:
+\begin{equation}
+\mathbb{A}=\left\lbrace\overrightarrow{X}\in[0.0,1.0]^D,t\in[0.0,1.0],\overrightarrow{O_\mathbb{A}}+C_\mathbb{A}.\overrightarrow{X}+\overrightarrow{V_\mathbb{A}.t}\right\rbrace
+\end{equation}
+\begin{equation}
+\mathbb{B}=\left\lbrace\overrightarrow{X}\in[0.0,1.0]^D,t\in[0.0,1.0],\overrightarrow{O_\mathbb{B}}+C_\mathbb{B}.\overrightarrow{X}+\overrightarrow{V_\mathbb{B}}.t\right\rbrace
+\end{equation}
+where $O_\mathbb{A}$ is the origin of $\mathbb{A}$ and $C_\mathbb{A}$ is the matrix of the components of $A$ (one component per column). Idem for $\overrightarrow{O_\mathbb{B}}$ and $C_\mathbb{B}$.\\
+
+If $\mathbb{A}$ and $\mathbb{B}$ are two tetrahedrons:
+\begin{equation}
+\mathbb{A}=\left\lbrace\overrightarrow{X}\in[0.0,1.0]^D,t\in[0.0,1.0],\sum_{i=0}^{D-1}Xi\le1.0,\overrightarrow{O_\mathbb{A}}+C_\mathbb{A}.\overrightarrow{X}+\overrightarrow{V_\mathbb{A}}.t\right\rbrace
+\end{equation}
+\begin{equation}
+\mathbb{B}=\left\lbrace\overrightarrow{X}\in[0.0,1.0]^D,t\in[0.0,1.0],\sum_{i=0}^{D-1}Xi\le1.0,\overrightarrow{O_\mathbb{B}}+C_\mathbb{B}.\overrightarrow{X}+\overrightarrow{V_\mathbb{B}}.t\right\rbrace
+\end{equation}
+
+If $\mathbb{B}$ is a cuboid, $\mathbb{B}_\mathbb{A}$ becomes:
+\begin{equation}
+\mathbb{B}_\mathbb{A}=\left\lbrace
+\begin{array}{c}
+\overrightarrow{X}\in[0.0,1.0]^D,t\in[0.0,1.0],\\
+C_\mathbb{A}^{-1}.\left(\overrightarrow{O_\mathbb{B}}-\overrightarrow{O_\mathbb{A}}+C_\mathbb{B}.\overrightarrow{X}+\left(\overrightarrow{V_\mathbb{B}}-\overrightarrow{V_\mathbb{A}}\right).t\right)
+\end{array}
+\right\rbrace
+\end{equation}
+
+If $\mathbb{B}$ is a tetrahedron:
+\begin{equation}
+\mathbb{B}_\mathbb{A}=\left\lbrace
+\begin{array}{c}
+\overrightarrow{X}\in[0.0,1.0]^D,t\in[0.0,1.0],\sum_{i=0}^{D-1}Xi\le1.0,\\
+C_\mathbb{A}^{-1}.\left(\overrightarrow{O_\mathbb{B}}-\overrightarrow{O_\mathbb{A}}+C_\mathbb{B}.\overrightarrow{X}+\left(\overrightarrow{V_\mathbb{B}}-\overrightarrow{V_\mathbb{A}}\right).t\right)
+\end{array}
+\right\rbrace
+\end{equation}
+
+$\mathbb{A}$ in its own coordinates system has the same definition as in the static case. For a cuboid:
+\begin{equation}
+\mathbb{A}_\mathbb{A}=\left\lbrace\overrightarrow{X}\in[0.0,1.0]^D\right\rbrace
+\end{equation}
+and for a tetrahedron:
+\begin{equation}
+\mathbb{A}_\mathbb{A}=\left\lbrace\overrightarrow{X}\in[0.0,1.0]^D,\sum_{i=0}^{D-1}Xi\le1.0\right\rbrace
+\end{equation}
+
+The intersection of $\mathbb{A}$ and $\mathbb{B}$ in $\mathbb{A}$'s coordinates sytem, can then be expressed as follow.\\
+
+If $\mathbb{A}$ and $\mathbb{B}$ are two cuboids:
+\begin{equation}
+\left\lbrace
+\begin{array}{c}
+\overrightarrow{X}\in[0.0,1.0]^D,t\in[0.0,1.0],\\
+C_\mathbb{A}^{-1}.\left(\overrightarrow{O_\mathbb{B}}-\overrightarrow{O_\mathbb{A}}+C_\mathbb{B}.\overrightarrow{X}+\left(\overrightarrow{V_\mathbb{B}}-\overrightarrow{V_\mathbb{A}}\right).t\right)\cap[0.0,1.0]^D
+\end{array}
+\right\rbrace
+\end{equation}
+
+If $\mathbb{A}$ is a cuboid and $\mathbb{B}$ is a tetrahedron:
+\begin{equation}
+\left\lbrace
+\begin{array}{c}
+\overrightarrow{X}\in[0.0,1.0]^D,t\in[0.0,1.0],\sum_{i=0}^{D-1}Xi\le1.0,\\
+C_\mathbb{A}^{-1}.\left(\overrightarrow{O_\mathbb{B}}-\overrightarrow{O_\mathbb{A}}+C_\mathbb{B}.\overrightarrow{X}+\left(\overrightarrow{V_\mathbb{B}}-\overrightarrow{V_\mathbb{A}}\right).t\right)\cap[0.0,1.0]^D
+\end{array}
+\right\rbrace
+\end{equation}
+
+If $\mathbb{A}$ is a tetrahedron and $\mathbb{B}$ is a cuboid:
+\begin{equation}
+\left\lbrace
+\begin{array}{c}
+\overrightarrow{X}\in[0.0,1.0]^D,t\in[0.0,1.0],\\
+C_\mathbb{A}^{-1}.\left(\overrightarrow{O_\mathbb{B}}-\overrightarrow{O_\mathbb{A}}+C_\mathbb{B}.\overrightarrow{X}+\left(\overrightarrow{V_\mathbb{B}}-\overrightarrow{V_\mathbb{A}}\right).t\right)\cap[0.0,1.0]^D\\
+\sum_{i=0}^{D-1}\left(C_\mathbb{A}^{-1}.\left(\overrightarrow{O_\mathbb{B}}-\overrightarrow{O_\mathbb{A}}+C_\mathbb{B}.\overrightarrow{X})\right)_i\le1.0\\
+\end{array}
+\right\rbrace
+\end{equation}
+
+If $\mathbb{A}$ and $\mathbb{B}$ are two tetrahedrons:
+\begin{equation}
+\left\lbrace
+\begin{array}{c}
+\overrightarrow{X}\in[0.0,1.0]^D,t\in[0.0,1.0],\sum_{i=0}^{D-1}Xi\le1.0\\
+C_\mathbb{A}^{-1}.(\overrightarrow{O_\mathbb{B}}-\overrightarrow{O_\mathbb{A}}+C_\mathbb{B}.\overrightarrow{X}+\left(\overrightarrow{V_\mathbb{B}}-\overrightarrow{V_\mathbb{A}}\right).t)\cap[0.0,1.0]^D\\
+\sum_{i=0}^{D-1}\left(C_\mathbb{A}^{-1}.\left(\overrightarrow{O_\mathbb{B}}-\overrightarrow{O_\mathbb{A}}+C_\mathbb{B}.\overrightarrow{X}\right)\right)_i\le1.0\\
+\end{array}
+\right\rbrace
+\end{equation}
+
+
+
+
 
 \section{Solution}
 
@@ -296,19 +401,75 @@ In this section I introduce an implementation of the algorithms of the previous 
 
 \subsection{FMB}
 
-\subsubsection{Header}
+\subsubsection{2D static}
+
+\subsubsubsection{Header}
 
 \begin{scriptsize}
 \begin{ttfamily}
-\verbatiminput{../fmb.h}
+\verbatiminput{../fmb2d.h}
 \end{ttfamily}
 \end{scriptsize}
 
-\subsubsection{Body}
+\subsubsubsection{Body}
 
 \begin{scriptsize}
 \begin{ttfamily}
-\verbatiminput{../fmb.c}
+\verbatiminput{../fmb2d.c}
+\end{ttfamily}
+\end{scriptsize}
+
+\subsubsection{3D static}
+
+\subsubsubsection{Header}
+
+\begin{scriptsize}
+\begin{ttfamily}
+\verbatiminput{../fmb3d.h}
+\end{ttfamily}
+\end{scriptsize}
+
+\subsubsubsection{Body}
+
+\begin{scriptsize}
+\begin{ttfamily}
+\verbatiminput{../fmb3d.c}
+\end{ttfamily}
+\end{scriptsize}
+
+\subsubsection{2D dynamic}
+
+\subsubsubsection{Header}
+
+\begin{scriptsize}
+\begin{ttfamily}
+\verbatiminput{../fmb2dt.h}
+\end{ttfamily}
+\end{scriptsize}
+
+\subsubsubsection{Body}
+
+\begin{scriptsize}
+\begin{ttfamily}
+\verbatiminput{../fmb2dt.c}
+\end{ttfamily}
+\end{scriptsize}
+
+\subsubsection{3D dynamic}
+
+\subsubsubsection{Header}
+
+\begin{scriptsize}
+\begin{ttfamily}
+\verbatiminput{../fmb3dt.h}
+\end{ttfamily}
+\end{scriptsize}
+
+\subsubsubsection{Body}
+
+\begin{scriptsize}
+\begin{ttfamily}
+\verbatiminput{../fmb3dt.c}
 \end{ttfamily}
 \end{scriptsize}
 
