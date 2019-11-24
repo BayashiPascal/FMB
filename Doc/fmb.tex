@@ -27,6 +27,13 @@ In this paper I introduce how to perform intersection detection of pair of cuboi
 \newpage
 \tableofcontents
 
+\section{Notations}
+
+\begin{itemize}
+\item{$\left[M\right]_{r,c}$ is the component at column $c$ and row $r$ of the matrix $M$}
+\item{$\left[V\right]_r$ is the $r$-th component of the vector $\overrightarrow{V}$}
+\end{itemize}
+
 \section{Definition of the problem}
 
 \subsection{Static case}
@@ -37,29 +44,62 @@ The two Frames are represented as a vector origin and a number of component vect
 
 Lets call $\mathbb{A}$ and $\mathbb{B}$ the two Frames tested for intersection. If $A$ and $B$ are two cuboids:
 \begin{equation}
-\mathbb{A}=\left\lbrace\overrightarrow{X}\in[0.0,1.0]^D,\overrightarrow{O_\mathbb{A}}+C_\mathbb{A}.\overrightarrow{X}\right\rbrace
+\mathbb{A}=\left\lbrace
+\begin{array}{c}
+\overrightarrow{X}\in[0.0,1.0]^D\\
+\overrightarrow{O_\mathbb{A}}+C_\mathbb{A}.\overrightarrow{X}
+\end{array}
+\right\rbrace
 \end{equation}
 \begin{equation}
-\mathbb{B}=\left\lbrace\overrightarrow{X}\in[0.0,1.0]^D,\overrightarrow{O_\mathbb{B}}+C_\mathbb{B}.\overrightarrow{X}\right\rbrace
+\mathbb{B}=\left\lbrace
+\begin{array}{c}
+\overrightarrow{X}\in[0.0,1.0]^D\\
+\overrightarrow{O_\mathbb{B}}+C_\mathbb{B}.\overrightarrow{X}
+\end{array}
+\right\rbrace
 \end{equation}
-where $O_\mathbb{A}$ is the origin of $\mathbb{A}$ and $C_\mathbb{A}$ is the matrix of the components of $A$ (one component per column). Idem for $\overrightarrow{O_\mathbb{B}}$ and $C_\mathbb{B}$.\\
+where $\overrightarrow{O_\mathbb{A}}$ is the origin of $\mathbb{A}$ and $C_\mathbb{A}$ is the matrix of the components of $A$ (one component per column). Idem for $\overrightarrow{O_\mathbb{B}}$ and $C_\mathbb{B}$.\\
 
 If $\mathbb{A}$ and $\mathbb{B}$ are two tetrahedrons:
 \begin{equation}
-\mathbb{A}=\left\lbrace\overrightarrow{X}\in[0.0,1.0]^D,\sum_{i=0}^{D-1}Xi\le1.0,\overrightarrow{O_\mathbb{A}}+C_\mathbb{A}.\overrightarrow{X}\right\rbrace
+\mathbb{A}=\left\lbrace
+\begin{array}{c}
+\overrightarrow{X}\in[0.0,1.0]^D\\
+\sum_{i=0}^{D-1}\left[X\right]_i\le1.0\\
+\overrightarrow{O_\mathbb{A}}+C_\mathbb{A}.\overrightarrow{X}
+\end{array}
+\right\rbrace
 \end{equation}
 \begin{equation}
-\mathbb{B}=\left\lbrace\overrightarrow{X}\in[0.0,1.0]^D,\sum_{i=0}^{D-1}Xi\le1.0,\overrightarrow{O_\mathbb{B}}+C_\mathbb{B}.\overrightarrow{X}\right\rbrace
+\mathbb{B}=\left\lbrace
+\begin{array}{c}
+\overrightarrow{X}\in[0.0,1.0]^D\\
+\sum_{i=0}^{D-1}\left[X\right]_i\le1.0\\
+\overrightarrow{O_\mathbb{B}}+C_\mathbb{B}.\overrightarrow{X}
+\end{array}
+\right\rbrace
 \end{equation}
 
 I'll assume the Frames are well formed, i.e. their components matrix is invertible. It is then possible to express $\mathbb{B}$ in $\mathbb{A}$'s coordinates system, noted as $\mathbb{B}_\mathbb{A}$. If $\mathbb{B}$ is a cuboid:
 \begin{equation}
-\mathbb{B}_\mathbb{A}=\left\lbrace\overrightarrow{X}\in[0.0,1.0]^D,C_\mathbb{A}^{-1}.(\overrightarrow{O_\mathbb{B}}-\overrightarrow{O_\mathbb{A}}+C_\mathbb{B}.\overrightarrow{X})\right\rbrace
+\mathbb{B}_\mathbb{A}=\left\lbrace
+\begin{array}{c}
+\overrightarrow{X}\in[0.0,1.0]^D\\
+C_\mathbb{A}^{-1}.(\overrightarrow{O_\mathbb{B}}-\overrightarrow{O_\mathbb{A}}+C_\mathbb{B}.\overrightarrow{X})
+\end{array}
+\right\rbrace
 \end{equation}
 
 If $\mathbb{B}$ is a tetrahedron:
 \begin{equation}
-\mathbb{B}_\mathbb{A}=\left\lbrace\overrightarrow{X}\in[0.0,1.0]^D,\sum_{i=0}^{D-1}Xi\le1.0,C_\mathbb{A}^{-1}.(\overrightarrow{O_\mathbb{B}}-\overrightarrow{O_\mathbb{A}}+C_\mathbb{B}.\overrightarrow{X})\right\rbrace
+\mathbb{B}_\mathbb{A}=\left\lbrace
+\begin{array}{c}
+\overrightarrow{X}\in[0.0,1.0]^D\\
+\sum_{i=0}^{D-1}\left[X\right]_i\le1.0\\
+C_\mathbb{A}^{-1}.(\overrightarrow{O_\mathbb{B}}-\overrightarrow{O_\mathbb{A}}+C_\mathbb{B}.\overrightarrow{X})
+\end{array}
+\right\rbrace
 \end{equation}
 
 $\mathbb{A}$ in its own coordinates system becomes, for a cuboid:
@@ -68,21 +108,32 @@ $\mathbb{A}$ in its own coordinates system becomes, for a cuboid:
 \end{equation}
 and for a tetrahedron:
 \begin{equation}
-\mathbb{A}_\mathbb{A}=\left\lbrace\overrightarrow{X}\in[0.0,1.0]^D,\sum_{i=0}^{D-1}Xi\le1.0\right\rbrace
+\mathbb{A}_\mathbb{A}=\left\lbrace
+\begin{array}{c}
+\overrightarrow{X}\in[0.0,1.0]^D\\
+\sum_{i=0}^{D-1}\left[X\right]_i\le1.0
+\end{array}
+\right\rbrace
 \end{equation}
 
 The intersection of $\mathbb{A}$ and $\mathbb{B}$ in $\mathbb{A}$'s coordinates sytem, can then be expressed as follow.\\
 
 If $\mathbb{A}$ and $\mathbb{B}$ are two cuboids:
 \begin{equation}
-\left\lbrace\overrightarrow{X}\in[0.0,1.0]^D,C_\mathbb{A}^{-1}.\left(\overrightarrow{O_\mathbb{B}}-\overrightarrow{O_\mathbb{A}}+C_\mathbb{B}.\overrightarrow{X}\right)\cap[0.0,1.0]^D\right\rbrace
+\left\lbrace
+\begin{array}{c}
+\overrightarrow{X}\in[0.0,1.0]^D\\
+C_\mathbb{A}^{-1}.\left(\overrightarrow{O_\mathbb{B}}-\overrightarrow{O_\mathbb{A}}+C_\mathbb{B}.\overrightarrow{X}\right)\cap[0.0,1.0]^D
+\end{array}
+\right\rbrace
 \end{equation}
 
 If $\mathbb{A}$ is a cuboid and $\mathbb{B}$ is a tetrahedron:
 \begin{equation}
 \left\lbrace
 \begin{array}{c}
-\overrightarrow{X}\in[0.0,1.0]^D,\sum_{i=0}^{D-1}Xi\le1.0,\\
+\overrightarrow{X}\in[0.0,1.0]^D\\
+\sum_{i=0}^{D-1}\left[X\right]_i\le1.0\\
 C_\mathbb{A}^{-1}.\left(\overrightarrow{O_\mathbb{B}}-\overrightarrow{O_\mathbb{A}}+C_\mathbb{B}.\overrightarrow{X}\right)\cap[0.0,1.0]^D
 \end{array}
 \right\rbrace
@@ -92,8 +143,9 @@ If $\mathbb{A}$ is a tetrahedron and $\mathbb{B}$ is a cuboid:
 \begin{equation}
 \left\lbrace
 \begin{array}{c}
-\overrightarrow{X}\in[0.0,1.0]^D,C_\mathbb{A}^{-1}.\left(\overrightarrow{O_\mathbb{B}}-\overrightarrow{O_\mathbb{A}}+C_\mathbb{B}.\overrightarrow{X}\right)\cap[0.0,1.0]^D\\
-\sum_{i=0}^{D-1}\left(C_\mathbb{A}^{-1}.\left(\overrightarrow{O_\mathbb{B}}-\overrightarrow{O_\mathbb{A}}+C_\mathbb{B}.\overrightarrow{X}\right)\right)_i\le1.0\\
+\overrightarrow{X}\in[0.0,1.0]^D\\
+C_\mathbb{A}^{-1}.\left(\overrightarrow{O_\mathbb{B}}-\overrightarrow{O_\mathbb{A}}+C_\mathbb{B}.\overrightarrow{X}\right)\cap[0.0,1.0]^D\\
+\sum_{i=0}^{D-1}\left[C_\mathbb{A}^{-1}.\left(\overrightarrow{O_\mathbb{B}}-\overrightarrow{O_\mathbb{A}}+C_\mathbb{B}.\overrightarrow{X}\right)\right]_i\le1.0\\
 \end{array}
 \right\rbrace
 \end{equation}
@@ -102,29 +154,30 @@ If $\mathbb{A}$ and $\mathbb{B}$ are two tetrahedrons:
 \begin{equation}
 \left\lbrace
 \begin{array}{c}
-\overrightarrow{X}\in[0.0,1.0]^D,\sum_{i=0}^{D-1}Xi\le1.0\\
+\overrightarrow{X}\in[0.0,1.0]^D\\
+\sum_{i=0}^{D-1}\left[X\right]_i\le1.0\\
 C_\mathbb{A}^{-1}.(\overrightarrow{O_\mathbb{B}}-\overrightarrow{O_\mathbb{A}}+C_\mathbb{B}.\overrightarrow{X})\cap[0.0,1.0]^D\\
-\sum_{i=0}^{D-1}\left(C_\mathbb{A}^{-1}.\left(\overrightarrow{O_\mathbb{B}}-\overrightarrow{O_\mathbb{A}}+C_\mathbb{B}.\overrightarrow{X}\right)\right)_i\le1.0\\
+\sum_{i=0}^{D-1}\left[C_\mathbb{A}^{-1}.\left(\overrightarrow{O_\mathbb{B}}-\overrightarrow{O_\mathbb{A}}+C_\mathbb{B}.\overrightarrow{X}\right)\right]_i\le1.0\\
 \end{array}
 \right\rbrace
 \end{equation}
 
-These can in turn be expressed as systems of linear inequations as follows, given the two shortcuts $\overrightarrow{O_{\mathbb{B}_\mathbb{A}}}=C_\mathbb{A}^{-1}.(\overrightarrow{O_\mathbb{B}}-\overrightarrow{O_\mathbb{A}})$ and $C_{\mathbb{B}_\mathbb{A}}=C_\mathbb{A}^{-1}.C_{\mathbb{B}}$, and the notation $M_{rc}$ for the element at column $c$ and row $r$ of the matrix $M$.
+These can in turn be expressed as systems of linear inequations as follows, given the two shortcuts $\overrightarrow{O_{\mathbb{B}_\mathbb{A}}}=C_\mathbb{A}^{-1}.(\overrightarrow{O_\mathbb{B}}-\overrightarrow{O_\mathbb{A}})$ and $C_{\mathbb{B}_\mathbb{A}}=C_\mathbb{A}^{-1}.C_{\mathbb{B}}$.
 
 If $\mathbb{A}$ and $\mathbb{B}$ are two cuboids:
 \begin{equation}
 \left\lbrace
-\begin{array}{c}
-X_0\le1.0\\
--X_0\le0.0\\
+\begin{array}{rcl}
+\left[X\right]_0&\le&1.0\\
+-\left[X\right]_0&\le&0.0\\
 ...\\
-X_{D-1}\le1.0\\
--X_{D-1}\le0.0\\
-\sum_{i=0}^{D-1}C_{\mathbb{B}_\mathbb{A}0i}X_i\le1.0-O_{\mathbb{B}_\mathbb{A}0}\\
--\sum_{i=0}^{D-1}C_{\mathbb{B}_\mathbb{A}0i}X_i\le-O_{\mathbb{B}_\mathbb{A}0}\\
+\left[X\right]_{D-1}&\le&1.0\\
+-\left[X\right]_{D-1}&\le&0.0\\
+\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{0,i}.\left[X\right]_i&\le&1.0-\left[O_{\mathbb{B}_\mathbb{A}}\right]_0\\
+-\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{0,i}.\left[X\right]_i&\le&-\left[O_{\mathbb{B}_\mathbb{A}}\right]_0\\
 ...\\
-\sum_{i=0}^{D-1}C_{\mathbb{B}_\mathbb{A}(D-1)i}X_i\le1.0-O_{\mathbb{B}_\mathbb{A}(D-1)}\\
--\sum_{i=0}^{D-1}C_{\mathbb{B}_\mathbb{A}(D-1)i}X_i\le-O_{\mathbb{B}_\mathbb{A}(D-1)}
+\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{D-1,i}.\left[X\right]_i&\le&1.0-\left[O_{\mathbb{B}_\mathbb{A}}\right]_{D-1}\\
+-\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{D-1,i}.\left[X\right]_i&\le&-\left[O_{\mathbb{B}_\mathbb{A}}\right]_{D-1}
 \end{array}
 \right.
 \end{equation}
@@ -132,16 +185,16 @@ X_{D-1}\le1.0\\
 If $\mathbb{A}$ is a cuboid and $\mathbb{B}$ is a tetrahedron:
 \begin{equation}
 \left\lbrace
-\begin{array}{c}
--X_0\le0.0\\
+\begin{array}{rcl}
+-\left[X\right]_0&\le&0.0\\
 ...\\
--X_{D-1}\le0.0\\
-\sum_{i=0}^{D-1}C_{\mathbb{B}_\mathbb{A}0i}X_i\le1.0-O_{\mathbb{B}_\mathbb{A}0}\\
--\sum_{i=0}^{D-1}C_{\mathbb{B}_\mathbb{A}0i}X_i\le-O_{\mathbb{B}_\mathbb{A}0}\\
+-\left[X\right]_{D-1}&\le&0.0\\
+\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{0,i}.\left[X\right]_i&\le&1.0-\left[O_{\mathbb{B}_\mathbb{A}}\right]_0\\
+-\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{0,i}.\left[X\right]_i&\le&-\left[O_{\mathbb{B}_\mathbb{A}}\right]_0\\
 ...\\
-\sum_{i=0}^{D-1}C_{\mathbb{B}_\mathbb{A}(D-1)i}X_i\le1.0-O_{\mathbb{B}_\mathbb{A}(D-1)}\\
--\sum_{i=0}^{D-1}C_{\mathbb{B}_\mathbb{A}(D-1)i}X_i\le-O_{\mathbb{B}_\mathbb{A}(D-1)}\\
-\sum_{i=0}^{D-1}Xi\le1.0
+\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{D-1,i}.\left[X\right]_i&\le&1.0-\left[O_{\mathbb{B}_\mathbb{A}}\right]_{D-1}\\
+-\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{D-1,i}.\left[X\right]_i&\le&-\left[O_{\mathbb{B}_\mathbb{A}}\right]_{D-1}\\
+\sum_{i=0}^{D-1}\left[X\right]_i&\le&1.0
 \end{array}
 \right.
 \end{equation}
@@ -149,17 +202,17 @@ If $\mathbb{A}$ is a cuboid and $\mathbb{B}$ is a tetrahedron:
 If $\mathbb{A}$ is a tetrahedron and $\mathbb{B}$ is a cuboid:
 \begin{equation}
 \left\lbrace
-\begin{array}{c}
-X_0\le1.0\\
--X_0\le0.0\\
+\begin{array}{rcl}
+\left[X\right]_0&\le&1.0\\
+-\left[X\right]_0&\le&0.0\\
 ...\\
-X_{D-1}\le1.0\\
--X_{D-1}\le0.0\\
--\sum_{i=0}^{D-1}C_{\mathbb{B}_\mathbb{A}0i}X_i\le-O_{\mathbb{B}_\mathbb{A}0}\\
+\left[X\right]_{D-1}&\le&1.0\\
+-\left[X\right]_{D-1}&\le&0.0\\
+-\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{0,i}.\left[X\right]_i&\le&-\left[O_{\mathbb{B}_\mathbb{A}}\right]_0\\
 ...\\
-\sum_{i=0}^{D-1}C_{\mathbb{B}_\mathbb{A}(D-1)i}X_i\le1.0-O_{\mathbb{B}_\mathbb{A}(D-1)}\\
--\sum_{i=0}^{D-1}C_{\mathbb{B}_\mathbb{A}(D-1)i}X_i\le-O_{\mathbb{B}_\mathbb{A}(D-1)}\\
-\sum_{j=0}^{D-1}\left(\sum_{i=0}^{D-1}\left(C_{\mathbb{B}_\mathbb{A}ji}\right)X_i\right)\le1.0-\sum_{i=0}^{D-1}O_{\mathbb{B}_\mathbb{A}i}
+\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{D-1,i}.\left[X\right]_i&\le&1.0-\left[O_{\mathbb{B}_\mathbb{A}}\right]_{D-1}\\
+-\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{D-1,i}.\left[X\right]_i&\le&-\left[O_{\mathbb{B}_\mathbb{A}}\right]_{D-1}\\
+\sum_{j=0}^{D-1}\left(\left(\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{j,i}\right).\left[X\right]_i\right)&\le&1.0-\sum_{i=0}^{D-1}\left[O_{\mathbb{B}_\mathbb{A}}\right]_i
 \end{array}
 \right.
 \end{equation}
@@ -167,16 +220,16 @@ X_{D-1}\le1.0\\
 If $\mathbb{A}$ and $\mathbb{B}$ are two tetrahedrons:
 \begin{equation}
 \left\lbrace
-\begin{array}{c}
--X_0\le0.0\\
+\begin{array}{rcl}
+-\left[X\right]_0&\le&0.0\\
 ...\\
--X_{D-1}\le0.0\\
--\sum_{i=0}^{D-1}C_{\mathbb{B}_\mathbb{A}0i}X_i\le-O_{\mathbb{B}_\mathbb{A}0}\\
+-\left[X\right]_{D-1}&\le&0.0\\
+-\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{0,i}.\left[X\right]_i&\le&-\left[O_{\mathbb{B}_\mathbb{A}}\right]0}\\
 ...\\
-\sum_{i=0}^{D-1}C_{\mathbb{B}_\mathbb{A}(D-1)i}X_i\le1.0-O_{\mathbb{B}_\mathbb{A}(D-1)}\\
--\sum_{i=0}^{D-1}C_{\mathbb{B}_\mathbb{A}(D-1)i}X_i\le-O_{\mathbb{B}_\mathbb{A}(D-1)}\\
-\sum_{i=0}^{D-1}Xi\le1.0\\
-\sum_{j=0}^{D-1}\left(\sum_{i=0}^{D-1}\left(C_{\mathbb{B}_\mathbb{A}ji}\right)X_i\right)\le1.0-\sum_{i=0}^{D-1}O_{\mathbb{B}_\mathbb{A}i}
+\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{D-1,i}.\left[X\right]_i&\le&1.0-\left[O_{\mathbb{B}_\mathbb{A}}\right]_{D-1}\\
+-\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{D-1,i}.\left[X\right]_i&\le&-\left[O_{\mathbb{B}_\mathbb{A}}\right]_{D-1}\\
+\sum_{i=0}^{D-1}\left[X\right]_i&\le&1.0\\
+\sum_{j=0}^{D-1}\left(\left(\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{j,i}\right).\left[X\right]_i\right)&\le&1.0-\sum_{i=0}^{D-1}\left[O_{\mathbb{B}_\mathbb{A}}\right]_i
 \end{array}
 \right.
 \end{equation}
@@ -187,26 +240,53 @@ If the frames $\mathbb{A}$ and $\mathbb{B}$ are moving linearly along the vector
 
 If $A$ and $B$ are two cuboids:
 \begin{equation}
-\mathbb{A}=\left\lbrace\overrightarrow{X}\in[0.0,1.0]^D,t\in[0.0,1.0],\overrightarrow{O_\mathbb{A}}+C_\mathbb{A}.\overrightarrow{X}+\overrightarrow{V_\mathbb{A}.t}\right\rbrace
+\mathbb{A}=\left\lbrace
+\begin{array}{c}
+\overrightarrow{X}\in[0.0,1.0]^D\\
+t\in[0.0,1.0]\\
+\overrightarrow{O_\mathbb{A}}+C_\mathbb{A}.\overrightarrow{X}+\overrightarrow{V_\mathbb{A}}.t
+\end{array}
+\right\rbrace
 \end{equation}
 \begin{equation}
-\mathbb{B}=\left\lbrace\overrightarrow{X}\in[0.0,1.0]^D,t\in[0.0,1.0],\overrightarrow{O_\mathbb{B}}+C_\mathbb{B}.\overrightarrow{X}+\overrightarrow{V_\mathbb{B}}.t\right\rbrace
+\mathbb{B}=\left\lbrace
+\begin{array}{c}
+\overrightarrow{X}\in[0.0,1.0]^D\\
+t\in[0.0,1.0]\\
+\overrightarrow{O_\mathbb{B}}+C_\mathbb{B}.\overrightarrow{X}+\overrightarrow{V_\mathbb{B}}.t
+\end{array}
+\right\rbrace
 \end{equation}
-where $O_\mathbb{A}$ is the origin of $\mathbb{A}$ and $C_\mathbb{A}$ is the matrix of the components of $A$ (one component per column). Idem for $\overrightarrow{O_\mathbb{B}}$ and $C_\mathbb{B}$.\\
+where $\overrightarrow{O_\mathbb{A}}$ is the origin of $\mathbb{A}$ and $C_\mathbb{A}$ is the matrix of the components of $A$ (one component per column). Idem for $\overrightarrow{O_\mathbb{B}}$ and $C_\mathbb{B}$.\\
 
 If $\mathbb{A}$ and $\mathbb{B}$ are two tetrahedrons:
 \begin{equation}
-\mathbb{A}=\left\lbrace\overrightarrow{X}\in[0.0,1.0]^D,t\in[0.0,1.0],\sum_{i=0}^{D-1}Xi\le1.0,\overrightarrow{O_\mathbb{A}}+C_\mathbb{A}.\overrightarrow{X}+\overrightarrow{V_\mathbb{A}}.t\right\rbrace
+\mathbb{A}=\left\lbrace
+\begin{array}{c}
+\overrightarrow{X}\in[0.0,1.0]^D\\
+t\in[0.0,1.0]\\
+\sum_{i=0}^{D-1}\left[X\right]_i\le1.0\\
+\overrightarrow{O_\mathbb{A}}+C_\mathbb{A}.\overrightarrow{X}+\overrightarrow{V_\mathbb{A}}.t
+\end{array}
+\right\rbrace
 \end{equation}
 \begin{equation}
-\mathbb{B}=\left\lbrace\overrightarrow{X}\in[0.0,1.0]^D,t\in[0.0,1.0],\sum_{i=0}^{D-1}Xi\le1.0,\overrightarrow{O_\mathbb{B}}+C_\mathbb{B}.\overrightarrow{X}+\overrightarrow{V_\mathbb{B}}.t\right\rbrace
+\mathbb{B}=\left\lbrace
+\begin{array}{c}
+\overrightarrow{X}\in[0.0,1.0]^D\\
+t\in[0.0,1.0]\\
+\sum_{i=0}^{D-1}\left[X\right]_i\le1.0\\
+\overrightarrow{O_\mathbb{B}}+C_\mathbb{B}.\overrightarrow{X}+\overrightarrow{V_\mathbb{B}}.t
+\end{array}
+\right\rbrace
 \end{equation}
 
 If $\mathbb{B}$ is a cuboid, $\mathbb{B}_\mathbb{A}$ becomes:
 \begin{equation}
 \mathbb{B}_\mathbb{A}=\left\lbrace
 \begin{array}{c}
-\overrightarrow{X}\in[0.0,1.0]^D,t\in[0.0,1.0],\\
+\overrightarrow{X}\in[0.0,1.0]^D\\
+t\in[0.0,1.0]\\
 C_\mathbb{A}^{-1}.\left(\overrightarrow{O_\mathbb{B}}-\overrightarrow{O_\mathbb{A}}+C_\mathbb{B}.\overrightarrow{X}+\left(\overrightarrow{V_\mathbb{B}}-\overrightarrow{V_\mathbb{A}}\right).t\right)
 \end{array}
 \right\rbrace
@@ -216,7 +296,9 @@ If $\mathbb{B}$ is a tetrahedron:
 \begin{equation}
 \mathbb{B}_\mathbb{A}=\left\lbrace
 \begin{array}{c}
-\overrightarrow{X}\in[0.0,1.0]^D,t\in[0.0,1.0],\sum_{i=0}^{D-1}Xi\le1.0,\\
+\overrightarrow{X}\in[0.0,1.0]^D\\
+t\in[0.0,1.0]\\
+\sum_{i=0}^{D-1}\left[X\right]_i\le1.0\\
 C_\mathbb{A}^{-1}.\left(\overrightarrow{O_\mathbb{B}}-\overrightarrow{O_\mathbb{A}}+C_\mathbb{B}.\overrightarrow{X}+\left(\overrightarrow{V_\mathbb{B}}-\overrightarrow{V_\mathbb{A}}\right).t\right)
 \end{array}
 \right\rbrace
@@ -228,7 +310,11 @@ $\mathbb{A}$ in its own coordinates system has the same definition as in the sta
 \end{equation}
 and for a tetrahedron:
 \begin{equation}
-\mathbb{A}_\mathbb{A}=\left\lbrace\overrightarrow{X}\in[0.0,1.0]^D,\sum_{i=0}^{D-1}Xi\le1.0\right\rbrace
+\mathbb{A}_\mathbb{A}=\left\lbrace
+\begin{array}{c}
+\overrightarrow{X}\in[0.0,1.0]^D\\
+\sum_{i=0}^{D-1}\left[X\right]_i\le1.0\end{array}
+\right\rbrace
 \end{equation}
 
 The intersection of $\mathbb{A}$ and $\mathbb{B}$ in $\mathbb{A}$'s coordinates sytem, can then be expressed as follow.\\
@@ -237,7 +323,8 @@ If $\mathbb{A}$ and $\mathbb{B}$ are two cuboids:
 \begin{equation}
 \left\lbrace
 \begin{array}{c}
-\overrightarrow{X}\in[0.0,1.0]^D,t\in[0.0,1.0],\\
+\overrightarrow{X}\in[0.0,1.0]^D\\
+t\in[0.0,1.0]\\
 C_\mathbb{A}^{-1}.\left(\overrightarrow{O_\mathbb{B}}-\overrightarrow{O_\mathbb{A}}+C_\mathbb{B}.\overrightarrow{X}+\left(\overrightarrow{V_\mathbb{B}}-\overrightarrow{V_\mathbb{A}}\right).t\right)\cap[0.0,1.0]^D
 \end{array}
 \right\rbrace
@@ -247,7 +334,9 @@ If $\mathbb{A}$ is a cuboid and $\mathbb{B}$ is a tetrahedron:
 \begin{equation}
 \left\lbrace
 \begin{array}{c}
-\overrightarrow{X}\in[0.0,1.0]^D,t\in[0.0,1.0],\sum_{i=0}^{D-1}Xi\le1.0,\\
+\overrightarrow{X}\in[0.0,1.0]^D\\
+t\in[0.0,1.0]\\
+\sum_{i=0}^{D-1}\left[X\right]_i\le1.0\\
 C_\mathbb{A}^{-1}.\left(\overrightarrow{O_\mathbb{B}}-\overrightarrow{O_\mathbb{A}}+C_\mathbb{B}.\overrightarrow{X}+\left(\overrightarrow{V_\mathbb{B}}-\overrightarrow{V_\mathbb{A}}\right).t\right)\cap[0.0,1.0]^D
 \end{array}
 \right\rbrace
@@ -257,9 +346,10 @@ If $\mathbb{A}$ is a tetrahedron and $\mathbb{B}$ is a cuboid:
 \begin{equation}
 \left\lbrace
 \begin{array}{c}
-\overrightarrow{X}\in[0.0,1.0]^D,t\in[0.0,1.0],\\
+\overrightarrow{X}\in[0.0,1.0]^D\\
+t\in[0.0,1.0]\\
 C_\mathbb{A}^{-1}.\left(\overrightarrow{O_\mathbb{B}}-\overrightarrow{O_\mathbb{A}}+C_\mathbb{B}.\overrightarrow{X}+\left(\overrightarrow{V_\mathbb{B}}-\overrightarrow{V_\mathbb{A}}\right).t\right)\cap[0.0,1.0]^D\\
-\sum_{i=0}^{D-1}\left(C_\mathbb{A}^{-1}.\left(\overrightarrow{O_\mathbb{B}}-\overrightarrow{O_\mathbb{A}}+C_\mathbb{B}.\overrightarrow{X})\right)_i\le1.0\\
+\sum_{i=0}^{D-1}\left[C_\mathbb{A}^{-1}.\left(\overrightarrow{O_\mathbb{B}}-\overrightarrow{O_\mathbb{A}}+C_\mathbb{B}.\overrightarrow{X}\right)\right]_i\le1.0\\
 \end{array}
 \right\rbrace
 \end{equation}
@@ -268,11 +358,93 @@ If $\mathbb{A}$ and $\mathbb{B}$ are two tetrahedrons:
 \begin{equation}
 \left\lbrace
 \begin{array}{c}
-\overrightarrow{X}\in[0.0,1.0]^D,t\in[0.0,1.0],\sum_{i=0}^{D-1}Xi\le1.0\\
-C_\mathbb{A}^{-1}.(\overrightarrow{O_\mathbb{B}}-\overrightarrow{O_\mathbb{A}}+C_\mathbb{B}.\overrightarrow{X}+\left(\overrightarrow{V_\mathbb{B}}-\overrightarrow{V_\mathbb{A}}\right).t)\cap[0.0,1.0]^D\\
-\sum_{i=0}^{D-1}\left(C_\mathbb{A}^{-1}.\left(\overrightarrow{O_\mathbb{B}}-\overrightarrow{O_\mathbb{A}}+C_\mathbb{B}.\overrightarrow{X}\right)\right)_i\le1.0\\
+\overrightarrow{X}\in[0.0,1.0]^D\\
+t\in[0.0,1.0]\\
+\sum_{i=0}^{D-1}\left[X\right]_i\le1.0\\
+C_\mathbb{A}^{-1}.\left(\overrightarrow{O_\mathbb{B}}-\overrightarrow{O_\mathbb{A}}+C_\mathbb{B}.\overrightarrow{X}+\left(\overrightarrow{V_\mathbb{B}}-\overrightarrow{V_\mathbb{A}}\right).t\right)\cap[0.0,1.0]^D\\
+\sum_{i=0}^{D-1}\left[C_\mathbb{A}^{-1}.\left(\overrightarrow{O_\mathbb{B}}-\overrightarrow{O_\mathbb{A}}+C_\mathbb{B}.\overrightarrow{X}\right)\right]_i\le1.0\\
 \end{array}
 \right\rbrace
+\end{equation}
+
+These lead to the systems of linear inequations as follows, given the three shortcuts $\overrightarrow{O_{\mathbb{B}_\mathbb{A}}}=C_\mathbb{A}^{-1}.(\overrightarrow{O_\mathbb{B}}-\overrightarrow{O_\mathbb{A}})$, $\overrightarrow{V_{\mathbb{B}_\mathbb{A}}}=C_\mathbb{A}^{-1}.(\overrightarrow{V_\mathbb{B}}-\overrightarrow{V_\mathbb{A}})$ and $C_{\mathbb{B}_\mathbb{A}}=C_\mathbb{A}^{-1}.C_{\mathbb{B}}$.
+
+If $\mathbb{A}$ and $\mathbb{B}$ are two cuboids:
+\begin{equation}
+\left\lbrace
+\begin{array}{rcl}
+t&\le&1.0\\
+-t&\le&0.0\\
+\left[X\right]_0&\le&1.0\\
+-\left[X\right]_0&\le&0.0\\
+...\\
+\left[X\right]_{D-1}&\le&1.0\\
+-\left[X\right]_{D-1}&\le&0.0\\
+\left[V_{\mathbb{B}_\mathbb{A}}\right]_0t+\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{0,i}\left[X\right]_i&\le&1.0-\left[O_{\mathbb{B}_\mathbb{A}}\right]_0\\
+-\left[V_{\mathbb{B}_\mathbb{A}}\right]_0t-\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{0,i}\left[X\right]_i&\le&-\left[O_{\mathbb{B}_\mathbb{A}}\right]_0\\
+...\\
+\left[V_{\mathbb{B}_\mathbb{A}}\right]_{D-1}t+\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{D-1,i}\left[X\right]_i&\le&1.0-\left[O_{\mathbb{B}_\mathbb{A}}\right]_{D-1}\\
+-\left[V_{\mathbb{B}_\mathbb{A}}\right]_{D-1}t-\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{D-1,i}\left[X\right]_i&\le&-\left[O_{\mathbb{B}_\mathbb{A}}\right]_{D-1}
+\end{array}
+\right.
+\end{equation}
+
+If $\mathbb{A}$ is a cuboid and $\mathbb{B}$ is a tetrahedron:
+\begin{equation}
+\left\lbrace
+\begin{array}{rcl}
+t&\le&1.0\\
+-t&\le&0.0\\
+-\left[X\right]_0&\le&0.0\\
+...\\
+-\left[X\right]_{D-1}&\le&0.0\\
+\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{0,i}\left[X\right]_i&\le&1.0-\left[O_{\mathbb{B}_\mathbb{A}}\right]_0\\
+-\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{0,i}\left[X\right]_i&\le&-\left[O_{\mathbb{B}_\mathbb{A}}\right]_0\\
+...\\
+\left[V_{\mathbb{B}_\mathbb{A}}\right]_{D-1}t+\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{D-1,i}\left[X\right]_i&\le&1.0-\left[O_{\mathbb{B}_\mathbb{A}}\right]_{D-1}\\
+-\left[V_{\mathbb{B}_\mathbb{A}}\right]_{D-1}t-\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{D-1,i}\left[X\right]_i&\le&-\left[O_{\mathbb{B}_\mathbb{A}}\right]_{D-1}\\
+\sum_{i=0}^{D-1}\left[X\right]_i&\le&1.0
+\end{array}
+\right.
+\end{equation}
+
+If $\mathbb{A}$ is a tetrahedron and $\mathbb{B}$ is a cuboid:
+\begin{equation}
+\left\lbrace
+\begin{array}{rcl}
+t&\le&1.0\\
+-t&\le&0.0\\
+\left[X\right]_0&\le&1.0\\
+-\left[X\right]_0&\le&0.0\\
+...\\
+\left[X\right]_{D-1}&\le&1.0\\
+-\left[X\right]_{D-1}&\le&0.0\\
+-\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{0,i}\left[X\right]_i&\le&-\left[O_{\mathbb{B}_\mathbb{A}}\right]_0\\
+...\\
+\left[V_{\mathbb{B}_\mathbb{A}}\right]_{D-1}t+\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{D-1,i}\left[X\right]_i&\le&1.0-\left[O_{\mathbb{B}_\mathbb{A}}\right]_{D-1}\\
+-\left[V_{\mathbb{B}_\mathbb{A}}\right]_{D-1}t-\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{D-1,i}\left[X\right]_i&\le&-\left[O_{\mathbb{B}_\mathbb{A}}\right]_{D-1}\\
+\sum_{j=0}^{D-1}\left(\left(\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{j,i}\right)\left[X\right]_i\right)&\le&1.0-\sum_{i=0}^{D-1}\left[O_{\mathbb{B}_\mathbb{A}}\right]_{i}
+\end{array}
+\right.
+\end{equation}
+
+If $\mathbb{A}$ and $\mathbb{B}$ are two tetrahedrons:
+\begin{equation}
+\left\lbrace
+\begin{array}{rcl}
+t&\le&1.0\\
+-t&\le&0.0\\
+-\left[X\right]_0&\le&0.0\\
+...\\
+-\left[X\right]_{D-1}&\le&0.0\\
+-\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{0,i}\left[X\right]_i&\le&-\left[O_{\mathbb{B}_\mathbb{A}}\right]_{0}\\
+...\\
+\left[V_{\mathbb{B}_\mathbb{A}}\right]_{D-1}t+\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{D-1,i}\left[X\right]_i&\le&1.0-\left[O_{\mathbb{B}_\mathbb{A}}\right]_{D-1}\\
+-\left[V_{\mathbb{B}_\mathbb{A}}\right]_{D-1}t-\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{D-1,i}\left[X\right]_i&\le&-\left[O_{\mathbb{B}_\mathbb{A}}\right]_{D-1}\\
+\sum_{i=0}^{D-1}\left[X\right]_i&\le&1.0\\
+\sum_{j=0}^{D-1}\left(\left(\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{j,i}\right)\left[X\right]_i\right)&\le&1.0-\sum_{i=0}^{D-1}\left[O_{\mathbb{B}_\mathbb{A}}\right]_{i}
+\end{array}
+\right.
 \end{equation}
 
 
