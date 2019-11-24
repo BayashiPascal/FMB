@@ -4,14 +4,14 @@
 \contentsline {subsection}{\numberline {2.2}Dynamic case}{6}
 \contentsline {section}{\numberline {3}Solution}{10}
 \contentsline {subsection}{\numberline {3.1}Fourier-Motzkin elimination method}{10}
-\contentsline {subsection}{\numberline {3.2}Application of the Fourier-Motzkin method to the intersection problem}{11}
+\contentsline {subsection}{\numberline {3.2}Application of the Fourier-Motzkin method to the intersection problem}{12}
 \contentsline {section}{\numberline {4}Algorithms}{12}
 \contentsline {subsection}{\numberline {4.1}2D case}{12}
-\contentsline {subsection}{\numberline {4.2}3D case}{12}
-\contentsline {section}{\numberline {5}Implementation}{12}
+\contentsline {subsection}{\numberline {4.2}3D case}{13}
+\contentsline {section}{\numberline {5}Implementation}{13}
 \contentsline {subsection}{\numberline {5.1}Frames}{13}
 \contentsline {subsubsection}{\numberline {5.1.1}Header}{13}
-\contentsline {subsubsection}{\numberline {5.1.2}Body}{14}
+\contentsline {subsubsection}{\numberline {5.1.2}Body}{15}
 \contentsline {subsection}{\numberline {5.2}FMB}{25}
 \contentsline {subsubsection}{\numberline {5.2.1}2D static}{25}
 \contentsline {subsubsection}{\numberline {5.2.2}3D static}{37}
