@@ -613,8 +613,8 @@ bool FMBTestIntersection3DTime(
   // Declare variables to eliminate the first variable
   // The number of rows is set conservatively, one may try to reduce
   // them if needed  
-  double Mp[64][4];
-  double Yp[64];
+  double Mp[49][4];
+  double Yp[49];
   int nbRowsP;
 
   // Eliminate the first variable
@@ -640,8 +640,8 @@ bool FMBTestIntersection3DTime(
   // Declare variables to eliminate the second variable
   // The number of rows is set conservatively, one may try to reduce
   // them if needed  
-  double Mpp[514][4];
-  double Ypp[514];
+  double Mpp[625][4];
+  double Ypp[625];
   int nbRowsPP;
 
   // Eliminate the second variable (which is the first in the new system)

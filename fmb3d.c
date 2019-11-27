@@ -345,8 +345,8 @@ bool FMBTestIntersection3D(
 
   // Declare two variables to memorize the system to be solved M.X <= Y
   // (M arrangement is [iRow][iCol])
-  double M[14][3];
-  double Y[14];
+  double M[12][3];
+  double Y[12];
 
   // Shortcuts
   double (*thoProjComp)[3] = thoProj.comp;
@@ -613,8 +613,8 @@ bool FMBTestIntersection3D(
   // Declare variables to eliminate the first variable
   // The number of rows is set conservatively, one may try to reduce
   // them if needed  
-  double Mp[64][3];
-  double Yp[64];
+  double Mp[36][3];
+  double Yp[36];
   int nbRowsP;
 
   // Eliminate the first variable
@@ -640,8 +640,8 @@ bool FMBTestIntersection3D(
   // Declare variables to eliminate the second variable
   // The number of rows is set conservatively, one may try to reduce
   // them if needed  
-  double Mpp[514][3];
-  double Ypp[514];
+  double Mpp[324][3];
+  double Ypp[324];
   int nbRowsPP;
 
   // Eliminate the second variable (which is the first in the new system)

@@ -373,7 +373,7 @@ int main(int argc, char** argv) {
   printf("===== 2D ======\n");
   Validate2D();
   printf("\n");
-  printf("===== 2D ======\n");
+  printf("===== 3D ======\n");
   Validate3D();
 
   return 0;

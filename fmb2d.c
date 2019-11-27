@@ -345,8 +345,8 @@ bool FMBTestIntersection2D(
 
   // Declare two variables to memorize the system to be solved M.X <= Y
   // (M arrangement is [iRow][iCol])
-  double M[10][2];
-  double Y[10];
+  double M[8][2];
+  double Y[8];
 
   // Shortcuts
   double (*thoProjComp)[2] = thoProj.comp;
@@ -611,10 +611,8 @@ bool FMBTestIntersection2D(
   AABB2D bdgBoxLocal;
   
   // Declare variables to eliminate the first variable
-  // The number of rows is set conservatively, one may try to reduce
-  // them if needed  
-  double Mp[60][2];
-  double Yp[60];
+  double Mp[16][2];
+  double Yp[16];
   int nbRowsP;
 
   // Eliminate the first variable

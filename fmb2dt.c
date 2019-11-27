@@ -613,8 +613,8 @@ bool FMBTestIntersection2DTime(
   // Declare variables to eliminate the first variable
   // The number of rows is set conservatively, one may try to reduce
   // them if needed  
-  double Mp[60][3];
-  double Yp[60];
+  double Mp[25][3];
+  double Yp[25];
   int nbRowsP;
 
   // Eliminate the first variable
