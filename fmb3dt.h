@@ -16,8 +16,8 @@
 // The resulting AABB of FMBTestIntersection(A,B) may be different
 // of the resulting AABB of FMBTestIntersection(B,A)
 bool FMBTestIntersection3DTime(
-  const Frame3D* const that, 
-  const Frame3D* const tho, 
-         AABB3D* const bdgBox);
+  const Frame3DTime* const that, 
+  const Frame3DTime* const tho, 
+         AABB3DTime* const bdgBox);
 
 #endif

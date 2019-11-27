@@ -9,6 +9,8 @@
 // Update the inverse components of the Frame 'that'
 void Frame2DUpdateInv(Frame2D* const that);
 void Frame3DUpdateInv(Frame3D* const that);
+void Frame2DTimeUpdateInv(Frame2DTime* const that);
+void Frame3DTimeUpdateInv(Frame3DTime* const that);
 
 // ------------- Functions implementation -------------
 

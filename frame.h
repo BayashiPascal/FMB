@@ -90,7 +90,7 @@ typedef struct {
 void AABB2DPrint(const AABB2D* const that);
 void AABB3DPrint(const AABB3D* const that);
 void AABB2DTimePrint(const AABB2DTime* const that);
-void AABB3DTimePrint(const AABB3DTime const that);
+void AABB3DTimePrint(const AABB3DTime* const that);
 
 // Print the Frame 'that' on stdout
 // Output format is
@@ -114,12 +114,12 @@ Frame3D Frame3DCreateStatic(
   const FrameType type,
      const double orig[3],
      const double comp[3][3]);
-Frame2D Frame2DTimeCreateStatic(
+Frame2DTime Frame2DTimeCreateStatic(
   const FrameType type,
      const double orig[2],
-     const double speed[3],
+     const double speed[2],
      const double comp[2][2]);
-Frame3D Frame3DTimeCreateStatic(
+Frame3DTime Frame3DTimeCreateStatic(
   const FrameType type,
      const double orig[3],
      const double speed[3],

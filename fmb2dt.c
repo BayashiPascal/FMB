@@ -345,7 +345,7 @@ bool FMBTestIntersection2DTime(
 
   // Declare two variables to memorize the system to be solved M.X <= Y
   // (M arrangement is [iRow][iCol])
-  double M[10][2];
+  double M[10][3];
   double Y[10];
 
   // Shortcuts
@@ -613,7 +613,7 @@ bool FMBTestIntersection2DTime(
   // Declare variables to eliminate the first variable
   // The number of rows is set conservatively, one may try to reduce
   // them if needed  
-  double Mp[60][2];
+  double Mp[60][3];
   double Yp[60];
   int nbRowsP;
 
@@ -703,7 +703,7 @@ bool FMBTestIntersection2DTime(
     double* const max = bdgBox->max;
     const double* const thatBdgBoxMin = that->bdgBox.min;
     const double* const thatBdgBoxMax = that->bdgBox.max;
-    for (int iAxis = 2; 
+    for (int iAxis = 3; 
          iAxis--;) {
 
       if (min[iAxis] < thatBdgBoxMin[iAxis]) {

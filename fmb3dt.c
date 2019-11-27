@@ -21,11 +21,11 @@
 // else return true
 bool ElimVar3DTime(
      const int iVar, 
-  const double (*M)[3], 
+  const double (*M)[4], 
   const double* Y, 
      const int nbRows, 
      const int nbCols, 
-        double (*Mp)[3], 
+        double (*Mp)[4], 
         double* Yp, 
     int* const nbRemainRows);
 
@@ -38,17 +38,17 @@ bool ElimVar3DTime(
 // column than 'iVar'
 // May return inconsistent values (max < min), which would
 // mean the system has no solution
-void GetBound3D(
+void GetBound3DTime(
      const int iVar,
-  const double (*M)[3], 
+  const double (*M)[4], 
   const double* Y, 
      const int nbRows, 
-   AABB3D* const bdgBox);
+   AABB3DTime* const bdgBox);
 
 // ------------- Functions implementation -------------
 
 void PrintMY3DTime(
-  const double (*M)[3], 
+  const double (*M)[4], 
   const double* Y, 
      const int nbRows,
      const int nbVar) {
@@ -61,10 +61,10 @@ void PrintMY3DTime(
 }
 
 void PrintM3DTime(
-  const double (*M)[3], 
+  const double (*M)[4], 
      const int nbRows) {
   for (int iRow = 0; iRow < nbRows; ++iRow) {
-    for (int iCol = 0; iCol < 3; ++iCol) {
+    for (int iCol = 0; iCol < 4; ++iCol) {
       printf("%f ", M[iRow][iCol]);
     }
     printf("\n");
@@ -80,11 +80,11 @@ void PrintM3DTime(
 // else return false
 bool ElimVar3DTime(
      const int iVar, 
-  const double (*M)[3], 
+  const double (*M)[4], 
   const double* Y, 
      const int nbRows, 
      const int nbCols, 
-        double (*Mp)[3], 
+        double (*Mp)[4], 
         double* Yp, 
     int* const nbRemainRows) {
 
@@ -267,10 +267,10 @@ bool ElimVar3DTime(
 // mean the system has no solution
 void GetBound3DTime(
      const int iVar,
-  const double (*M)[3], 
+  const double (*M)[4], 
   const double* Y, 
      const int nbRows, 
-   AABB3D* const bdgBox) {
+   AABB3DTime* const bdgBox) {
 
   // Shortcuts
   double* min = bdgBox->min + iVar;
@@ -334,18 +334,18 @@ void GetBound3DTime(
 // The resulting AABB of FMBTestIntersection(A,B) may be different
 // of the resulting AABB of FMBTestIntersection(B,A)
 bool FMBTestIntersection3DTime(
-  const Frame3D* const that, 
-  const Frame3D* const tho, 
-         AABB3D* const bdgBox) {
+  const Frame3DTime* const that, 
+  const Frame3DTime* const tho, 
+         AABB3DTime* const bdgBox) {
 
   // Get the projection of the Frame 'tho' in Frame 'that' coordinates
   // system
-  Frame3D thoProj;
-  Frame3DImportFrame(that, tho, &thoProj);
+  Frame3DTime thoProj;
+  Frame3DTimeImportFrame(that, tho, &thoProj);
 
   // Declare two variables to memorize the system to be solved M.X <= Y
   // (M arrangement is [iRow][iCol])
-  double M[14][3];
+  double M[14][4];
   double Y[14];
 
   // Shortcuts
@@ -608,12 +608,12 @@ bool FMBTestIntersection3DTime(
 
   // Declare a AABB to memorize the bounding box of the intersection
   // in the coordinates system of that
-  AABB3D bdgBoxLocal;
+  AABB3DTime bdgBoxLocal;
   
   // Declare variables to eliminate the first variable
   // The number of rows is set conservatively, one may try to reduce
   // them if needed  
-  double Mp[64][3];
+  double Mp[64][4];
   double Yp[64];
   int nbRowsP;
 
@@ -640,7 +640,7 @@ bool FMBTestIntersection3DTime(
   // Declare variables to eliminate the second variable
   // The number of rows is set conservatively, one may try to reduce
   // them if needed  
-  double Mpp[514][3];
+  double Mpp[514][4];
   double Ypp[514];
   int nbRowsPP;
 
@@ -773,7 +773,7 @@ bool FMBTestIntersection3DTime(
 
     // Export the local bounding box toward the real coordinates
     // system
-    Frame3DExportBdgBox(
+    Frame3DTimeExportBdgBox(
       tho, 
       &bdgBoxLocal, 
       bdgBox);
@@ -783,7 +783,7 @@ bool FMBTestIntersection3DTime(
     double* const max = bdgBox->max;
     const double* const thatBdgBoxMin = that->bdgBox.min;
     const double* const thatBdgBoxMax = that->bdgBox.max;
-    for (int iAxis = 3; 
+    for (int iAxis = 4; 
          iAxis--;) {
 
       if (min[iAxis] < thatBdgBoxMin[iAxis]) {
