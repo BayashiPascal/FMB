@@ -21,11 +21,11 @@
 // else return true
 bool ElimVar2DTime(
      const int iVar, 
-  const double (*M)[2], 
+  const double (*M)[3], 
   const double* Y, 
      const int nbRows, 
      const int nbCols, 
-        double (*Mp)[2], 
+        double (*Mp)[3], 
         double* Yp, 
     int* const nbRemainRows);
 
@@ -40,15 +40,15 @@ bool ElimVar2DTime(
 // mean the system has no solution
 void GetBound2DTime(
      const int iVar,
-  const double (*M)[2], 
+  const double (*M)[3], 
   const double* Y, 
      const int nbRows, 
-   AABB2D* const bdgBox);
+   AABB2DTime* const bdgBox);
 
 // ------------- Functions implementation -------------
 
 void PrintMY2DTime(
-  const double (*M)[2], 
+  const double (*M)[3], 
   const double* Y, 
      const int nbRows,
      const int nbVar) {
@@ -61,10 +61,10 @@ void PrintMY2DTime(
 }
 
 void PrintM2DTime(
-  const double (*M)[2], 
+  const double (*M)[3], 
      const int nbRows) {
   for (int iRow = 0; iRow < nbRows; ++iRow) {
-    for (int iCol = 0; iCol < 2; ++iCol) {
+    for (int iCol = 0; iCol < 3; ++iCol) {
       printf("%f ", M[iRow][iCol]);
     }
     printf("\n");
@@ -80,11 +80,11 @@ void PrintM2DTime(
 // else return false
 bool ElimVar2DTime(
      const int iVar, 
-  const double (*M)[2], 
+  const double (*M)[3], 
   const double* Y, 
      const int nbRows, 
      const int nbCols, 
-        double (*Mp)[2], 
+        double (*Mp)[3], 
         double* Yp, 
     int* const nbRemainRows) {
 
@@ -267,10 +267,10 @@ bool ElimVar2DTime(
 // mean the system has no solution
 void GetBound2DTime(
      const int iVar,
-  const double (*M)[2], 
+  const double (*M)[3], 
   const double* Y, 
      const int nbRows, 
-   AABB2D* const bdgBox) {
+   AABB2DTime* const bdgBox) {
 
   // Shortcuts
   double* min = bdgBox->min + iVar;
@@ -334,14 +334,14 @@ void GetBound2DTime(
 // The resulting AABB of FMBTestIntersection(A,B) may be different
 // of the resulting AABB of FMBTestIntersection(B,A)
 bool FMBTestIntersection2DTime(
-  const Frame2D* const that, 
-  const Frame2D* const tho, 
-         AABB2D* const bdgBox) {
+  const Frame2DTime* const that, 
+  const Frame2DTime* const tho, 
+         AABB2DTime* const bdgBox) {
 
   // Get the projection of the Frame 'tho' in Frame 'that' coordinates
   // system
-  Frame2D thoProj;
-  Frame2DImportFrame(that, tho, &thoProj);
+  Frame2DTime thoProj;
+  Frame2DTimeImportFrame(that, tho, &thoProj);
 
   // Declare two variables to memorize the system to be solved M.X <= Y
   // (M arrangement is [iRow][iCol])
@@ -608,7 +608,7 @@ bool FMBTestIntersection2DTime(
 
   // Declare a AABB to memorize the bounding box of the intersection
   // in the coordinates system of that
-  AABB2D bdgBoxLocal;
+  AABB2DTime bdgBoxLocal;
   
   // Declare variables to eliminate the first variable
   // The number of rows is set conservatively, one may try to reduce
@@ -693,7 +693,7 @@ bool FMBTestIntersection2DTime(
 
     // Export the local bounding box toward the real coordinates
     // system
-    Frame2DExportBdgBox(
+    Frame2DTimeExportBdgBox(
       tho, 
       &bdgBoxLocal, 
       bdgBox);
