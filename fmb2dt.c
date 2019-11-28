@@ -351,6 +351,7 @@ bool FMBTestIntersection2DTime(
   // Shortcuts
   double (*thoProjComp)[2] = thoProj.comp;
   double *thoProjOrig = thoProj.orig;
+  double *thoProjSpeed = thoProj.speed;
 
   // Variable to memorise the current row in the system
   int iRow = 0;
@@ -358,7 +359,7 @@ bool FMBTestIntersection2DTime(
   // Shortcuts
   double* MIRow;
 
-  // Constraints O + C.X >= 0.0
+  // Constraints O + C.X + V.t >= 0.0
   // and constraints x_i >= 0.0
   for (;
        iRow < 2;
@@ -390,12 +391,24 @@ bool FMBTestIntersection2DTime(
 
       }
     }
+    if (thoProjSpeed[iRow] < 0.0) {
+      sumNeg += thoProjSpeed[iRow];
+    }
     if (thoProjOrig[iRow] < sumNeg)
       return false;
+    MIRow[2] = -1.0 * thoProjSpeed[iRow];
+    MJRow[2] = 0.0;
     Y[iRow] = thoProjOrig[iRow];
     Y[iRow + 2] = 0.0;
   }
-  iRow = 4;
+
+  // Constraints t >= 0.0
+  M[4][0] = 0.0;
+  M[4][1] = 0.0;
+  M[4][2] = -1.0;
+  Y[4] = 0.0;
+
+  iRow = 5;
 
   if (that->type == FrameCuboid) {
 
@@ -439,6 +452,7 @@ bool FMBTestIntersection2DTime(
     double* MRow = M[iRow];
 
     Y[iRow] = 1.0;
+    MRow[2] = 0.0;
 
     // For each column of the system
     for (int iCol = 2;
@@ -453,6 +467,8 @@ bool FMBTestIntersection2DTime(
         MRow[iCol] += thoProjComp[iCol][iAxis];
 
       }
+
+      MRow[2] += thoProjSpeed[iCol];
 
       Y[iRow] -= thoProjOrig[iCol];
 
@@ -472,6 +488,23 @@ bool FMBTestIntersection2DTime(
         allNull = false;
 
       }
+
+    }
+
+    // If the coefficient is negative
+    if (MRow[2] < -1.0 * EPSILON) {
+
+      // Memorize that at least one coefficient is not null
+      allNull = false;
+
+      // Update the sum of the negative coefficient
+      sumNegCoeff += MRow[2];
+
+    // Else, if the coefficient is positive
+    } else if (MRow[2] > EPSILON) {
+
+      // Memorize that at least one coefficient is not null
+      allNull = false;
 
     }
 
