@@ -345,7 +345,7 @@ bool FMBTestIntersection2D(
   // system
   Frame2D thoProj;
   Frame2DImportFrame(that, tho, &thoProj);
-//Frame2DPrint(&thoProj);printf("\n");
+
   // Declare two variables to memorize the system to be solved M.X <= Y
   // (M arrangement is [iRow][iCol])
   double M[8][2];
@@ -354,26 +354,25 @@ bool FMBTestIntersection2D(
 //===== 2D ======
 //ratio (timeFMB / timeSAT)
 //run	countInter	countNoInter	minInter	avgInter	maxInter	minNoInter	avgNoInter	maxNoInter	minTotal	avgTotal	maxTotal
-//0	467386	1532614	0.287500	1.883682	5.509091	0.096000	0.925966	12.666667	0.096000	1.149777	12.666667
+//0	469336	1530664	0.411576	1.841618	5.800000	0.074866	0.858967	12.687500	0.074866	1.089564	12.687500
 
   // Shortcuts
   //double (*thoProjComp)[2] = thoProj.comp;
   //double *thoProjOrig = thoProj.orig;
   //double* MIRow;
 
-  // -sum_iC_j,iX_i<=-O_j
+  // -sum_iC_j,iX_i<=O_j
   M[0][0] = -thoProj.comp[0][0];
-  M[0][1] = -thoProj.comp[0][1];
+  M[0][1] = -thoProj.comp[1][0];
   Y[0] = thoProj.orig[0];
   if (Y[0] < neg(M[0][0]) + neg(M[0][1]))
     return false;
-//PrintM2D(M,1);fflush(stdout);
-  M[1][0] = -thoProj.comp[1][0];
+
+  M[1][0] = -thoProj.comp[0][1];
   M[1][1] = -thoProj.comp[1][1];
   Y[1] = thoProj.orig[1];
   if (Y[1] < neg(M[1][0]) + neg(M[1][1]))
     return false;
-//PrintM2D(M,2);fflush(stdout);
 
   // Variable to memorise the nb of rows in the system
   int nbRows = 2;
@@ -382,31 +381,28 @@ bool FMBTestIntersection2D(
 
     // sum_iC_j,iX_i<=1.0-O_j
     M[nbRows][0] = thoProj.comp[0][0];
-    M[nbRows][1] = thoProj.comp[0][1];
+    M[nbRows][1] = thoProj.comp[1][0];
     Y[nbRows] = 1.0 - thoProj.orig[0];
     if (Y[nbRows] < neg(M[nbRows][0]) + neg(M[nbRows][1]))
       return false;
     ++nbRows;
-//PrintM2D(M,nbRows);fflush(stdout);
 
-    M[nbRows][0] = thoProj.comp[1][0];
+    M[nbRows][0] = thoProj.comp[0][1];
     M[nbRows][1] = thoProj.comp[1][1];
     Y[nbRows] = 1.0 - thoProj.orig[1];
     if (Y[nbRows] < neg(M[nbRows][0]) + neg(M[nbRows][1]))
       return false;
     ++nbRows;
-//PrintM2D(M,nbRows);fflush(stdout);
 
   } else {
 
     // sum_j(sum_iC_j,iX_i)<=1.0-sum_iO_i
-    M[nbRows][0] = thoProj.comp[0][0] + thoProj.comp[1][0];
-    M[nbRows][1] = thoProj.comp[0][1] + thoProj.comp[1][1];
+    M[nbRows][0] = thoProj.comp[0][0] + thoProj.comp[0][1];
+    M[nbRows][1] = thoProj.comp[1][0] + thoProj.comp[1][1];
     Y[nbRows] = 1.0 - thoProj.orig[0] - thoProj.orig[1];
     if (Y[nbRows] < neg(M[nbRows][0]) + neg(M[nbRows][1]))
       return false;
     ++nbRows;
-//PrintM2D(M,nbRows);fflush(stdout);
 
   }
 
@@ -417,13 +413,11 @@ bool FMBTestIntersection2D(
     M[nbRows][1] = 0.0;
     Y[nbRows] = 1.0;
     ++nbRows;
-//PrintM2D(M,nbRows);fflush(stdout);
 
     M[nbRows][0] = 0.0;
     M[nbRows][1] = 1.0;
     Y[nbRows] = 1.0;
     ++nbRows;
-//PrintM2D(M,nbRows);fflush(stdout);
 
   } else {
     
@@ -432,7 +426,6 @@ bool FMBTestIntersection2D(
     M[nbRows][1] = 1.0;
     Y[nbRows] = 1.0;
     ++nbRows;
-//PrintM2D(M,nbRows);fflush(stdout);
 
   }
 
@@ -441,16 +434,14 @@ bool FMBTestIntersection2D(
   M[nbRows][1] = 0.0;
   Y[nbRows] = 0.0;
   ++nbRows;
-//PrintM2D(M,nbRows);fflush(stdout);
 
   M[nbRows][0] = 0.0;
   M[nbRows][1] = -1.0;
   Y[nbRows] = 0.0;
   ++nbRows;
-//PrintM2D(M,nbRows);fflush(stdout);
 
   // Solve the system
-
+  
   // Declare a AABB to memorize the bounding box of the intersection
   // in the coordinates system of that
   AABB2D bdgBoxLocal;
@@ -516,10 +507,16 @@ bool FMBTestIntersection2D(
       Mp, 
       Yp, 
       &nbRowsP);
+
+  // If the system is inconsistent
   if (inconsistency == true) {
+
+    // The two Frames are not in intersection
     return false;
+
   }
 
+  // Get the bounds for the remaining first variable
   GetBound2D(
     FST_VAR,
     Mp,
@@ -527,8 +524,12 @@ bool FMBTestIntersection2D(
     nbRowsP,
     &bdgBoxLocal);
 
+  // If the bounds are inconstent
   if (bdgBoxLocal.min[FST_VAR] >= bdgBoxLocal.max[FST_VAR]) {
+
+    // The two Frames are not in intersection
     return false;
+
   }
 
   // If the user requested the resulting bounding box
@@ -561,7 +562,7 @@ bool FMBTestIntersection2D(
       }
 
     }
-    
+
   }
 
   // If we've reached here the two Frames are intersecting
