@@ -121,14 +121,6 @@ bool ElimVar2D(
         // coefficients in the row
         double sumNegCoeff = 0.0;
         
-        // Declare a variable to memorize if all the coefficients
-        // are >= 0.0
-        bool allPositive = true;
-
-        // Declare a variable to memorize if all the coefficients
-        // are null
-        bool allNull = true;
-
         // Add the sum of the two normed (relative to the eliminated
         // variable) rows into the result system. This actually
         // eliminate the variable while keeping the constraints on
@@ -143,63 +135,27 @@ bool ElimVar2D(
               M[iRow][iCol] / fabsMIRowIVar + 
               M[jRow][iCol] / fabs(M[jRow][iVar]);
 
-            // If the coefficient is negative
-            if (Mp[*nbRemainRows][jCol] < -1.0 * EPSILON) {
+            // Update the sum of the negative coefficient
+            sumNegCoeff += neg(Mp[*nbRemainRows][jCol]);
 
-              // Memorize that at least one coefficient is not positive
-              allPositive = false;
-
-              // Memorize that at least one coefficient is not null
-              allNull = false;
-
-              // Update the sum of the negative coefficient
-              sumNegCoeff += Mp[*nbRemainRows][jCol];
-
-            // Else, if the coefficient is positive
-            } else if (Mp[*nbRemainRows][jCol] > EPSILON) {
-
-              // Memorize that at least one coefficient is not null
-              allNull = false;
-
-            }
-
+            // Increment the number of columns in the new inequality
             ++jCol;
 
           }
 
         }
 
+        // Update the right side of the inequality
         Yp[*nbRemainRows] = 
           YIRowDivideByFabsMIRowIVar +
           Y[jRow] / fabs(M[jRow][iVar]);
 
-        // If at least one coefficient is not null
-        if (allNull == false) {
+        // If the right side of the inequality if lower than the sum of 
+        // negative coefficients in the row
+        // (Add epsilon for numerical imprecision)
+        if (Yp[*nbRemainRows] < sumNegCoeff + EPSILON) {
 
-          // If all the coefficients are positive and the right side of
-          // the inequality is negative
-          if (allPositive == true && 
-              Yp[*nbRemainRows] < 0.0) {
-
-            // As X is in [0,1], the system is inconsistent
-            return true;
-
-          }
-
-          // If the right side of the inequality if lower than the sum of 
-          // negative coefficients in the row
-          if (Yp[*nbRemainRows] < sumNegCoeff) {
-
-            // As X is in [0,1], the system is inconsistent
-            return true;
-
-          }
-
-        // Else all coefficients are null, if the right side is null
-        // or negative
-        } else if (Yp[*nbRemainRows] <= 0.0) {
-
-          // The system is inconsistent
+          // Given that X is in [0,1], the system is inconsistent
           return true;
 
         }
@@ -354,7 +310,7 @@ bool FMBTestIntersection2D(
 //===== 2D ======
 //ratio (timeFMB / timeSAT)
 //run	countInter	countNoInter	minInter	avgInter	maxInter	minNoInter	avgNoInter	maxNoInter	minTotal	avgTotal	maxTotal
-//0	469336	1530664	0.411576	1.841618	5.800000	0.074866	0.858967	12.687500	0.074866	1.089564	12.687500
+//0	469986	1530014	0.478261	1.777298	5.824561	0.139706	0.836872	13.133333	0.139706	1.057865	13.133333
 
   // Shortcuts
   //double (*thoProjComp)[2] = thoProj.comp;
