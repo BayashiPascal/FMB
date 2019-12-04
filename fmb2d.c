@@ -310,11 +310,6 @@ bool FMBTestIntersection2D(
   double M[8][2];
   double Y[8];
 
-//===== 2D ======
-//ratio (timeFMB / timeSAT)
-//run	countInter	countNoInter	minInter	avgInter	maxInter	minNoInter	avgNoInter	maxNoInter	minTotal	avgTotal	maxTotal
-//0	469986	1530014	0.478261	1.777298	5.824561	0.139706	0.836872	13.133333	0.139706	1.057865	13.133333
-
   // Create the inequality system
 
   // -sum_iC_j,iX_i<=O_j

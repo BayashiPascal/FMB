@@ -15,6 +15,7 @@
 // The resulting AABB may be larger than the smallest possible AABB
 // The resulting AABB of FMBTestIntersection(A,B) may be different
 // of the resulting AABB of FMBTestIntersection(B,A)
+// The resulting AABB is given in 'tho' 's local coordinates system
 bool FMBTestIntersection2DTime(
   const Frame2DTime* const that, 
   const Frame2DTime* const tho, 
