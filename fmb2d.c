@@ -12,7 +12,7 @@
 #define SND_VAR 1
 #define THD_VAR 2
 
-#define EPSILON 0.0000001 //0.001
+#define EPSILON 0.0000001
 
 // ------------- Functions declaration -------------
 
@@ -50,6 +50,7 @@ void GetBound2D(
 
 // ------------- Functions implementation -------------
 
+// TODO
 void PrintMY2D(
   const double (*M)[2], 
   const double* Y, 
@@ -212,6 +213,7 @@ bool ElimVar2D(
 
   }
 
+  // If we reach here the system is not inconsistent
   return false;
 
 }
@@ -292,6 +294,7 @@ void GetBound2D(
 // The resulting AABB may be larger than the smallest possible AABB
 // The resulting AABB of FMBTestIntersection(A,B) may be different
 // of the resulting AABB of FMBTestIntersection(B,A)
+// The resulting AABB is given in 'tho' 's local coordinates system
 bool FMBTestIntersection2D(
   const Frame2D* const that, 
   const Frame2D* const tho, 
@@ -312,10 +315,7 @@ bool FMBTestIntersection2D(
 //run	countInter	countNoInter	minInter	avgInter	maxInter	minNoInter	avgNoInter	maxNoInter	minTotal	avgTotal	maxTotal
 //0	469986	1530014	0.478261	1.777298	5.824561	0.139706	0.836872	13.133333	0.139706	1.057865	13.133333
 
-  // Shortcuts
-  //double (*thoProjComp)[2] = thoProj.comp;
-  //double *thoProjOrig = thoProj.orig;
-  //double* MIRow;
+  // Create the inequality system
 
   // -sum_iC_j,iX_i<=O_j
   M[0][0] = -thoProj.comp[0][0];
@@ -435,7 +435,7 @@ bool FMBTestIntersection2D(
     nbRowsP,
     &bdgBoxLocal);
 
-  // If the bounds are inconstent
+  // If the bounds are inconsistent
   if (bdgBoxLocal.min[SND_VAR] >= bdgBoxLocal.max[SND_VAR]) {
 
     // The two Frames are not in intersection
@@ -453,6 +453,8 @@ bool FMBTestIntersection2D(
 
   // Now starts again from the initial systems and eliminate the 
   // second variable to get the bounds of the first variable
+  // No need to check for consistency because we already know here
+  // that the Frames are intersecting and the system is consistent
   inconsistency = 
     ElimVar2D(
       SND_VAR,
@@ -464,14 +466,6 @@ bool FMBTestIntersection2D(
       Yp, 
       &nbRowsP);
 
-  // If the system is inconsistent
-  if (inconsistency == true) {
-
-    // The two Frames are not in intersection
-    return false;
-
-  }
-
   // Get the bounds for the remaining first variable
   GetBound2D(
     FST_VAR,
@@ -480,44 +474,11 @@ bool FMBTestIntersection2D(
     nbRowsP,
     &bdgBoxLocal);
 
-  // If the bounds are inconstent
-  if (bdgBoxLocal.min[FST_VAR] >= bdgBoxLocal.max[FST_VAR]) {
-
-    // The two Frames are not in intersection
-    return false;
-
-  }
-
   // If the user requested the resulting bounding box
   if (bdgBox != NULL) {
 
-    // Export the local bounding box toward the real coordinates
-    // system
-    Frame2DExportBdgBox(
-      tho, 
-      &bdgBoxLocal, 
-      bdgBox);
-
-    // Clip with the AABB of 'that'
-    double* const min = bdgBox->min;
-    double* const max = bdgBox->max;
-    const double* const thatBdgBoxMin = that->bdgBox.min;
-    const double* const thatBdgBoxMax = that->bdgBox.max;
-    for (int iAxis = 2; 
-         iAxis--;) {
-
-      if (min[iAxis] < thatBdgBoxMin[iAxis]) {
-
-        min[iAxis] = thatBdgBoxMin[iAxis];
-
-      }
-      if (max[iAxis] > thatBdgBoxMax[iAxis]) {
-
-        max[iAxis] = thatBdgBoxMax[iAxis];
-
-      }
-
-    }
+    // Memorize the result
+    *bdgBox = bdgBoxLocal;
 
   }
 

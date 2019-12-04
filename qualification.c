@@ -49,10 +49,46 @@ double maxNoInter;
 double sumNoInter;
 unsigned long countNoInter;
 
+double minInterCC;
+double maxInterCC;
+double sumInterCC;
+unsigned long countInterCC;
+double minNoInterCC;
+double maxNoInterCC;
+double sumNoInterCC;
+unsigned long countNoInterCC;
+
+double minInterCT;
+double maxInterCT;
+double sumInterCT;
+unsigned long countInterCT;
+double minNoInterCT;
+double maxNoInterCT;
+double sumNoInterCT;
+unsigned long countNoInterCT;
+
+double minInterTC;
+double maxInterTC;
+double sumInterTC;
+unsigned long countInterTC;
+double minNoInterTC;
+double maxNoInterTC;
+double sumNoInterTC;
+unsigned long countNoInterTC;
+
+double minInterTT;
+double maxInterTT;
+double sumInterTT;
+unsigned long countInterTT;
+double minNoInterTT;
+double maxNoInterTT;
+double sumNoInterTT;
+unsigned long countNoInterTT;
+
 // Qualification function
 // Takes two Frame definition as input, run the intersection test on 
 // them with FMB and SAT, and measure the time of execution of each
-void Qualification2D(
+void Qualification2DStatic(
         const Param2D paramP,
         const Param2D paramQ) {
 
@@ -169,11 +205,11 @@ void Qualification2D(
         Frame2DPrint(tho);
         printf("\n");
         printf("FMB : ");
-        if (isIntersectingFMB == false)
+        if (isIntersectingFMB[0] == false)
           printf("no ");
         printf("intersection\n");
         printf("SAT : ");
-        if (isIntersectingSAT == false)
+        if (isIntersectingSAT[0] == false)
           printf("no ");
         printf("intersection\n");
 
@@ -205,6 +241,84 @@ void Qualification2D(
         sumInter += ratio;
         ++countInter;
 
+        if (paramP.type == FrameCuboid && 
+            paramQ.type == FrameCuboid) {
+
+          if (countInterCC == 0) {
+
+            minInterCC = ratio;
+            maxInterCC = ratio;
+
+          } else {
+
+            if (minInterCC > ratio)
+              minInterCC = ratio;
+            if (maxInterCC < ratio)
+              maxInterCC = ratio;
+
+          }
+          sumInterCC += ratio;
+          ++countInterCC;
+
+        } else if (paramP.type == FrameCuboid && 
+                   paramQ.type == FrameTetrahedron) {
+
+          if (countInterCT == 0) {
+
+            minInterCT = ratio;
+            maxInterCT = ratio;
+
+          } else {
+
+            if (minInterCT > ratio)
+              minInterCT = ratio;
+            if (maxInterCT < ratio)
+              maxInterCT = ratio;
+
+          }
+          sumInterCT += ratio;
+          ++countInterCT;
+
+        } else if (paramP.type == FrameTetrahedron && 
+                   paramQ.type == FrameCuboid) {
+
+          if (countInterTC == 0) {
+
+            minInterTC = ratio;
+            maxInterTC = ratio;
+
+          } else {
+
+            if (minInterTC > ratio)
+              minInterTC = ratio;
+            if (maxInterTC < ratio)
+              maxInterTC = ratio;
+
+          }
+          sumInterTC += ratio;
+          ++countInterTC;
+
+        } else if (paramP.type == FrameTetrahedron && 
+                   paramQ.type == FrameTetrahedron) {
+              
+          if (countInterTT == 0) {
+
+            minInterTT = ratio;
+            maxInterTT = ratio;
+
+          } else {
+
+            if (minInterTT > ratio)
+              minInterTT = ratio;
+            if (maxInterTT < ratio)
+              maxInterTT = ratio;
+
+          }
+          sumInterTT += ratio;
+          ++countInterTT;
+
+        }
+
       // Else, the Frames do not intersect
       } else {
 
@@ -225,6 +339,83 @@ void Qualification2D(
         sumNoInter += ratio;
         ++countNoInter;
 
+        if (paramP.type == FrameCuboid && 
+            paramQ.type == FrameCuboid) {
+
+          if (countNoInterCC == 0) {
+
+            minNoInterCC = ratio;
+            maxNoInterCC = ratio;
+
+          } else {
+
+            if (minNoInterCC > ratio)
+              minNoInterCC = ratio;
+            if (maxNoInterCC < ratio)
+              maxNoInterCC = ratio;
+
+          }
+          sumNoInterCC += ratio;
+          ++countNoInterCC;
+
+        } else if (paramP.type == FrameCuboid && 
+                   paramQ.type == FrameTetrahedron) {
+
+          if (countNoInterCT == 0) {
+
+            minNoInterCT = ratio;
+            maxNoInterCT = ratio;
+
+          } else {
+
+            if (minNoInterCT > ratio)
+              minNoInterCT = ratio;
+            if (maxNoInterCT < ratio)
+              maxNoInterCT = ratio;
+
+          }
+          sumNoInterCT += ratio;
+          ++countNoInterCT;
+
+        } else if (paramP.type == FrameTetrahedron && 
+                   paramQ.type == FrameCuboid) {
+
+          if (countNoInterTC == 0) {
+
+            minNoInterTC = ratio;
+            maxNoInterTC = ratio;
+
+          } else {
+
+            if (minNoInterTC > ratio)
+              minNoInterTC = ratio;
+            if (maxNoInterTC < ratio)
+              maxNoInterTC = ratio;
+
+          }
+          sumNoInterTC += ratio;
+          ++countNoInterTC;
+
+        } else if (paramP.type == FrameTetrahedron && 
+                   paramQ.type == FrameTetrahedron) {
+
+          if (countNoInterTT == 0) {
+
+            minNoInterTT = ratio;
+            maxNoInterTT = ratio;
+
+          } else {
+
+            if (minNoInterTT > ratio)
+              minNoInterTT = ratio;
+            if (maxNoInterTT < ratio)
+              maxNoInterTT = ratio;
+
+          }
+          sumNoInterTT += ratio;
+          ++countNoInterTT;
+
+        } 
       }
 
     // Else, if time of execution for FMB was less than a 10ms
@@ -249,7 +440,7 @@ void Qualification2D(
 
 }
 
-void Qualification3D(
+void Qualification3DStatic(
         const Param3D paramP,
         const Param3D paramQ) {
 
@@ -366,11 +557,11 @@ void Qualification3D(
         Frame3DPrint(tho);
         printf("\n");
         printf("FMB : ");
-        if (isIntersectingFMB == false)
+        if (isIntersectingFMB[0] == false)
           printf("no ");
         printf("intersection\n");
         printf("SAT : ");
-        if (isIntersectingSAT == false)
+        if (isIntersectingSAT[0] == false)
           printf("no ");
         printf("intersection\n");
 
@@ -402,6 +593,84 @@ void Qualification3D(
         sumInter += ratio;
         ++countInter;
 
+        if (paramP.type == FrameCuboid && 
+            paramQ.type == FrameCuboid) {
+
+          if (countInterCC == 0) {
+
+            minInterCC = ratio;
+            maxInterCC = ratio;
+
+          } else {
+
+            if (minInterCC > ratio)
+              minInterCC = ratio;
+            if (maxInterCC < ratio)
+              maxInterCC = ratio;
+
+          }
+          sumInterCC += ratio;
+          ++countInterCC;
+
+        } else if (paramP.type == FrameCuboid && 
+                   paramQ.type == FrameTetrahedron) {
+
+          if (countInterCT == 0) {
+
+            minInterCT = ratio;
+            maxInterCT = ratio;
+
+          } else {
+
+            if (minInterCT > ratio)
+              minInterCT = ratio;
+            if (maxInterCT < ratio)
+              maxInterCT = ratio;
+
+          }
+          sumInterCT += ratio;
+          ++countInterCT;
+
+        } else if (paramP.type == FrameTetrahedron && 
+                   paramQ.type == FrameCuboid) {
+
+          if (countInterTC == 0) {
+
+            minInterTC = ratio;
+            maxInterTC = ratio;
+
+          } else {
+
+            if (minInterTC > ratio)
+              minInterTC = ratio;
+            if (maxInterTC < ratio)
+              maxInterTC = ratio;
+
+          }
+          sumInterTC += ratio;
+          ++countInterTC;
+
+        } else if (paramP.type == FrameTetrahedron && 
+                   paramQ.type == FrameTetrahedron) {
+              
+          if (countInterTT == 0) {
+
+            minInterTT = ratio;
+            maxInterTT = ratio;
+
+          } else {
+
+            if (minInterTT > ratio)
+              minInterTT = ratio;
+            if (maxInterTT < ratio)
+              maxInterTT = ratio;
+
+          }
+          sumInterTT += ratio;
+          ++countInterTT;
+
+        }
+
       // Else, the Frames do not intersect
       } else {
 
@@ -422,6 +691,83 @@ void Qualification3D(
         sumNoInter += ratio;
         ++countNoInter;
 
+        if (paramP.type == FrameCuboid && 
+            paramQ.type == FrameCuboid) {
+
+          if (countNoInterCC == 0) {
+
+            minNoInterCC = ratio;
+            maxNoInterCC = ratio;
+
+          } else {
+
+            if (minNoInterCC > ratio)
+              minNoInterCC = ratio;
+            if (maxNoInterCC < ratio)
+              maxNoInterCC = ratio;
+
+          }
+          sumNoInterCC += ratio;
+          ++countNoInterCC;
+
+        } else if (paramP.type == FrameCuboid && 
+                   paramQ.type == FrameTetrahedron) {
+
+          if (countNoInterCT == 0) {
+
+            minNoInterCT = ratio;
+            maxNoInterCT = ratio;
+
+          } else {
+
+            if (minNoInterCT > ratio)
+              minNoInterCT = ratio;
+            if (maxNoInterCT < ratio)
+              maxNoInterCT = ratio;
+
+          }
+          sumNoInterCT += ratio;
+          ++countNoInterCT;
+
+        } else if (paramP.type == FrameTetrahedron && 
+                   paramQ.type == FrameCuboid) {
+
+          if (countNoInterTC == 0) {
+
+            minNoInterTC = ratio;
+            maxNoInterTC = ratio;
+
+          } else {
+
+            if (minNoInterTC > ratio)
+              minNoInterTC = ratio;
+            if (maxNoInterTC < ratio)
+              maxNoInterTC = ratio;
+
+          }
+          sumNoInterTC += ratio;
+          ++countNoInterTC;
+
+        } else if (paramP.type == FrameTetrahedron && 
+                   paramQ.type == FrameTetrahedron) {
+
+          if (countNoInterTT == 0) {
+
+            minNoInterTT = ratio;
+            maxNoInterTT = ratio;
+
+          } else {
+
+            if (minNoInterTT > ratio)
+              minNoInterTT = ratio;
+            if (maxNoInterTT < ratio)
+              maxNoInterTT = ratio;
+
+          }
+          sumNoInterTT += ratio;
+          ++countNoInterTT;
+
+        }
       }
 
     // Else, if time of execution for FMB was less than a 10ms
@@ -446,7 +792,7 @@ void Qualification3D(
 
 }
 
-void Qualify2D(void) {
+void Qualify2DStatic(void) {
 
   // Initialise the random generator
   srandom(time(NULL));
@@ -465,6 +811,42 @@ void Qualify2D(void) {
     maxNoInter = 0.0;
     sumNoInter = 0.0;
     countNoInter = 0;
+
+    minInterCC = 0.0;
+    maxInterCC = 0.0;
+    sumInterCC = 0.0;
+    countInterCC = 0;
+    minNoInterCC = 0.0;
+    maxNoInterCC = 0.0;
+    sumNoInterCC = 0.0;
+    countNoInterCC = 0;
+
+    minInterCT = 0.0;
+    maxInterCT = 0.0;
+    sumInterCT = 0.0;
+    countInterCT = 0;
+    minNoInterCT = 0.0;
+    maxNoInterCT = 0.0;
+    sumNoInterCT = 0.0;
+    countNoInterCT = 0;
+
+    minInterTC = 0.0;
+    maxInterTC = 0.0;
+    sumInterTC = 0.0;
+    countInterTC = 0;
+    minNoInterTC = 0.0;
+    maxNoInterTC = 0.0;
+    sumNoInterTC = 0.0;
+    countNoInterTC = 0;
+
+    minInterTT = 0.0;
+    maxInterTT = 0.0;
+    sumInterTT = 0.0;
+    countInterTT = 0;
+    minNoInterTT = 0.0;
+    maxNoInterTT = 0.0;
+    sumNoInterTT = 0.0;
+    countNoInterTT = 0;
 
     // Declare two variables to memozie the arguments to the
     // Qualification function
@@ -519,7 +901,7 @@ void Qualify2D(void) {
       if (fabs(detP) > EPSILON && fabs(detQ) > EPSILON) {
 
         // Run the validation on the two Frames
-        Qualification2D(
+        Qualification2DStatic(
           paramP,
           paramQ);
 
@@ -531,33 +913,101 @@ void Qualify2D(void) {
     if (iRun == 0) {
 
       printf("ratio (timeFMB / timeSAT)\n");
-      printf("run\tcountInter\tcountNoInter\t");
+      printf("run\t");
+      printf("countInter\tcountNoInter\t");
       printf("minInter\tavgInter\tmaxInter\t");
       printf("minNoInter\tavgNoInter\tmaxNoInter\t");
-      printf("minTotal\tavgTotal\tmaxTotal\n");
+      printf("minTotal\tavgTotal\tmaxTotal\t");
+
+      printf("countInterCC\tcountNoInterCC\t");
+      printf("minInterCC\tavgInterCC\tmaxInterCC\t");
+      printf("minNoInterCC\tavgNoInterCC\tmaxNoInterCC\t");
+      printf("minTotalCC\tavgTotalCC\tmaxTotalCC\t");
+
+      printf("countInterCT\tcountNoInterCT\t");
+      printf("minInterCT\tavgInterCT\tmaxInterCT\t");
+      printf("minNoInterCT\tavgNoInterCT\tmaxNoInterCT\t");
+      printf("minTotalCT\tavgTotalCT\tmaxTotalCT\t");
+
+      printf("countInterTC\tcountNoInterTC\t");
+      printf("minInterTC\tavgInterTC\tmaxInterTC\t");
+      printf("minNoInterTC\tavgNoInterTC\tmaxNoInterTC\t");
+      printf("minTotalTC\tavgTotalTC\tmaxTotalTC\t");
+
+      printf("countInterTT\tcountNoInterTT\t");
+      printf("minInterTT\tavgInterTT\tmaxInterTT\t");
+      printf("minNoInterTT\tavgNoInterTT\tmaxNoInterTT\t");
+      printf("minTotalTT\tavgTotalTT\tmaxTotalTT\n");
 
     }
 
-    printf("%d\t%lu\t%lu\t", iRun, countInter, countNoInter);
+    printf("%d\t", iRun);
 
+    printf("%lu\t%lu\t", countInter, countNoInter);
     double avgInter = sumInter / (double)countInter;
     printf("%f\t%f\t%f\t", minInter, avgInter, maxInter);
-
     double avgNoInter = sumNoInter / (double)countNoInter;
     printf("%f\t%f\t%f\t", minNoInter, avgNoInter, maxNoInter);
-
     double avg = 
       (sumInter + sumNoInter) / (double)(countInter + countNoInter);
-    printf("%f\t%f\t%f\n", 
+    printf("%f\t%f\t%f\t", 
       (minNoInter < minInter ? minNoInter : minInter), 
       avg,
       (maxNoInter > maxInter ? maxNoInter : maxInter));
+
+    printf("%lu\t%lu\t", countInterCC, countNoInterCC);
+    double avgInterCC = sumInterCC / (double)countInterCC;
+    printf("%f\t%f\t%f\t", minInterCC, avgInterCC, maxInterCC);
+    double avgNoInterCC = sumNoInterCC / (double)countNoInterCC;
+    printf("%f\t%f\t%f\t", minNoInterCC, avgNoInterCC, maxNoInterCC);
+    double avgCC = 
+      (sumInterCC + sumNoInterCC) / (double)(countInterCC + countNoInterCC);
+    printf("%f\t%f\t%f\t", 
+      (minNoInterCC < minInterCC ? minNoInterCC : minInterCC), 
+      avgCC,
+      (maxNoInterCC > maxInterCC ? maxNoInterCC : maxInterCC));
+
+    printf("%lu\t%lu\t", countInterCT, countNoInterCT);
+    double avgInterCT = sumInterCT / (double)countInterCT;
+    printf("%f\t%f\t%f\t", minInterCT, avgInterCT, maxInterCT);
+    double avgNoInterCT = sumNoInterCT / (double)countNoInterCT;
+    printf("%f\t%f\t%f\t", minNoInterCT, avgNoInterCT, maxNoInterCT);
+    double avgCT = 
+      (sumInterCT + sumNoInterCT) / (double)(countInterCT + countNoInterCT);
+    printf("%f\t%f\t%f\t", 
+      (minNoInterCT < minInterCT ? minNoInterCT : minInterCT), 
+      avgCT,
+      (maxNoInterCT > maxInterCT ? maxNoInterCT : maxInterCT));
+
+    printf("%lu\t%lu\t", countInterTC, countNoInterTC);
+    double avgInterTC = sumInterTC / (double)countInterTC;
+    printf("%f\t%f\t%f\t", minInterTC, avgInterTC, maxInterTC);
+    double avgNoInterTC = sumNoInterTC / (double)countNoInterTC;
+    printf("%f\t%f\t%f\t", minNoInterTC, avgNoInterTC, maxNoInterTC);
+    double avgTC = 
+      (sumInterTC + sumNoInterTC) / (double)(countInterTC + countNoInterTC);
+    printf("%f\t%f\t%f\t", 
+      (minNoInterTC < minInterTC ? minNoInterTC : minInterTC), 
+      avgTC,
+      (maxNoInterTC > maxInterTC ? maxNoInterTC : maxInterTC));
+
+    printf("%lu\t%lu\t", countInterTT, countNoInterTT);
+    double avgInterTT = sumInterTT / (double)countInterTT;
+    printf("%f\t%f\t%f\t", minInterTT, avgInterTT, maxInterTT);
+    double avgNoInterTT = sumNoInterTT / (double)countNoInterTT;
+    printf("%f\t%f\t%f\t", minNoInterTT, avgNoInterTT, maxNoInterTT);
+    double avgTT = 
+      (sumInterTT + sumNoInterTT) / (double)(countInterTT + countNoInterTT);
+    printf("%f\t%f\t%f\n", 
+      (minNoInterTT < minInterTT ? minNoInterTT : minInterTT), 
+      avgTT,
+      (maxNoInterTT > maxInterTT ? maxNoInterTT : maxInterTT));
 
   }
 
 }
 
-void Qualify3D(void) {
+void Qualify3DStatic(void) {
 
   // Initialise the random generator
   srandom(time(NULL));
@@ -576,6 +1026,42 @@ void Qualify3D(void) {
     maxNoInter = 0.0;
     sumNoInter = 0.0;
     countNoInter = 0;
+
+    minInterCC = 0.0;
+    maxInterCC = 0.0;
+    sumInterCC = 0.0;
+    countInterCC = 0;
+    minNoInterCC = 0.0;
+    maxNoInterCC = 0.0;
+    sumNoInterCC = 0.0;
+    countNoInterCC = 0;
+
+    minInterCT = 0.0;
+    maxInterCT = 0.0;
+    sumInterCT = 0.0;
+    countInterCT = 0;
+    minNoInterCT = 0.0;
+    maxNoInterCT = 0.0;
+    sumNoInterCT = 0.0;
+    countNoInterCT = 0;
+
+    minInterTC = 0.0;
+    maxInterTC = 0.0;
+    sumInterTC = 0.0;
+    countInterTC = 0;
+    minNoInterTC = 0.0;
+    maxNoInterTC = 0.0;
+    sumNoInterTC = 0.0;
+    countNoInterTC = 0;
+
+    minInterTT = 0.0;
+    maxInterTT = 0.0;
+    sumInterTT = 0.0;
+    countInterTT = 0;
+    minNoInterTT = 0.0;
+    maxNoInterTT = 0.0;
+    sumNoInterTT = 0.0;
+    countNoInterTT = 0;
 
     // Declare two variables to memozie the arguments to the
     // Qualification function
@@ -637,7 +1123,7 @@ void Qualify3D(void) {
       if (fabs(detP) > EPSILON && fabs(detQ) > EPSILON) {
 
         // Run the validation on the two Frames
-        Qualification3D(
+        Qualification3DStatic(
           paramP,
           paramQ);
 
@@ -649,27 +1135,95 @@ void Qualify3D(void) {
     if (iRun == 0) {
 
       printf("ratio (timeFMB / timeSAT)\n");
-      printf("run\tcountInter\tcountNoInter\t");
+      printf("run\t");
+      printf("countInter\tcountNoInter\t");
       printf("minInter\tavgInter\tmaxInter\t");
       printf("minNoInter\tavgNoInter\tmaxNoInter\t");
-      printf("minTotal\tavgTotal\tmaxTotal\n");
+      printf("minTotal\tavgTotal\tmaxTotal\t");
+
+      printf("countInterCC\tcountNoInterCC\t");
+      printf("minInterCC\tavgInterCC\tmaxInterCC\t");
+      printf("minNoInterCC\tavgNoInterCC\tmaxNoInterCC\t");
+      printf("minTotalCC\tavgTotalCC\tmaxTotalCC\t");
+
+      printf("countInterCT\tcountNoInterCT\t");
+      printf("minInterCT\tavgInterCT\tmaxInterCT\t");
+      printf("minNoInterCT\tavgNoInterCT\tmaxNoInterCT\t");
+      printf("minTotalCT\tavgTotalCT\tmaxTotalCT\t");
+
+      printf("countInterTC\tcountNoInterTC\t");
+      printf("minInterTC\tavgInterTC\tmaxInterTC\t");
+      printf("minNoInterTC\tavgNoInterTC\tmaxNoInterTC\t");
+      printf("minTotalTC\tavgTotalTC\tmaxTotalTC\t");
+
+      printf("countInterTT\tcountNoInterTT\t");
+      printf("minInterTT\tavgInterTT\tmaxInterTT\t");
+      printf("minNoInterTT\tavgNoInterTT\tmaxNoInterTT\t");
+      printf("minTotalTT\tavgTotalTT\tmaxTotalTT\n");
 
     }
 
-    printf("%d\t%lu\t%lu\t", iRun, countInter, countNoInter);
+    printf("%d\t", iRun);
 
+    printf("%lu\t%lu\t", countInter, countNoInter);
     double avgInter = sumInter / (double)countInter;
     printf("%f\t%f\t%f\t", minInter, avgInter, maxInter);
-
     double avgNoInter = sumNoInter / (double)countNoInter;
     printf("%f\t%f\t%f\t", minNoInter, avgNoInter, maxNoInter);
-
     double avg = 
       (sumInter + sumNoInter) / (double)(countInter + countNoInter);
-    printf("%f\t%f\t%f\n", 
+    printf("%f\t%f\t%f\t", 
       (minNoInter < minInter ? minNoInter : minInter), 
       avg,
       (maxNoInter > maxInter ? maxNoInter : maxInter));
+
+    printf("%lu\t%lu\t", countInterCC, countNoInterCC);
+    double avgInterCC = sumInterCC / (double)countInterCC;
+    printf("%f\t%f\t%f\t", minInterCC, avgInterCC, maxInterCC);
+    double avgNoInterCC = sumNoInterCC / (double)countNoInterCC;
+    printf("%f\t%f\t%f\t", minNoInterCC, avgNoInterCC, maxNoInterCC);
+    double avgCC = 
+      (sumInterCC + sumNoInterCC) / (double)(countInterCC + countNoInterCC);
+    printf("%f\t%f\t%f\t", 
+      (minNoInterCC < minInterCC ? minNoInterCC : minInterCC), 
+      avgCC,
+      (maxNoInterCC > maxInterCC ? maxNoInterCC : maxInterCC));
+
+    printf("%lu\t%lu\t", countInterCT, countNoInterCT);
+    double avgInterCT = sumInterCT / (double)countInterCT;
+    printf("%f\t%f\t%f\t", minInterCT, avgInterCT, maxInterCT);
+    double avgNoInterCT = sumNoInterCT / (double)countNoInterCT;
+    printf("%f\t%f\t%f\t", minNoInterCT, avgNoInterCT, maxNoInterCT);
+    double avgCT = 
+      (sumInterCT + sumNoInterCT) / (double)(countInterCT + countNoInterCT);
+    printf("%f\t%f\t%f\t", 
+      (minNoInterCT < minInterCT ? minNoInterCT : minInterCT), 
+      avgCT,
+      (maxNoInterCT > maxInterCT ? maxNoInterCT : maxInterCT));
+
+    printf("%lu\t%lu\t", countInterTC, countNoInterTC);
+    double avgInterTC = sumInterTC / (double)countInterTC;
+    printf("%f\t%f\t%f\t", minInterTC, avgInterTC, maxInterTC);
+    double avgNoInterTC = sumNoInterTC / (double)countNoInterTC;
+    printf("%f\t%f\t%f\t", minNoInterTC, avgNoInterTC, maxNoInterTC);
+    double avgTC = 
+      (sumInterTC + sumNoInterTC) / (double)(countInterTC + countNoInterTC);
+    printf("%f\t%f\t%f\t", 
+      (minNoInterTC < minInterTC ? minNoInterTC : minInterTC), 
+      avgTC,
+      (maxNoInterTC > maxInterTC ? maxNoInterTC : maxInterTC));
+
+    printf("%lu\t%lu\t", countInterTT, countNoInterTT);
+    double avgInterTT = sumInterTT / (double)countInterTT;
+    printf("%f\t%f\t%f\t", minInterTT, avgInterTT, maxInterTT);
+    double avgNoInterTT = sumNoInterTT / (double)countNoInterTT;
+    printf("%f\t%f\t%f\t", minNoInterTT, avgNoInterTT, maxNoInterTT);
+    double avgTT = 
+      (sumInterTT + sumNoInterTT) / (double)(countInterTT + countNoInterTT);
+    printf("%f\t%f\t%f\n", 
+      (minNoInterTT < minInterTT ? minNoInterTT : minInterTT), 
+      avgTT,
+      (maxNoInterTT > maxInterTT ? maxNoInterTT : maxInterTT));
 
   }
 
@@ -677,11 +1231,11 @@ void Qualify3D(void) {
 
 int main(int argc, char** argv) {
 
-  printf("===== 2D ======\n");
-  Qualify2D();
+  printf("===== 2D static ======\n");
+  Qualify2DStatic();
   printf("\n");
-  printf("===== 3D ======\n");
-  //Qualify3D();
+  printf("===== 3D static ======\n");
+  Qualify3DStatic();
 
   return 0;
 }

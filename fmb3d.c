@@ -5,11 +5,14 @@
 // Return 1.0 if v is positive, -1.0 if v is negative, 0.0 else
 #define sgn(v) (((0.0 < (v)) ? 1 : 0) - (((v) < 0.0) ? 1 : 0))
 
+// Return x if x is negative, 0.0 else
+#define neg(x) (x < 0.0 ? x : 0.0)
+
 #define FST_VAR 0
 #define SND_VAR 1
 #define THD_VAR 2
 
-#define EPSILON 0.0000001 //0.001
+#define EPSILON 0.0000001
 
 // ------------- Functions declaration -------------
 
@@ -47,6 +50,7 @@ void GetBound3D(
 
 // ------------- Functions implementation -------------
 
+// TODO
 void PrintMY3D(
   const double (*M)[3], 
   const double* Y, 
@@ -118,14 +122,6 @@ bool ElimVar3D(
         // coefficients in the row
         double sumNegCoeff = 0.0;
         
-        // Declare a variable to memorize if all the coefficients
-        // are >= 0.0
-        bool allPositive = true;
-
-        // Declare a variable to memorize if all the coefficients
-        // are null
-        bool allNull = true;
-
         // Add the sum of the two normed (relative to the eliminated
         // variable) rows into the result system. This actually
         // eliminate the variable while keeping the constraints on
@@ -140,63 +136,27 @@ bool ElimVar3D(
               M[iRow][iCol] / fabsMIRowIVar + 
               M[jRow][iCol] / fabs(M[jRow][iVar]);
 
-            // If the coefficient is negative
-            if (Mp[*nbRemainRows][jCol] < -1.0 * EPSILON) {
+            // Update the sum of the negative coefficient
+            sumNegCoeff += neg(Mp[*nbRemainRows][jCol]);
 
-              // Memorize that at least one coefficient is not positive
-              allPositive = false;
-
-              // Memorize that at least one coefficient is not null
-              allNull = false;
-
-              // Update the sum of the negative coefficient
-              sumNegCoeff += Mp[*nbRemainRows][jCol];
-
-            // Else, if the coefficient is positive
-            } else if (Mp[*nbRemainRows][jCol] > EPSILON) {
-
-              // Memorize that at least one coefficient is not null
-              allNull = false;
-
-            }
-
+            // Increment the number of columns in the new inequality
             ++jCol;
 
           }
 
         }
 
+        // Update the right side of the inequality
         Yp[*nbRemainRows] = 
           YIRowDivideByFabsMIRowIVar +
           Y[jRow] / fabs(M[jRow][iVar]);
 
-        // If at least one coefficient is not null
-        if (allNull == false) {
+        // If the right side of the inequality if lower than the sum of 
+        // negative coefficients in the row
+        // (Add epsilon for numerical imprecision)
+        if (Yp[*nbRemainRows] < sumNegCoeff + EPSILON) {
 
-          // If all the coefficients are positive and the right side of
-          // the inequality is negative
-          if (allPositive == true && 
-              Yp[*nbRemainRows] < 0.0) {
-
-            // As X is in [0,1], the system is inconsistent
-            return true;
-
-          }
-
-          // If the right side of the inequality if lower than the sum of 
-          // negative coefficients in the row
-          if (Yp[*nbRemainRows] < sumNegCoeff) {
-
-            // As X is in [0,1], the system is inconsistent
-            return true;
-
-          }
-
-        // Else all coefficients are null, if the right side is null
-        // or negative
-        } else if (Yp[*nbRemainRows] <= 0.0) {
-
-          // The system is inconsistent
+          // Given that X is in [0,1], the system is inconsistent
           return true;
 
         }
@@ -253,6 +213,7 @@ bool ElimVar3D(
 
   }
 
+  // If we reach here the system is not inconsistent
   return false;
 
 }
@@ -333,6 +294,7 @@ void GetBound3D(
 // The resulting AABB may be larger than the smallest possible AABB
 // The resulting AABB of FMBTestIntersection(A,B) may be different
 // of the resulting AABB of FMBTestIntersection(B,A)
+// The resulting AABB is given in 'tho' 's local coordinates system
 bool FMBTestIntersection3D(
   const Frame3D* const that, 
   const Frame3D* const tho, 
@@ -348,261 +310,131 @@ bool FMBTestIntersection3D(
   double M[12][3];
   double Y[12];
 
-  // Shortcuts
-  double (*thoProjComp)[3] = thoProj.comp;
-  double *thoProjOrig = thoProj.orig;
+  // Create the inequality system
 
-  // Variable to memorise the current row in the system
-  int iRow = 0;
+  // -sum_iC_j,iX_i<=O_j
+  M[0][0] = -thoProj.comp[0][0];
+  M[0][1] = -thoProj.comp[1][0];
+  M[0][2] = -thoProj.comp[2][0];
+  Y[0] = thoProj.orig[0];
+  if (Y[0] < neg(M[0][0]) + neg(M[0][1]) + neg(M[0][2]))
+    return false;
 
-  // Shortcuts
-  double* MIRow;
+  M[1][0] = -thoProj.comp[0][1];
+  M[1][1] = -thoProj.comp[1][1];
+  M[1][2] = -thoProj.comp[2][1];
+  Y[1] = thoProj.orig[1];
+  if (Y[1] < neg(M[1][0]) + neg(M[1][1]) + neg(M[1][2]))
+    return false;
 
-  // Constraints O + C.X >= 0.0
-  // and constraints x_i >= 0.0
-  for (;
-       iRow < 3;
-       ++iRow) {
+  M[2][0] = -thoProj.comp[0][2];
+  M[2][1] = -thoProj.comp[1][2];
+  M[2][2] = -thoProj.comp[2][2];
+  Y[2] = thoProj.orig[2];
+  if (Y[2] < neg(M[2][0]) + neg(M[2][1]) + neg(M[2][2]))
+    return false;
 
-    // Shortcuts
-    MIRow = M[iRow];
-    double* MJRow = M[iRow + 3];
-
-    // For each column of the system
-    double sumNeg = 0.0;
-    for (int iCol = 3;
-         iCol--;) {
-
-      MIRow[iCol] = -1.0 * thoProjComp[iCol][iRow];
-      if (MIRow[iCol] < 0.0) {
-        sumNeg += MIRow[iCol];
-      }
-      
-      // If it's on the diagonal 
-      if (iRow == iCol) {
-
-        MJRow[iCol] = -1.0;
-
-      // Else it's not on the diagonal
-      } else {
-
-        MJRow[iCol] = 0.0;
-
-      }
-    }
-    if (thoProjOrig[iRow] < sumNeg)
-      return false;
-    Y[iRow] = thoProjOrig[iRow];
-    Y[iRow + 3] = 0.0;
-  }
-  iRow = 6;
+  // Variable to memorise the nb of rows in the system
+  int nbRows = 3;
 
   if (that->type == FrameCuboid) {
 
-    // Constraints O + C.X <= 1.0
-    for (int jRow = 0;
-         jRow < 3;
-         ++jRow, ++iRow) {
+    // sum_iC_j,iX_i<=1.0-O_j
+    M[nbRows][0] = thoProj.comp[0][0];
+    M[nbRows][1] = thoProj.comp[1][0];
+    M[nbRows][2] = thoProj.comp[2][0];
+    Y[nbRows] = 1.0 - thoProj.orig[0];
+    if (Y[nbRows] < neg(M[nbRows][0]) + neg(M[nbRows][1]) + 
+                    neg(M[nbRows][2]))
+      return false;
+    ++nbRows;
 
-      // Shortcuts
-      MIRow = M[iRow];
-      double* MJRow = M[jRow];
+    M[nbRows][0] = thoProj.comp[0][1];
+    M[nbRows][1] = thoProj.comp[1][1];
+    M[nbRows][2] = thoProj.comp[2][1];
+    Y[nbRows] = 1.0 - thoProj.orig[1];
+    if (Y[nbRows] < neg(M[nbRows][0]) + neg(M[nbRows][1]) + 
+                    neg(M[nbRows][2]))
+      return false;
+    ++nbRows;
 
-      // For each column of the system
-      double sumNeg = 0.0;
-      for (int iCol = 3;
-           iCol--;) {
+    M[nbRows][0] = thoProj.comp[0][2];
+    M[nbRows][1] = thoProj.comp[1][2];
+    M[nbRows][2] = thoProj.comp[2][2];
+    Y[nbRows] = 1.0 - thoProj.orig[2];
+    if (Y[nbRows] < neg(M[nbRows][0]) + neg(M[nbRows][1]) + 
+                    neg(M[nbRows][2]))
+      return false;
+    ++nbRows;
 
-        MIRow[iCol] = -1.0 * MJRow[iCol];
-        if (MIRow[iCol] < 0.0) {
-          sumNeg += MIRow[iCol];
-        }
-        
-      }
-      Y[iRow] = 1.0 - thoProjOrig[jRow];
-      if (Y[iRow] < sumNeg)
-        return false;
-    }
-
-  // Else, the first frame is a Tetrahedron
   } else {
 
-    // Declare a variable to memorize the sum of the negative 
-    // coefficients in the row
-    double sumNegCoeff = 0.0;
-    
-    // Declare a variable to memorize if all the coefficients
-    // are null
-    bool allNull = true;
-
-    // Shortcut
-    double* MRow = M[iRow];
-
-    Y[iRow] = 1.0;
-
-    // For each column of the system
-    for (int iCol = 3;
-         iCol--;) {
-
-      MRow[iCol] = 0.0;
-
-      // For each component
-      for (int iAxis = 3;
-           iAxis--;) {
-
-        MRow[iCol] += thoProjComp[iCol][iAxis];
-
-      }
-
-      Y[iRow] -= thoProjOrig[iCol];
-
-      // If the coefficient is negative
-      if (MRow[iCol] < -1.0 * EPSILON) {
-
-        // Memorize that at least one coefficient is not null
-        allNull = false;
-
-        // Update the sum of the negative coefficient
-        sumNegCoeff += MRow[iCol];
-
-      // Else, if the coefficient is positive
-      } else if (MRow[iCol] > EPSILON) {
-
-        // Memorize that at least one coefficient is not null
-        allNull = false;
-
-      }
-
-    }
-
-    // If at least one coefficient is not null
-    if (allNull == false) {
-
-      // If the right side of the inequality is lower than the sum of 
-      // negative coefficients in the row
-      if (Y[iRow] < sumNegCoeff) {
-
-        // As X is in [0,1], the system is inconsistent
-        // there is no intersection
-        return false;
-
-      }
-
-    // Else all coefficients are null, if the right side is null
-    // or negative
-    } else if (Y[iRow] <= 0.0) {
-
-      // The system is inconsistent, there is no intersection
+    // sum_j(sum_iC_j,iX_i)<=1.0-sum_iO_i
+    M[nbRows][0] = 
+      thoProj.comp[0][0] + thoProj.comp[0][1] + thoProj.comp[0][2];
+    M[nbRows][1] = 
+      thoProj.comp[1][0] + thoProj.comp[1][1] + thoProj.comp[1][2];
+    M[nbRows][2] = 
+      thoProj.comp[2][0] + thoProj.comp[2][1] + thoProj.comp[2][2];
+    Y[nbRows] = 
+      1.0 - thoProj.orig[0] - thoProj.orig[1] - thoProj.orig[2];
+    if (Y[nbRows] < neg(M[nbRows][0]) + neg(M[nbRows][1]) + 
+                    neg(M[nbRows][2]))
       return false;
-
-    }
-
-    // Update the number of rows in the system
-    ++iRow;
+    ++nbRows;
 
   }
 
   if (tho->type == FrameCuboid) {
 
-    // Constraints x_i <= 1.0
-    for (int jRow = 0;
-         jRow < 3;
-         ++jRow, ++iRow) {
+    // X_i <= 1.0
+    M[nbRows][0] = 1.0;
+    M[nbRows][1] = 0.0;
+    M[nbRows][2] = 0.0;
+    Y[nbRows] = 1.0;
+    ++nbRows;
 
-      // Shortcuts
-      MIRow = M[iRow];
+    M[nbRows][0] = 0.0;
+    M[nbRows][1] = 1.0;
+    M[nbRows][2] = 0.0;
+    Y[nbRows] = 1.0;
+    ++nbRows;
 
-      // For each column of the system
-      for (int iCol = 3;
-           iCol--;) {
-        // If it's on the diagonal 
-        if (jRow == iCol) {
+    M[nbRows][0] = 0.0;
+    M[nbRows][1] = 0.0;
+    M[nbRows][2] = 1.0;
+    Y[nbRows] = 1.0;
+    ++nbRows;
 
-          MIRow[iCol] = 1.0;
-
-        // Else it's not on the diagonal
-        } else {
-
-          MIRow[iCol] = 0.0;
-
-        }
-
-      }
-      Y[iRow] = 1.0;
-
-    }
-
-  // Else, the second frame is a Tetrahedron
   } else {
-
-    // Declare a variable to memorize the sum of the negative 
-    // coefficients in the row
-    double sumNegCoeff = 0.0;
     
-    // Declare a variable to memorize if all the coefficients
-    // are null
-    bool allNull = true;
-
-    // Shortcut
-    double* MRow = M[iRow];
-
-    // For each column of the system
-    for (int iCol = 3;
-         iCol--;) {
-
-      MRow[iCol] =  1.0;
-
-      // If the coefficient is negative
-      if (MRow[iCol] < -1.0 * EPSILON) {
-
-        // Memorize that at least one coefficient is not null
-        allNull = false;
-
-        // Update the sum of the negative coefficient
-        sumNegCoeff += MRow[iCol];
-
-      // Else, if the coefficient is positive
-      } else if (MRow[iCol] > EPSILON) {
-
-        // Memorize that at least one coefficient is not null
-        allNull = false;
-
-      }
-
-    }
-
-    Y[iRow] = 1.0;
-
-    // If at least one coefficient is not null
-    if (allNull == false) {
-
-      // If the right side of the inequality is lower than the sum of 
-      // negative coefficients in the row
-      if (Y[iRow] < sumNegCoeff) {
-
-        // As X is in [0,1], the system is inconsistent
-        // there is no intersection
-        return false;
-
-      }
-
-    // Else all coefficients are null, if the right side is null
-    // or negative
-    } else if (Y[iRow] <= 0.0) {
-
-      // The system is inconsistent, there is no intersection
-      return false;
-
-    }
-
-    // Update the number of rows in the system
-    ++iRow;
+    // sum_iX_i<=1.0
+    M[nbRows][0] = 1.0;
+    M[nbRows][1] = 1.0;
+    M[nbRows][2] = 1.0;
+    Y[nbRows] = 1.0;
+    ++nbRows;
 
   }
 
-  // Declare a variable to memorize the total number of rows in the
-  // system. It may vary depending on the type of Frames
-  int nbRows = iRow;
+  // -X_i <= 0.0
+  M[nbRows][0] = -1.0;
+  M[nbRows][1] = 0.0;
+  M[nbRows][2] = 0.0;
+  Y[nbRows] = 0.0;
+  ++nbRows;
+
+  M[nbRows][0] = 0.0;
+  M[nbRows][1] = -1.0;
+  M[nbRows][2] = 0.0;
+  Y[nbRows] = 0.0;
+  ++nbRows;
+
+  M[nbRows][0] = 0.0;
+  M[nbRows][1] = 0.0;
+  M[nbRows][2] = -1.0;
+  Y[nbRows] = 0.0;
+  ++nbRows;
 
   // Solve the system
 
@@ -611,13 +443,11 @@ bool FMBTestIntersection3D(
   AABB3D bdgBoxLocal;
   
   // Declare variables to eliminate the first variable
-  // The number of rows is set conservatively, one may try to reduce
-  // them if needed  
   double Mp[36][3];
   double Yp[36];
   int nbRowsP;
 
-  // Eliminate the first variable
+  // Eliminate the first variable in the original system
   bool inconsistency = 
     ElimVar3D(
       FST_VAR,
@@ -638,8 +468,6 @@ bool FMBTestIntersection3D(
   }
 
   // Declare variables to eliminate the second variable
-  // The number of rows is set conservatively, one may try to reduce
-  // them if needed  
   double Mpp[324][3];
   double Ypp[324];
   int nbRowsPP;
@@ -678,9 +506,17 @@ bool FMBTestIntersection3D(
     // The two Frames are not in intersection
     return false;
 
+  // Else, if the bounds are consistent here it means
+  // the two Frames are in intersection.
+  // If the user hasn't requested for the resulting bounding box
+  } else if (bdgBox == NULL) {
+
+    // Immediately return true
+    return true;
+
   }
 
-  // Eliminate the third variable (which is second first in the new
+  // Eliminate the third variable (which is the first in the new
   // system)
   inconsistency = 
     ElimVar3D(
@@ -693,22 +529,6 @@ bool FMBTestIntersection3D(
       Ypp, 
       &nbRowsPP);
 
-  // If the resulting system is inconsistent
-  if (inconsistency == true) {
-
-    // The two Frames are not in intersection
-    return false;
-
-  // Else, if the bounds are consistent here it means
-  // the two Frames are in intersection.
-  // If the user hasn't requested for the resulting bounding box
-  } else if (bdgBox == NULL) {
-
-    // Immediately return true
-    return true;
-
-  }
-
   // Get the bounds for the remaining second variable
   GetBound3D(
     SND_VAR,
@@ -717,19 +537,13 @@ bool FMBTestIntersection3D(
     nbRowsPP,
     &bdgBoxLocal);
 
-  // If the bounds are inconstent
-  if (bdgBoxLocal.min[SND_VAR] >= bdgBoxLocal.max[SND_VAR]) {
-
-    // The two Frames are not in intersection
-    return false;
-
-  }
-
   // Now starts again from the initial systems and eliminate the 
   // second and third variables to get the bounds of the first variable
+  // No need to check for consistency because we already know here
+  // that the Frames are intersecting and the system is consistent
   inconsistency = 
     ElimVar3D(
-      SND_VAR,
+      THD_VAR,
       M, 
       Y, 
       nbRows, 
@@ -737,10 +551,6 @@ bool FMBTestIntersection3D(
       Mp, 
       Yp, 
       &nbRowsP);
-
-  if (inconsistency == true) {
-    return false;
-  }
 
   inconsistency = 
     ElimVar3D(
@@ -753,10 +563,6 @@ bool FMBTestIntersection3D(
       Ypp, 
       &nbRowsPP);
 
-  if (inconsistency == true) {
-    return false;
-  }
-
   GetBound3D(
     FST_VAR,
     Mpp,
@@ -764,40 +570,11 @@ bool FMBTestIntersection3D(
     nbRowsPP,
     &bdgBoxLocal);
 
-  if (bdgBoxLocal.min[FST_VAR] >= bdgBoxLocal.max[FST_VAR]) {
-    return false;
-  }
-
   // If the user requested the resulting bounding box
   if (bdgBox != NULL) {
 
-    // Export the local bounding box toward the real coordinates
-    // system
-    Frame3DExportBdgBox(
-      tho, 
-      &bdgBoxLocal, 
-      bdgBox);
-
-    // Clip with the AABB of 'that'
-    double* const min = bdgBox->min;
-    double* const max = bdgBox->max;
-    const double* const thatBdgBoxMin = that->bdgBox.min;
-    const double* const thatBdgBoxMax = that->bdgBox.max;
-    for (int iAxis = 3; 
-         iAxis--;) {
-
-      if (min[iAxis] < thatBdgBoxMin[iAxis]) {
-
-        min[iAxis] = thatBdgBoxMin[iAxis];
-
-      }
-      if (max[iAxis] > thatBdgBoxMax[iAxis]) {
-
-        max[iAxis] = thatBdgBoxMax[iAxis];
-
-      }
-
-    }
+    // Memorize the result
+    *bdgBox = bdgBoxLocal;
     
   }
 

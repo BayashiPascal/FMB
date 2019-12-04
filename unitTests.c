@@ -47,7 +47,7 @@ void UnitTest2D(
       paramQ.comp);
 
   // Declare a variable to memorize the resulting bounding box
-  AABB2D bdgBox;
+  AABB2D bdgBoxLocal;
 
   // Helper variables to loop on the pair (that, tho) and (tho, that)
   Frame2D* that = &P;
@@ -68,7 +68,7 @@ void UnitTest2D(
       FMBTestIntersection2D(
         that, 
         tho, 
-        &bdgBox);
+        &bdgBoxLocal);
 
     // If the test hasn't given the expected answer about intersection
     if (isIntersecting != correctAnswer) {
@@ -90,6 +90,29 @@ void UnitTest2D(
 
       // If the Frames were intersecting
       if (isIntersecting == true) {
+
+        AABB2D bdgBox;
+        Frame2DExportBdgBox(
+          tho, 
+          &bdgBoxLocal, 
+          &bdgBox);
+
+        for (int iAxis = 2; 
+             iAxis--;) {
+
+          if (bdgBox.min[iAxis] < that->bdgBox.min[iAxis]) {
+            bdgBox.min[iAxis] = that->bdgBox.min[iAxis];
+          }
+          if (bdgBox.max[iAxis] > that->bdgBox.max[iAxis]) {
+            bdgBox.max[iAxis] = that->bdgBox.max[iAxis];
+          }
+          if (bdgBox.min[iAxis] < tho->bdgBox.min[iAxis]) {
+            bdgBox.min[iAxis] = tho->bdgBox.min[iAxis];
+          }
+          if (bdgBox.max[iAxis] > tho->bdgBox.max[iAxis]) {
+            bdgBox.max[iAxis] = tho->bdgBox.max[iAxis];
+          }
+        }
 
         // Check the bounding box
         bool flag = true;
@@ -168,7 +191,7 @@ void UnitTest3D(
       paramQ.comp);
 
   // Declare a variable to memorize the resulting bounding box
-  AABB3D bdgBox;
+  AABB3D bdgBoxLocal;
 
   // Helper variables to loop on the pair (that, tho) and (tho, that)
   Frame3D* that = &P;
@@ -189,7 +212,7 @@ void UnitTest3D(
       FMBTestIntersection3D(
         that, 
         tho, 
-        &bdgBox);
+        &bdgBoxLocal);
 
     // If the test hasn't given the expected answer about intersection
     if (isIntersecting != correctAnswer) {
@@ -211,6 +234,29 @@ void UnitTest3D(
 
       // If the Frames were intersecting
       if (isIntersecting == true) {
+
+        AABB3D bdgBox;
+        Frame3DExportBdgBox(
+          tho, 
+          &bdgBoxLocal, 
+          &bdgBox);
+
+        for (int iAxis = 2; 
+             iAxis--;) {
+
+          if (bdgBox.min[iAxis] < that->bdgBox.min[iAxis]) {
+            bdgBox.min[iAxis] = that->bdgBox.min[iAxis];
+          }
+          if (bdgBox.max[iAxis] > that->bdgBox.max[iAxis]) {
+            bdgBox.max[iAxis] = that->bdgBox.max[iAxis];
+          }
+          if (bdgBox.min[iAxis] < tho->bdgBox.min[iAxis]) {
+            bdgBox.min[iAxis] = tho->bdgBox.min[iAxis];
+          }
+          if (bdgBox.max[iAxis] > tho->bdgBox.max[iAxis]) {
+            bdgBox.max[iAxis] = tho->bdgBox.max[iAxis];
+          }
+        }
 
         // Check the bounding box
         bool flag = true;

@@ -37,19 +37,56 @@ int main(int argc, char** argv) {
 
   // Declare a variable to memorize the result of the intersection
   // detection
-  AABB3D bdgBox3D;
+  AABB3D bdgBox3DLocal;
 
   // Test for intersection between P and Q
   bool isIntersecting3D = 
     FMBTestIntersection3D(
       &P3D, 
       &Q3D, 
-      &bdgBox3D);
+      &bdgBox3DLocal);
 
   // If the two objects are intersecting
   if (isIntersecting3D) {
 
     printf("Intersection detected in AABB ");
+
+    // Export the local bounding box toward the real coordinates
+    // system
+    AABB3D bdgBox3D;
+    Frame3DExportBdgBox(
+      &Q3D, 
+      &bdgBox3DLocal, 
+      &bdgBox3D);
+
+    // Clip with the AABB of 'Q3D' and 'P3D' to improve results
+    for (int iAxis = 2; 
+         iAxis--;) {
+
+      if (bdgBox3D.min[iAxis] < P3D.bdgBox.min[iAxis]) {
+
+        bdgBox3D.min[iAxis] = P3D.bdgBox.min[iAxis];
+
+      }
+      if (bdgBox3D.max[iAxis] > P3D.bdgBox.max[iAxis]) {
+
+        bdgBox3D.max[iAxis] = P3D.bdgBox.max[iAxis];
+
+      }
+
+      if (bdgBox3D.min[iAxis] < Q3D.bdgBox.min[iAxis]) {
+
+        bdgBox3D.min[iAxis] = Q3D.bdgBox.min[iAxis];
+
+      }
+      if (bdgBox3D.max[iAxis] > Q3D.bdgBox.max[iAxis]) {
+
+        bdgBox3D.max[iAxis] = Q3D.bdgBox.max[iAxis];
+
+      }
+
+    }
+
     AABB3DPrint(&bdgBox3D);
     printf("\n");
 
@@ -86,19 +123,56 @@ int main(int argc, char** argv) {
 
   // Declare a variable to memorize the result of the intersection
   // detection
-  AABB2D bdgBox2D;
+  AABB2D bdgBox2DLocal;
 
   // Test for intersection between P and Q
   bool isIntersecting2D = 
     FMBTestIntersection2D(
       &P2D, 
       &Q2D, 
-      &bdgBox2D);
+      &bdgBox2DLocal);
 
   // If the two objects are intersecting
   if (isIntersecting2D) {
 
     printf("Intersection detected in AABB ");
+
+    // Export the local bounding box toward the real coordinates
+    // system
+    AABB2D bdgBox2D;
+    Frame2DExportBdgBox(
+      &Q2D, 
+      &bdgBox2DLocal, 
+      &bdgBox2D);
+
+    // Clip with the AABB of 'Q2D' and 'P2D' to improve results
+    for (int iAxis = 2; 
+         iAxis--;) {
+
+      if (bdgBox2D.min[iAxis] < P2D.bdgBox.min[iAxis]) {
+
+        bdgBox2D.min[iAxis] = P2D.bdgBox.min[iAxis];
+
+      }
+      if (bdgBox2D.max[iAxis] > P2D.bdgBox.max[iAxis]) {
+
+        bdgBox2D.max[iAxis] = P2D.bdgBox.max[iAxis];
+
+      }
+
+      if (bdgBox2D.min[iAxis] < Q2D.bdgBox.min[iAxis]) {
+
+        bdgBox2D.min[iAxis] = Q2D.bdgBox.min[iAxis];
+
+      }
+      if (bdgBox2D.max[iAxis] > Q2D.bdgBox.max[iAxis]) {
+
+        bdgBox2D.max[iAxis] = Q2D.bdgBox.max[iAxis];
+
+      }
+
+    }
+
     AABB2DPrint(&bdgBox2D);
     printf("\n");
 
