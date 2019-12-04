@@ -24,11 +24,11 @@
 // else return true
 bool ElimVar2DTime(
      const int iVar, 
-  const double (*M)[2], 
+  const double (*M)[3], 
   const double* Y, 
      const int nbRows, 
      const int nbCols, 
-        double (*Mp)[2], 
+        double (*Mp)[3], 
         double* Yp, 
     int* const nbRemainRows);
 
@@ -43,7 +43,7 @@ bool ElimVar2DTime(
 // mean the system has no solution
 void GetBound2DTime(
      const int iVar,
-  const double (*M)[2], 
+  const double (*M)[3], 
   const double* Y, 
      const int nbRows, 
    AABB2DTime* const bdgBox);
@@ -52,7 +52,7 @@ void GetBound2DTime(
 
 // TODO
 void PrintMY2DTime(
-  const double (*M)[2], 
+  const double (*M)[3], 
   const double* Y, 
      const int nbRows,
      const int nbVar) {
@@ -65,10 +65,10 @@ void PrintMY2DTime(
 }
 
 void PrintM2DTime(
-  const double (*M)[2], 
+  const double (*M)[3], 
      const int nbRows) {
   for (int iRow = 0; iRow < nbRows; ++iRow) {
-    for (int iCol = 0; iCol < 2; ++iCol) {
+    for (int iCol = 0; iCol < 3; ++iCol) {
       printf("%f ", M[iRow][iCol]);
     }
     printf("\n");
@@ -84,11 +84,11 @@ void PrintM2DTime(
 // else return false
 bool ElimVar2DTime(
      const int iVar, 
-  const double (*M)[2], 
+  const double (*M)[3], 
   const double* Y, 
      const int nbRows, 
      const int nbCols, 
-        double (*Mp)[2], 
+        double (*Mp)[3], 
         double* Yp, 
     int* const nbRemainRows) {
 
@@ -228,7 +228,7 @@ bool ElimVar2DTime(
 // mean the system has no solution
 void GetBound2DTime(
      const int iVar,
-  const double (*M)[2], 
+  const double (*M)[3], 
   const double* Y, 
      const int nbRows, 
    AABB2DTime* const bdgBox) {
@@ -285,6 +285,16 @@ void GetBound2DTime(
 
 }
 
+// Test for intersection between Frame 'that' and Frame 'tho'
+// Return true if the two Frames are intersecting, else false
+// If the Frame are intersecting the AABB of the intersection
+// is stored into 'bdgBox', else 'bdgBox' is not modified
+// If 'bdgBox' is null, the result AABB is not memorized (to use if
+// unnecessary and want to speed up the algorithm)
+// The resulting AABB may be larger than the smallest possible AABB
+// The resulting AABB of FMBTestIntersection(A,B) may be different
+// of the resulting AABB of FMBTestIntersection(B,A)
+// The resulting AABB is given in 'tho' 's local coordinates system
 bool FMBTestIntersection2DTime(
   const Frame2DTime* const that, 
   const Frame2DTime* const tho, 
@@ -297,22 +307,24 @@ bool FMBTestIntersection2DTime(
 
   // Declare two variables to memorize the system to be solved M.X <= Y
   // (M arrangement is [iRow][iCol])
-  double M[8][2];
-  double Y[8];
+  double M[10][3];
+  double Y[10];
 
   // Create the inequality system
 
-  // -sum_iC_j,iX_i<=O_j
+  // -V_jT-sum_iC_j,iX_i<=O_j
   M[0][0] = -thoProj.comp[0][0];
   M[0][1] = -thoProj.comp[1][0];
+  M[0][2] = -thoProj.speed[0];
   Y[0] = thoProj.orig[0];
-  if (Y[0] < neg(M[0][0]) + neg(M[0][1]))
+  if (Y[0] < neg(M[0][0]) + neg(M[0][1]) + neg(M[0][2]))
     return false;
 
   M[1][0] = -thoProj.comp[0][1];
   M[1][1] = -thoProj.comp[1][1];
+  M[1][2] = -thoProj.speed[1];
   Y[1] = thoProj.orig[1];
-  if (Y[1] < neg(M[1][0]) + neg(M[1][1]))
+  if (Y[1] < neg(M[1][0]) + neg(M[1][1]) + neg(M[1][2]))
     return false;
 
   // Variable to memorise the nb of rows in the system
@@ -320,28 +332,34 @@ bool FMBTestIntersection2DTime(
 
   if (that->type == FrameCuboid) {
 
-    // sum_iC_j,iX_i<=1.0-O_j
+    // V_jT+sum_iC_j,iX_i<=1.0-O_j
     M[nbRows][0] = thoProj.comp[0][0];
     M[nbRows][1] = thoProj.comp[1][0];
+    M[nbRows][2] = thoProj.speed[0];
     Y[nbRows] = 1.0 - thoProj.orig[0];
-    if (Y[nbRows] < neg(M[nbRows][0]) + neg(M[nbRows][1]))
+    if (Y[nbRows] < neg(M[nbRows][0]) + neg(M[nbRows][1]) + 
+                    neg(M[nbRows][2]))
       return false;
     ++nbRows;
 
     M[nbRows][0] = thoProj.comp[0][1];
     M[nbRows][1] = thoProj.comp[1][1];
+    M[nbRows][2] = thoProj.speed[1];
     Y[nbRows] = 1.0 - thoProj.orig[1];
-    if (Y[nbRows] < neg(M[nbRows][0]) + neg(M[nbRows][1]))
+    if (Y[nbRows] < neg(M[nbRows][0]) + neg(M[nbRows][1]) + 
+                    neg(M[nbRows][2]))
       return false;
     ++nbRows;
 
   } else {
 
-    // sum_j(sum_iC_j,iX_i)<=1.0-sum_iO_i
+    // sum_j(V_jT+sum_iC_j,iX_i)<=1.0-sum_iO_i
     M[nbRows][0] = thoProj.comp[0][0] + thoProj.comp[0][1];
     M[nbRows][1] = thoProj.comp[1][0] + thoProj.comp[1][1];
+    M[nbRows][2] = thoProj.speed[0] + thoProj.speed[1];
     Y[nbRows] = 1.0 - thoProj.orig[0] - thoProj.orig[1];
-    if (Y[nbRows] < neg(M[nbRows][0]) + neg(M[nbRows][1]))
+    if (Y[nbRows] < neg(M[nbRows][0]) + neg(M[nbRows][1]) + 
+                    neg(M[nbRows][2]))
       return false;
     ++nbRows;
 
@@ -352,11 +370,13 @@ bool FMBTestIntersection2DTime(
     // X_i <= 1.0
     M[nbRows][0] = 1.0;
     M[nbRows][1] = 0.0;
+    M[nbRows][2] = 0.0;
     Y[nbRows] = 1.0;
     ++nbRows;
 
     M[nbRows][0] = 0.0;
     M[nbRows][1] = 1.0;
+    M[nbRows][2] = 0.0;
     Y[nbRows] = 1.0;
     ++nbRows;
 
@@ -365,6 +385,7 @@ bool FMBTestIntersection2DTime(
     // sum_iX_i<=1.0
     M[nbRows][0] = 1.0;
     M[nbRows][1] = 1.0;
+    M[nbRows][2] = 0.0;
     Y[nbRows] = 1.0;
     ++nbRows;
 
@@ -373,11 +394,26 @@ bool FMBTestIntersection2DTime(
   // -X_i <= 0.0
   M[nbRows][0] = -1.0;
   M[nbRows][1] = 0.0;
+  M[nbRows][2] = 0.0;
   Y[nbRows] = 0.0;
   ++nbRows;
 
   M[nbRows][0] = 0.0;
   M[nbRows][1] = -1.0;
+  M[nbRows][2] = 0.0;
+  Y[nbRows] = 0.0;
+  ++nbRows;
+
+  // 0.0 <= t <= 1.0
+  M[nbRows][0] = 0.0;
+  M[nbRows][1] = 0.0;
+  M[nbRows][2] = 1.0;
+  Y[nbRows] = 1.0;
+  ++nbRows;
+
+  M[nbRows][0] = 0.0;
+  M[nbRows][1] = 0.0;
+  M[nbRows][2] = -1.0;
   Y[nbRows] = 0.0;
   ++nbRows;
 
@@ -388,18 +424,18 @@ bool FMBTestIntersection2DTime(
   AABB2DTime bdgBoxLocal;
   
   // Declare variables to eliminate the first variable
-  double Mp[16][2];
-  double Yp[16];
+  double Mp[25][3];
+  double Yp[25];
   int nbRowsP;
 
-  // Eliminate the first variable
+  // Eliminate the first variable in the original system
   bool inconsistency = 
     ElimVar2DTime(
       FST_VAR,
       M, 
       Y, 
       nbRows, 
-      2,
+      3,
       Mp, 
       Yp, 
       &nbRowsP);
@@ -412,16 +448,41 @@ bool FMBTestIntersection2DTime(
 
   }
 
-  // Get the bounds for the remaining second variable
+  // Declare variables to eliminate the second variable
+  double Mpp[169][3];
+  double Ypp[169];
+  int nbRowsPP;
+
+  // Eliminate the second variable (which is the first in the new system)
+  inconsistency = 
+    ElimVar2DTime(
+      FST_VAR,
+      Mp, 
+      Yp, 
+      nbRowsP, 
+      2,
+      Mpp, 
+      Ypp, 
+      &nbRowsPP);
+
+  // If the system is inconsistent
+  if (inconsistency == true) {
+
+    // The two Frames are not in intersection
+    return false;
+
+  }
+
+  // Get the bounds for the remaining third variable
   GetBound2DTime(
-    SND_VAR,
-    Mp,
-    Yp,
-    nbRowsP,
+    THD_VAR,
+    Mpp,
+    Ypp,
+    nbRowsPP,
     &bdgBoxLocal);
 
-  // If the bounds are inconsistent
-  if (bdgBoxLocal.min[SND_VAR] >= bdgBoxLocal.max[SND_VAR]) {
+  // If the bounds are inconstent
+  if (bdgBoxLocal.min[THD_VAR] >= bdgBoxLocal.max[THD_VAR]) {
 
     // The two Frames are not in intersection
     return false;
@@ -436,27 +497,58 @@ bool FMBTestIntersection2DTime(
 
   }
 
+  // Eliminate the third variable (which is the first in the new
+  // system)
+  inconsistency = 
+    ElimVar2DTime(
+      SND_VAR,
+      Mp, 
+      Yp, 
+      nbRowsP, 
+      2,
+      Mpp, 
+      Ypp, 
+      &nbRowsPP);
+
+  // Get the bounds for the remaining second variable
+  GetBound2DTime(
+    SND_VAR,
+    Mpp,
+    Ypp,
+    nbRowsPP,
+    &bdgBoxLocal);
+
   // Now starts again from the initial systems and eliminate the 
-  // second variable to get the bounds of the first variable
+  // second and third variables to get the bounds of the first variable
   // No need to check for consistency because we already know here
   // that the Frames are intersecting and the system is consistent
   inconsistency = 
     ElimVar2DTime(
-      SND_VAR,
+      THD_VAR,
       M, 
       Y, 
       nbRows, 
-      2,
+      3,
       Mp, 
       Yp, 
       &nbRowsP);
 
-  // Get the bounds for the remaining first variable
+  inconsistency = 
+    ElimVar2DTime(
+      SND_VAR,
+      Mp, 
+      Yp, 
+      nbRowsP, 
+      2,
+      Mpp, 
+      Ypp, 
+      &nbRowsPP);
+
   GetBound2DTime(
     FST_VAR,
-    Mp,
-    Yp,
-    nbRowsP,
+    Mpp,
+    Ypp,
+    nbRowsPP,
     &bdgBoxLocal);
 
   // If the user requested the resulting bounding box
@@ -464,7 +556,7 @@ bool FMBTestIntersection2DTime(
 
     // Memorize the result
     *bdgBox = bdgBoxLocal;
-
+    
   }
 
   // If we've reached here the two Frames are intersecting

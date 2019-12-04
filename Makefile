@@ -4,25 +4,25 @@ BUILD_ARG=-O3
 BUILD_ARG_=-ggdb
 
 main : main.o fmb2d.o fmb3d.o fmb2dt.o fmb3dt.o sat.o frame.o Makefile
-	gcc -o main main.o fmb2d.o fmb3d.o sat.o frame.o
+	gcc -o main main.o fmb2d.o fmb3d.o fmb2dt.o fmb3dt.o sat.o frame.o
 
 main.o : main.c fmb2d.h fmb3d.h fmb2dt.h fmb3dt.h frame.h Makefile
 	gcc -c main.c $(BUILD_ARG)
 
 unitTests : unitTests.o fmb2d.o fmb3d.o fmb2dt.o fmb3dt.o frame.o Makefile
-	gcc -o unitTests unitTests.o fmb2d.o fmb3d.o frame.o $(LINK_ARG)
+	gcc -o unitTests unitTests.o fmb2d.o fmb3d.o fmb2dt.o fmb3dt.o frame.o $(LINK_ARG)
 
 unitTests.o : unitTests.c fmb2d.h fmb3d.h fmb2dt.h fmb3dt.h frame.h Makefile
 	gcc -c unitTests.c $(BUILD_ARG)
 
 validation : validation.o fmb2d.o fmb3d.o fmb2dt.o fmb3dt.o sat.o frame.o Makefile
-	gcc -o validation validation.o fmb2d.o fmb3d.o sat.o frame.o $(LINK_ARG)
+	gcc -o validation validation.o fmb2d.o fmb3d.o fmb2dt.o fmb3dt.o sat.o frame.o $(LINK_ARG)
 
 validation.o : validation.c fmb2d.h fmb3d.h fmb2dt.h fmb3dt.h sat.h frame.h Makefile
 	gcc -c validation.c $(BUILD_ARG)
 
 qualification : qualification.o fmb2d.o fmb3d.o fmb2dt.o fmb3dt.o sat.o frame.o Makefile
-	gcc -o qualification qualification.o fmb2d.o fmb3d.o sat.o frame.o $(LINK_ARG)
+	gcc -o qualification qualification.o fmb2d.o fmb3d.o fmb2dt.o fmb3dt.o sat.o frame.o $(LINK_ARG)
 
 qualification.o : qualification.c fmb2d.h fmb3d.h fmb2dt.h fmb3dt.h sat.h frame.h Makefile
 	gcc -c qualification.c $(BUILD_ARG)

@@ -1,5 +1,5 @@
-#ifndef __FMB2D_H_
-#define __FMB2D_H_
+#ifndef __FMB2DT_H_
+#define __FMB2DT_H_
 
 #include <stdbool.h>
 #include "frame.h"
