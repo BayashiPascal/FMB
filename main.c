@@ -70,7 +70,7 @@ int main(int argc, char** argv) {
     {0.0, 1.0}}; // Second component
   Frame2D P2D = 
     Frame2DCreateStatic(
-      FrameTetrahedron,
+      FrameCuboid,
       origP2D,
       compP2D);
  
@@ -80,7 +80,7 @@ int main(int argc, char** argv) {
     {0.0, -1.0}};
   Frame2D Q2D = 
     Frame2DCreateStatic(
-      FrameTetrahedron,
+      FrameCuboid,
       origQ2D,
       compQ2D);
 

@@ -5,6 +5,9 @@
 // Return 1.0 if v is positive, -1.0 if v is negative, 0.0 else
 #define sgn(v) (((0.0 < (v)) ? 1 : 0) - (((v) < 0.0) ? 1 : 0))
 
+// Return x if x is negative, 0.0 else
+#define neg(x) (x < 0.0 ? x : 0.0)
+
 #define FST_VAR 0
 #define SND_VAR 1
 #define THD_VAR 2
@@ -342,267 +345,109 @@ bool FMBTestIntersection2D(
   // system
   Frame2D thoProj;
   Frame2DImportFrame(that, tho, &thoProj);
-
+//Frame2DPrint(&thoProj);printf("\n");
   // Declare two variables to memorize the system to be solved M.X <= Y
   // (M arrangement is [iRow][iCol])
   double M[8][2];
   double Y[8];
 
-  // Shortcuts
-  double (*thoProjComp)[2] = thoProj.comp;
-  double *thoProjOrig = thoProj.orig;
-
-  // Variable to memorise the current row in the system
-  int iRow = 0;
+//===== 2D ======
+//ratio (timeFMB / timeSAT)
+//run	countInter	countNoInter	minInter	avgInter	maxInter	minNoInter	avgNoInter	maxNoInter	minTotal	avgTotal	maxTotal
+//0	467386	1532614	0.287500	1.883682	5.509091	0.096000	0.925966	12.666667	0.096000	1.149777	12.666667
 
   // Shortcuts
-  double* MIRow;
+  //double (*thoProjComp)[2] = thoProj.comp;
+  //double *thoProjOrig = thoProj.orig;
+  //double* MIRow;
 
-  // Constraints O + C.X >= 0.0
-  // and constraints x_i >= 0.0
-  for (;
-       iRow < 2;
-       ++iRow) {
+  // -sum_iC_j,iX_i<=-O_j
+  M[0][0] = -thoProj.comp[0][0];
+  M[0][1] = -thoProj.comp[0][1];
+  Y[0] = thoProj.orig[0];
+  if (Y[0] < neg(M[0][0]) + neg(M[0][1]))
+    return false;
+//PrintM2D(M,1);fflush(stdout);
+  M[1][0] = -thoProj.comp[1][0];
+  M[1][1] = -thoProj.comp[1][1];
+  Y[1] = thoProj.orig[1];
+  if (Y[1] < neg(M[1][0]) + neg(M[1][1]))
+    return false;
+//PrintM2D(M,2);fflush(stdout);
 
-    // Shortcuts
-    MIRow = M[iRow];
-    double* MJRow = M[iRow + 2];
-
-    // For each column of the system
-    double sumNeg = 0.0;
-    for (int iCol = 2;
-         iCol--;) {
-
-      MIRow[iCol] = -1.0 * thoProjComp[iCol][iRow];
-      if (MIRow[iCol] < 0.0) {
-        sumNeg += MIRow[iCol];
-      }
-      
-      // If it's on the diagonal 
-      if (iRow == iCol) {
-
-        MJRow[iCol] = -1.0;
-
-      // Else it's not on the diagonal
-      } else {
-
-        MJRow[iCol] = 0.0;
-
-      }
-    }
-    if (thoProjOrig[iRow] < sumNeg)
-      return false;
-    Y[iRow] = thoProjOrig[iRow];
-    Y[iRow + 2] = 0.0;
-  }
-  iRow = 4;
+  // Variable to memorise the nb of rows in the system
+  int nbRows = 2;
 
   if (that->type == FrameCuboid) {
 
-    // Constraints O + C.X <= 1.0
-    for (int jRow = 0;
-         jRow < 2;
-         ++jRow, ++iRow) {
+    // sum_iC_j,iX_i<=1.0-O_j
+    M[nbRows][0] = thoProj.comp[0][0];
+    M[nbRows][1] = thoProj.comp[0][1];
+    Y[nbRows] = 1.0 - thoProj.orig[0];
+    if (Y[nbRows] < neg(M[nbRows][0]) + neg(M[nbRows][1]))
+      return false;
+    ++nbRows;
+//PrintM2D(M,nbRows);fflush(stdout);
 
-      // Shortcuts
-      MIRow = M[iRow];
-      double* MJRow = M[jRow];
+    M[nbRows][0] = thoProj.comp[1][0];
+    M[nbRows][1] = thoProj.comp[1][1];
+    Y[nbRows] = 1.0 - thoProj.orig[1];
+    if (Y[nbRows] < neg(M[nbRows][0]) + neg(M[nbRows][1]))
+      return false;
+    ++nbRows;
+//PrintM2D(M,nbRows);fflush(stdout);
 
-      // For each column of the system
-      double sumNeg = 0.0;
-      for (int iCol = 2;
-           iCol--;) {
-
-        MIRow[iCol] = -1.0 * MJRow[iCol];
-        if (MIRow[iCol] < 0.0) {
-          sumNeg += MIRow[iCol];
-        }
-        
-      }
-      Y[iRow] = 1.0 - thoProjOrig[jRow];
-      if (Y[iRow] < sumNeg)
-        return false;
-    }
-
-  // Else, the first frame is a Tetrahedron
   } else {
 
-    // Declare a variable to memorize the sum of the negative 
-    // coefficients in the row
-    double sumNegCoeff = 0.0;
-    
-    // Declare a variable to memorize if all the coefficients
-    // are null
-    bool allNull = true;
-
-    // Shortcut
-    double* MRow = M[iRow];
-
-    Y[iRow] = 1.0;
-
-    // For each column of the system
-    for (int iCol = 2;
-         iCol--;) {
-
-      MRow[iCol] = 0.0;
-
-      // For each component
-      for (int iAxis = 2;
-           iAxis--;) {
-
-        MRow[iCol] += thoProjComp[iCol][iAxis];
-
-      }
-
-      Y[iRow] -= thoProjOrig[iCol];
-
-      // If the coefficient is negative
-      if (MRow[iCol] < -1.0 * EPSILON) {
-
-        // Memorize that at least one coefficient is not null
-        allNull = false;
-
-        // Update the sum of the negative coefficient
-        sumNegCoeff += MRow[iCol];
-
-      // Else, if the coefficient is positive
-      } else if (MRow[iCol] > EPSILON) {
-
-        // Memorize that at least one coefficient is not null
-        allNull = false;
-
-      }
-
-    }
-
-    // If at least one coefficient is not null
-    if (allNull == false) {
-
-      // If the right side of the inequality is lower than the sum of 
-      // negative coefficients in the row
-      if (Y[iRow] < sumNegCoeff) {
-
-        // As X is in [0,1], the system is inconsistent
-        // there is no intersection
-        return false;
-
-      }
-
-    // Else all coefficients are null, if the right side is null
-    // or negative
-    } else if (Y[iRow] <= 0.0) {
-
-      // The system is inconsistent, there is no intersection
+    // sum_j(sum_iC_j,iX_i)<=1.0-sum_iO_i
+    M[nbRows][0] = thoProj.comp[0][0] + thoProj.comp[1][0];
+    M[nbRows][1] = thoProj.comp[0][1] + thoProj.comp[1][1];
+    Y[nbRows] = 1.0 - thoProj.orig[0] - thoProj.orig[1];
+    if (Y[nbRows] < neg(M[nbRows][0]) + neg(M[nbRows][1]))
       return false;
-
-    }
-
-    // Update the number of rows in the system
-    ++iRow;
+    ++nbRows;
+//PrintM2D(M,nbRows);fflush(stdout);
 
   }
 
   if (tho->type == FrameCuboid) {
 
-    // Constraints x_i <= 1.0
-    for (int jRow = 0;
-         jRow < 2;
-         ++jRow, ++iRow) {
+    // X_i <= 1.0
+    M[nbRows][0] = 1.0;
+    M[nbRows][1] = 0.0;
+    Y[nbRows] = 1.0;
+    ++nbRows;
+//PrintM2D(M,nbRows);fflush(stdout);
 
-      // Shortcuts
-      MIRow = M[iRow];
+    M[nbRows][0] = 0.0;
+    M[nbRows][1] = 1.0;
+    Y[nbRows] = 1.0;
+    ++nbRows;
+//PrintM2D(M,nbRows);fflush(stdout);
 
-      // For each column of the system
-      for (int iCol = 2;
-           iCol--;) {
-        // If it's on the diagonal 
-        if (jRow == iCol) {
-
-          MIRow[iCol] = 1.0;
-
-        // Else it's not on the diagonal
-        } else {
-
-          MIRow[iCol] = 0.0;
-
-        }
-
-      }
-      Y[iRow] = 1.0;
-
-    }
-
-  // Else, the second frame is a Tetrahedron
   } else {
-
-    // Declare a variable to memorize the sum of the negative 
-    // coefficients in the row
-    double sumNegCoeff = 0.0;
     
-    // Declare a variable to memorize if all the coefficients
-    // are null
-    bool allNull = true;
-
-    // Shortcut
-    double* MRow = M[iRow];
-
-    // For each column of the system
-    for (int iCol = 2;
-         iCol--;) {
-
-      MRow[iCol] =  1.0;
-
-      // If the coefficient is negative
-      if (MRow[iCol] < -1.0 * EPSILON) {
-
-        // Memorize that at least one coefficient is not null
-        allNull = false;
-
-        // Update the sum of the negative coefficient
-        sumNegCoeff += MRow[iCol];
-
-      // Else, if the coefficient is positive
-      } else if (MRow[iCol] > EPSILON) {
-
-        // Memorize that at least one coefficient is not null
-        allNull = false;
-
-      }
-
-    }
-
-    Y[iRow] = 1.0;
-
-    // If at least one coefficient is not null
-    if (allNull == false) {
-
-      // If the right side of the inequality is lower than the sum of 
-      // negative coefficients in the row
-      if (Y[iRow] < sumNegCoeff) {
-
-        // As X is in [0,1], the system is inconsistent
-        // there is no intersection
-        return false;
-
-      }
-
-    // Else all coefficients are null, if the right side is null
-    // or negative
-    } else if (Y[iRow] <= 0.0) {
-
-      // The system is inconsistent, there is no intersection
-      return false;
-
-    }
-
-    // Update the number of rows in the system
-    ++iRow;
+    // sum_iX_i<=1.0
+    M[nbRows][0] = 1.0;
+    M[nbRows][1] = 1.0;
+    Y[nbRows] = 1.0;
+    ++nbRows;
+//PrintM2D(M,nbRows);fflush(stdout);
 
   }
 
-  // Declare a variable to memorize the total number of rows in the
-  // system. It may vary depending on the type of Frames
-  int nbRows = iRow;
+  // -X_i <= 0.0
+  M[nbRows][0] = -1.0;
+  M[nbRows][1] = 0.0;
+  Y[nbRows] = 0.0;
+  ++nbRows;
+//PrintM2D(M,nbRows);fflush(stdout);
+
+  M[nbRows][0] = 0.0;
+  M[nbRows][1] = -1.0;
+  Y[nbRows] = 0.0;
+  ++nbRows;
+//PrintM2D(M,nbRows);fflush(stdout);
 
   // Solve the system
 

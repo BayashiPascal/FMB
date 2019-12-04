@@ -681,7 +681,7 @@ int main(int argc, char** argv) {
   Qualify2D();
   printf("\n");
   printf("===== 3D ======\n");
-  Qualify3D();
+  //Qualify3D();
 
   return 0;
 }
