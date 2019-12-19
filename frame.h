@@ -20,21 +20,25 @@ typedef enum {
 
 // Axis aligned bounding box structure
 typedef struct {
+  // x,y
   double min[2];
   double max[2];
 } AABB2D;
 
 typedef struct {
+  // x,y,z
   double min[3];
   double max[3];
 } AABB3D;
 
 typedef struct {
+  // x,y,t
   double min[3];
   double max[3];
 } AABB2DTime;
 
 typedef struct {
+  // x,y,z,t
   double min[4];
   double max[4];
 } AABB3DTime;

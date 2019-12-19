@@ -826,6 +826,7 @@ void Frame2DTimeExportBdgBox(
 
   // Shortcuts
   const double* to    = that->orig;
+  const double* ts    = that->speed;
   const double* bbmi  = bdgBox->min;
   const double* bbma  = bdgBox->max;
         double* bbpmi = bdgBoxProj->min;
@@ -841,7 +842,7 @@ void Frame2DTimeExportBdgBox(
   for (int i = 2;
        i--;) {
 
-    bbpma[i] = to[i];
+    bbpma[i] = to[i] + ts[i] * bbmi[2];
 
     for (int j = 2;
          j--;) {
@@ -895,14 +896,24 @@ void Frame2DTimeExportBdgBox(
     for (int i = 2; 
          i--;) {
 
-      if (bbpmi[i] > w[i]) {
+      if (bbpmi[i] > w[i] + ts[i] * bbmi[2]) {
 
-        bbpmi[i] = w[i];
+        bbpmi[i] = w[i] + ts[i] * bbmi[2];
 
       }
-      if (bbpma[i] < w[i]) {
+      if (bbpmi[i] > w[i] + ts[i] * bbma[2]) {
 
-        bbpma[i] = w[i];
+        bbpmi[i] = w[i] + ts[i] * bbma[2];
+
+      }
+      if (bbpma[i] < w[i] + ts[i] * bbmi[2]) {
+
+        bbpma[i] = w[i] + ts[i] * bbmi[2];
+
+      }
+      if (bbpma[i] < w[i] + ts[i] * bbma[2]) {
+
+        bbpma[i] = w[i] + ts[i] * bbma[2];
 
       }
     }
@@ -1005,7 +1016,7 @@ void Frame3DTimeExportBdgBox(
 // Output format is (min[0], min[1], ...)-(max[0], max[1], ...)
 void AABB2DPrint(const AABB2D* const that) {
   
-  printf("(");
+  printf("minXY(");
   for (int i = 0;
        i < 2;
        ++i) {
@@ -1015,7 +1026,7 @@ void AABB2DPrint(const AABB2D* const that) {
       printf(",");
 
   }
-  printf(")-(");
+  printf(")-maxXY(");
   for (int i = 0;
        i < 2;
        ++i) {
@@ -1031,7 +1042,7 @@ void AABB2DPrint(const AABB2D* const that) {
 
 void AABB3DPrint(const AABB3D* const that) {
   
-  printf("(");
+  printf("minXYZ(");
   for (int i = 0;
        i < 3;
        ++i) {
@@ -1041,7 +1052,7 @@ void AABB3DPrint(const AABB3D* const that) {
       printf(",");
 
   }
-  printf(")-(");
+  printf(")-maxXYZ(");
   for (int i = 0;
        i < 3;
        ++i) {
@@ -1057,7 +1068,7 @@ void AABB3DPrint(const AABB3D* const that) {
 
 void AABB2DTimePrint(const AABB2DTime* const that) {
   
-  printf("(");
+  printf("minXYT(");
   for (int i = 0;
        i < 3;
        ++i) {
@@ -1067,7 +1078,7 @@ void AABB2DTimePrint(const AABB2DTime* const that) {
       printf(",");
 
   }
-  printf(")-(");
+  printf(")-maxXYT(");
   for (int i = 0;
        i < 3;
        ++i) {
@@ -1083,7 +1094,7 @@ void AABB2DTimePrint(const AABB2DTime* const that) {
 
 void AABB3DTimePrint(const AABB3DTime* const that) {
   
-  printf("(");
+  printf("minXYZT(");
   for (int i = 0;
        i < 4;
        ++i) {
@@ -1093,7 +1104,7 @@ void AABB3DTimePrint(const AABB3DTime* const that) {
       printf(",");
 
   }
-  printf(")-(");
+  printf(")-maxXYZT(");
   for (int i = 0;
        i < 4;
        ++i) {
@@ -1118,7 +1129,7 @@ void Frame2DPrint(const Frame2D* const that) {
   } else if (that->type == FrameCuboid) {
     printf("C");
   }
-  printf("(");
+  printf("o(");
   for (int i = 0;
        i < 2;
        ++i) {
@@ -1128,10 +1139,11 @@ void Frame2DPrint(const Frame2D* const that) {
       printf(",");
 
   }
+  char comp[2] = {'x','y'};
   for (int j = 0;
        j < 2;
        ++j) {
-    printf(") (");
+    printf(") %c(", comp[j]);
     for (int i = 0;
          i < 2;
          ++i) {
@@ -1152,7 +1164,7 @@ void Frame3DPrint(const Frame3D* const that) {
   } else if (that->type == FrameCuboid) {
     printf("C");
   }
-  printf("(");
+  printf("o(");
   for (int i = 0;
        i < 3;
        ++i) {
@@ -1162,10 +1174,11 @@ void Frame3DPrint(const Frame3D* const that) {
       printf(",");
 
   }
+  char comp[3] = {'x','y','z'};
   for (int j = 0;
        j < 3;
        ++j) {
-    printf(") (");
+    printf(") %c(", comp[j]);
     for (int i = 0;
          i < 3;
          ++i) {
@@ -1186,7 +1199,7 @@ void Frame2DTimePrint(const Frame2DTime* const that) {
   } else if (that->type == FrameCuboid) {
     printf("C");
   }
-  printf("(");
+  printf("o(");
   for (int i = 0;
        i < 2;
        ++i) {
@@ -1196,7 +1209,7 @@ void Frame2DTimePrint(const Frame2DTime* const that) {
       printf(",");
 
   }
-  printf(") (");
+  printf(") s(");
   for (int i = 0;
        i < 2;
        ++i) {
@@ -1206,10 +1219,11 @@ void Frame2DTimePrint(const Frame2DTime* const that) {
       printf(",");
 
   }
+  char comp[2] = {'x','y'};
   for (int j = 0;
        j < 2;
        ++j) {
-    printf(") (");
+    printf(") %c(", comp[j]);
     for (int i = 0;
          i < 2;
          ++i) {
@@ -1230,7 +1244,7 @@ void Frame3DTimePrint(const Frame3DTime* const that) {
   } else if (that->type == FrameCuboid) {
     printf("C");
   }
-  printf("(");
+  printf("o(");
   for (int i = 0;
        i < 3;
        ++i) {
@@ -1240,7 +1254,7 @@ void Frame3DTimePrint(const Frame3DTime* const that) {
       printf(",");
 
   }
-  printf(") (");
+  printf(") s(");
   for (int i = 0;
        i < 3;
        ++i) {
@@ -1250,10 +1264,11 @@ void Frame3DTimePrint(const Frame3DTime* const that) {
       printf(",");
 
   }
+  char comp[3] = {'x','y', 'z'};
   for (int j = 0;
        j < 3;
        ++j) {
-    printf(") (");
+    printf(") %c(", comp[j]);
     for (int i = 0;
          i < 3;
          ++i) {

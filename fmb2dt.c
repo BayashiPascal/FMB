@@ -497,7 +497,7 @@ bool FMBTestIntersection2DTime(
 
   }
 
-  // Eliminate the third variable (which is the first in the new
+  // Eliminate the third variable (which is the second in the new
   // system)
   inconsistency = 
     ElimVar2DTime(

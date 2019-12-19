@@ -400,24 +400,6 @@ void UnitTest2DTime(
           tho, 
           &bdgBoxLocal, 
           &bdgBox);
-
-        for (int iAxis = 2; 
-             iAxis--;) {
-
-          if (bdgBox.min[iAxis] < that->bdgBox.min[iAxis]) {
-            bdgBox.min[iAxis] = that->bdgBox.min[iAxis];
-          }
-          if (bdgBox.max[iAxis] > that->bdgBox.max[iAxis]) {
-            bdgBox.max[iAxis] = that->bdgBox.max[iAxis];
-          }
-          if (bdgBox.min[iAxis] < tho->bdgBox.min[iAxis]) {
-            bdgBox.min[iAxis] = tho->bdgBox.min[iAxis];
-          }
-          if (bdgBox.max[iAxis] > tho->bdgBox.max[iAxis]) {
-            bdgBox.max[iAxis] = tho->bdgBox.max[iAxis];
-          }
-        }
-
         // Check the bounding box
         bool flag = true;
         for (int i = 3;
@@ -1380,11 +1362,138 @@ void Test2DTime(void) {
      .comp = 
        {{1.0, 0.0},
         {0.0, 1.0}},
+     .speed = {-1.0, 0.0}
+    };
+  UnitTest2DTime(
+    paramP,
+    paramQ,
+    false,
+    NULL);
+
+  // ----------------------------
+  paramP = (Param2DTime)
+    {.type = FrameCuboid,
+     .orig = {0.0, 0.0},
+     .comp = 
+       {{1.0, 0.0},
+        {0.0, 1.0}},
+     .speed = {0.0, 0.0}
+    };
+  paramQ = (Param2DTime)
+    {.type = FrameCuboid,
+     .orig = {-1.0, -1.0},
+     .comp = 
+       {{1.0, 0.0},
+        {0.0, 1.0}},
+     .speed = {1.0, 0.0}
+    };
+  UnitTest2DTime(
+    paramP,
+    paramQ,
+    false,
+    NULL);
+
+  // ----------------------------
+  paramP = (Param2DTime)
+    {.type = FrameCuboid,
+     .orig = {0.0, 0.0},
+     .comp = 
+       {{1.0, 0.0},
+        {0.0, 1.0}},
+     .speed = {0.0, 0.0}
+    };
+  paramQ = (Param2DTime)
+    {.type = FrameCuboid,
+     .orig = {-1.0, 0.0},
+     .comp = 
+       {{1.0, 0.0},
+        {0.0, 1.0}},
      .speed = {1.0, 0.0}
     };
   correctBdgBox = (AABB2DTime) 
     {.min = {0.0, 0.0, 0.0},
      .max = {1.0, 1.0, 1.0}
+    };
+  UnitTest2DTime(
+    paramP,
+    paramQ,
+    true,
+    &correctBdgBox);
+
+  // ----------------------------
+  paramP = (Param2DTime)
+    {.type = FrameCuboid,
+     .orig = {0.0, 0.0},
+     .comp = 
+       {{1.0, 0.0},
+        {0.0, 1.0}},
+     .speed = {0.0, 0.0}
+    };
+  paramQ = (Param2DTime)
+    {.type = FrameCuboid,
+     .orig = {-1.0, 0.25},
+     .comp = 
+       {{0.5, 0.0},
+        {0.0, 0.5}},
+     .speed = {4.0, 0.0}
+    };
+  correctBdgBox = (AABB2DTime) 
+    {.min = {0.0, 0.25, 0.125},
+     .max = {1.0, 0.75, 0.5}
+    };
+  UnitTest2DTime(
+    paramP,
+    paramQ,
+    true,
+    &correctBdgBox);
+
+  // ----------------------------
+  paramP = (Param2DTime)
+    {.type = FrameCuboid,
+     .orig = {0.0, 0.0},
+     .comp = 
+       {{1.0, 0.0},
+        {0.0, 1.0}},
+     .speed = {0.0, 0.0}
+    };
+  paramQ = (Param2DTime)
+    {.type = FrameCuboid,
+     .orig = {0.25, -1.0},
+     .comp = 
+       {{0.5, 0.0},
+        {0.0, 0.5}},
+     .speed = {0.0, 4.0}
+    };
+  correctBdgBox = (AABB2DTime) 
+    {.min = {0.25, 0.0, 0.125},
+     .max = {0.75, 1.0, 0.5}
+    };
+  UnitTest2DTime(
+    paramP,
+    paramQ,
+    true,
+    &correctBdgBox);
+
+  // ----------------------------
+  paramP = (Param2DTime)
+    {.type = FrameCuboid,
+     .orig = {0.0, 0.0},
+     .comp = 
+       {{1.0, 0.0},
+        {0.0, 1.0}},
+     .speed = {0.0, 0.0}
+    };
+  paramQ = (Param2DTime)
+    {.type = FrameCuboid,
+     .orig = {0.9, -1.0},
+     .comp = 
+       {{0.5, 0.0},
+        {0.0, 0.5}},
+     .speed = {0.0, 4.0}
+    };
+  correctBdgBox = (AABB2DTime) 
+    {.min = {0.9, 0.0, 0.125},
+     .max = {1.0, 1.0, 0.5}
     };
   UnitTest2DTime(
     paramP,
