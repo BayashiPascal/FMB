@@ -3,52 +3,91 @@ all : main unitTests validation qualification
 BUILD_ARG=-O3
 BUILD_ARG_=-ggdb
 
-main : main.o fmb2d.o fmb3d.o fmb2dt.o fmb3dt.o sat.o frame.o Makefile
-	gcc -o main main.o fmb2d.o fmb3d.o fmb2dt.o fmb3dt.o sat.o frame.o
+main : main2D main2DTime main3D main3DTime
 
-main.o : main.c fmb2d.h fmb3d.h fmb2dt.h fmb3dt.h frame.h Makefile
-	gcc -c main.c $(BUILD_ARG)
+main2D:
+	cd 2D; make main; cd -
 
-unitTests : unitTests.o fmb2d.o fmb3d.o fmb2dt.o fmb3dt.o frame.o Makefile
-	gcc -o unitTests unitTests.o fmb2d.o fmb3d.o fmb2dt.o fmb3dt.o frame.o $(LINK_ARG)
+main2DTime:
+	cd 2DTime; make main; cd -
 
-unitTests.o : unitTests.c fmb2d.h fmb3d.h fmb2dt.h fmb3dt.h frame.h Makefile
-	gcc -c unitTests.c $(BUILD_ARG)
+main3D:
+	cd 3D; make main; cd -
 
-validation : validation.o fmb2d.o fmb3d.o fmb2dt.o fmb3dt.o sat.o frame.o Makefile
-	gcc -o validation validation.o fmb2d.o fmb3d.o fmb2dt.o fmb3dt.o sat.o frame.o $(LINK_ARG)
+main3DTime:
+	cd 3DTime; make main; cd -
 
-validation.o : validation.c fmb2d.h fmb3d.h fmb2dt.h fmb3dt.h sat.h frame.h Makefile
-	gcc -c validation.c $(BUILD_ARG)
+unitTests : unitTests2D unitTests2DTime unitTests3D unitTests3DTime
 
-qualification : qualification.o fmb2d.o fmb3d.o fmb2dt.o fmb3dt.o sat.o frame.o Makefile
-	gcc -o qualification qualification.o fmb2d.o fmb3d.o fmb2dt.o fmb3dt.o sat.o frame.o $(LINK_ARG)
+unitTests2D:
+	cd 2D; make unitTests; cd -
 
-qualification.o : qualification.c fmb2d.h fmb3d.h fmb2dt.h fmb3dt.h sat.h frame.h Makefile
-	gcc -c qualification.c $(BUILD_ARG)
+unitTests2DTime:
+	cd 2DTime; make unitTests; cd -
 
-fmb2d.o : fmb2d.c fmb2d.h frame.h Makefile
-	gcc -c fmb2d.c $(BUILD_ARG)
+unitTests3D:
+	cd 3D; make unitTests; cd -
 
-fmb3d.o : fmb3d.c fmb3d.h frame.h Makefile
-	gcc -c fmb3d.c $(BUILD_ARG)
+unitTests3DTime:
+	cd 3DTime; make unitTests; cd -
 
-fmb2dt.o : fmb2dt.c fmb2dt.h frame.h Makefile
-	gcc -c fmb2dt.c $(BUILD_ARG)
+validation : validation2D validation2DTime validation3D validation3DTime
 
-fmb3dt.o : fmb3dt.c fmb3dt.h frame.h Makefile
-	gcc -c fmb3dt.c $(BUILD_ARG)
+validation2D:
+	cd 2D; make validation; cd -
 
-sat.o : sat.c sat.h frame.h Makefile
-	gcc -c sat.c $(BUILD_ARG)
+validation2DTime:
+	cd 2DTime; make validation; cd -
 
-frame.o : frame.c frame.h Makefile
-	gcc -c frame.c $(BUILD_ARG)
+validation3D:
+	cd 3D; make validation; cd -
 
-clean : 
-	rm -f *.o main unitTests validation qualification
+validation3DTime:
+	cd 3DTime; make validation; cd -
 
-valgrind :
-	valgrind -v --track-origins=yes --leak-check=full \
-	--gen-suppressions=yes --show-leak-kinds=all ./main
+qualification : qualification2D qualification2DTime qualification3D qualification3DTime
 
+qualification2D:
+	cd 2D; make qualification; cd -
+
+qualification2DTime:
+	cd 2DTime; make qualification; cd -
+
+qualification3D:
+	cd 3D; make qualification; cd -
+
+qualification3DTime:
+	cd 3DTime; make qualification; cd -
+
+clean : clean2D clean2DTime clean3D clean3DTime
+
+clean2D:
+	cd 2D; make clean; cd -
+
+clean2DTime:
+	cd 2DTime; make clean; cd -
+
+clean3D:
+	cd 3D; make clean; cd -
+
+clean3DTime:
+	cd 3DTime; make clean; cd -
+
+valgrind : valgrind2D valgrind2DTime valgrind3D valgrind3DTime
+
+valgrind2D:
+	cd 2D; make valgrind; cd -
+
+valgrind2DTime:
+	cd 2DTime; make valgrind; cd -
+
+valgrind3D:
+	cd 3D; make valgrind; cd -
+
+valgrind3DTime:
+	cd 3DTime; make valgrind; cd -
+
+run : run2D run2DTime run3D run3DTime
+
+run2D: 
+	cd 2D; ./main > ../Results/main2D.txt; ./unitTests > ../Results/unitTests2D.txt; ./validation > ../Results/validation2D.txt; ./qualification > ../Results/qualification2D.txt; cd - 
