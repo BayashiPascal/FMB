@@ -29,11 +29,6 @@ typedef struct {
   double orig[2];
   double comp[2][2];
 } Param2D;
-typedef struct {
-  FrameType type;
-  double orig[3];
-  double comp[3][3];
-} Param3D;
 
 // Validation function
 // Takes two Frame definition as input, run the intersection test on 
