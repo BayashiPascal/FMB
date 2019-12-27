@@ -1,8 +1,5 @@
 all : main unitTests validation qualification
 
-BUILD_ARG=-O3
-BUILD_ARG_=-ggdb
-
 main : main2D main2DTime main3D main3DTime
 
 main2D:
@@ -91,3 +88,6 @@ run : run2D run2DTime run3D run3DTime
 
 run2D: 
 	cd 2D; ./main > ../Results/main2D.txt; ./unitTests > ../Results/unitTests2D.txt; ./validation > ../Results/validation2D.txt; ./qualification > ../Results/qualification2D.txt; cd - 
+
+run3D: 
+	cd 3D; ./main > ../Results/main3D.txt; ./unitTests > ../Results/unitTests3D.txt; ./validation > ../Results/validation3D.txt; ./qualification > ../Results/qualification3D.txt; cd - 

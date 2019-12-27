@@ -19,7 +19,8 @@
 #define NB_TESTS 1000 //1000000
 // Nb of times the test is run on one pair of frame, used to 
 // slow down the processus and be able to measure time
-#define NB_REPEAT_3D 800 //800
+#define NB_REPEAT_3D 800
+#define NB_REPEAT_2D 1500
 
 // Helper macro to generate random number in [0.0, 1.0]
 #define rnd() (double)(rand())/(double)(RAND_MAX)
@@ -78,6 +79,9 @@ double maxNoInterTT;
 double sumNoInterTT;
 unsigned long countNoInterTT;
 
+// Qualification function
+// Takes two Frame definition as input, run the intersection test on 
+// them with FMB and SAT, and measure the time of execution of each
 void Qualification3DStatic(
         const Param3D paramP,
         const Param3D paramQ) {
