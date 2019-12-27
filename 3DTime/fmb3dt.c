@@ -11,6 +11,7 @@
 #define FST_VAR 0
 #define SND_VAR 1
 #define THD_VAR 2
+#define FOR_VAR 3
 
 #define EPSILON 0.0000001
 
@@ -24,11 +25,11 @@
 // else return true
 bool ElimVar3DTime(
      const int iVar, 
-  const double (*M)[3], 
+  const double (*M)[4], 
   const double* Y, 
      const int nbRows, 
      const int nbCols, 
-        double (*Mp)[3], 
+        double (*Mp)[4], 
         double* Yp, 
     int* const nbRemainRows);
 
@@ -43,7 +44,7 @@ bool ElimVar3DTime(
 // mean the system has no solution
 void GetBound3DTime(
      const int iVar,
-  const double (*M)[3], 
+  const double (*M)[4], 
   const double* Y, 
      const int nbRows, 
    AABB3DTime* const bdgBox);
@@ -52,7 +53,7 @@ void GetBound3DTime(
 
 // TODO
 void PrintMY3DTime(
-  const double (*M)[3], 
+  const double (*M)[4], 
   const double* Y, 
      const int nbRows,
      const int nbVar) {
@@ -65,7 +66,7 @@ void PrintMY3DTime(
 }
 
 void PrintM3DTime(
-  const double (*M)[3], 
+  const double (*M)[4], 
      const int nbRows) {
   for (int iRow = 0; iRow < nbRows; ++iRow) {
     for (int iCol = 0; iCol < 3; ++iCol) {
@@ -84,11 +85,11 @@ void PrintM3DTime(
 // else return false
 bool ElimVar3DTime(
      const int iVar, 
-  const double (*M)[3], 
+  const double (*M)[4], 
   const double* Y, 
      const int nbRows, 
      const int nbCols, 
-        double (*Mp)[3], 
+        double (*Mp)[4], 
         double* Yp, 
     int* const nbRemainRows) {
 
@@ -228,7 +229,7 @@ bool ElimVar3DTime(
 // mean the system has no solution
 void GetBound3DTime(
      const int iVar,
-  const double (*M)[3], 
+  const double (*M)[4], 
   const double* Y, 
      const int nbRows, 
    AABB3DTime* const bdgBox) {
@@ -307,31 +308,34 @@ bool FMBTestIntersection3DTime(
 
   // Declare two variables to memorize the system to be solved M.X <= Y
   // (M arrangement is [iRow][iCol])
-  double M[12][3];
-  double Y[12];
+  double M[14][4];
+  double Y[14];
 
   // Create the inequality system
 
-  // -sum_iC_j,iX_i<=O_j
+  // -V_jT-sum_iC_j,iX_i<=O_j
   M[0][0] = -thoProj.comp[0][0];
   M[0][1] = -thoProj.comp[1][0];
   M[0][2] = -thoProj.comp[2][0];
+  M[0][3] = -thoProj.speed[0];
   Y[0] = thoProj.orig[0];
-  if (Y[0] < neg(M[0][0]) + neg(M[0][1]) + neg(M[0][2]))
+  if (Y[0] < neg(M[0][0]) + neg(M[0][1]) + neg(M[0][2]) + neg(M[0][3]))
     return false;
 
   M[1][0] = -thoProj.comp[0][1];
   M[1][1] = -thoProj.comp[1][1];
   M[1][2] = -thoProj.comp[2][1];
+  M[1][3] = -thoProj.speed[1];
   Y[1] = thoProj.orig[1];
-  if (Y[1] < neg(M[1][0]) + neg(M[1][1]) + neg(M[1][2]))
+  if (Y[1] < neg(M[1][0]) + neg(M[1][1]) + neg(M[1][2]) + neg(M[1][3]))
     return false;
 
   M[2][0] = -thoProj.comp[0][2];
   M[2][1] = -thoProj.comp[1][2];
   M[2][2] = -thoProj.comp[2][2];
+  M[2][3] = -thoProj.speed[2];
   Y[2] = thoProj.orig[2];
-  if (Y[2] < neg(M[2][0]) + neg(M[2][1]) + neg(M[2][2]))
+  if (Y[2] < neg(M[2][0]) + neg(M[2][1]) + neg(M[2][2]) + neg(M[2][3]))
     return false;
 
   // Variable to memorise the nb of rows in the system
@@ -339,47 +343,50 @@ bool FMBTestIntersection3DTime(
 
   if (that->type == FrameCuboid) {
 
-    // sum_iC_j,iX_i<=1.0-O_j
+    // V_jT+sum_iC_j,iX_i<=1.0-O_j
     M[nbRows][0] = thoProj.comp[0][0];
     M[nbRows][1] = thoProj.comp[1][0];
     M[nbRows][2] = thoProj.comp[2][0];
+    M[nbRows][3] = thoProj.speed[0];
     Y[nbRows] = 1.0 - thoProj.orig[0];
     if (Y[nbRows] < neg(M[nbRows][0]) + neg(M[nbRows][1]) + 
-                    neg(M[nbRows][2]))
+                    neg(M[nbRows][2]) + neg(M[nbRows][3]))
       return false;
     ++nbRows;
 
     M[nbRows][0] = thoProj.comp[0][1];
     M[nbRows][1] = thoProj.comp[1][1];
     M[nbRows][2] = thoProj.comp[2][1];
+    M[nbRows][3] = thoProj.speed[1];
     Y[nbRows] = 1.0 - thoProj.orig[1];
     if (Y[nbRows] < neg(M[nbRows][0]) + neg(M[nbRows][1]) + 
-                    neg(M[nbRows][2]))
+                    neg(M[nbRows][2]) + neg(M[nbRows][3]))
       return false;
     ++nbRows;
 
     M[nbRows][0] = thoProj.comp[0][2];
     M[nbRows][1] = thoProj.comp[1][2];
     M[nbRows][2] = thoProj.comp[2][2];
+    M[nbRows][3] = thoProj.speed[2];
     Y[nbRows] = 1.0 - thoProj.orig[2];
     if (Y[nbRows] < neg(M[nbRows][0]) + neg(M[nbRows][1]) + 
-                    neg(M[nbRows][2]))
+                    neg(M[nbRows][2]) + neg(M[nbRows][3]))
       return false;
     ++nbRows;
 
   } else {
 
-    // sum_j(sum_iC_j,iX_i)<=1.0-sum_iO_i
+    // sum_j(V_jT+sum_iC_j,iX_i)<=1.0-sum_iO_i
     M[nbRows][0] = 
       thoProj.comp[0][0] + thoProj.comp[0][1] + thoProj.comp[0][2];
     M[nbRows][1] = 
       thoProj.comp[1][0] + thoProj.comp[1][1] + thoProj.comp[1][2];
     M[nbRows][2] = 
       thoProj.comp[2][0] + thoProj.comp[2][1] + thoProj.comp[2][2];
-    Y[nbRows] = 
-      1.0 - thoProj.orig[0] - thoProj.orig[1] - thoProj.orig[2];
+    M[nbRows][3] = thoProj.speed[0] + thoProj.speed[1] + thoProj.speed[2];
+    Y[nbRows] = 1.0 - thoProj.orig[0] - thoProj.orig[1] - thoProj.orig[2];
     if (Y[nbRows] < neg(M[nbRows][0]) + neg(M[nbRows][1]) + 
-                    neg(M[nbRows][2]))
+                    neg(M[nbRows][2]) + neg(M[nbRows][3]))
       return false;
     ++nbRows;
 
@@ -391,18 +398,21 @@ bool FMBTestIntersection3DTime(
     M[nbRows][0] = 1.0;
     M[nbRows][1] = 0.0;
     M[nbRows][2] = 0.0;
+    M[nbRows][3] = 0.0;
     Y[nbRows] = 1.0;
     ++nbRows;
 
     M[nbRows][0] = 0.0;
     M[nbRows][1] = 1.0;
     M[nbRows][2] = 0.0;
+    M[nbRows][3] = 0.0;
     Y[nbRows] = 1.0;
     ++nbRows;
 
     M[nbRows][0] = 0.0;
     M[nbRows][1] = 0.0;
     M[nbRows][2] = 1.0;
+    M[nbRows][3] = 0.0;
     Y[nbRows] = 1.0;
     ++nbRows;
 
@@ -412,6 +422,7 @@ bool FMBTestIntersection3DTime(
     M[nbRows][0] = 1.0;
     M[nbRows][1] = 1.0;
     M[nbRows][2] = 1.0;
+    M[nbRows][3] = 0.0;
     Y[nbRows] = 1.0;
     ++nbRows;
 
@@ -421,18 +432,36 @@ bool FMBTestIntersection3DTime(
   M[nbRows][0] = -1.0;
   M[nbRows][1] = 0.0;
   M[nbRows][2] = 0.0;
+  M[nbRows][3] = 0.0;
   Y[nbRows] = 0.0;
   ++nbRows;
 
   M[nbRows][0] = 0.0;
   M[nbRows][1] = -1.0;
   M[nbRows][2] = 0.0;
+  M[nbRows][3] = 0.0;
   Y[nbRows] = 0.0;
   ++nbRows;
 
   M[nbRows][0] = 0.0;
   M[nbRows][1] = 0.0;
   M[nbRows][2] = -1.0;
+  M[nbRows][3] = 0.0;
+  Y[nbRows] = 0.0;
+  ++nbRows;
+
+  // 0.0 <= t <= 1.0
+  M[nbRows][0] = 0.0;
+  M[nbRows][1] = 0.0;
+  M[nbRows][2] = 0.0;
+  M[nbRows][3] = 1.0;
+  Y[nbRows] = 1.0;
+  ++nbRows;
+
+  M[nbRows][0] = 0.0;
+  M[nbRows][1] = 0.0;
+  M[nbRows][2] = 0.0;
+  M[nbRows][3] = -1.0;
   Y[nbRows] = 0.0;
   ++nbRows;
 
@@ -443,8 +472,8 @@ bool FMBTestIntersection3DTime(
   AABB3DTime bdgBoxLocal;
   
   // Declare variables to eliminate the first variable
-  double Mp[36][3];
-  double Yp[36];
+  double Mp[49][4];
+  double Yp[49];
   int nbRowsP;
 
   // Eliminate the first variable in the original system
@@ -454,7 +483,7 @@ bool FMBTestIntersection3DTime(
       M, 
       Y, 
       nbRows, 
-      3,
+      4,
       Mp, 
       Yp, 
       &nbRowsP);
@@ -468,8 +497,8 @@ bool FMBTestIntersection3DTime(
   }
 
   // Declare variables to eliminate the second variable
-  double Mpp[324][3];
-  double Ypp[324];
+  double Mpp[625][4];
+  double Ypp[625];
   int nbRowsPP;
 
   // Eliminate the second variable (which is the first in the new system)
@@ -479,7 +508,7 @@ bool FMBTestIntersection3DTime(
       Mp, 
       Yp, 
       nbRowsP, 
-      2,
+      3,
       Mpp, 
       Ypp, 
       &nbRowsPP);
@@ -492,16 +521,41 @@ bool FMBTestIntersection3DTime(
 
   }
 
-  // Get the bounds for the remaining third variable
+  // Declare variables to eliminate the third variable
+  double Mppp[97969][4];
+  double Yppp[97969];
+  int nbRowsPPP;
+
+  // Eliminate the third variable (which is the first in the new system)
+  inconsistency = 
+    ElimVar3DTime(
+      FST_VAR,
+      Mpp, 
+      Ypp, 
+      nbRowsPP, 
+      2,
+      Mppp, 
+      Yppp, 
+      &nbRowsPPP);
+
+  // If the system is inconsistent
+  if (inconsistency == true) {
+
+    // The two Frames are not in intersection
+    return false;
+
+  }
+
+  // Get the bounds for the remaining fourth variable
   GetBound3DTime(
-    THD_VAR,
-    Mpp,
-    Ypp,
-    nbRowsPP,
+    FOR_VAR,
+    Mppp,
+    Yppp,
+    nbRowsPPP,
     &bdgBoxLocal);
 
   // If the bounds are inconstent
-  if (bdgBoxLocal.min[THD_VAR] >= bdgBoxLocal.max[THD_VAR]) {
+  if (bdgBoxLocal.min[FOR_VAR] >= bdgBoxLocal.max[FOR_VAR]) {
 
     // The two Frames are not in intersection
     return false;
@@ -516,58 +570,88 @@ bool FMBTestIntersection3DTime(
 
   }
 
-  // Eliminate the third variable (which is the first in the new
+  // Eliminate the fourth variable (which is the second in the new
   // system)
   inconsistency = 
     ElimVar3DTime(
       SND_VAR,
-      Mp, 
-      Yp, 
-      nbRowsP, 
-      2,
       Mpp, 
       Ypp, 
-      &nbRowsPP);
+      nbRowsPP, 
+      2,
+      Mppp, 
+      Yppp, 
+      &nbRowsPPP);
 
-  // Get the bounds for the remaining second variable
+  // Get the bounds for the remaining third variable
   GetBound3DTime(
-    SND_VAR,
-    Mpp,
-    Ypp,
-    nbRowsPP,
+    THD_VAR,
+    Mppp,
+    Yppp,
+    nbRowsPPP,
     &bdgBoxLocal);
 
   // Now starts again from the initial systems and eliminate the 
-  // second and third variables to get the bounds of the first variable
+  // third and fourth variables to get the bounds of the first and
+  // second variables.
   // No need to check for consistency because we already know here
   // that the Frames are intersecting and the system is consistent
   inconsistency = 
     ElimVar3DTime(
-      THD_VAR,
+      FOR_VAR,
       M, 
       Y, 
       nbRows, 
-      3,
+      4,
       Mp, 
       Yp, 
       &nbRowsP);
 
   inconsistency = 
     ElimVar3DTime(
-      SND_VAR,
+      THD_VAR,
       Mp, 
       Yp, 
       nbRowsP, 
-      2,
+      3,
       Mpp, 
       Ypp, 
       &nbRowsPP);
 
+  inconsistency = 
+    ElimVar3DTime(
+      SND_VAR,
+      Mpp, 
+      Ypp, 
+      nbRowsPP, 
+      2,
+      Mppp, 
+      Yppp, 
+      &nbRowsPPP);
+
   GetBound3DTime(
     FST_VAR,
-    Mpp,
-    Ypp,
-    nbRowsPP,
+    Mppp,
+    Yppp,
+    nbRowsPPP,
+    &bdgBoxLocal);
+
+  inconsistency = 
+    ElimVar3DTime(
+      FST_VAR,
+      Mpp, 
+      Ypp, 
+      nbRowsPP, 
+      2,
+      Mppp, 
+      Yppp, 
+      &nbRowsPPP);
+
+  GetBound3DTime(
+    SND_VAR,
+    Mppp,
+    Yppp,
+    nbRowsPPP,
     &bdgBoxLocal);
 
   // If the user requested the resulting bounding box

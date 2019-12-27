@@ -245,6 +245,18 @@ Frame2DTime Frame2DTimeCreateStatic(
 
     }
 
+    if (that.speed[iAxis] < 0.0) {
+
+      min += that.speed[iAxis];
+
+    }
+
+    if (that.speed[iAxis] > 0.0) {
+
+      max += that.speed[iAxis];
+
+    }
+
     that.bdgBox.min[iAxis] = min;
     that.bdgBox.max[iAxis] = max;
 
@@ -327,6 +339,18 @@ Frame3DTime Frame3DTimeCreateStatic(
         }
 
       }
+
+    }
+
+    if (that.speed[iAxis] < 0.0) {
+
+      min += that.speed[iAxis];
+
+    }
+
+    if (that.speed[iAxis] > 0.0) {
+
+      max += that.speed[iAxis];
 
     }
 
@@ -928,6 +952,7 @@ void Frame3DTimeExportBdgBox(
 
   // Shortcuts
   const double* to    = that->orig;
+  const double* ts    = that->speed;
   const double* bbmi  = bdgBox->min;
   const double* bbma  = bdgBox->max;
         double* bbpmi = bdgBoxProj->min;
@@ -943,7 +968,7 @@ void Frame3DTimeExportBdgBox(
   for (int i = 3;
        i--;) {
 
-    bbpma[i] = to[i];
+    bbpma[i] = to[i] + ts[i] * bbmi[3];
 
     for (int j = 3;
          j--;) {
@@ -997,14 +1022,24 @@ void Frame3DTimeExportBdgBox(
     for (int i = 3; 
          i--;) {
 
-      if (bbpmi[i] > w[i]) {
+      if (bbpmi[i] > w[i] + ts[i] * bbmi[3]) {
 
-        bbpmi[i] = w[i];
+        bbpmi[i] = w[i] + ts[i] * bbmi[3];
 
       }
-      if (bbpma[i] < w[i]) {
+      if (bbpmi[i] > w[i] + ts[i] * bbma[3]) {
 
-        bbpma[i] = w[i];
+        bbpmi[i] = w[i] + ts[i] * bbma[3];
+
+      }
+      if (bbpma[i] < w[i] + ts[i] * bbmi[3]) {
+
+        bbpma[i] = w[i] + ts[i] * bbmi[3];
+
+      }
+      if (bbpma[i] < w[i] + ts[i] * bbma[3]) {
+
+        bbpma[i] = w[i] + ts[i] * bbma[3];
 
       }
     }
