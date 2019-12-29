@@ -188,6 +188,8 @@ bool SATTestIntersection2DTime(
   const Frame2DTime* frameEdge = that;
 
   // Declare a variable to memorize the speed of tho relative to that
+  // TODO: already calculated by TestIntersection, should be given
+  // in argument
   double relSpeed[2];
   relSpeed[0] = tho->speed[0] - that->speed[0];
   relSpeed[1] = tho->speed[1] - that->speed[1];
@@ -596,7 +598,7 @@ bool SATTestIntersection3D(
 bool SATTestIntersection3DTime(
   const Frame3DTime* const that, 
   const Frame3DTime* const tho) {
-  
+
   // Declare two variables to memorize the opposite edges in case
   // of tetrahedron
   double oppEdgesThat[3][3];
@@ -663,7 +665,7 @@ bool SATTestIntersection3DTime(
     nbEdgesTho = 6;
 
   }
-  
+
   // Declare variables to loop on Frames and commonalize code
   const Frame3DTime* frame = that;
   const double (*oppEdgesA)[3] = oppEdgesThat;
@@ -877,14 +879,16 @@ bool SATTestIntersection3DTime(
         that->comp[iEdgeThat] : 
         oppEdgesThat[iEdgeThat - 3]);
 
-    for (int iEdgeTho = nbEdgesTho;
+    for (int iEdgeTho = nbEdgesTho + 1;
          iEdgeTho--;) {
 
       // Get the second edge
       const double* edgeTho = 
-        (iEdgeTho < 3 ? 
-          tho->comp[iEdgeTho] : 
-          oppEdgesTho[iEdgeTho - 3]);
+        (iEdgeTho == nbEdgesTho ?
+          relSpeed :
+          (iEdgeTho < 3 ? 
+            tho->comp[iEdgeTho] : 
+            oppEdgesTho[iEdgeTho - 3]));
 
       // Get the cross product of the two edges
       double axis[3];
@@ -1063,7 +1067,7 @@ bool CheckAxis3DTime(
   const Frame3DTime* const that,
   const Frame3DTime* const tho,
   const double* const axis) {
-  
+
   // Declare variables to memorize the boundaries of projection
   // of the two frames on the current edge
   double bdgBoxA[2];
@@ -1074,6 +1078,8 @@ bool CheckAxis3DTime(
   double* bdgBox = bdgBoxA;
 
   // Declare a variable to memorize the speed of tho relative to that
+  // TODO: already calculated by TestIntersection, should be given
+  // in argument
   double relSpeed[3];
   relSpeed[0] = tho->speed[0] - that->speed[0];
   relSpeed[1] = tho->speed[1] - that->speed[1];

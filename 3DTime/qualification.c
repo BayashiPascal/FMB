@@ -14,12 +14,12 @@
 // Range of values for the random generation of Frames
 #define RANGE_AXIS 100.0
 // Nb of run
-#define NB_RUNS 1
+#define NB_RUNS 10
 // Nb of tests per run
-#define NB_TESTS 1000 //1000000
+#define NB_TESTS 100000
 // Nb of times the test is run on one pair of frame, used to 
 // slow down the processus and be able to measure time
-#define NB_REPEAT_3D 1500
+#define NB_REPEAT_3D 800
 
 // Helper macro to generate random number in [0.0, 1.0]
 #define rnd() (double)(rand())/(double)(RAND_MAX)
