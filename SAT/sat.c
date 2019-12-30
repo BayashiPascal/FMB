@@ -189,8 +189,6 @@ bool SATTestIntersection2DTime(
   const Frame2DTime* frameEdge = that;
 
   // Declare a variable to memorize the speed of tho relative to that
-  // TODO: already calculated by TestIntersection, should be given
-  // in argument
   double relSpeed[2];
   relSpeed[0] = tho->speed[0] - that->speed[0];
   relSpeed[1] = tho->speed[1] - that->speed[1];

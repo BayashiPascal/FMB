@@ -50,31 +50,6 @@ void GetBound2DTime(
 
 // ------------- Functions implementation -------------
 
-// TODO
-void PrintMY2DTime(
-  const double (*M)[3], 
-  const double* Y, 
-     const int nbRows,
-     const int nbVar) {
-  for (int iRow = 0; iRow < nbRows; ++iRow) {
-    for (int iCol = 0; iCol < nbVar; ++iCol) {
-      printf("%f ", M[iRow][iCol]);
-    }
-    printf("| %f\n", Y[iRow]);
-  }
-}
-
-void PrintM2DTime(
-  const double (*M)[3], 
-     const int nbRows) {
-  for (int iRow = 0; iRow < nbRows; ++iRow) {
-    for (int iCol = 0; iCol < 3; ++iCol) {
-      printf("%f ", M[iRow][iCol]);
-    }
-    printf("\n");
-  }
-}
-
 // Eliminate the 'iVar'-th variable in the system 'M'.X<='Y'
 // using the Fourier-Motzkin method and return
 // the resulting system in 'Mp' and 'Yp', and the number of rows of 
