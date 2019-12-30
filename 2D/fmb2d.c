@@ -10,7 +10,6 @@
 
 #define FST_VAR 0
 #define SND_VAR 1
-#define THD_VAR 2
 
 #define EPSILON 0.0000001
 
@@ -132,7 +131,6 @@ bool ElimVar2D(
         if (Yp[*nbRemainRows] < sumNegCoeff - EPSILON) {
 
           // Given that X is in [0,1], the system is inconsistent
-//printf("inconsistent %.9f %.9f\n",Yp[*nbRemainRows], sumNegCoeff + EPSILON);
           return true;
 
         }
@@ -242,7 +240,7 @@ void GetBound2D(
 
     // Else, if this row has been reduced to the variable in argument
     // and it has a strictly negative coefficient
-    } else if (MjRowiVar < -1.0 * EPSILON) {
+    } else if (MjRowiVar < -EPSILON) {
 
       // Get the scaled value of Y for this row
       double y = Y[jRow] / MjRowiVar;
@@ -395,7 +393,6 @@ bool FMBTestIntersection2D(
   if (inconsistency == true) {
 
     // The two Frames are not in intersection
-//printf("inconsisten A\n");
     return false;
 
   }
@@ -412,7 +409,6 @@ bool FMBTestIntersection2D(
   if (bdgBoxLocal.min[SND_VAR] >= bdgBoxLocal.max[SND_VAR]) {
 
     // The two Frames are not in intersection
-//printf("bound %f %f\n",bdgBoxLocal.min[SND_VAR],bdgBoxLocal.max[SND_VAR]);
     return false;
 
   // Else, if the bounds are consistent here it means
@@ -421,7 +417,6 @@ bool FMBTestIntersection2D(
   } else if (bdgBox == NULL) {
 
     // Immediately return true
-//printf("inter\n");
     return true;
 
   }
@@ -440,7 +435,7 @@ bool FMBTestIntersection2D(
       Mp, 
       Yp, 
       &nbRowsP);
-//printf("inconsistent B %d\n",inconsistency);
+
   // Get the bounds for the remaining first variable
   GetBound2D(
     FST_VAR,
@@ -448,7 +443,6 @@ bool FMBTestIntersection2D(
     Yp,
     nbRowsP,
     &bdgBoxLocal);
-//printf("bound %f %f\n",bdgBoxLocal.min[FST_VAR],bdgBoxLocal.max[FST_VAR]);
 
   // If the user requested the resulting bounding box
   if (bdgBox != NULL) {
@@ -459,7 +453,6 @@ bool FMBTestIntersection2D(
   }
 
   // If we've reached here the two Frames are intersecting
-//printf("inter\n");
   return true;
 
 }

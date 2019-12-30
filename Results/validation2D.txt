@@ -1,3 +1,3 @@
 ===== 2D static ======
 Validation2D has succeed.
-Tested 468082 intersections and 1531834 no intersections
+Tested 469142 intersections and 1530762 no intersections

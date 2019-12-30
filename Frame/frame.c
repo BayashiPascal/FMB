@@ -385,8 +385,8 @@ void Frame2DUpdateInv(Frame2D* const that) {
   }
 
   tic[0][0] = tc[1][1] / det;
-  tic[0][1] = -1.0 * tc[0][1] / det;
-  tic[1][0] = -1.0 * tc[1][0] / det;
+  tic[0][1] = -tc[0][1] / det;
+  tic[1][0] = -tc[1][0] / det;
   tic[1][1] = tc[0][0] / det;
 
 }
@@ -435,8 +435,8 @@ void Frame2DTimeUpdateInv(Frame2DTime* const that) {
   }
 
   tic[0][0] = tc[1][1] / det;
-  tic[0][1] = -1.0 * tc[0][1] / det;
-  tic[1][0] = -1.0 * tc[1][0] / det;
+  tic[0][1] = -tc[0][1] / det;
+  tic[1][0] = -tc[1][0] / det;
   tic[1][1] = tc[0][0] / det;
 
 }

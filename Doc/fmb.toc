@@ -6,65 +6,66 @@
 \contentsline {subsection}{\numberline {3.1}Fourier-Motzkin elimination method}{11}
 \contentsline {subsection}{\numberline {3.2}Application of the Fourier-Motzkin method to the intersection problem}{13}
 \contentsline {section}{\numberline {4}Algorithms}{13}
-\contentsline {subsection}{\numberline {4.1}2D static}{14}
-\contentsline {subsection}{\numberline {4.2}3D static}{14}
-\contentsline {subsection}{\numberline {4.3}2D dynamic}{14}
-\contentsline {subsection}{\numberline {4.4}3D dynamic}{14}
-\contentsline {section}{\numberline {5}Implementation}{14}
-\contentsline {subsection}{\numberline {5.1}Frames}{14}
-\contentsline {subsubsection}{\numberline {5.1.1}Header}{14}
-\contentsline {subsubsection}{\numberline {5.1.2}Body}{17}
-\contentsline {subsection}{\numberline {5.2}FMB}{39}
-\contentsline {subsubsection}{\numberline {5.2.1}2D static}{39}
-\contentsline {subsubsection}{\numberline {5.2.2}3D static}{47}
-\contentsline {subsubsection}{\numberline {5.2.3}2D dynamic}{56}
-\contentsline {subsubsection}{\numberline {5.2.4}3D dynamic}{66}
-\contentsline {section}{\numberline {6}Example of use}{77}
-\contentsline {subsection}{\numberline {6.1}2D static}{77}
-\contentsline {subsection}{\numberline {6.2}3D static}{78}
-\contentsline {subsection}{\numberline {6.3}2D dynamic}{80}
-\contentsline {subsection}{\numberline {6.4}3D dynamic}{81}
-\contentsline {section}{\numberline {7}Unit tests}{82}
-\contentsline {subsection}{\numberline {7.1}Code}{83}
-\contentsline {subsubsection}{\numberline {7.1.1}2D static}{83}
-\contentsline {subsubsection}{\numberline {7.1.2}3D static}{86}
-\contentsline {subsubsection}{\numberline {7.1.3}2D dynamic}{89}
-\contentsline {subsubsection}{\numberline {7.1.4}3D dynamic}{93}
-\contentsline {subsection}{\numberline {7.2}Results}{96}
-\contentsline {subsubsection}{\numberline {7.2.1}2D static}{96}
-\contentsline {subsubsection}{\numberline {7.2.2}3D static}{100}
-\contentsline {subsubsection}{\numberline {7.2.3}2D dynamic}{101}
-\contentsline {subsubsection}{\numberline {7.2.4}3D dynamic}{102}
-\contentsline {section}{\numberline {8}Validation}{102}
-\contentsline {subsection}{\numberline {8.1}Code}{102}
-\contentsline {subsubsection}{\numberline {8.1.1}2D static}{102}
-\contentsline {subsubsection}{\numberline {8.1.2}3D static}{106}
-\contentsline {subsubsection}{\numberline {8.1.3}2D dynamic}{109}
-\contentsline {subsubsection}{\numberline {8.1.4}3D dynamic}{113}
-\contentsline {subsection}{\numberline {8.2}Results}{116}
-\contentsline {subsubsection}{\numberline {8.2.1}Failures}{116}
-\contentsline {subsubsection}{\numberline {8.2.2}2D static}{117}
-\contentsline {subsubsection}{\numberline {8.2.3}2D dynamic}{117}
-\contentsline {subsubsection}{\numberline {8.2.4}3D static}{117}
-\contentsline {subsubsection}{\numberline {8.2.5}3D dynamic}{117}
-\contentsline {section}{\numberline {9}Qualification against SAT}{117}
-\contentsline {subsection}{\numberline {9.1}Code}{118}
-\contentsline {subsubsection}{\numberline {9.1.1}2D static}{118}
-\contentsline {subsubsection}{\numberline {9.1.2}3D static}{128}
-\contentsline {subsubsection}{\numberline {9.1.3}2D dynamic}{139}
-\contentsline {subsubsection}{\numberline {9.1.4}3D dynamic}{150}
-\contentsline {subsection}{\numberline {9.2}Results}{161}
-\contentsline {subsubsection}{\numberline {9.2.1}2D static}{161}
-\contentsline {subsubsection}{\numberline {9.2.2}3D static}{165}
-\contentsline {subsubsection}{\numberline {9.2.3}2D dynamic}{170}
-\contentsline {subsubsection}{\numberline {9.2.4}3D dynamic}{175}
-\contentsline {section}{\numberline {10}Conclusion}{181}
-\contentsline {section}{\numberline {11}Annex}{181}
-\contentsline {subsection}{\numberline {11.1}SAT implementation}{181}
-\contentsline {subsubsection}{\numberline {11.1.1}Header}{181}
-\contentsline {subsubsection}{\numberline {11.1.2}Body}{182}
-\contentsline {subsection}{\numberline {11.2}Makefile}{201}
-\contentsline {subsubsection}{\numberline {11.2.1}2D static}{204}
-\contentsline {subsubsection}{\numberline {11.2.2}3D static}{205}
-\contentsline {subsubsection}{\numberline {11.2.3}2D dynamic}{206}
-\contentsline {subsubsection}{\numberline {11.2.4}3D dynamic}{206}
+\contentsline {subsection}{\numberline {4.1}Frames}{14}
+\contentsline {subsection}{\numberline {4.2}2D static}{14}
+\contentsline {subsection}{\numberline {4.3}3D static}{21}
+\contentsline {subsection}{\numberline {4.4}2D dynamic}{25}
+\contentsline {subsection}{\numberline {4.5}3D dynamic}{34}
+\contentsline {section}{\numberline {5}Implementation}{38}
+\contentsline {subsection}{\numberline {5.1}Frames}{39}
+\contentsline {subsubsection}{\numberline {5.1.1}Header}{39}
+\contentsline {subsubsection}{\numberline {5.1.2}Body}{41}
+\contentsline {subsection}{\numberline {5.2}FMB}{63}
+\contentsline {subsubsection}{\numberline {5.2.1}2D static}{63}
+\contentsline {subsubsection}{\numberline {5.2.2}3D static}{71}
+\contentsline {subsubsection}{\numberline {5.2.3}2D dynamic}{81}
+\contentsline {subsubsection}{\numberline {5.2.4}3D dynamic}{90}
+\contentsline {section}{\numberline {6}Example of use}{101}
+\contentsline {subsection}{\numberline {6.1}2D static}{101}
+\contentsline {subsection}{\numberline {6.2}3D static}{103}
+\contentsline {subsection}{\numberline {6.3}2D dynamic}{104}
+\contentsline {subsection}{\numberline {6.4}3D dynamic}{105}
+\contentsline {section}{\numberline {7}Unit tests}{107}
+\contentsline {subsection}{\numberline {7.1}Code}{107}
+\contentsline {subsubsection}{\numberline {7.1.1}2D static}{107}
+\contentsline {subsubsection}{\numberline {7.1.2}3D static}{110}
+\contentsline {subsubsection}{\numberline {7.1.3}2D dynamic}{114}
+\contentsline {subsubsection}{\numberline {7.1.4}3D dynamic}{117}
+\contentsline {subsection}{\numberline {7.2}Results}{121}
+\contentsline {subsubsection}{\numberline {7.2.1}2D static}{121}
+\contentsline {subsubsection}{\numberline {7.2.2}3D static}{124}
+\contentsline {subsubsection}{\numberline {7.2.3}2D dynamic}{125}
+\contentsline {subsubsection}{\numberline {7.2.4}3D dynamic}{126}
+\contentsline {section}{\numberline {8}Validation}{126}
+\contentsline {subsection}{\numberline {8.1}Code}{127}
+\contentsline {subsubsection}{\numberline {8.1.1}2D static}{127}
+\contentsline {subsubsection}{\numberline {8.1.2}3D static}{130}
+\contentsline {subsubsection}{\numberline {8.1.3}2D dynamic}{133}
+\contentsline {subsubsection}{\numberline {8.1.4}3D dynamic}{137}
+\contentsline {subsection}{\numberline {8.2}Results}{140}
+\contentsline {subsubsection}{\numberline {8.2.1}Failures}{140}
+\contentsline {subsubsection}{\numberline {8.2.2}2D static}{141}
+\contentsline {subsubsection}{\numberline {8.2.3}2D dynamic}{141}
+\contentsline {subsubsection}{\numberline {8.2.4}3D static}{141}
+\contentsline {subsubsection}{\numberline {8.2.5}3D dynamic}{142}
+\contentsline {section}{\numberline {9}Qualification against SAT}{142}
+\contentsline {subsection}{\numberline {9.1}Code}{142}
+\contentsline {subsubsection}{\numberline {9.1.1}2D static}{142}
+\contentsline {subsubsection}{\numberline {9.1.2}3D static}{153}
+\contentsline {subsubsection}{\numberline {9.1.3}2D dynamic}{163}
+\contentsline {subsubsection}{\numberline {9.1.4}3D dynamic}{174}
+\contentsline {subsection}{\numberline {9.2}Results}{185}
+\contentsline {subsubsection}{\numberline {9.2.1}2D static}{185}
+\contentsline {subsubsection}{\numberline {9.2.2}3D static}{187}
+\contentsline {subsubsection}{\numberline {9.2.3}2D dynamic}{192}
+\contentsline {subsubsection}{\numberline {9.2.4}3D dynamic}{197}
+\contentsline {section}{\numberline {10}Conclusion}{203}
+\contentsline {section}{\numberline {11}Annex}{203}
+\contentsline {subsection}{\numberline {11.1}SAT implementation}{203}
+\contentsline {subsubsection}{\numberline {11.1.1}Header}{203}
+\contentsline {subsubsection}{\numberline {11.1.2}Body}{204}
+\contentsline {subsection}{\numberline {11.2}Makefile}{223}
+\contentsline {subsubsection}{\numberline {11.2.1}2D static}{226}
+\contentsline {subsubsection}{\numberline {11.2.2}3D static}{227}
+\contentsline {subsubsection}{\numberline {11.2.3}2D dynamic}{228}
+\contentsline {subsubsection}{\numberline {11.2.4}3D dynamic}{228}

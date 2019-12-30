@@ -241,7 +241,7 @@ void GetBound2DTime(
 
     // Else, if this row has been reduced to the variable in argument
     // and it has a strictly negative coefficient
-    } else if (MjRowiVar < -1.0 * EPSILON) {
+    } else if (MjRowiVar < -EPSILON) {
 
       // Get the scaled value of Y for this row
       double y = Y[jRow] / MjRowiVar;
