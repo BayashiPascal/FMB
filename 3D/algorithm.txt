@@ -128,8 +128,8 @@ FUNCTION FMBTestIntersection3D(that, tho, bdgBox)
     M[nbRows][1] = thoProj.comp[1][0] 
     M[nbRows][2] = thoProj.comp[2][0] 
     Y[nbRows] = 1.0 - thoProj.orig[0] 
-    IF (Y[nbRows] < neg(M[nbRows][0]) + neg(M[nbRows][1]) + 
-                    neg(M[nbRows][2]))
+    IF Y[nbRows] < neg(M[nbRows][0]) + neg(M[nbRows][1]) + 
+                    neg(M[nbRows][2])
       RETURN FALSE 
     END IF
     nbRows = nbRows + 1
@@ -166,7 +166,7 @@ FUNCTION FMBTestIntersection3D(that, tho, bdgBox)
     END IF
     nbRows = nbRows + 1
   END
-  IF (tho.type == FrameCuboid) {
+  IF tho.type == FrameCuboid {
     M[nbRows][0] = 1.0 
     M[nbRows][1] = 0.0 
     M[nbRows][2] = 0.0 
@@ -211,3 +211,24 @@ FUNCTION FMBTestIntersection3D(that, tho, bdgBox)
   bdgBox = bdgBoxLocal 
   RETURN TRUE 
 END
+
+origP3D = [0.0, 0.0, 0.0]
+compP3D = [
+  [1.0, 0.0, 0.0],
+  [0.0, 1.0, 0.0],
+  [0.0, 0.0, 1.0]]
+P3D = Frame3DCreateStatic(FrameTetrahedron, origP3D, compP3D)
+origQ3D = [0.5, 0.5, 0.5]
+compQ3D = [
+  [2.0, 0.0, 0.0],
+  [0.0, 2.0, 0.0],
+  [0.0, 0.0, 2.0]]
+Q3D = Frame3DCreateStatic(FrameTetrahedron, origQ3D, compQ3D)
+isIntersecting3D = FMBTestIntersection3D(P3D, Q3D, bdgBox3DLocal)
+IF isIntersecting3D == TRUE
+  PRINT "Intersection detected in AABB "
+  Frame3DExportBdgBox(Q3D, bdgBox3DLocal, bdgBox3D)
+  AABB3DPrint(bdgBox3D)
+ELSE
+  PRINT "No intersection."
+END IF

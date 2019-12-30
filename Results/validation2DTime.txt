@@ -1,3 +1,3 @@
 ===== 2D dynamic ======
 Validation2DTime has succeed.
-Tested 744748 intersections and 1255166 no intersections
+Tested 741478 intersections and 1258454 no intersections
