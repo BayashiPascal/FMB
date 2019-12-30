@@ -15,13 +15,13 @@
 
 \begin{document}
 
-\title{The FMB algorithm\\An intersection detection algorithm for 2D/3D cuboid and tetrahedron based on the Fourier-Motzkin elimination method}
+\title{The FMB Algorithm\\An intersection detection algorithm for 2D/3D cuboid and tetrahedron based on the Fourier-Motzkin elimination method}
 \author{P. Baillehache}
 \date{\today}
 \maketitle
 
 \begin{abstract}
-In this paper I introduce how to perform intersection detection of pair of cuboid/tetrahedron in 2D and 3D by using the Fourier-Motzkin elimination method. The mathematical definition and solution of the problem in the two first sections is followed by the algorithm of the solution and its implementation in the C programming language in the two following sections. The last two sections introduce the validation and qualification of the FMB algorithm against the SAT algorithm.
+This paper introduces how to perform intersection detection and localisation of pair of static/dynamic cuboid/tetrahedron in 2D/3D by using the Fourier-Motzkin elimination method. The mathematical definition and solution of the problem in the two first sections is followed by the algorithm of the solution and its implementation in the C programming language in the four following sections. The last two sections introduce the validation and qualification in term of relative performance of the FMB algorithm against the SAT algorithm.
 \end{abstract}
 
 \newpage
@@ -227,7 +227,7 @@ If $\mathbb{A}$ and $\mathbb{B}$ are two tetrahedrons:
 -\left[X\right]_0&\le&0.0\\
 ...\\
 -\left[X\right]_{D-1}&\le&0.0\\
--\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{0,i}.\left[X\right]_i&\le&\left[O_{\mathbb{B}_\mathbb{A}}\right]0}\\
+-\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{0,i}.\left[X\right]_i&\le&\left[O_{\mathbb{B}_\mathbb{A}}\right]_0\\
 ...\\
 -\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{D-1,i}.\left[X\right]_i&\le&\left[O_{\mathbb{B}_\mathbb{A}}\right]_{D-1}\\
 \sum_{i=0}^{D-1}\left[X\right]_i&\le&1.0\\
@@ -451,10 +451,6 @@ t&\le&1.0\\
 \right.
 \end{equation}
 
-
-
-
-
 \section{Solution}
 
 \subsection{Fourier-Motzkin elimination method}
@@ -537,19 +533,35 @@ where $I^-=\left\lbrace i, a_i<0.0\right\rbrace$.\\
 
 In this section I introduce the algorithms of the solution of the previous section for the cases 2D and 3D.\\
 
-\subsection{2D case}
+\subsection{2D static}
 
 \begin{scriptsize}
 \begin{ttfamily}
-\verbatiminput{../algorithm2D.txt}
+\verbatiminput{../2D/algorithm.txt}
 \end{ttfamily}
 \end{scriptsize}
 
-\subsection{3D case}
+\subsection{3D static}
 
 \begin{scriptsize}
 \begin{ttfamily}
-\verbatiminput{../algorithm3D.txt}
+\verbatiminput{../3D/algorithm.txt}
+\end{ttfamily}
+\end{scriptsize}
+
+\subsection{2D dynamic}
+
+\begin{scriptsize}
+\begin{ttfamily}
+\verbatiminput{../2DTime/algorithm.txt}
+\end{ttfamily}
+\end{scriptsize}
+
+\subsection{3D dynamic}
+
+\begin{scriptsize}
+\begin{ttfamily}
+\verbatiminput{../3DTime/algorithm.txt}
 \end{ttfamily}
 \end{scriptsize}
 
@@ -563,7 +575,7 @@ In this section I introduce an implementation of the algorithms of the previous 
 
 \begin{scriptsize}
 \begin{ttfamily}
-\verbatiminput{../frame.h}
+\verbatiminput{../Frame/frame.h}
 \end{ttfamily}
 \end{scriptsize}
 
@@ -571,7 +583,7 @@ In this section I introduce an implementation of the algorithms of the previous 
 
 \begin{scriptsize}
 \begin{ttfamily}
-\verbatiminput{../frame.c}
+\verbatiminput{../Frame/frame.c}
 \end{ttfamily}
 \end{scriptsize}
 
@@ -583,7 +595,7 @@ In this section I introduce an implementation of the algorithms of the previous 
 
 \begin{scriptsize}
 \begin{ttfamily}
-\verbatiminput{../fmb2d.h}
+\verbatiminput{../2D/fmb2d.h}
 \end{ttfamily}
 \end{scriptsize}
 
@@ -591,7 +603,7 @@ In this section I introduce an implementation of the algorithms of the previous 
 
 \begin{scriptsize}
 \begin{ttfamily}
-\verbatiminput{../fmb2d.c}
+\verbatiminput{../2D/fmb2d.c}
 \end{ttfamily}
 \end{scriptsize}
 
@@ -601,7 +613,7 @@ In this section I introduce an implementation of the algorithms of the previous 
 
 \begin{scriptsize}
 \begin{ttfamily}
-\verbatiminput{../fmb3d.h}
+\verbatiminput{../3D/fmb3d.h}
 \end{ttfamily}
 \end{scriptsize}
 
@@ -609,7 +621,7 @@ In this section I introduce an implementation of the algorithms of the previous 
 
 \begin{scriptsize}
 \begin{ttfamily}
-\verbatiminput{../fmb3d.c}
+\verbatiminput{../3D/fmb3d.c}
 \end{ttfamily}
 \end{scriptsize}
 
@@ -619,7 +631,7 @@ In this section I introduce an implementation of the algorithms of the previous 
 
 \begin{scriptsize}
 \begin{ttfamily}
-\verbatiminput{../fmb2dt.h}
+\verbatiminput{../2DTime/fmb2dt.h}
 \end{ttfamily}
 \end{scriptsize}
 
@@ -627,7 +639,7 @@ In this section I introduce an implementation of the algorithms of the previous 
 
 \begin{scriptsize}
 \begin{ttfamily}
-\verbatiminput{../fmb2dt.c}
+\verbatiminput{../2DTime/fmb2dt.c}
 \end{ttfamily}
 \end{scriptsize}
 
@@ -637,7 +649,7 @@ In this section I introduce an implementation of the algorithms of the previous 
 
 \begin{scriptsize}
 \begin{ttfamily}
-\verbatiminput{../fmb3dt.h}
+\verbatiminput{../3DTime/fmb3dt.h}
 \end{ttfamily}
 \end{scriptsize}
 
@@ -645,97 +657,405 @@ In this section I introduce an implementation of the algorithms of the previous 
 
 \begin{scriptsize}
 \begin{ttfamily}
-\verbatiminput{../fmb3dt.c}
+\verbatiminput{../3DTime/fmb3dt.c}
 \end{ttfamily}
 \end{scriptsize}
 
-\subsection{Example of use}
+\section{Example of use}
+
+In this section I give a minimal example of how to use the code given in the previous section.
+
+\subsection{2D static}
 
 \begin{scriptsize}
 \begin{ttfamily}
-\verbatiminput{../main.c}
+\verbatiminput{../2D/main.c}
+\end{ttfamily}
+\end{scriptsize}
+
+\subsection{3D static}
+
+\begin{scriptsize}
+\begin{ttfamily}
+\verbatiminput{../3D/main.c}
+\end{ttfamily}
+\end{scriptsize}
+
+\subsection{2D dynamic}
+
+\begin{scriptsize}
+\begin{ttfamily}
+\verbatiminput{../2DTime/main.c}
+\end{ttfamily}
+\end{scriptsize}
+
+\subsection{3D dynamic}
+
+\begin{scriptsize}
+\begin{ttfamily}
+\verbatiminput{../3DTime/main.c}
+\end{ttfamily}
+\end{scriptsize}
+
+\section{Unit tests}
+
+In this section I introduce the code I've used to test the algorithm and its implementation. The test consists of running the algorithm on a set of cases for which the solution has been computed by hand. The code of the implementation of the SAT algorithm is given in annex (p.\pageref{sat_implementation})\\
+
+\subsection{Code}
+
+\subsubsection{2D static}
+
+\begin{scriptsize}
+\begin{ttfamily}
+\verbatiminput{../2D/validation.c}
+\end{ttfamily}
+\end{scriptsize}
+
+\subsubsection{3D static}
+
+\begin{scriptsize}
+\begin{ttfamily}
+\verbatiminput{../3D/validation.c}
+\end{ttfamily}
+\end{scriptsize}
+
+\subsubsection{2D dynamic}
+
+\begin{scriptsize}
+\begin{ttfamily}
+\verbatiminput{../2DTime/validation.c}
+\end{ttfamily}
+\end{scriptsize}
+
+\subsubsection{3D dynamic}
+
+\begin{scriptsize}
+\begin{ttfamily}
+\verbatiminput{../3DTime/validation.c}
+\end{ttfamily}
+\end{scriptsize}
+
+\subsection{Results}
+
+\subsubsection{2D static}
+
+\begin{scriptsize}
+\begin{ttfamily}
+\verbatiminput{../Results/unitTests2D.txt}
+\end{ttfamily}
+\end{scriptsize}
+
+\subsubsection{3D static}
+
+\begin{scriptsize}
+\begin{ttfamily}
+\verbatiminput{../Results/unitTests3D.txt}
+\end{ttfamily}
+\end{scriptsize}
+
+\subsubsection{2D dynamic}
+
+\begin{scriptsize}
+\begin{ttfamily}
+\verbatiminput{../Results/unitTests2DTime.txt}
+\end{ttfamily}
+\end{scriptsize}
+
+\subsubsection{3D dynamic}
+
+\begin{scriptsize}
+\begin{ttfamily}
+\verbatiminput{../Results/unitTests3DTime.txt}
 \end{ttfamily}
 \end{scriptsize}
 
 \section{Validation}
 
-In this section I introduce the code I've used to validate the algorithm and its implementation. The validation consists of, first running the algorithm on a set of unit test for which the solution has been computed by hand, and second running the FMB algorithm on randomly generated pairs of Frame and check that its result is equal to the one of running the SAT algorithm on the same pair of Frames. The code of the implementation of the SAT algorithm is given in annex (p.\pageref{sat_implementation})\\
+In this section I introduce the code I've used to validate the algorithm and its implementation. The validation consists of running the FMB algorithm on randomly generated pairs of Frame and check that its result is equal to the one of running the SAT algorithm on the same pair of Frames. The code of the implementation of the SAT algorithm is given in annex (p.\pageref{sat_implementation})\\
 
 \subsection{Code}
 
-\subsubsection{Unit tests}
+\subsubsection{2D static}
 
 \begin{scriptsize}
 \begin{ttfamily}
-\verbatiminput{../unitTests.c}
+\verbatiminput{../2D/validation.c}
 \end{ttfamily}
 \end{scriptsize}
 
-\subsubsection{Validation against SAT}
+\subsubsection{3D static}
 
 \begin{scriptsize}
 \begin{ttfamily}
-\verbatiminput{../validation.c}
+\verbatiminput{../3D/validation.c}
+\end{ttfamily}
+\end{scriptsize}
+
+\subsubsection{2D dynamic}
+
+\begin{scriptsize}
+\begin{ttfamily}
+\verbatiminput{../2DTime/validation.c}
+\end{ttfamily}
+\end{scriptsize}
+
+\subsubsection{3D dynamic}
+
+\begin{scriptsize}
+\begin{ttfamily}
+\verbatiminput{../3DTime/validation.c}
 \end{ttfamily}
 \end{scriptsize}
 
 \subsection{Results}
 
-\subsubsection{2D}
+\subsubsection{Failures}
 
-\subsubsection{3D}
+Validation has failed in one case: when one or both of the frame are degenerated (at least two of there components ae colinear). An example is given below for reference:\\
 
-\section{Qualification}
+\begin{scriptsize}
+\begin{ttfamily}
+===== 2D static ======\\
+Validation2D has failed\\
+Co(-63.571705,-22.581119) x(55.239119,38.152177) y(-62.031537,-42.843548) against To(3.474294,22.751011) x(-49.195251,84.166201) y(41.179031,-95.350316)\\
+FMB : intersection\\
+SAT : no intersection\\
+\end{ttfamily}
+\end{scriptsize}
+
+\begin{center}
+\begin{figure}[H]
+\centering\includegraphics[width=10cm]{./degeneratedFrame.png}\\
+\end{figure}
+\end{center}
+
+This case can be detected and avoided prior to the intersection test by checking the determinant of the frame: degenerated frames have a null determinant. In the example above the determinant of the first frame is equal to -0.001667.
+
+\subsubsection{2D static}
+
+\begin{scriptsize}
+\begin{ttfamily}
+\verbatiminput{../Results/validation2D.txt}
+\end{ttfamily}
+\end{scriptsize}
+
+\subsubsection{2D dynamic}
+
+\begin{scriptsize}
+\begin{ttfamily}
+\verbatiminput{../Results/validation2DTime.txt}
+\end{ttfamily}
+\end{scriptsize}
+
+\subsubsection{3D static}
+
+\begin{scriptsize}
+\begin{ttfamily}
+\verbatiminput{../Results/validation3D.txt}
+\end{ttfamily}
+\end{scriptsize}
+
+\subsubsection{3D dynamic}
+
+\begin{scriptsize}
+\begin{ttfamily}
+\verbatiminput{../Results/validation3DTime.txt}
+\end{ttfamily}
+\end{scriptsize}
+
+\section{Qualification against SAT}
 
 In this section I introduce the code I've used to qualify the algorithm and its implementation. The qualification consists of running the FMB algorithm on randomly generated pairs of Frame, and check its execution time against the one of running the SAT algorithm on the same pair of Frames.\\
 
 \subsection{Code}
 
+\subsubsection{2D static}
+
 \begin{scriptsize}
 \begin{ttfamily}
-\verbatiminput{../qualification.c}
+\verbatiminput{../2D/qualification.c}
+\end{ttfamily}
+\end{scriptsize}
+
+\subsubsection{3D static}
+
+\begin{scriptsize}
+\begin{ttfamily}
+\verbatiminput{../3D/qualification.c}
+\end{ttfamily}
+\end{scriptsize}
+
+\subsubsection{2D dynamic}
+
+\begin{scriptsize}
+\begin{ttfamily}
+\verbatiminput{../2DTime/qualification.c}
+\end{ttfamily}
+\end{scriptsize}
+
+\subsubsection{3D dynamic}
+
+\begin{scriptsize}
+\begin{ttfamily}
+\verbatiminput{../3DTime/qualification.c}
 \end{ttfamily}
 \end{scriptsize}
 
 \subsection{Results}
 
-\subsubsection{2D}
+\subsubsection{2D static}
+
+\begin{scriptsize}
+\begin{ttfamily}
+\verbatiminput{../Results/qualification2D.txt}
+\end{ttfamily}
+\end{scriptsize}
 
 \begin{center}
 \begin{figure}[H]
-\centering\includegraphics[width=10cm]{./2dnointer.png}\\
+\centering\includegraphics[width=12cm]{../Results/qualification2D.png}\\
 \end{figure}
 \end{center}
 
 \begin{center}
 \begin{figure}[H]
-\centering\includegraphics[width=10cm]{./2dinter.png}\\
+\centering\includegraphics[width=12cm]{../Results/qualification2Dinter.png}\\
+\centering\includegraphics[width=12cm]{../Results/qualification2Dnointer.png}\\
 \end{figure}
 \end{center}
 
 \begin{center}
 \begin{figure}[H]
-\centering\includegraphics[width=10cm]{./2dtotal.png}\\
-\end{figure}
-\end{center}
-
-\subsubsection{3D}
-
-\begin{center}
-\begin{figure}[H]
-\centering\includegraphics[width=10cm]{./3dnointer.png}\\
+\centering\includegraphics[width=6cm]{../Results/qualification2DCCinter.png}
+\centering\includegraphics[width=6cm]{../Results/qualification2DCTinter.png}\\
+\centering\includegraphics[width=6cm]{../Results/qualification2DTCinter.png}
+\centering\includegraphics[width=6cm]{../Results/qualification2DTTinter.png}\\
 \end{figure}
 \end{center}
 
 \begin{center}
 \begin{figure}[H]
-\centering\includegraphics[width=10cm]{./3dinter.png}\\
+\centering\includegraphics[width=6cm]{../Results/qualification2DCCnointer.png}
+\centering\includegraphics[width=6cm]{../Results/qualification2DCTnointer.png}\\
+\centering\includegraphics[width=6cm]{../Results/qualification2DTCnointer.png}
+\centering\includegraphics[width=6cm]{../Results/qualification2DTTnointer.png}\\
+\end{figure}
+\end{center}
+
+\subsubsection{3D static}
+
+\begin{scriptsize}
+\begin{ttfamily}
+\verbatiminput{../Results/qualification3D.txt}
+\end{ttfamily}
+\end{scriptsize}
+
+\begin{center}
+\begin{figure}[H]
+\centering\includegraphics[width=12cm]{../Results/qualification3D.png}\\
 \end{figure}
 \end{center}
 
 \begin{center}
 \begin{figure}[H]
-\centering\includegraphics[width=10cm]{./3dtotal.png}\\
+\centering\includegraphics[width=12cm]{../Results/qualification3Dinter.png}\\
+\centering\includegraphics[width=12cm]{../Results/qualification3Dnointer.png}\\
+\end{figure}
+\end{center}
+
+\begin{center}
+\begin{figure}[H]
+\centering\includegraphics[width=6cm]{../Results/qualification3DCCinter.png}
+\centering\includegraphics[width=6cm]{../Results/qualification3DCTinter.png}\\
+\centering\includegraphics[width=6cm]{../Results/qualification3DTCinter.png}
+\centering\includegraphics[width=6cm]{../Results/qualification3DTTinter.png}\\
+\end{figure}
+\end{center}
+
+\begin{center}
+\begin{figure}[H]
+\centering\includegraphics[width=6cm]{../Results/qualification3DCCnointer.png}
+\centering\includegraphics[width=6cm]{../Results/qualification3DCTnointer.png}\\
+\centering\includegraphics[width=6cm]{../Results/qualification3DTCnointer.png}
+\centering\includegraphics[width=6cm]{../Results/qualification3DTTnointer.png}\\
+\end{figure}
+\end{center}
+
+\subsubsection{2D dynamic}
+
+\begin{scriptsize}
+\begin{ttfamily}
+\verbatiminput{../Results/qualification2DTime.txt}
+\end{ttfamily}
+\end{scriptsize}
+
+\begin{center}
+\begin{figure}[H]
+\centering\includegraphics[width=12cm]{../Results/qualification2DTime.png}\\
+\end{figure}
+\end{center}
+
+\begin{center}
+\begin{figure}[H]
+\centering\includegraphics[width=12cm]{../Results/qualification2DTimeinter.png}\\
+\centering\includegraphics[width=12cm]{../Results/qualification2DTimenointer.png}\\
+\end{figure}
+\end{center}
+
+\begin{center}
+\begin{figure}[H]
+\centering\includegraphics[width=6cm]{../Results/qualification2DTimeCCinter.png}
+\centering\includegraphics[width=6cm]{../Results/qualification2DTimeCTinter.png}\\
+\centering\includegraphics[width=6cm]{../Results/qualification2DTimeTCinter.png}
+\centering\includegraphics[width=6cm]{../Results/qualification2DTimeTTinter.png}\\
+\end{figure}
+\end{center}
+
+\begin{center}
+\begin{figure}[H]
+\centering\includegraphics[width=6cm]{../Results/qualification2DTimeCCnointer.png}
+\centering\includegraphics[width=6cm]{../Results/qualification2DTimeCTnointer.png}\\
+\centering\includegraphics[width=6cm]{../Results/qualification2DTimeTCnointer.png}
+\centering\includegraphics[width=6cm]{../Results/qualification2DTimeTTnointer.png}\\
+\end{figure}
+\end{center}
+
+\subsubsection{3D dynamic}
+
+\begin{scriptsize}
+\begin{ttfamily}
+\verbatiminput{../Results/qualification3DTime.txt}
+\end{ttfamily}
+\end{scriptsize}
+
+\begin{center}
+\begin{figure}[H]
+\centering\includegraphics[width=12cm]{../Results/qualification3DTime.png}\\
+\end{figure}
+\end{center}
+
+\begin{center}
+\begin{figure}[H]
+\centering\includegraphics[width=12cm]{../Results/qualification3DTimeinter.png}\\
+\centering\includegraphics[width=12cm]{../Results/qualification3DTimenointer.png}\\
+\end{figure}
+\end{center}
+
+\begin{center}
+\begin{figure}[H]
+\centering\includegraphics[width=6cm]{../Results/qualification3DTimeCCinter.png}
+\centering\includegraphics[width=6cm]{../Results/qualification3DTimeCTinter.png}\\
+\centering\includegraphics[width=6cm]{../Results/qualification3DTimeTCinter.png}
+\centering\includegraphics[width=6cm]{../Results/qualification3DTimeTTinter.png}\\
+\end{figure}
+\end{center}
+
+\begin{center}
+\begin{figure}[H]
+\centering\includegraphics[width=6cm]{../Results/qualification3DTimeCCnointer.png}
+\centering\includegraphics[width=6cm]{../Results/qualification3DTimeCTnointer.png}\\
+\centering\includegraphics[width=6cm]{../Results/qualification3DTimeTCnointer.png}
+\centering\includegraphics[width=6cm]{../Results/qualification3DTimeTTnointer.png}\\
 \end{figure}
 \end{center}
 
@@ -756,7 +1076,7 @@ In this section I introduce the code of the implementation of the SAT algorithm,
 
 \begin{scriptsize}
 \begin{ttfamily}
-\verbatiminput{../sat.h}
+\verbatiminput{../SAT/sat.h}
 \end{ttfamily}
 \end{scriptsize}
 
@@ -764,7 +1084,7 @@ In this section I introduce the code of the implementation of the SAT algorithm,
 
 \begin{scriptsize}
 \begin{ttfamily}
-\verbatiminput{../sat.c}
+\verbatiminput{../SAT/sat.c}
 \end{ttfamily}
 \end{scriptsize}
 
@@ -778,11 +1098,41 @@ In this section I introduce the Makefile used to compile the code given in the p
 \end{ttfamily}
 \end{scriptsize}
 
+\subsubsection{2D static}
+
+\begin{scriptsize}
+\begin{ttfamily}
+\verbatiminput{../2D/Makefile}
+\end{ttfamily}
+\end{scriptsize}
+
+\subsubsection{3D static}
+
+\begin{scriptsize}
+\begin{ttfamily}
+\verbatiminput{../3D/Makefile}
+\end{ttfamily}
+\end{scriptsize}
+
+\subsubsection{2D dynamic}
+
+\begin{scriptsize}
+\begin{ttfamily}
+\verbatiminput{../2DTime/Makefile}
+\end{ttfamily}
+\end{scriptsize}
+
+\subsubsection{3D dynamic}
+
+\begin{scriptsize}
+\begin{ttfamily}
+\verbatiminput{../3DTime/Makefile}
+\end{ttfamily}
+\end{scriptsize}
+
 \begin{thebibliography}{9}
 \bibitem{fourier} J.J.-B. Fourier. Oeuvres II. Paris, 1890
 \bibitem{motzkin} T.S. Motzkin. {\em Beitr\"{a}ge zur Theorie der linearen Ungleichungen}. Thesis, 1936. Reprinted in: {\em Theodore S. Motzkin: selected papers} (D.Cantor et al., eds,), Birkh\"{a}user, Boston, 1983.
-\bibitem{SAT} Dynamic Collision Detection using Oriented Bounding
-Boxes, David Eberly, Geometric Tools, Redmond WA 98052
 \end{thebibliography}
 
 \end{document}

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.10.17)  4 DEC 2019 12:23
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.10.17)  30 DEC 2019 15:05
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -591,6 +591,7 @@ File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 33.
 
+[3]
 Underfull \hbox (badness 10000) in paragraph at lines 41--42
 
  []
@@ -605,22 +606,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 61--63
 
  []
 
-[3]
+[4]
 Underfull \hbox (badness 10000) in paragraph at lines 119--120
 
  []
 
-[4] [5]
-! Extra }, or forgotten $.
-l.230 ...&\left[O_{\mathbb{B}_\mathbb{A}}\right]0}
-                                                  \\
-I've deleted a group-closing symbol because it seems to be
-spurious, as in `$x}$'. But perhaps the } is legitimate and
-you forgot something else, as in `\hbox{$x}'. In such cases
-the way to recover is to insert both the forgotten and the
-deleted material, e.g., by typing `I$}'.
-
-
+[5] [6]
 Underfull \hbox (badness 10000) in paragraph at lines 241--242
 
  []
@@ -630,45 +621,48 @@ Underfull \hbox (badness 10000) in paragraph at lines 261--263
 
  []
 
-[6]
+[7]
 Underfull \hbox (badness 10000) in paragraph at lines 322--323
 
  []
 
-[7] [8] [9] [10] [11]
-Underfull \hbox (badness 10000) in paragraph at lines 521--522
+[8] [9] [10] [11] [12]
+Underfull \hbox (badness 10000) in paragraph at lines 517--518
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 528--529
+Underfull \hbox (badness 10000) in paragraph at lines 524--525
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 533--535
+Underfull \hbox (badness 10000) in paragraph at lines 529--531
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 538--539
+Underfull \hbox (badness 10000) in paragraph at lines 534--535
 
  []
 
-File: ../algorithm2D.txt  (verbatim)
-File: ../algorithm3D.txt  (verbatim)
-[12]
-Underfull \hbox (badness 10000) in paragraph at lines 558--559
+File: ../2D/algorithm.txt  (verbatim)
+File: ../3D/algorithm.txt  (verbatim)
+[13]
+File: ../2DTime/algorithm.txt  (verbatim)
+File: ../3DTime/algorithm.txt  (verbatim)
+
+Underfull \hbox (badness 10000) in paragraph at lines 570--571
 
  []
 
-File: ../frame.h  (verbatim)
-[13] [14] [15]
-File: ../frame.c  (verbatim)
- [16] [17] [18] [19] [20] [21] [22] [23] [24] [25] [26] [27]
-[28] [29] [30] [31] [32] [33] [34] [35]
+File: ../Frame/frame.h  (verbatim)
+[14] [15] [16]
+File: ../Frame/frame.c  (verbatim)
+ [17] [18] [19] [20] [21] [22] [23] [24] [25] [26] [27] [28]
+[29] [30] [31] [32] [33] [34] [35] [36] [37]
 ! Undefined control sequence.
-l.582 \subsubsubsection
+l.594 \subsubsubsection
                        {Header}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -676,11 +670,11 @@ misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
-[36]
-File: ../fmb2d.h  (verbatim)
+[38]
+File: ../2D/fmb2d.h  (verbatim)
 
 ! Undefined control sequence.
-l.590 \subsubsubsection
+l.602 \subsubsubsection
                        {Body}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -688,22 +682,10 @@ misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
-File: ../fmb2d.c  (verbatim)
-[37] [38] [39] [40] [41] [42]
-Overfull \hbox (26.50598pt too wide) in paragraph at lines 594--594
-[]\OT1/cmtt/m/n/8 //run countInter countNoInter minInter avgInter maxInter minN
-oInter avgNoInter maxNoInter minTotal
- []
-
-
-Overfull \hbox (39.25616pt too wide) in paragraph at lines 594--594
-[]\OT1/cmtt/m/n/8 //0 467386 1532614 0.287500 1.883682 5.509091 0.096000 0.9259
-66 12.666667 0.096000 1.149777 12.666667[] 
- []
-
-[43] [44] [45]
+File: ../2D/fmb2d.c  (verbatim)
+[39] [40] [41] [42] [43] [44] [45] [46]
 ! Undefined control sequence.
-l.600 \subsubsubsection
+l.612 \subsubsubsection
                        {Header}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -711,10 +693,9 @@ misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
-File: ../fmb3d.h  (verbatim)
-[46]
+File: ../3D/fmb3d.h  (verbatim)
 ! Undefined control sequence.
-l.608 \subsubsubsection
+l.620 \subsubsubsection
                        {Body}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -722,10 +703,11 @@ misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
-File: ../fmb3d.c  (verbatim)
-[47] [48] [49] [50] [51] [52] [53] [54] [55] [56] [57] [58] [59]
+[47]
+File: ../3D/fmb3d.c  (verbatim)
+ [48] [49] [50] [51] [52] [53] [54] [55] [56]
 ! Undefined control sequence.
-l.618 \subsubsubsection
+l.630 \subsubsubsection
                        {Header}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -733,9 +715,9 @@ misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
-File: ../fmb2dt.h  (verbatim)
+File: ../2DTime/fmb2dt.h  (verbatim)
 ! Undefined control sequence.
-l.626 \subsubsubsection
+l.638 \subsubsubsection
                        {Body}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -743,10 +725,10 @@ misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
-File: ../fmb2dt.c  (verbatim)
-[60] [61] [62] [63] [64] [65] [66] [67] [68] [69] [70] [71] [72]
+File: ../2DTime/fmb2dt.c  (verbatim)
+[57] [58] [59] [60] [61] [62] [63] [64] [65] [66]
 ! Undefined control sequence.
-l.636 \subsubsubsection
+l.648 \subsubsubsection
                        {Header}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -754,9 +736,9 @@ misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
-File: ../fmb3dt.h  (verbatim)
+File: ../3DTime/fmb3dt.h  (verbatim)
 ! Undefined control sequence.
-l.644 \subsubsubsection
+l.656 \subsubsubsection
                        {Body}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -764,93 +746,1833 @@ misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
-File: ../fmb3dt.c  (verbatim)
-[73] [74] [75] [76] [77] [78] [79] [80] [81] [82] [83] [84] [85]
-File: ../main.c  (verbatim)
- [86] [87]
-Underfull \hbox (badness 10000) in paragraph at lines 662--663
+File: ../3DTime/fmb3dt.c  (verbatim)
+[67] [68] [69] [70] [71] [72] [73] [74] [75] [76] [77]
+File: ../2D/main.c  (verbatim)
+ [78] [79]
+File: ../3D/main.c  (verbatim)
+ [80]
+File: ../2DTime/main.c  (verbatim)
+ [81]
+[82]
+File: ../3DTime/main.c  (verbatim)
+ [83]
+Underfull \hbox (badness 10000) in paragraph at lines 702--703
 
  []
 
-File: ../unitTests.c  (verbatim)
-[88] [89] [90] [91] [92] [93] [94] [95] [96] [97] [98] [99] [100] [101]
-[102] [103] [104] [105] [106]
-File: ../validation.c  (verbatim)
- [107] [108] [109] [110] [111] [112]
-Underfull \hbox (badness 10000) in paragraph at lines 690--691
+File: ../2D/validation.c  (verbatim)
+[84] [85] [86] [87]
+File: ../3D/validation.c  (verbatim)
+ [88] [89] [90]
+File: ../2DTime/validation.c  (verbatim)
+ [91] [92] [93]
+File: ../3DTime/validation.c  (verbatim)
+ [94] [95] [96] [97]
+File: ../Results/unitTests2D.txt  (verbatim)
+ [98]
+[99] [100]
+File: ../Results/unitTests3D.txt  (verbatim)
 
- []
-
-[113]
-File: ../qualification.c  (verbatim)
- [114] [115] [116] [117] [118] [119] [120] [121] [122] [123] [124]
-<./2dnointer.png, id=414, 575.14874pt x 455.7025pt>
-File: ./2dnointer.png Graphic file (type png)
-<use ./2dnointer.png>
-Package pdftex.def Info: ./2dnointer.png  used on input line 706.
-(pdftex.def)             Requested size: 284.52756pt x 225.44478pt.
-
-[125 <./2dnointer.png>]
-<./2dinter.png, id=420, 575.14874pt x 455.7025pt>
-File: ./2dinter.png Graphic file (type png)
-<use ./2dinter.png>
-Package pdftex.def Info: ./2dinter.png  used on input line 712.
-(pdftex.def)             Requested size: 284.52756pt x 225.44478pt.
-<./2dtotal.png, id=421, 575.14874pt x 455.7025pt>
-File: ./2dtotal.png Graphic file (type png)
-<use ./2dtotal.png>
-Package pdftex.def Info: ./2dtotal.png  used on input line 718.
-(pdftex.def)             Requested size: 284.52756pt x 225.44478pt.
-<./3dnointer.png, id=422, 577.15625pt x 450.68375pt>
-File: ./3dnointer.png Graphic file (type png)
-<use ./3dnointer.png>
-Package pdftex.def Info: ./3dnointer.png  used on input line 726.
-(pdftex.def)             Requested size: 284.52756pt x 222.18483pt.
- [126 <./2dinter.png> <./2dtotal.png>]
-<./3dinter.png, id=428, 577.15625pt x 450.68375pt>
-File: ./3dinter.png Graphic file (type png)
-<use ./3dinter.png>
-Package pdftex.def Info: ./3dinter.png  used on input line 732.
-(pdftex.def)             Requested size: 284.52756pt x 222.18483pt.
-<./3dtotal.png, id=429, 577.15625pt x 450.68375pt>
-File: ./3dtotal.png Graphic file (type png)
-<use ./3dtotal.png>
-Package pdftex.def Info: ./3dtotal.png  used on input line 738.
-(pdftex.def)             Requested size: 284.52756pt x 222.18483pt.
- [127 <./3dnointer.png> <./3dinter.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 744--745
-
+Overfull \hbox (120.00732pt too wide) in paragraph at lines 752--752
+[]\OT1/cmtt/m/n/8 Co(0.000000,0.000000,0.000000) x(1.000000,0.000000,0.000000) 
+y(0.000000,1.000000,0.000000) z(0.000000,0.000000,1.000000) 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 746--747
+Overfull \hbox (120.00732pt too wide) in paragraph at lines 752--752
+[]\OT1/cmtt/m/n/8 Co(0.000000,0.000000,0.000000) x(1.000000,0.000000,0.000000) 
+y(0.000000,1.000000,0.000000) z(0.000000,0.000000,1.000000)[] 
+ []
+
+
+Overfull \hbox (120.00732pt too wide) in paragraph at lines 752--752
+[]\OT1/cmtt/m/n/8 Co(0.000000,0.000000,0.000000) x(1.000000,0.000000,0.000000) 
+y(0.000000,1.000000,0.000000) z(0.000000,0.000000,1.000000)[] 
+ []
+
+
+Overfull \hbox (120.00732pt too wide) in paragraph at lines 752--752
+[]\OT1/cmtt/m/n/8 Co(0.000000,0.000000,0.000000) x(1.000000,0.000000,0.000000) 
+y(0.000000,1.000000,0.000000) z(0.000000,0.000000,1.000000)[] 
+ []
+
+
+Overfull \hbox (120.00732pt too wide) in paragraph at lines 752--752
+[]\OT1/cmtt/m/n/8 Co(0.000000,0.000000,0.000000) x(1.000000,0.000000,0.000000) 
+y(0.000000,1.000000,0.000000) z(0.000000,0.000000,1.000000)[] 
+ []
+
+
+Overfull \hbox (120.00732pt too wide) in paragraph at lines 752--752
+[]\OT1/cmtt/m/n/8 Co(0.500000,0.500000,0.500000) x(1.000000,0.000000,0.000000) 
+y(0.000000,1.000000,0.000000) z(0.000000,0.000000,1.000000)[] 
+ []
+
+
+Overfull \hbox (120.00732pt too wide) in paragraph at lines 752--752
+[]\OT1/cmtt/m/n/8 Co(0.500000,0.500000,0.500000) x(1.000000,0.000000,0.000000) 
+y(0.000000,1.000000,0.000000) z(0.000000,0.000000,1.000000)[] 
+ []
+
+[101]
+Overfull \hbox (120.00732pt too wide) in paragraph at lines 752--752
+[]\OT1/cmtt/m/n/8 Co(0.000000,0.000000,0.000000) x(1.000000,0.000000,0.000000) 
+y(0.000000,1.000000,0.000000) z(0.000000,0.000000,1.000000)[] 
+ []
+
+
+Overfull \hbox (120.00732pt too wide) in paragraph at lines 752--752
+[]\OT1/cmtt/m/n/8 Co(0.000000,0.000000,0.000000) x(1.000000,0.000000,0.000000) 
+y(0.000000,1.000000,0.000000) z(0.000000,0.000000,1.000000)[] 
+ []
+
+
+Overfull \hbox (132.7575pt too wide) in paragraph at lines 752--752
+[]\OT1/cmtt/m/n/8 Co(-0.500000,-0.500000,-0.500000) x(1.000000,0.000000,0.00000
+0) y(0.000000,1.000000,0.000000) z(0.000000,0.000000,1.000000)[] 
+ []
+
+
+Overfull \hbox (132.7575pt too wide) in paragraph at lines 752--752
+[]\OT1/cmtt/m/n/8 Co(-0.500000,-0.500000,-0.500000) x(1.000000,0.000000,0.00000
+0) y(0.000000,1.000000,0.000000) z(0.000000,0.000000,1.000000)[] 
+ []
+
+
+Overfull \hbox (120.00732pt too wide) in paragraph at lines 752--752
+[]\OT1/cmtt/m/n/8 Co(0.000000,0.000000,0.000000) x(1.000000,0.000000,0.000000) 
+y(0.000000,1.000000,0.000000) z(0.000000,0.000000,1.000000)[] 
+ []
+
+
+Overfull \hbox (120.00732pt too wide) in paragraph at lines 752--752
+[]\OT1/cmtt/m/n/8 Co(0.000000,0.000000,0.000000) x(1.000000,0.000000,0.000000) 
+y(0.000000,1.000000,0.000000) z(0.000000,0.000000,1.000000)[] 
+ []
+
+
+Overfull \hbox (132.7575pt too wide) in paragraph at lines 752--752
+[]\OT1/cmtt/m/n/8 Co(1.500000,1.500000,1.500000) x(-1.000000,0.000000,0.000000)
+ y(0.000000,-1.000000,0.000000) z(0.000000,0.000000,-1.000000)[] 
+ []
+
+
+Overfull \hbox (132.7575pt too wide) in paragraph at lines 752--752
+[]\OT1/cmtt/m/n/8 Co(1.500000,1.500000,1.500000) x(-1.000000,0.000000,0.000000)
+ y(0.000000,-1.000000,0.000000) z(0.000000,0.000000,-1.000000)[] 
+ []
+
+
+Overfull \hbox (120.00732pt too wide) in paragraph at lines 752--752
+[]\OT1/cmtt/m/n/8 Co(0.000000,0.000000,0.000000) x(1.000000,0.000000,0.000000) 
+y(0.000000,1.000000,0.000000) z(0.000000,0.000000,1.000000)[] 
+ []
+
+
+Overfull \hbox (120.00732pt too wide) in paragraph at lines 752--752
+[]\OT1/cmtt/m/n/8 Co(0.000000,0.000000,0.000000) x(1.000000,0.000000,0.000000) 
+y(0.000000,1.000000,0.000000) z(0.000000,0.000000,1.000000)[] 
+ []
+
+
+Overfull \hbox (128.50745pt too wide) in paragraph at lines 752--752
+[]\OT1/cmtt/m/n/8 Co(0.500000,1.500000,-1.500000) x(1.000000,0.000000,0.000000)
+ y(0.000000,-1.000000,0.000000) z(0.000000,0.000000,1.000000)[] 
+ []
+
+
+Overfull \hbox (128.50745pt too wide) in paragraph at lines 752--752
+[]\OT1/cmtt/m/n/8 Co(0.500000,1.500000,-1.500000) x(1.000000,0.000000,0.000000)
+ y(0.000000,-1.000000,0.000000) z(0.000000,0.000000,1.000000)[] 
+ []
+
+
+Overfull \hbox (120.00732pt too wide) in paragraph at lines 752--752
+[]\OT1/cmtt/m/n/8 Co(0.000000,0.000000,0.000000) x(1.000000,0.000000,0.000000) 
+y(0.000000,1.000000,0.000000) z(0.000000,0.000000,1.000000)[] 
+ []
+
+
+Overfull \hbox (124.25739pt too wide) in paragraph at lines 752--752
+[]\OT1/cmtt/m/n/8 Co(0.000000,0.000000,0.000000) x(1.000000,0.000000,0.000000) 
+y(0.000000,1.000000,0.000000) z(0.000000,0.000000,-1.000000)[] 
+ []
+
+
+Overfull \hbox (128.50745pt too wide) in paragraph at lines 752--752
+[]\OT1/cmtt/m/n/8 Co(0.500000,1.500000,-1.500000) x(1.000000,0.000000,0.000000)
+ y(0.000000,-1.000000,0.000000) z(0.000000,0.000000,1.000000)[] 
+ []
+
+
+Overfull \hbox (128.50745pt too wide) in paragraph at lines 752--752
+[]\OT1/cmtt/m/n/8 Co(0.500000,1.500000,-1.500000) x(1.000000,0.000000,0.000000)
+ y(0.000000,-1.000000,0.000000) z(0.000000,0.000000,1.000000)[] 
+ []
+
+
+Overfull \hbox (124.25739pt too wide) in paragraph at lines 752--752
+[]\OT1/cmtt/m/n/8 Co(0.000000,0.000000,0.000000) x(1.000000,0.000000,0.000000) 
+y(0.000000,1.000000,0.000000) z(0.000000,0.000000,-1.000000)[] 
+ []
+
+
+Overfull \hbox (132.7575pt too wide) in paragraph at lines 752--752
+[]\OT1/cmtt/m/n/8 Co(-1.000000,-1.000000,-1.000000) x(1.000000,0.000000,0.00000
+0) y(1.000000,1.000000,1.000000) z(0.000000,0.000000,1.000000)[] 
+ []
+
+
+Overfull \hbox (120.00732pt too wide) in paragraph at lines 752--752
+[]\OT1/cmtt/m/n/8 Co(0.000000,0.000000,0.000000) x(1.000000,0.000000,0.000000) 
+y(0.000000,1.000000,0.000000) z(0.000000,0.000000,1.000000)[] 
+ []
+
+File: ../Results/unitTests2DTime.txt  (verbatim)
+[102]
+File: ../Results/unitTests3DTime.txt  (verbatim)
+
+Overfull \hbox (247.50916pt too wide) in paragraph at lines 768--768
+[]\OT1/cmtt/m/n/8 Co(0.000000,0.000000,0.000000) s(0.000000,0.000000,0.000000) 
+x(1.000000,0.000000,0.000000) y(0.000000,1.000000,0.000000) z(0.000000,0.000000
+,1.000000) 
+ []
+
+
+Overfull \hbox (256.00928pt too wide) in paragraph at lines 768--768
+[]\OT1/cmtt/m/n/8 Co(-1.000000,0.000000,0.000000) s(-1.000000,0.000000,0.000000
+) x(1.000000,0.000000,0.000000) y(0.000000,1.000000,0.000000) z(0.000000,0.0000
+00,1.000000)[] 
+ []
+
+
+Overfull \hbox (256.00928pt too wide) in paragraph at lines 768--768
+[]\OT1/cmtt/m/n/8 Co(-1.000000,0.000000,0.000000) s(-1.000000,0.000000,0.000000
+) x(1.000000,0.000000,0.000000) y(0.000000,1.000000,0.000000) z(0.000000,0.0000
+00,1.000000)[] 
+ []
+
+
+Overfull \hbox (247.50916pt too wide) in paragraph at lines 768--768
+[]\OT1/cmtt/m/n/8 Co(0.000000,0.000000,0.000000) s(0.000000,0.000000,0.000000) 
+x(1.000000,0.000000,0.000000) y(0.000000,1.000000,0.000000) z(0.000000,0.000000
+,1.000000)[] 
+ []
+
+
+Overfull \hbox (247.50916pt too wide) in paragraph at lines 768--768
+[]\OT1/cmtt/m/n/8 Co(0.000000,0.000000,0.000000) s(0.000000,0.000000,0.000000) 
+x(1.000000,0.000000,0.000000) y(0.000000,1.000000,0.000000) z(0.000000,0.000000
+,1.000000)[] 
+ []
+
+
+Overfull \hbox (256.00928pt too wide) in paragraph at lines 768--768
+[]\OT1/cmtt/m/n/8 Co(-1.000000,-1.000000,0.000000) s(1.000000,0.000000,0.000000
+) x(1.000000,0.000000,0.000000) y(0.000000,1.000000,0.000000) z(0.000000,0.0000
+00,1.000000)[] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 774--775
+
+ []
+
+File: ../2D/validation.c  (verbatim)
+[103] [104] [105] [106]
+File: ../3D/validation.c  (verbatim)
+ [107] [108] [109]
+File: ../2DTime/validation.c  (verbatim)
+ [110] [111] [112]
+File: ../3DTime/validation.c  (verbatim)
+ [113] [114]
+[115] [116]
+Underfull \hbox (badness 10000) in paragraph at lines 814--815
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 753--754
+Overfull \hbox (52.00635pt too wide) in paragraph at lines 818--825
+\OT1/cmtt/m/n/8 Co(-63.571705,-22.581119) x(55.239119,38.152177) y(-62.031537,-
+42.843548) against To(3.474294,22.751011)
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 818--825
 
  []
 
-File: ../sat.h  (verbatim)
-[128 <./3dtotal.png>]
-File: ../sat.c  (verbatim)
- [129] [130] [131] [132] [133] [134] [135] [136]
-Underfull \hbox (badness 10000) in paragraph at lines 773--774
+<./degeneratedFrame.png, id=389, 576.1525pt x 336.25626pt>
+File: ./degeneratedFrame.png Graphic file (type png)
+<use ./degeneratedFrame.png>
+Package pdftex.def Info: ./degeneratedFrame.png  used on input line 828.
+(pdftex.def)             Requested size: 284.52756pt x 166.05998pt.
+[117]
+File: ../Results/validation2D.txt  (verbatim)
+File: ../Results/validation2DTime.txt  (verbatim)
+File: ../Results/validation3D.txt  (verbatim)
+File: ../Results/validation3DTime.txt  (verbatim)
+
+Underfull \hbox (badness 10000) in paragraph at lines 868--869
 
  []
 
-[137]
+[118 <./degeneratedFrame.png>]
+File: ../2D/qualification.c  (verbatim)
+ [119] [120] [121] [122] [123] [124] [125]
+[126] [127] [128]
+File: ../3D/qualification.c  (verbatim)
+ [129] [130] [131] [132] [133] [134] [135] [136] [137]
+[138] [139]
+File: ../2DTime/qualification.c  (verbatim)
+ [140] [141] [142] [143] [144] [145] [146] [147] [148] [149]
+[150]
+File: ../3DTime/qualification.c  (verbatim)
+ [151] [152] [153] [154] [155] [156] [157] [158] [159] [160] [161]
+File: ../Results/qualification2D.txt  (verbatim)
+
+Overfull \hbox (1.00562pt too wide) in paragraph at lines 910--910
+[]\OT1/cmtt/m/n/8 ratio Inter/NoInter countInter countNoInter minInter avgInter
+ maxInter minNoInter avgNoInter
+ []
+
+
+Overfull \hbox (26.50598pt too wide) in paragraph at lines 910--910
+\OT1/cmtt/m/n/8 maxNoInter minTotal avgTotal maxTotal countInterCC countNoInter
+CC minInterCC avgInterCC maxInterCC
+ []
+
+
+Overfull \hbox (30.75604pt too wide) in paragraph at lines 910--910
+\OT1/cmtt/m/n/8 minNoInterCC avgNoInterCC maxNoInterCC minTotalCC avgTotalCC ma
+xTotalCC countInterCT countNoInterCT
+ []
+
+
+Overfull \hbox (5.25568pt too wide) in paragraph at lines 910--910
+\OT1/cmtt/m/n/8 minInterCT avgInterCT maxInterCT minNoInterCT avgNoInterCT maxN
+oInterCT minTotalCT avgTotalCT
+ []
+
+
+Overfull \hbox (22.25592pt too wide) in paragraph at lines 910--910
+\OT1/cmtt/m/n/8 maxTotalCT countInterTC countNoInterTC minInterTC avgInterTC ma
+xInterTC minNoInterTC avgNoInterTC
+ []
+
+
+Overfull \hbox (13.7558pt too wide) in paragraph at lines 910--910
+\OT1/cmtt/m/n/8 maxNoInterTC minTotalTC avgTotalTC maxTotalTC countInterTT coun
+tNoInterTT minInterTT avgInterTT
+ []
+
+
+Overfull \hbox (22.25592pt too wide) in paragraph at lines 910--910
+[]\OT1/cmtt/m/n/8 0.1 46966 153022 0.566434 1.703869 6.923077 0.141026 0.819928
+ 8.000000 0.141026 0.908322 8.000000
+ []
+
+
+Overfull \hbox (1.00562pt too wide) in paragraph at lines 910--910
+\OT1/cmtt/m/n/8 13244 36370 0.880597 2.180478 6.923077 0.156627 0.742749 5.7619
+05 0.156627 0.886522 6.923077
+ []
+
+
+Overfull \hbox (1.00562pt too wide) in paragraph at lines 910--910
+\OT1/cmtt/m/n/8 11680 38422 0.756098 1.662513 3.576271 0.157895 0.826459 8.0000
+00 0.157895 0.910064 8.000000
+ []
+
+
+Overfull \hbox (1.00562pt too wide) in paragraph at lines 910--910
+\OT1/cmtt/m/n/8 11638 38122 0.728682 1.663660 4.275862 0.144444 0.824793 7.0000
+00 0.144444 0.908679 7.000000
+ []
+
+
+Overfull \hbox (1.00562pt too wide) in paragraph at lines 910--910
+\OT1/cmtt/m/n/8 10404 40108 0.566434 1.188565 2.393939 0.141026 0.879033 7.6875
+00 0.141026 0.909986 7.687500[] 
+ []
+
+
+Overfull \hbox (30.75604pt too wide) in paragraph at lines 910--910
+[]\OT1/cmtt/m/n/8 0.2 46868 153118 0.515924 1.704268 4.927273 0.155844 0.819394
+ 11.666667 0.155844 0.996369 11.666667
+ []
+
+
+Overfull \hbox (1.00562pt too wide) in paragraph at lines 910--910
+\OT1/cmtt/m/n/8 12990 36922 0.881481 2.181347 4.927273 0.180556 0.742780 5.5750
+00 0.180556 1.030494 5.575000
+ []
+
+
+Overfull \hbox (1.00562pt too wide) in paragraph at lines 910--910
+\OT1/cmtt/m/n/8 11736 38144 0.679487 1.664811 3.465517 0.155844 0.828881 8.3750
+00 0.155844 0.996067 8.375000
+ []
+
+
+Overfull \hbox (9.50574pt too wide) in paragraph at lines 910--910
+\OT1/cmtt/m/n/8 11926 38114 0.635762 1.663998 3.770492 0.175676 0.825917 11.666
+667 0.175676 0.993533 11.666667
+ []
+
+
+Overfull \hbox (1.00562pt too wide) in paragraph at lines 910--910
+\OT1/cmtt/m/n/8 10216 39938 0.515924 1.189984 2.402985 0.160494 0.874937 6.2000
+00 0.160494 0.937946 6.200000[] 
+ []
+
+
+Overfull \hbox (30.75604pt too wide) in paragraph at lines 910--910
+[]\OT1/cmtt/m/n/8 0.3 46534 153454 0.447514 1.702537 4.905660 0.127451 0.819496
+ 10.562500 0.127451 1.084409 10.562500
+ []
+
+
+Overfull \hbox (1.00562pt too wide) in paragraph at lines 910--910
+\OT1/cmtt/m/n/8 12904 37164 0.906433 2.181373 4.905660 0.170732 0.747585 4.5909
+09 0.170732 1.177722 4.905660
+ []
+
+
+Overfull \hbox (1.00562pt too wide) in paragraph at lines 910--910
+\OT1/cmtt/m/n/8 11822 38556 0.587629 1.662497 3.216667 0.127451 0.822627 6.5333
+33 0.127451 1.074588 6.533333
+ []
+
+
+Overfull \hbox (9.50574pt too wide) in paragraph at lines 910--910
+\OT1/cmtt/m/n/8 11592 38250 0.511737 1.662599 3.453125 0.151685 0.830219 10.562
+500 0.151685 1.079933 10.562500
+ []
+
+
+Overfull \hbox (1.00562pt too wide) in paragraph at lines 910--910
+\OT1/cmtt/m/n/8 10216 39484 0.447514 1.189363 2.454545 0.141026 0.873737 8.0666
+67 0.141026 0.968425 8.066667[] 
+ []
+
+
+Overfull \hbox (22.25592pt too wide) in paragraph at lines 910--910
+[]\OT1/cmtt/m/n/8 0.4 47032 152964 0.434783 1.705222 5.037037 0.080460 0.819058
+ 8.125000 0.080460 1.173524 8.125000
+ []
+
+
+Overfull \hbox (1.00562pt too wide) in paragraph at lines 910--910
+\OT1/cmtt/m/n/8 13234 36748 0.887640 2.179615 5.037037 0.160494 0.745819 4.4651
+16 0.160494 1.319337 5.037037
+ []
+
+
+Overfull \hbox (1.00562pt too wide) in paragraph at lines 910--910
+\OT1/cmtt/m/n/8 11906 38080 0.519231 1.663047 3.716667 0.080460 0.824219 8.1250
+00 0.080460 1.159750 8.125000
+ []
+
+
+Overfull \hbox (1.00562pt too wide) in paragraph at lines 910--910
+\OT1/cmtt/m/n/8 11622 38348 0.697368 1.663416 4.114754 0.192308 0.823624 6.5333
+33 0.192308 1.159541 6.533333
+ []
+
+
+Overfull \hbox (1.00562pt too wide) in paragraph at lines 910--910
+\OT1/cmtt/m/n/8 10270 39788 0.434783 1.190119 2.614286 0.101695 0.877361 7.8666
+67 0.101695 1.002464 7.866667[] 
+ []
+
+
+Overfull \hbox (22.25592pt too wide) in paragraph at lines 910--910
+[]\OT1/cmtt/m/n/8 0.5 47012 152976 0.490909 1.702165 4.563636 0.079710 0.819014
+ 8.562500 0.079710 1.260590 8.562500
+ []
+
+
+Overfull \hbox (1.00562pt too wide) in paragraph at lines 910--910
+\OT1/cmtt/m/n/8 13072 36742 0.983471 2.179741 4.563636 0.155844 0.747984 6.0232
+56 0.155844 1.463862 6.023256
+ []
+
+
+Overfull \hbox (1.00562pt too wide) in paragraph at lines 910--910
+\OT1/cmtt/m/n/8 11778 38062 0.644295 1.663080 3.672131 0.125000 0.824957 6.5333
+33 0.125000 1.244018 6.533333
+ []
+
+
+Overfull \hbox (1.00562pt too wide) in paragraph at lines 910--910
+\OT1/cmtt/m/n/8 11736 38620 0.610063 1.665692 3.612903 0.079710 0.825705 8.5625
+00 0.079710 1.245698 8.562500
+ []
+
+
+Overfull \hbox (1.00562pt too wide) in paragraph at lines 910--910
+\OT1/cmtt/m/n/8 10426 39552 0.490909 1.188596 2.895522 0.162500 0.872745 6.2666
+67 0.162500 1.030671 6.266667[] 
+ []
+
+
+Overfull \hbox (22.25592pt too wide) in paragraph at lines 910--910
+[]\OT1/cmtt/m/n/8 0.6 47002 152988 0.534759 1.704474 4.945455 0.093525 0.819909
+ 9.333333 0.093525 1.350648 9.333333
+ []
+
+
+Overfull \hbox (1.00562pt too wide) in paragraph at lines 910--910
+\OT1/cmtt/m/n/8 13292 36688 0.721053 2.180593 4.945455 0.093525 0.748104 4.9500
+00 0.093525 1.607597 4.950000
+ []
+
+
+Overfull \hbox (1.00562pt too wide) in paragraph at lines 910--910
+\OT1/cmtt/m/n/8 11654 38232 0.583333 1.663303 4.644068 0.142857 0.827837 6.4666
+67 0.142857 1.329116 6.466667
+ []
+
+
+Overfull \hbox (1.00562pt too wide) in paragraph at lines 910--910
+\OT1/cmtt/m/n/8 11648 38364 0.700730 1.663686 4.271186 0.147727 0.826859 8.6875
+00 0.147727 1.328955 8.687500
+ []
+
+
+Overfull \hbox (1.00562pt too wide) in paragraph at lines 910--910
+\OT1/cmtt/m/n/8 10408 39704 0.534759 1.188170 2.880597 0.171875 0.871911 9.3333
+33 0.171875 1.061667 9.333333[] 
+ []
+
+
+Overfull \hbox (22.25592pt too wide) in paragraph at lines 910--910
+[]\OT1/cmtt/m/n/8 0.7 47202 152792 0.455056 1.706769 4.576923 0.081481 0.819624
+ 7.562500 0.081481 1.440625 7.562500
+ []
+
+
+Overfull \hbox (1.00562pt too wide) in paragraph at lines 910--910
+\OT1/cmtt/m/n/8 13362 36626 1.000000 2.181935 4.576923 0.081481 0.743440 7.5625
+00 0.081481 1.750386 7.562500
+ []
+
+
+Overfull \hbox (1.00562pt too wide) in paragraph at lines 910--910
+\OT1/cmtt/m/n/8 11694 38058 0.477477 1.662745 3.767123 0.176471 0.823407 7.1333
+33 0.176471 1.410944 7.133333
+ []
+
+
+Overfull \hbox (1.00562pt too wide) in paragraph at lines 910--910
+\OT1/cmtt/m/n/8 11892 38440 0.715328 1.662450 3.573770 0.129412 0.829590 6.6250
+00 0.129412 1.412592 6.625000
+ []
+
+
+Overfull \hbox (1.00562pt too wide) in paragraph at lines 910--910
+\OT1/cmtt/m/n/8 10254 39668 0.455056 1.189185 2.985075 0.139785 0.876679 7.1176
+47 0.139785 1.095433 7.117647[] 
+ []
+
+[162]
+Overfull \hbox (30.75604pt too wide) in paragraph at lines 910--910
+[]\OT1/cmtt/m/n/8 0.8 46816 153182 0.493902 1.707018 4.314815 0.092199 0.819990
+ 12.733333 0.092199 1.529612 12.733333
+ []
+
+
+Overfull \hbox (1.00562pt too wide) in paragraph at lines 910--910
+\OT1/cmtt/m/n/8 13322 36370 0.687861 2.180205 4.314815 0.092199 0.742926 3.8333
+33 0.092199 1.892749 4.314815
+ []
+
+
+Overfull \hbox (1.00562pt too wide) in paragraph at lines 910--910
+\OT1/cmtt/m/n/8 11494 38566 0.646259 1.662133 3.333333 0.117117 0.827329 6.4666
+67 0.117117 1.495172 6.466667
+ []
+
+
+Overfull \hbox (1.00562pt too wide) in paragraph at lines 910--910
+\OT1/cmtt/m/n/8 11836 38062 0.572289 1.663755 4.081967 0.112000 0.825611 6.5333
+33 0.112000 1.496127 6.533333
+ []
+
+
+Overfull \hbox (9.50574pt too wide) in paragraph at lines 910--910
+\OT1/cmtt/m/n/8 10164 40184 0.493902 1.187947 2.911765 0.159420 0.877372 12.733
+333 0.159420 1.125832 12.733333[] 
+ []
+
+
+Overfull \hbox (22.25592pt too wide) in paragraph at lines 910--910
+[]\OT1/cmtt/m/n/8 0.9 46924 153070 0.468571 1.704683 4.500000 0.079137 0.817229
+ 9.875000 0.079137 1.615938 9.875000
+ []
+
+
+Overfull \hbox (1.00562pt too wide) in paragraph at lines 910--910
+\OT1/cmtt/m/n/8 13396 37030 1.051724 2.179104 4.500000 0.090909 0.742654 4.9523
+81 0.090909 2.035459 4.952381
+ []
+
+
+Overfull \hbox (1.00562pt too wide) in paragraph at lines 910--910
+\OT1/cmtt/m/n/8 11522 38170 0.753968 1.661215 3.694915 0.079137 0.823619 6.4666
+67 0.079137 1.577456 6.466667
+ []
+
+
+Overfull \hbox (1.00562pt too wide) in paragraph at lines 910--910
+\OT1/cmtt/m/n/8 11654 38286 0.903448 1.662193 3.629032 0.173913 0.823679 9.8750
+00 0.173913 1.578341 9.875000
+ []
+
+
+Overfull \hbox (1.00562pt too wide) in paragraph at lines 910--910
+\OT1/cmtt/m/n/8 10352 39584 0.468571 1.186974 3.000000 0.164557 0.874594 8.5000
+00 0.164557 1.155736 8.500000[] 
+ []
+
+<../Results/qualification2D.png, id=538, 602.25pt x 401.5pt>
+File: ../Results/qualification2D.png Graphic file (type png)
+<use ../Results/qualification2D.png>
+Package pdftex.def Info: ../Results/qualification2D.png  used on input line 916
+.
+(pdftex.def)             Requested size: 341.43306pt x 227.6321pt.
+<../Results/qualification2Dinter.png, id=539, 602.25pt x 401.5pt>
+File: ../Results/qualification2Dinter.png Graphic file (type png)
+<use ../Results/qualification2Dinter.png>
+Package pdftex.def Info: ../Results/qualification2Dinter.png  used on input lin
+e 922.
+(pdftex.def)             Requested size: 341.43306pt x 227.6321pt.
+<../Results/qualification2Dnointer.png, id=540, 602.25pt x 401.5pt>
+File: ../Results/qualification2Dnointer.png Graphic file (type png)
+<use ../Results/qualification2Dnointer.png>
+Package pdftex.def Info: ../Results/qualification2Dnointer.png  used on input l
+ine 923.
+(pdftex.def)             Requested size: 341.43306pt x 227.6321pt.
+[163 <../Results/qualification2D.png>]
+<../Results/qualification2DCCinter.png, id=545, 602.25pt x 401.5pt>
+File: ../Results/qualification2DCCinter.png Graphic file (type png)
+<use ../Results/qualification2DCCinter.png>
+Package pdftex.def Info: ../Results/qualification2DCCinter.png  used on input l
+ine 929.
+(pdftex.def)             Requested size: 170.71652pt x 113.80992pt.
+<../Results/qualification2DCTinter.png, id=546, 602.25pt x 401.5pt>
+File: ../Results/qualification2DCTinter.png Graphic file (type png)
+<use ../Results/qualification2DCTinter.png>
+Package pdftex.def Info: ../Results/qualification2DCTinter.png  used on input l
+ine 930.
+(pdftex.def)             Requested size: 170.71652pt x 113.80992pt.
+<../Results/qualification2DTCinter.png, id=547, 602.25pt x 401.5pt>
+File: ../Results/qualification2DTCinter.png Graphic file (type png)
+<use ../Results/qualification2DTCinter.png>
+Package pdftex.def Info: ../Results/qualification2DTCinter.png  used on input l
+ine 931.
+(pdftex.def)             Requested size: 170.71652pt x 113.80992pt.
+<../Results/qualification2DTTinter.png, id=548, 602.25pt x 401.5pt>
+File: ../Results/qualification2DTTinter.png Graphic file (type png)
+<use ../Results/qualification2DTTinter.png>
+Package pdftex.def Info: ../Results/qualification2DTTinter.png  used on input l
+ine 932.
+(pdftex.def)             Requested size: 170.71652pt x 113.80992pt.
+ [164 <../Results/qualification2Dinter.png> <../Results/qualification2Dnointer.
+png>]
+<../Results/qualification2DCCnointer.png, id=552, 602.25pt x 401.5pt>
+File: ../Results/qualification2DCCnointer.png Graphic file (type png)
+<use ../Results/qualification2DCCnointer.png>
+Package pdftex.def Info: ../Results/qualification2DCCnointer.png  used on input
+ line 938.
+(pdftex.def)             Requested size: 170.71652pt x 113.80992pt.
+<../Results/qualification2DCTnointer.png, id=553, 602.25pt x 401.5pt>
+File: ../Results/qualification2DCTnointer.png Graphic file (type png)
+<use ../Results/qualification2DCTnointer.png>
+Package pdftex.def Info: ../Results/qualification2DCTnointer.png  used on input
+ line 939.
+(pdftex.def)             Requested size: 170.71652pt x 113.80992pt.
+<../Results/qualification2DTCnointer.png, id=554, 602.25pt x 401.5pt>
+File: ../Results/qualification2DTCnointer.png Graphic file (type png)
+<use ../Results/qualification2DTCnointer.png>
+Package pdftex.def Info: ../Results/qualification2DTCnointer.png  used on input
+ line 940.
+(pdftex.def)             Requested size: 170.71652pt x 113.80992pt.
+<../Results/qualification2DTTnointer.png, id=555, 602.25pt x 401.5pt>
+File: ../Results/qualification2DTTnointer.png Graphic file (type png)
+<use ../Results/qualification2DTTnointer.png>
+Package pdftex.def Info: ../Results/qualification2DTTnointer.png  used on input
+ line 941.
+(pdftex.def)             Requested size: 170.71652pt x 113.80992pt.
+File: ../Results/qualification3D.txt  (verbatim)
+
+Overfull \hbox (1.00562pt too wide) in paragraph at lines 949--949
+[]\OT1/cmtt/m/n/8 ratio Inter/NoInter countInter countNoInter minInter avgInter
+ maxInter minNoInter avgNoInter
+ []
+
+
+Overfull \hbox (26.50598pt too wide) in paragraph at lines 949--949
+\OT1/cmtt/m/n/8 maxNoInter minTotal avgTotal maxTotal countInterCC countNoInter
+CC minInterCC avgInterCC maxInterCC
+ []
+
+
+Overfull \hbox (30.75604pt too wide) in paragraph at lines 949--949
+\OT1/cmtt/m/n/8 minNoInterCC avgNoInterCC maxNoInterCC minTotalCC avgTotalCC ma
+xTotalCC countInterCT countNoInterCT
+ []
+
+
+Overfull \hbox (5.25568pt too wide) in paragraph at lines 949--949
+\OT1/cmtt/m/n/8 minInterCT avgInterCT maxInterCT minNoInterCT avgNoInterCT maxN
+oInterCT minTotalCT avgTotalCT
+ []
+
+
+Overfull \hbox (22.25592pt too wide) in paragraph at lines 949--949
+\OT1/cmtt/m/n/8 maxTotalCT countInterTC countNoInterTC minInterTC avgInterTC ma
+xInterTC minNoInterTC avgNoInterTC
+ []
+
+
+Overfull \hbox (13.7558pt too wide) in paragraph at lines 949--949
+\OT1/cmtt/m/n/8 maxNoInterTC minTotalTC avgTotalTC maxTotalTC countInterTT coun
+tNoInterTT minInterTT avgInterTT
+ []
+
+[165 <../Results/qualification2DCCinter.png> <../Results/qualification2DCTinter
+.png> <../Results/qualification2DTCinter.png> <../Results/qualification2DTTinte
+r.png> <../Results/qualification2DCCnointer.png> <../Results/qualification2DCTn
+ointer.png> <../Results/qualification2DTCnointer.png> <../Results/qualification
+2DTTnointer.png>]
+Overfull \hbox (22.25592pt too wide) in paragraph at lines 949--949
+[]\OT1/cmtt/m/n/8 0.1 31716 168284 0.195513 0.525441 1.031293 0.041359 0.545129
+ 9.612903 0.041359 0.543160 9.612903
+ []
+
+
+Overfull \hbox (1.00562pt too wide) in paragraph at lines 949--949
+\OT1/cmtt/m/n/8 10616 39390 0.602136 0.778821 1.031293 0.063559 0.387620 3.0340
+14 0.063559 0.426740 3.034014
+ []
+
+
+Overfull \hbox (18.00586pt too wide) in paragraph at lines 949--949
+\OT1/cmtt/m/n/8 7920 42174 0.218111 0.445642 0.780516 0.046129 0.529435 9.61290
+3 0.046129 0.521056 9.612903 8042
+ []
+
+
+Overfull \hbox (22.25592pt too wide) in paragraph at lines 949--949
+\OT1/cmtt/m/n/8 41840 0.291444 0.444923 0.645333 0.046774 0.530002 9.468750 0.0
+46774 0.521494 9.468750 5138 44880
+ []
+
+
+Overfull \hbox (22.25592pt too wide) in paragraph at lines 949--949
+[]\OT1/cmtt/m/n/8 0.2 31770 168230 0.203681 0.524833 1.045620 0.041916 0.547554
+ 9.500000 0.041916 0.543010 9.500000
+ []
+
+
+Overfull \hbox (1.00562pt too wide) in paragraph at lines 949--949
+\OT1/cmtt/m/n/8 10710 39298 0.595007 0.778798 1.045620 0.064444 0.391099 3.0136
+99 0.064444 0.468639 3.013699
+ []
+
+
+Overfull \hbox (18.00586pt too wide) in paragraph at lines 949--949
+\OT1/cmtt/m/n/8 7878 41378 0.279503 0.445876 0.708029 0.045381 0.529847 9.50000
+0 0.045381 0.513053 9.500000 7796
+ []
+
+
+Overfull \hbox (22.25592pt too wide) in paragraph at lines 949--949
+\OT1/cmtt/m/n/8 42444 0.285714 0.445254 0.709353 0.047776 0.531599 9.437500 0.0
+47776 0.514330 9.437500 5386 45110
+ []
+
+
+Overfull \hbox (30.75604pt too wide) in paragraph at lines 949--949
+[]\OT1/cmtt/m/n/8 0.3 31592 168408 0.167113 0.527451 1.181501 0.042296 0.545777
+ 10.093750 0.042296 0.540279 10.093750
+ []
+
+
+Overfull \hbox (1.00562pt too wide) in paragraph at lines 949--949
+\OT1/cmtt/m/n/8 10744 39560 0.463895 0.779107 1.181501 0.065022 0.390479 3.1666
+67 0.065022 0.507067 3.166667
+ []
+
+
+Overfull \hbox (18.00586pt too wide) in paragraph at lines 949--949
+\OT1/cmtt/m/n/8 8020 41950 0.276243 0.445714 0.709251 0.042296 0.534041 9.75757
+6 0.042296 0.507543 9.757576 7730
+ []
+
+
+Overfull \hbox (5.25568pt too wide) in paragraph at lines 949--949
+\OT1/cmtt/m/n/8 42384 0.244944 0.444968 0.691971 0.047386 0.526136 10.093750 0.
+047386 0.501785 10.093750 5098
+ []
+
+
+Overfull \hbox (22.25592pt too wide) in paragraph at lines 949--949
+[]\OT1/cmtt/m/n/8 0.4 31716 168284 0.195376 0.525420 0.987273 0.041237 0.546552
+ 9.580645 0.041237 0.538099 9.580645
+ []
+
+
+Overfull \hbox (1.00562pt too wide) in paragraph at lines 949--949
+\OT1/cmtt/m/n/8 10728 39340 0.656832 0.778962 0.987273 0.064444 0.390907 2.9931
+51 0.064444 0.546129 2.993151
+ []
+
+
+Overfull \hbox (18.00586pt too wide) in paragraph at lines 949--949
+\OT1/cmtt/m/n/8 7832 42372 0.270627 0.445376 0.799423 0.045902 0.528674 9.58064
+5 0.045902 0.495355 9.580645 7822
+ []
+
+
+Overfull \hbox (22.25592pt too wide) in paragraph at lines 949--949
+\OT1/cmtt/m/n/8 41934 0.266423 0.445009 0.720588 0.047002 0.531795 9.437500 0.0
+47002 0.497081 9.437500 5334 44638
+ []
+
+
+Overfull \hbox (22.25592pt too wide) in paragraph at lines 949--949
+[]\OT1/cmtt/m/n/8 0.5 31526 168474 0.188960 0.524791 0.937276 0.041298 0.545450
+ 9.242424 0.041298 0.535120 9.242424
+ []
+
+
+Overfull \hbox (1.00562pt too wide) in paragraph at lines 949--949
+\OT1/cmtt/m/n/8 10556 39614 0.611272 0.778890 0.937276 0.065022 0.391878 3.3378
+38 0.065022 0.585384 3.337838
+ []
+
+
+Overfull \hbox (18.00586pt too wide) in paragraph at lines 949--949
+\OT1/cmtt/m/n/8 7842 42412 0.227149 0.445859 0.803184 0.043956 0.527911 9.24242
+4 0.043956 0.486885 9.242424 7898
+ []
+
+
+Overfull \hbox (22.25592pt too wide) in paragraph at lines 949--949
+\OT1/cmtt/m/n/8 42110 0.266509 0.445011 0.729844 0.046802 0.531517 9.000000 0.0
+46802 0.488264 9.000000 5230 44338
+ []
+
+
+Overfull \hbox (22.25592pt too wide) in paragraph at lines 949--949
+[]\OT1/cmtt/m/n/8 0.6 31826 168174 0.185787 0.526009 1.046595 0.040346 0.545207
+ 9.468750 0.040346 0.533688 9.468750
+ []
+
+
+Overfull \hbox (1.00562pt too wide) in paragraph at lines 949--949
+\OT1/cmtt/m/n/8 10752 39380 0.502924 0.778944 1.046595 0.064444 0.391719 3.1192
+05 0.064444 0.624054 3.119205
+ []
+
+
+Overfull \hbox (18.00586pt too wide) in paragraph at lines 949--949
+\OT1/cmtt/m/n/8 7708 41896 0.213256 0.445803 0.721481 0.045089 0.531062 9.46875
+0 0.045089 0.479906 9.468750 8104
+ []
+
+
+Overfull \hbox (22.25592pt too wide) in paragraph at lines 949--949
+\OT1/cmtt/m/n/8 42324 0.283908 0.445171 0.738416 0.048093 0.525634 9.181818 0.0
+48093 0.477356 9.181818 5262 44574
+ []
+
+
+Overfull \hbox (22.25592pt too wide) in paragraph at lines 949--949
+[]\OT1/cmtt/m/n/8 0.7 32002 167998 0.191130 0.523725 1.436364 0.040816 0.545714
+ 9.156250 0.040816 0.530322 9.156250
+ []
+
+
+Overfull \hbox (1.00562pt too wide) in paragraph at lines 949--949
+\OT1/cmtt/m/n/8 10656 39184 0.571429 0.779126 1.436364 0.065611 0.390225 3.4130
+43 0.065611 0.662456 3.413043
+ []
+
+
+Overfull \hbox (18.00586pt too wide) in paragraph at lines 949--949
+\OT1/cmtt/m/n/8 7926 41932 0.290451 0.445650 0.711340 0.044554 0.531201 9.15625
+0 0.044554 0.471315 9.156250 8018
+ []
+
+
+Overfull \hbox (22.25592pt too wide) in paragraph at lines 949--949
+\OT1/cmtt/m/n/8 42184 0.246440 0.445298 0.769118 0.046624 0.529724 8.911765 0.0
+46624 0.470626 8.911765 5402 44698
+ []
+
+
+Overfull \hbox (22.25592pt too wide) in paragraph at lines 949--949
+[]\OT1/cmtt/m/n/8 0.8 31878 168122 0.153328 0.523698 1.559415 0.039943 0.544468
+ 9.437500 0.039943 0.527852 9.437500
+ []
+
+
+Overfull \hbox (1.00562pt too wide) in paragraph at lines 949--949
+\OT1/cmtt/m/n/8 10608 39340 0.619392 0.778926 1.559415 0.062907 0.391076 3.1428
+57 0.062907 0.701356 3.142857
+ []
+
+
+Overfull \hbox (18.00586pt too wide) in paragraph at lines 949--949
+\OT1/cmtt/m/n/8 7870 42412 0.278416 0.445469 0.696925 0.043818 0.529756 9.25000
+0 0.043818 0.462327 9.250000 8040
+ []
+
+
+Overfull \hbox (22.25592pt too wide) in paragraph at lines 949--949
+\OT1/cmtt/m/n/8 42042 0.229990 0.445315 1.159590 0.046400 0.526192 9.437500 0.0
+46400 0.461490 9.437500 5360 44328
+ []
+
+
+Overfull \hbox (22.25592pt too wide) in paragraph at lines 949--949
+[]\OT1/cmtt/m/n/8 0.9 31928 168072 0.195789 0.524508 1.144177 0.030818 0.546272
+ 9.593750 0.030818 0.526684 9.593750
+ []
+
+
+Overfull \hbox (1.00562pt too wide) in paragraph at lines 949--949
+\OT1/cmtt/m/n/8 10650 39294 0.646526 0.778930 1.144177 0.065611 0.392040 3.1879
+19 0.065611 0.740241 3.187919
+ []
+
+
+Overfull \hbox (18.00586pt too wide) in paragraph at lines 949--949
+\OT1/cmtt/m/n/8 8026 42252 0.283505 0.445702 0.823358 0.044800 0.529001 9.59375
+0 0.044800 0.454032 9.593750 7984
+ []
+
+
+Overfull \hbox (22.25592pt too wide) in paragraph at lines 949--949
+\OT1/cmtt/m/n/8 41854 0.282636 0.444964 0.650442 0.030818 0.528834 9.454545 0.0
+30818 0.453351 9.454545 5268 44672
+ []
+
+<../Results/qualification3D.png, id=559, 602.25pt x 401.5pt>
+File: ../Results/qualification3D.png Graphic file (type png)
+<use ../Results/qualification3D.png>
+Package pdftex.def Info: ../Results/qualification3D.png  used on input line 955
+.
+(pdftex.def)             Requested size: 341.43306pt x 227.6321pt.
+[166]
+<../Results/qualification3Dinter.png, id=563, 602.25pt x 401.5pt>
+File: ../Results/qualification3Dinter.png Graphic file (type png)
+<use ../Results/qualification3Dinter.png>
+Package pdftex.def Info: ../Results/qualification3Dinter.png  used on input lin
+e 961.
+(pdftex.def)             Requested size: 341.43306pt x 227.6321pt.
+<../Results/qualification3Dnointer.png, id=564, 602.25pt x 401.5pt>
+File: ../Results/qualification3Dnointer.png Graphic file (type png)
+<use ../Results/qualification3Dnointer.png>
+Package pdftex.def Info: ../Results/qualification3Dnointer.png  used on input l
+ine 962.
+(pdftex.def)             Requested size: 341.43306pt x 227.6321pt.
+ [167 <../Results/qualification3D.png>]
+<../Results/qualification3DCCinter.png, id=568, 602.25pt x 401.5pt>
+File: ../Results/qualification3DCCinter.png Graphic file (type png)
+<use ../Results/qualification3DCCinter.png>
+Package pdftex.def Info: ../Results/qualification3DCCinter.png  used on input l
+ine 968.
+(pdftex.def)             Requested size: 170.71652pt x 113.80992pt.
+<../Results/qualification3DCTinter.png, id=569, 602.25pt x 401.5pt>
+File: ../Results/qualification3DCTinter.png Graphic file (type png)
+<use ../Results/qualification3DCTinter.png>
+Package pdftex.def Info: ../Results/qualification3DCTinter.png  used on input l
+ine 969.
+(pdftex.def)             Requested size: 170.71652pt x 113.80992pt.
+<../Results/qualification3DTCinter.png, id=570, 602.25pt x 401.5pt>
+File: ../Results/qualification3DTCinter.png Graphic file (type png)
+<use ../Results/qualification3DTCinter.png>
+Package pdftex.def Info: ../Results/qualification3DTCinter.png  used on input l
+ine 970.
+(pdftex.def)             Requested size: 170.71652pt x 113.80992pt.
+<../Results/qualification3DTTinter.png, id=571, 602.25pt x 401.5pt>
+File: ../Results/qualification3DTTinter.png Graphic file (type png)
+<use ../Results/qualification3DTTinter.png>
+Package pdftex.def Info: ../Results/qualification3DTTinter.png  used on input l
+ine 971.
+(pdftex.def)             Requested size: 170.71652pt x 113.80992pt.
+ [168 <../Results/qualification3Dinter.png> <../Results/qualification3Dnointer.
+png>]
+<../Results/qualification3DCCnointer.png, id=575, 602.25pt x 401.5pt>
+File: ../Results/qualification3DCCnointer.png Graphic file (type png)
+<use ../Results/qualification3DCCnointer.png>
+Package pdftex.def Info: ../Results/qualification3DCCnointer.png  used on input
+ line 977.
+(pdftex.def)             Requested size: 170.71652pt x 113.80992pt.
+<../Results/qualification3DCTnointer.png, id=576, 602.25pt x 401.5pt>
+File: ../Results/qualification3DCTnointer.png Graphic file (type png)
+<use ../Results/qualification3DCTnointer.png>
+Package pdftex.def Info: ../Results/qualification3DCTnointer.png  used on input
+ line 978.
+(pdftex.def)             Requested size: 170.71652pt x 113.80992pt.
+<../Results/qualification3DTCnointer.png, id=577, 602.25pt x 401.5pt>
+File: ../Results/qualification3DTCnointer.png Graphic file (type png)
+<use ../Results/qualification3DTCnointer.png>
+Package pdftex.def Info: ../Results/qualification3DTCnointer.png  used on input
+ line 979.
+(pdftex.def)             Requested size: 170.71652pt x 113.80992pt.
+<../Results/qualification3DTTnointer.png, id=578, 602.25pt x 401.5pt>
+File: ../Results/qualification3DTTnointer.png Graphic file (type png)
+<use ../Results/qualification3DTTnointer.png>
+Package pdftex.def Info: ../Results/qualification3DTTnointer.png  used on input
+ line 980.
+(pdftex.def)             Requested size: 170.71652pt x 113.80992pt.
+File: ../Results/qualification2DTime.txt  (verbatim)
+
+Overfull \hbox (1.00562pt too wide) in paragraph at lines 988--988
+[]\OT1/cmtt/m/n/8 ratio Inter/NoInter countInter countNoInter minInter avgInter
+ maxInter minNoInter avgNoInter
+ []
+
+
+Overfull \hbox (26.50598pt too wide) in paragraph at lines 988--988
+\OT1/cmtt/m/n/8 maxNoInter minTotal avgTotal maxTotal countInterCC countNoInter
+CC minInterCC avgInterCC maxInterCC
+ []
+
+
+Overfull \hbox (30.75604pt too wide) in paragraph at lines 988--988
+\OT1/cmtt/m/n/8 minNoInterCC avgNoInterCC maxNoInterCC minTotalCC avgTotalCC ma
+xTotalCC countInterCT countNoInterCT
+ []
+
+
+Overfull \hbox (5.25568pt too wide) in paragraph at lines 988--988
+\OT1/cmtt/m/n/8 minInterCT avgInterCT maxInterCT minNoInterCT avgNoInterCT maxN
+oInterCT minTotalCT avgTotalCT
+ []
+
+
+Overfull \hbox (22.25592pt too wide) in paragraph at lines 988--988
+\OT1/cmtt/m/n/8 maxTotalCT countInterTC countNoInterTC minInterTC avgInterTC ma
+xInterTC minNoInterTC avgNoInterTC
+ []
+
+
+Overfull \hbox (13.7558pt too wide) in paragraph at lines 988--988
+\OT1/cmtt/m/n/8 maxNoInterTC minTotalTC avgTotalTC maxTotalTC countInterTT coun
+tNoInterTT minInterTT avgInterTT
+ []
+
+[169 <../Results/qualification3DCCinter.png> <../Results/qualification3DCTinter
+.png> <../Results/qualification3DTCinter.png> <../Results/qualification3DTTinte
+r.png> <../Results/qualification3DCCnointer.png> <../Results/qualification3DCTn
+ointer.png> <../Results/qualification3DTCnointer.png> <../Results/qualification
+3DTTnointer.png>]
+Overfull \hbox (30.75604pt too wide) in paragraph at lines 988--988
+[]\OT1/cmtt/m/n/8 0.1 74120 125872 0.837061 2.311511 6.248062 0.101266 1.208643
+ 28.800000 0.101266 1.318930 28.800000
+ []
+
+
+Overfull \hbox (9.50574pt too wide) in paragraph at lines 988--988
+\OT1/cmtt/m/n/8 19700 30536 1.191892 3.028708 6.248062 0.103896 1.218248 25.115
+385 0.103896 1.399294 25.115385
+ []
+
+
+Overfull \hbox (9.50574pt too wide) in paragraph at lines 988--988
+\OT1/cmtt/m/n/8 18492 31106 0.974763 2.251752 5.408163 0.121429 1.221026 20.652
+174 0.121429 1.324099 20.652174
+ []
+
+
+Overfull \hbox (9.50574pt too wide) in paragraph at lines 988--988
+\OT1/cmtt/m/n/8 18898 31704 1.046099 2.248574 4.803150 0.101266 1.205695 28.800
+000 0.101266 1.309983 28.800000
+ []
+
+
+Overfull \hbox (9.50574pt too wide) in paragraph at lines 988--988
+\OT1/cmtt/m/n/8 17030 32526 0.837061 1.616598 3.189349 0.106918 1.190658 15.791
+667 0.106918 1.233252 15.791667[] 
+ []
+
+
+Overfull \hbox (30.75604pt too wide) in paragraph at lines 988--988
+[]\OT1/cmtt/m/n/8 0.2 74344 125642 0.680412 2.313088 6.036496 0.095506 1.209531
+ 25.071429 0.095506 1.430242 25.071429
+ []
+
+
+Overfull \hbox (9.50574pt too wide) in paragraph at lines 988--988
+\OT1/cmtt/m/n/8 19826 29896 1.210811 3.032327 6.036496 0.106918 1.203857 22.629
+630 0.106918 1.569551 22.629630
+ []
+
+
+Overfull \hbox (9.50574pt too wide) in paragraph at lines 988--988
+\OT1/cmtt/m/n/8 18696 31758 0.938907 2.253203 4.496063 0.099415 1.214103 25.071
+429 0.099415 1.421923 25.071429
+ []
+
+
+Overfull \hbox (9.50574pt too wide) in paragraph at lines 988--988
+\OT1/cmtt/m/n/8 18690 31354 1.035587 2.248050 4.658730 0.112676 1.237143 18.958
+333 0.112676 1.439324 18.958333
+ []
+
+
+Overfull \hbox (9.50574pt too wide) in paragraph at lines 988--988
+\OT1/cmtt/m/n/8 17132 32634 0.680412 1.617054 2.936306 0.095506 1.183751 14.166
+667 0.095506 1.270412 14.166667[] 
+ []
+
+
+Overfull \hbox (30.75604pt too wide) in paragraph at lines 988--988
+[]\OT1/cmtt/m/n/8 0.3 74496 125496 0.867987 2.313805 5.951049 0.082126 1.234912
+ 20.000000 0.082126 1.558579 20.000000
+ []
+
+
+Overfull \hbox (9.50574pt too wide) in paragraph at lines 988--988
+\OT1/cmtt/m/n/8 19888 30258 1.504065 3.031555 5.951049 0.093923 1.225522 20.000
+000 0.093923 1.767332 20.000000
+ []
+
+
+Overfull \hbox (9.50574pt too wide) in paragraph at lines 988--988
+\OT1/cmtt/m/n/8 18934 31208 0.948220 2.251892 4.622047 0.082126 1.254529 19.434
+783 0.082126 1.553738 19.434783
+ []
+
+
+Overfull \hbox (9.50574pt too wide) in paragraph at lines 988--988
+\OT1/cmtt/m/n/8 18608 31392 0.996865 2.248619 3.976923 0.098837 1.259352 18.272
+727 0.098837 1.556132 18.272727
+ []
+
+
+Overfull \hbox (9.50574pt too wide) in paragraph at lines 988--988
+\OT1/cmtt/m/n/8 17066 32638 0.867987 1.617133 2.811321 0.108280 1.201351 17.037
+037 0.108280 1.326086 17.037037[] 
+ []
+
+
+Overfull \hbox (30.75604pt too wide) in paragraph at lines 988--988
+[]\OT1/cmtt/m/n/8 0.4 74248 125740 0.907216 2.310234 4.967213 0.104167 1.211019
+ 19.720000 0.104167 1.650705 19.720000
+ []
+
+
+Overfull \hbox (9.50574pt too wide) in paragraph at lines 988--988
+\OT1/cmtt/m/n/8 19874 29828 1.855721 3.027625 4.967213 0.125926 1.214654 16.653
+846 0.125926 1.939843 16.653846
+ []
+
+
+Overfull \hbox (9.50574pt too wide) in paragraph at lines 988--988
+\OT1/cmtt/m/n/8 18614 31490 1.276119 2.249098 4.297297 0.104167 1.224775 19.720
+000 0.104167 1.634504 19.720000
+ []
+
+
+Overfull \hbox (9.50574pt too wide) in paragraph at lines 988--988
+\OT1/cmtt/m/n/8 18630 31458 1.200000 2.246232 4.617886 0.117241 1.222226 17.333
+333 0.117241 1.631829 17.333333
+ []
+
+
+Overfull \hbox (9.50574pt too wide) in paragraph at lines 988--988
+\OT1/cmtt/m/n/8 17130 32964 0.907216 1.613965 3.316770 0.129496 1.183895 14.040
+000 0.129496 1.355923 14.040000[] 
+ []
+
+
+Overfull \hbox (30.75604pt too wide) in paragraph at lines 988--988
+[]\OT1/cmtt/m/n/8 0.5 74084 125908 1.115880 2.306832 4.608333 0.109589 1.202898
+ 15.923077 0.109589 1.754865 15.923077
+ []
+
+
+Overfull \hbox (9.50574pt too wide) in paragraph at lines 988--988
+\OT1/cmtt/m/n/8 19638 30158 1.605578 3.025066 4.608333 0.126050 1.204034 15.923
+077 0.126050 2.114550 15.923077
+ []
+
+
+Overfull \hbox (9.50574pt too wide) in paragraph at lines 988--988
+\OT1/cmtt/m/n/8 18646 31918 1.149826 2.248365 3.625954 0.141509 1.228429 15.727
+273 0.141509 1.738397 15.727273
+ []
+
+
+Overfull \hbox (9.50574pt too wide) in paragraph at lines 988--988
+\OT1/cmtt/m/n/8 18658 31424 1.286996 2.245789 3.446154 0.119718 1.202380 15.304
+348 0.119718 1.724085 15.304348
+ []
+
+
+Overfull \hbox (9.50574pt too wide) in paragraph at lines 988--988
+\OT1/cmtt/m/n/8 17142 32408 1.115880 1.614057 2.380645 0.109589 1.177196 13.387
+097 0.109589 1.395627 13.387097[] 
+ []
+
+
+Overfull \hbox (30.75604pt too wide) in paragraph at lines 988--988
+[]\OT1/cmtt/m/n/8 0.6 74746 125246 0.942238 2.307949 4.851240 0.129630 1.205642
+ 21.200000 0.129630 1.867027 21.200000
+ []
+
+
+Overfull \hbox (9.50574pt too wide) in paragraph at lines 988--988
+\OT1/cmtt/m/n/8 19974 30126 1.748815 3.026642 4.851240 0.137615 1.196891 19.555
+556 0.137615 2.294741 19.555556
+ []
+
+
+Overfull \hbox (9.50574pt too wide) in paragraph at lines 988--988
+\OT1/cmtt/m/n/8 18478 31238 1.344037 2.247793 4.123077 0.147059 1.229855 21.200
+000 0.147059 1.840618 21.200000
+ []
+
+
+Overfull \hbox (9.50574pt too wide) in paragraph at lines 988--988
+\OT1/cmtt/m/n/8 18880 31366 1.336406 2.246459 4.765625 0.149533 1.206451 18.538
+462 0.149533 1.830456 18.538462
+ []
+
+
+Overfull \hbox (9.50574pt too wide) in paragraph at lines 988--988
+\OT1/cmtt/m/n/8 17414 32516 0.942238 1.614102 2.830508 0.129630 1.189710 17.307
+692 0.129630 1.444345 17.307692[] 
+ []
+
+
+Overfull \hbox (30.75604pt too wide) in paragraph at lines 988--988
+[]\OT1/cmtt/m/n/8 0.7 74358 125630 0.859935 2.305549 5.787402 0.116438 1.219713
+ 18.739130 0.116438 1.979798 18.739130
+ []
+
+
+Overfull \hbox (9.50574pt too wide) in paragraph at lines 988--988
+\OT1/cmtt/m/n/8 19884 29816 1.836634 3.025961 5.787402 0.164835 1.240444 16.840
+000 0.164835 2.490306 16.840000
+ []
+
+
+Overfull \hbox (9.50574pt too wide) in paragraph at lines 988--988
+\OT1/cmtt/m/n/8 18782 31532 1.134387 2.246623 3.696970 0.119048 1.233620 18.739
+130 0.119048 1.942722 18.739130
+ []
+
+
+Overfull \hbox (9.50574pt too wide) in paragraph at lines 988--988
+\OT1/cmtt/m/n/8 18140 31262 1.469027 2.245901 4.664179 0.116438 1.223522 15.727
+273 0.116438 1.939187 15.727273
+ []
+
+
+Overfull \hbox (9.50574pt too wide) in paragraph at lines 988--988
+\OT1/cmtt/m/n/8 17552 33020 0.859935 1.614124 3.786070 0.133333 1.184107 11.653
+846 0.133333 1.485119 11.653846[] 
+ []
+
+
+Overfull \hbox (30.75604pt too wide) in paragraph at lines 988--988
+[]\OT1/cmtt/m/n/8 0.8 73968 126030 0.938628 2.306300 5.556452 0.089947 1.190794
+ 17.086957 0.089947 2.083199 17.086957
+ []
+
+
+Overfull \hbox (9.50574pt too wide) in paragraph at lines 988--988
+\OT1/cmtt/m/n/8 19676 30430 1.967914 3.025384 5.556452 0.108974 1.169921 15.592
+593 0.108974 2.654291 15.592593
+ []
+
+
+Overfull \hbox (9.50574pt too wide) in paragraph at lines 988--988
+\OT1/cmtt/m/n/8 18820 31686 1.200000 2.247608 3.320000 0.089947 1.205285 17.086
+957 0.089947 2.039143 17.086957
+ []
+
+
+Overfull \hbox (9.50574pt too wide) in paragraph at lines 988--988
+\OT1/cmtt/m/n/8 18230 31550 1.414634 2.245347 3.679688 0.148148 1.188884 15.681
+818 0.148148 2.034055 15.681818
+ []
+
+
+Overfull \hbox (9.50574pt too wide) in paragraph at lines 988--988
+\OT1/cmtt/m/n/8 17242 32364 0.938628 1.614215 2.168750 0.131579 1.198094 13.640
+000 0.131579 1.530991 13.640000[] 
+ []
+
+
+Overfull \hbox (30.75604pt too wide) in paragraph at lines 988--988
+[]\OT1/cmtt/m/n/8 0.9 74498 125494 1.204762 2.311647 4.806723 0.115942 1.219154
+ 18.153846 0.115942 2.202398 18.153846
+ []
+
+
+Overfull \hbox (9.50574pt too wide) in paragraph at lines 988--988
+\OT1/cmtt/m/n/8 20168 30096 1.340580 3.026141 4.806723 0.205128 1.234743 18.153
+846 0.205128 2.847002 18.153846
+ []
+
+
+Overfull \hbox (9.50574pt too wide) in paragraph at lines 988--988
+\OT1/cmtt/m/n/8 18534 31602 1.331897 2.247253 3.460938 0.119718 1.237502 15.545
+455 0.119718 2.146278 15.545455
+ []
+
+
+Overfull \hbox (9.50574pt too wide) in paragraph at lines 988--988
+\OT1/cmtt/m/n/8 18626 31270 1.459144 2.245886 3.460938 0.119048 1.230062 15.458
+333 0.119048 2.144303 15.458333
+ []
+
+
+Overfull \hbox (9.50574pt too wide) in paragraph at lines 988--988
+\OT1/cmtt/m/n/8 17170 32526 1.204762 1.613246 2.692308 0.115942 1.176418 15.208
+333 0.115942 1.569563 15.208333[] 
+ []
+
+<../Results/qualification2DTime.png, id=583, 602.25pt x 401.5pt>
+File: ../Results/qualification2DTime.png Graphic file (type png)
+<use ../Results/qualification2DTime.png>
+Package pdftex.def Info: ../Results/qualification2DTime.png  used on input line
+ 994.
+(pdftex.def)             Requested size: 341.43306pt x 227.6321pt.
+[170]
+<../Results/qualification2DTimeinter.png, id=587, 602.25pt x 401.5pt>
+File: ../Results/qualification2DTimeinter.png Graphic file (type png)
+<use ../Results/qualification2DTimeinter.png>
+Package pdftex.def Info: ../Results/qualification2DTimeinter.png  used on input
+ line 1000.
+(pdftex.def)             Requested size: 341.43306pt x 227.6321pt.
+<../Results/qualification2DTimenointer.png, id=588, 602.25pt x 401.5pt>
+File: ../Results/qualification2DTimenointer.png Graphic file (type png)
+<use ../Results/qualification2DTimenointer.png>
+Package pdftex.def Info: ../Results/qualification2DTimenointer.png  used on inp
+ut line 1001.
+(pdftex.def)             Requested size: 341.43306pt x 227.6321pt.
+ [171 <../Results/qualification2DTime.png>]
+<../Results/qualification2DTimeCCinter.png, id=592, 602.25pt x 401.5pt>
+File: ../Results/qualification2DTimeCCinter.png Graphic file (type png)
+<use ../Results/qualification2DTimeCCinter.png>
+Package pdftex.def Info: ../Results/qualification2DTimeCCinter.png  used on inp
+ut line 1007.
+(pdftex.def)             Requested size: 170.71652pt x 113.80992pt.
+<../Results/qualification2DTimeCTinter.png, id=593, 602.25pt x 401.5pt>
+File: ../Results/qualification2DTimeCTinter.png Graphic file (type png)
+<use ../Results/qualification2DTimeCTinter.png>
+Package pdftex.def Info: ../Results/qualification2DTimeCTinter.png  used on inp
+ut line 1008.
+(pdftex.def)             Requested size: 170.71652pt x 113.80992pt.
+<../Results/qualification2DTimeTCinter.png, id=594, 602.25pt x 401.5pt>
+File: ../Results/qualification2DTimeTCinter.png Graphic file (type png)
+<use ../Results/qualification2DTimeTCinter.png>
+Package pdftex.def Info: ../Results/qualification2DTimeTCinter.png  used on inp
+ut line 1009.
+(pdftex.def)             Requested size: 170.71652pt x 113.80992pt.
+<../Results/qualification2DTimeTTinter.png, id=595, 602.25pt x 401.5pt>
+File: ../Results/qualification2DTimeTTinter.png Graphic file (type png)
+<use ../Results/qualification2DTimeTTinter.png>
+Package pdftex.def Info: ../Results/qualification2DTimeTTinter.png  used on inp
+ut line 1010.
+(pdftex.def)             Requested size: 170.71652pt x 113.80992pt.
+ [172 <../Results/qualification2DTimeinter.png> <../Results/qualification2DTime
+nointer.png>]
+<../Results/qualification2DTimeCCnointer.png, id=599, 602.25pt x 401.5pt>
+File: ../Results/qualification2DTimeCCnointer.png Graphic file (type png)
+<use ../Results/qualification2DTimeCCnointer.png>
+Package pdftex.def Info: ../Results/qualification2DTimeCCnointer.png  used on i
+nput line 1016.
+(pdftex.def)             Requested size: 170.71652pt x 113.80992pt.
+<../Results/qualification2DTimeCTnointer.png, id=600, 602.25pt x 401.5pt>
+File: ../Results/qualification2DTimeCTnointer.png Graphic file (type png)
+<use ../Results/qualification2DTimeCTnointer.png>
+Package pdftex.def Info: ../Results/qualification2DTimeCTnointer.png  used on i
+nput line 1017.
+(pdftex.def)             Requested size: 170.71652pt x 113.80992pt.
+<../Results/qualification2DTimeTCnointer.png, id=601, 602.25pt x 401.5pt>
+File: ../Results/qualification2DTimeTCnointer.png Graphic file (type png)
+<use ../Results/qualification2DTimeTCnointer.png>
+Package pdftex.def Info: ../Results/qualification2DTimeTCnointer.png  used on i
+nput line 1018.
+(pdftex.def)             Requested size: 170.71652pt x 113.80992pt.
+<../Results/qualification2DTimeTTnointer.png, id=602, 602.25pt x 401.5pt>
+File: ../Results/qualification2DTimeTTnointer.png Graphic file (type png)
+<use ../Results/qualification2DTimeTTnointer.png>
+Package pdftex.def Info: ../Results/qualification2DTimeTTnointer.png  used on i
+nput line 1019.
+(pdftex.def)             Requested size: 170.71652pt x 113.80992pt.
+File: ../Results/qualification3DTime.txt  (verbatim)
+
+Overfull \hbox (1.00562pt too wide) in paragraph at lines 1027--1027
+[]\OT1/cmtt/m/n/8 ratio Inter/NoInter countInter countNoInter minInter avgInter
+ maxInter minNoInter avgNoInter
+ []
+
+
+Overfull \hbox (26.50598pt too wide) in paragraph at lines 1027--1027
+\OT1/cmtt/m/n/8 maxNoInter minTotal avgTotal maxTotal countInterCC countNoInter
+CC minInterCC avgInterCC maxInterCC
+ []
+
+
+Overfull \hbox (30.75604pt too wide) in paragraph at lines 1027--1027
+\OT1/cmtt/m/n/8 minNoInterCC avgNoInterCC maxNoInterCC minTotalCC avgTotalCC ma
+xTotalCC countInterCT countNoInterCT
+ []
+
+
+Overfull \hbox (5.25568pt too wide) in paragraph at lines 1027--1027
+\OT1/cmtt/m/n/8 minInterCT avgInterCT maxInterCT minNoInterCT avgNoInterCT maxN
+oInterCT minTotalCT avgTotalCT
+ []
+
+
+Overfull \hbox (22.25592pt too wide) in paragraph at lines 1027--1027
+\OT1/cmtt/m/n/8 maxTotalCT countInterTC countNoInterTC minInterTC avgInterTC ma
+xInterTC minNoInterTC avgNoInterTC
+ []
+
+
+Overfull \hbox (13.7558pt too wide) in paragraph at lines 1027--1027
+\OT1/cmtt/m/n/8 maxNoInterTC minTotalTC avgTotalTC maxTotalTC countInterTT coun
+tNoInterTT minInterTT avgInterTT
+ []
+
+[173 <../Results/qualification2DTimeCCinter.png> <../Results/qualification2DTim
+eCTinter.png> <../Results/qualification2DTimeTCinter.png> <../Results/qualifica
+tion2DTimeTTinter.png> <../Results/qualification2DTimeCCnointer.png> <../Result
+s/qualification2DTimeCTnointer.png> <../Results/qualification2DTimeTCnointer.pn
+g> <../Results/qualification2DTimeTTnointer.png>]
+Overfull \hbox (30.75604pt too wide) in paragraph at lines 1027--1027
+[]\OT1/cmtt/m/n/8 0.1 52368 147632 0.286049 1.749111 3.827556 0.025856 0.690933
+ 30.054054 0.025856 0.796751 30.054054
+ []
+
+
+Overfull \hbox (9.50574pt too wide) in paragraph at lines 1027--1027
+\OT1/cmtt/m/n/8 15878 33932 2.079092 2.759798 3.827556 0.038136 0.591372 13.620
+833 0.038136 0.808214 13.620833
+ []
+
+
+Overfull \hbox (9.50574pt too wide) in paragraph at lines 1027--1027
+\OT1/cmtt/m/n/8 13050 36746 0.434733 1.587665 3.167442 0.025856 0.685968 24.448
+980 0.025856 0.776138 24.448980
+ []
+
+
+Overfull \hbox (9.50574pt too wide) in paragraph at lines 1027--1027
+\OT1/cmtt/m/n/8 13252 37254 0.471136 1.590276 3.125675 0.026583 0.702744 25.396
+226 0.026583 0.791497 25.396226
+ []
+
+
+Overfull \hbox (9.50574pt too wide) in paragraph at lines 1027--1027
+\OT1/cmtt/m/n/8 10188 39700 0.286049 0.587359 0.990444 0.026154 0.769541 30.054
+054 0.026154 0.751323 30.054054[] 
+ []
+
+
+Overfull \hbox (30.75604pt too wide) in paragraph at lines 1027--1027
+[]\OT1/cmtt/m/n/8 0.2 52346 147654 0.295306 1.758523 3.329092 0.025738 0.681488
+ 28.333333 0.025738 0.896895 28.333333
+ []
+
+
+Overfull \hbox (9.50574pt too wide) in paragraph at lines 1027--1027
+\OT1/cmtt/m/n/8 16152 33910 2.187500 2.759516 3.329092 0.037815 0.581714 13.888
+889 0.037815 1.017274 13.888889
+ []
+
+
+Overfull \hbox (9.50574pt too wide) in paragraph at lines 1027--1027
+\OT1/cmtt/m/n/8 13064 37180 0.464417 1.590671 3.155093 0.027844 0.686945 21.886
+792 0.027844 0.867691 21.886792
+ []
+
+
+Overfull \hbox (9.50574pt too wide) in paragraph at lines 1027--1027
+\OT1/cmtt/m/n/8 13048 36526 0.480315 1.592447 3.104006 0.027174 0.688474 20.169
+492 0.027174 0.869269 20.169492
+ []
+
+
+Overfull \hbox (9.50574pt too wide) in paragraph at lines 1027--1027
+\OT1/cmtt/m/n/8 10082 40038 0.295306 0.587299 0.971429 0.025738 0.754548 28.333
+333 0.025738 0.721098 28.333333[] 
+ []
+
+
+Overfull \hbox (30.75604pt too wide) in paragraph at lines 1027--1027
+[]\OT1/cmtt/m/n/8 0.3 52436 147562 0.307540 1.754851 3.270796 0.025974 0.693282
+ 29.527778 0.025974 1.011753 29.527778
+ []
+
+
+Overfull \hbox (9.50574pt too wide) in paragraph at lines 1027--1027
+\OT1/cmtt/m/n/8 16080 33990 1.761622 2.759934 3.270796 0.037422 0.609866 14.071
+730 0.037422 1.254887 14.071730
+ []
+
+
+Overfull \hbox (9.50574pt too wide) in paragraph at lines 1027--1027
+\OT1/cmtt/m/n/8 13076 37008 0.475703 1.591004 3.181470 0.026418 0.691146 25.039
+216 0.026418 0.961103 25.039216
+ []
+
+
+Overfull \hbox (9.50574pt too wide) in paragraph at lines 1027--1027
+\OT1/cmtt/m/n/8 13110 37086 0.479675 1.590604 3.152124 0.026316 0.695217 21.490
+196 0.026316 0.963833 21.490196
+ []
+
+
+Overfull \hbox (9.50574pt too wide) in paragraph at lines 1027--1027
+\OT1/cmtt/m/n/8 10170 39478 0.307540 0.588086 0.923382 0.025974 0.765286 29.527
+778 0.025974 0.712126 29.527778[] 
+ []
+
+
+Overfull \hbox (30.75604pt too wide) in paragraph at lines 1027--1027
+[]\OT1/cmtt/m/n/8 0.4 52464 147536 0.298784 1.756777 3.349088 0.026100 0.691147
+ 30.756757 0.026100 1.117399 30.756757
+ []
+
+
+Overfull \hbox (9.50574pt too wide) in paragraph at lines 1027--1027
+\OT1/cmtt/m/n/8 16062 34040 2.034483 2.759895 3.349088 0.037190 0.594947 13.844
+538 0.037190 1.460926 13.844538
+ []
+
+
+Overfull \hbox (9.50574pt too wide) in paragraph at lines 1027--1027
+\OT1/cmtt/m/n/8 13096 36798 0.484967 1.587998 3.156608 0.026100 0.696620 21.653
+846 0.026100 1.053171 21.653846
+ []
+
+
+Overfull \hbox (9.50574pt too wide) in paragraph at lines 1027--1027
+\OT1/cmtt/m/n/8 13340 36744 0.482940 1.587622 3.253086 0.026194 0.689614 22.529
+412 0.026194 1.048817 22.529412
+ []
+
+
+Overfull \hbox (5.25568pt too wide) in paragraph at lines 1027--1027
+\OT1/cmtt/m/n/8 9966 39954 0.298784 0.588282 0.889344 0.027778 0.769477 30.7567
+57 0.027778 0.696999 30.756757[] 
+ []
+
+
+Overfull \hbox (30.75604pt too wide) in paragraph at lines 1027--1027
+[]\OT1/cmtt/m/n/8 0.5 52548 147452 0.261731 1.753130 3.361954 0.026074 0.677937
+ 29.162162 0.026074 1.215534 29.162162
+ []
+
+
+Overfull \hbox (9.50574pt too wide) in paragraph at lines 1027--1027
+\OT1/cmtt/m/n/8 16064 33218 2.212185 2.758671 3.243386 0.037461 0.582163 13.715
+447 0.037461 1.670417 13.715447
+ []
+
+
+Overfull \hbox (9.50574pt too wide) in paragraph at lines 1027--1027
+\OT1/cmtt/m/n/8 13120 37332 0.476406 1.588347 3.361954 0.026214 0.677791 25.901
+961 0.026214 1.133069 25.901961
+ []
+
+
+Overfull \hbox (9.50574pt too wide) in paragraph at lines 1027--1027
+\OT1/cmtt/m/n/8 13190 36672 0.441667 1.591462 3.112623 0.026074 0.682622 23.040
+000 0.026074 1.137042 23.040000
+ []
+
+
+Overfull \hbox (9.50574pt too wide) in paragraph at lines 1027--1027
+\OT1/cmtt/m/n/8 10174 40230 0.261731 0.587549 1.035622 0.026316 0.752881 29.162
+162 0.026316 0.670215 29.162162[] 
+ []
+
+
+Overfull \hbox (30.75604pt too wide) in paragraph at lines 1027--1027
+[]\OT1/cmtt/m/n/8 0.6 52136 147864 0.297690 1.752979 3.461672 0.025895 0.687321
+ 29.194444 0.025895 1.326715 29.194444
+ []
+
+
+Overfull \hbox (9.50574pt too wide) in paragraph at lines 1027--1027
+\OT1/cmtt/m/n/8 15904 34230 1.967329 2.759280 3.461672 0.037657 0.602129 13.831
+276 0.037657 1.896420 13.831276
+ []
+
+
+Overfull \hbox (9.50574pt too wide) in paragraph at lines 1027--1027
+\OT1/cmtt/m/n/8 13122 37162 0.492318 1.591625 3.135982 0.025895 0.688886 22.220
+000 0.025895 1.230530 22.220000
+ []
+
+
+Overfull \hbox (9.50574pt too wide) in paragraph at lines 1027--1027
+\OT1/cmtt/m/n/8 13046 37022 0.441662 1.587810 3.241248 0.025934 0.673437 24.420
+000 0.025934 1.222061 24.420000
+ []
+
+
+Overfull \hbox (9.50574pt too wide) in paragraph at lines 1027--1027
+\OT1/cmtt/m/n/8 10064 39450 0.297690 0.587225 0.945034 0.026316 0.772794 29.194
+444 0.026316 0.661453 29.194444[] 
+ []
+
+
+Overfull \hbox (30.75604pt too wide) in paragraph at lines 1027--1027
+[]\OT1/cmtt/m/n/8 0.7 52606 147394 0.304502 1.763538 3.424645 0.026174 0.692122
+ 29.000000 0.026174 1.442113 29.000000
+ []
+
+
+Overfull \hbox (9.50574pt too wide) in paragraph at lines 1027--1027
+\OT1/cmtt/m/n/8 16466 33658 2.186667 2.758810 3.424645 0.036697 0.601924 13.737
+705 0.036697 2.111744 13.737705
+ []
+
+
+Overfull \hbox (9.50574pt too wide) in paragraph at lines 1027--1027
+\OT1/cmtt/m/n/8 12932 37112 0.484252 1.589151 3.193374 0.026625 0.685531 23.306
+122 0.026625 1.318065 23.306122
+ []
+
+
+Overfull \hbox (9.50574pt too wide) in paragraph at lines 1027--1027
+\OT1/cmtt/m/n/8 13106 37078 0.462850 1.590831 3.163997 0.026174 0.700987 21.480
+769 0.026174 1.323878 21.480769
+ []
+
+
+Overfull \hbox (9.50574pt too wide) in paragraph at lines 1027--1027
+\OT1/cmtt/m/n/8 10102 39546 0.304502 0.588575 0.911724 0.026255 0.766763 29.000
+000 0.026255 0.642032 29.000000[] 
+ []
+
+
+Overfull \hbox (30.75604pt too wide) in paragraph at lines 1027--1027
+[]\OT1/cmtt/m/n/8 0.8 52288 147712 0.305882 1.754773 3.478836 0.025279 0.689685
+ 30.540541 0.025279 1.541755 30.540541
+ []
+
+
+Overfull \hbox (9.50574pt too wide) in paragraph at lines 1027--1027
+\OT1/cmtt/m/n/8 16038 34366 1.914320 2.759470 3.478836 0.037634 0.604981 14.119
+149 0.037634 2.328572 14.119149
+ []
+
+
+Overfull \hbox (9.50574pt too wide) in paragraph at lines 1027--1027
+\OT1/cmtt/m/n/8 12896 36720 0.471064 1.588283 3.258187 0.026856 0.686767 23.745
+098 0.026856 1.407979 23.745098
+ []
+
+
+Overfull \hbox (9.50574pt too wide) in paragraph at lines 1027--1027
+\OT1/cmtt/m/n/8 13246 36790 0.490528 1.590958 3.160247 0.026616 0.692866 23.490
+196 0.026616 1.411339 23.490196
+ []
+
+
+Overfull \hbox (9.50574pt too wide) in paragraph at lines 1027--1027
+\OT1/cmtt/m/n/8 10108 39836 0.305882 0.587738 0.902539 0.025279 0.762510 30.540
+541 0.025279 0.622693 30.540541[] 
+ []
+
+
+Overfull \hbox (30.75604pt too wide) in paragraph at lines 1027--1027
+[]\OT1/cmtt/m/n/8 0.9 52364 147636 0.293860 1.745450 3.674936 0.026316 0.683076
+ 31.783784 0.026316 1.639212 31.783784
+ []
+
+
+Overfull \hbox (9.50574pt too wide) in paragraph at lines 1027--1027
+\OT1/cmtt/m/n/8 15856 34192 1.933252 2.760060 3.674936 0.037344 0.589482 14.066
+116 0.037344 2.543002 14.066116
+ []
+
+
+Overfull \hbox (9.50574pt too wide) in paragraph at lines 1027--1027
+\OT1/cmtt/m/n/8 12962 37346 0.406656 1.588794 3.355183 0.026604 0.687006 23.940
+000 0.026604 1.498615 23.940000
+ []
+
+
+Overfull \hbox (9.50574pt too wide) in paragraph at lines 1027--1027
+\OT1/cmtt/m/n/8 13142 36504 0.358188 1.590008 3.441595 0.026316 0.683885 26.714
+286 0.026316 1.499396 26.714286
+ []
+
+
+Overfull \hbox (9.50574pt too wide) in paragraph at lines 1027--1027
+\OT1/cmtt/m/n/8 10404 39594 0.293860 0.590674 1.032742 0.026357 0.759449 31.783
+784 0.026357 0.607552 31.783784[] 
+ []
+
+<../Results/qualification3DTime.png, id=606, 602.25pt x 401.5pt>
+File: ../Results/qualification3DTime.png Graphic file (type png)
+<use ../Results/qualification3DTime.png>
+Package pdftex.def Info: ../Results/qualification3DTime.png  used on input line
+ 1033.
+(pdftex.def)             Requested size: 341.43306pt x 227.6321pt.
+[174]
+<../Results/qualification3DTimeinter.png, id=610, 602.25pt x 401.5pt>
+File: ../Results/qualification3DTimeinter.png Graphic file (type png)
+<use ../Results/qualification3DTimeinter.png>
+Package pdftex.def Info: ../Results/qualification3DTimeinter.png  used on input
+ line 1039.
+(pdftex.def)             Requested size: 341.43306pt x 227.6321pt.
+<../Results/qualification3DTimenointer.png, id=611, 602.25pt x 401.5pt>
+File: ../Results/qualification3DTimenointer.png Graphic file (type png)
+<use ../Results/qualification3DTimenointer.png>
+Package pdftex.def Info: ../Results/qualification3DTimenointer.png  used on inp
+ut line 1040.
+(pdftex.def)             Requested size: 341.43306pt x 227.6321pt.
+ [175 <../Results/qualification3DTime.png>]
+<../Results/qualification3DTimeCCinter.png, id=616, 602.25pt x 401.5pt>
+File: ../Results/qualification3DTimeCCinter.png Graphic file (type png)
+<use ../Results/qualification3DTimeCCinter.png>
+Package pdftex.def Info: ../Results/qualification3DTimeCCinter.png  used on inp
+ut line 1046.
+(pdftex.def)             Requested size: 170.71652pt x 113.80992pt.
+<../Results/qualification3DTimeCTinter.png, id=617, 602.25pt x 401.5pt>
+File: ../Results/qualification3DTimeCTinter.png Graphic file (type png)
+<use ../Results/qualification3DTimeCTinter.png>
+Package pdftex.def Info: ../Results/qualification3DTimeCTinter.png  used on inp
+ut line 1047.
+(pdftex.def)             Requested size: 170.71652pt x 113.80992pt.
+<../Results/qualification3DTimeTCinter.png, id=618, 602.25pt x 401.5pt>
+File: ../Results/qualification3DTimeTCinter.png Graphic file (type png)
+<use ../Results/qualification3DTimeTCinter.png>
+Package pdftex.def Info: ../Results/qualification3DTimeTCinter.png  used on inp
+ut line 1048.
+(pdftex.def)             Requested size: 170.71652pt x 113.80992pt.
+<../Results/qualification3DTimeTTinter.png, id=619, 602.25pt x 401.5pt>
+File: ../Results/qualification3DTimeTTinter.png Graphic file (type png)
+<use ../Results/qualification3DTimeTTinter.png>
+Package pdftex.def Info: ../Results/qualification3DTimeTTinter.png  used on inp
+ut line 1049.
+(pdftex.def)             Requested size: 170.71652pt x 113.80992pt.
+ [176 <../Results/qualification3DTimeinter.png> <../Results/qualification3DTime
+nointer.png>]
+<../Results/qualification3DTimeCCnointer.png, id=623, 602.25pt x 401.5pt>
+File: ../Results/qualification3DTimeCCnointer.png Graphic file (type png)
+<use ../Results/qualification3DTimeCCnointer.png>
+Package pdftex.def Info: ../Results/qualification3DTimeCCnointer.png  used on i
+nput line 1055.
+(pdftex.def)             Requested size: 170.71652pt x 113.80992pt.
+<../Results/qualification3DTimeCTnointer.png, id=624, 602.25pt x 401.5pt>
+File: ../Results/qualification3DTimeCTnointer.png Graphic file (type png)
+<use ../Results/qualification3DTimeCTnointer.png>
+Package pdftex.def Info: ../Results/qualification3DTimeCTnointer.png  used on i
+nput line 1056.
+(pdftex.def)             Requested size: 170.71652pt x 113.80992pt.
+<../Results/qualification3DTimeTCnointer.png, id=625, 602.25pt x 401.5pt>
+File: ../Results/qualification3DTimeTCnointer.png Graphic file (type png)
+<use ../Results/qualification3DTimeTCnointer.png>
+Package pdftex.def Info: ../Results/qualification3DTimeTCnointer.png  used on i
+nput line 1057.
+(pdftex.def)             Requested size: 170.71652pt x 113.80992pt.
+<../Results/qualification3DTimeTTnointer.png, id=626, 602.25pt x 401.5pt>
+File: ../Results/qualification3DTimeTTnointer.png Graphic file (type png)
+<use ../Results/qualification3DTimeTTnointer.png>
+Package pdftex.def Info: ../Results/qualification3DTimeTTnointer.png  used on i
+nput line 1058.
+(pdftex.def)             Requested size: 170.71652pt x 113.80992pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 1064--1065
+
+ []
+
+[177 <../Results/qualification3DTimeCCinter.png> <../Results/qualification3DTim
+eCTinter.png> <../Results/qualification3DTimeTCinter.png> <../Results/qualifica
+tion3DTimeTTinter.png> <../Results/qualification3DTimeCCnointer.png> <../Result
+s/qualification3DTimeCTnointer.png> <../Results/qualification3DTimeTCnointer.pn
+g> <../Results/qualification3DTimeTTnointer.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 1066--1067
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1073--1074
+
+ []
+
+File: ../SAT/sat.h  (verbatim)
+[178]
+File: ../SAT/sat.c  (verbatim)
+ [179] [180] [181] [182] [183] [184] [185] [186] [187] [188] [189]
+[190] [191] [192] [193] [194] [195] [196] [197]
+Underfull \hbox (badness 10000) in paragraph at lines 1093--1094
+
+ []
+
+[198]
 File: ../Makefile  (verbatim)
- [138] [139] (./fmb.aux) ) 
+ [199]
+Overfull \hbox (732.01611pt too wide) in paragraph at lines 1097--1097
+[]\OT1/cmtt/m/n/8 cd 2D; ./main > ../Results/main2D.txt; ./unitTests > ../Resul
+ts/unitTests2D.txt; ./validation > ../Results/validation2D.txt; grep failed ../
+Results/validation2D.txt; ./qualification > ../Results/qualification2D.txt; gre
+p failed ../Results/qualification2D.txt; cd -[] 
+ []
+
+
+Overfull \hbox (732.01611pt too wide) in paragraph at lines 1097--1097
+[]\OT1/cmtt/m/n/8 cd 3D; ./main > ../Results/main3D.txt; ./unitTests > ../Resul
+ts/unitTests3D.txt; ./validation > ../Results/validation3D.txt; grep failed ../
+Results/validation3D.txt; ./qualification > ../Results/qualification3D.txt; gre
+p failed ../Results/qualification3D.txt; cd -[] 
+ []
+
+
+Overfull \hbox (851.01782pt too wide) in paragraph at lines 1097--1097
+[]\OT1/cmtt/m/n/8 cd 2DTime; ./main > ../Results/main2DTime.txt; ./unitTests > 
+../Results/unitTests2DTime.txt; ./validation > ../Results/validation2DTime.txt;
+ grep failed ../Results/validation2DTime.txt; ./qualification > ../Results/qual
+ification2DTime.txt; grep failed ../Results/qualification2DTime.txt; cd -[] 
+ []
+
+
+Overfull \hbox (851.01782pt too wide) in paragraph at lines 1097--1097
+[]\OT1/cmtt/m/n/8 cd 3DTime; ./main > ../Results/main3DTime.txt; ./unitTests > 
+../Results/unitTests3DTime.txt; ./validation > ../Results/validation3DTime.txt;
+ grep failed ../Results/validation3DTime.txt; ./qualification > ../Results/qual
+ification3DTime.txt; grep failed ../Results/qualification3DTime.txt; cd -[] 
+ []
+
+[200]
+File: ../2D/Makefile  (verbatim)
+File: ../3D/Makefile  (verbatim)
+ [201]
+File: ../2DTime/Makefile  (verbatim)
+ [202]
+File: ../3DTime/Makefile  (verbatim)
+ [203] [204] (./fmb.aux) ) 
 Here is how much of TeX's memory you used:
- 13763 strings out of 493765
- 263277 string characters out of 6151500
- 316009 words of memory out of 5000000
- 16981 multiletter control sequences out of 15000+600000
+ 13996 strings out of 493765
+ 272774 string characters out of 6151500
+ 316007 words of memory out of 5000000
+ 17162 multiletter control sequences out of 15000+600000
  13526 words of font info for 52 fonts, out of 8000000 for 9000
  622 hyphenation exceptions out of 8191
- 55i,21n,54p,662b,313s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 55i,21n,54p,723b,313s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/ams
 fonts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
 cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cme
@@ -870,10 +2592,10 @@ sr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm7.pfb>
 
 pdfTeX warning: pdflatex: no GlyphToUnicode entry has been inserted yet!
-Output written on fmb.pdf (139 pages, 436596 bytes).
+Output written on fmb.pdf (204 pages, 1079127 bytes).
 PDF statistics:
- 538 PDF objects out of 1000 (max. 8388607)
- 363 compressed objects within 4 object streams
+ 781 PDF objects out of 1000 (max. 8388607)
+ 505 compressed objects within 6 object streams
  0 named destinations out of 1000 (max. 500000)
- 31 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 226 words of extra memory for PDF output out of 10000 (max. 10000000)
 

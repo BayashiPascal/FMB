@@ -1,8 +1,8 @@
 all : main unitTests validation qualification
 
-COMPILER=gcc
-
-BUILD_ARG=-O3 -I../SAT -I../Frame
+COMPILER?=gcc
+OPTIMIZATION?=-O3
+BUILD_ARG=$(OPTIMIZATION) -I../SAT -I../Frame
 
 main : main.o fmb3d.o frame.o Makefile
 	$(COMPILER) -o main main.o fmb3d.o frame.o

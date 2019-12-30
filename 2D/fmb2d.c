@@ -154,9 +154,10 @@ bool ElimVar2D(
         // If the right side of the inequality if lower than the sum of 
         // negative coefficients in the row
         // (Add epsilon for numerical imprecision)
-        if (Yp[*nbRemainRows] < sumNegCoeff + EPSILON) {
+        if (Yp[*nbRemainRows] < sumNegCoeff - EPSILON) {
 
           // Given that X is in [0,1], the system is inconsistent
+//printf("inconsistent %.9f %.9f\n",Yp[*nbRemainRows], sumNegCoeff + EPSILON);
           return true;
 
         }
@@ -299,7 +300,8 @@ bool FMBTestIntersection2D(
   const Frame2D* const that, 
   const Frame2D* const tho, 
          AABB2D* const bdgBox) {
-
+//Frame2DPrint(that);printf("\n");
+//Frame2DPrint(tho);printf("\n");
   // Get the projection of the Frame 'tho' in Frame 'that' coordinates
   // system
   Frame2D thoProj;
@@ -418,6 +420,7 @@ bool FMBTestIntersection2D(
   if (inconsistency == true) {
 
     // The two Frames are not in intersection
+//printf("inconsisten A\n");
     return false;
 
   }
@@ -434,6 +437,7 @@ bool FMBTestIntersection2D(
   if (bdgBoxLocal.min[SND_VAR] >= bdgBoxLocal.max[SND_VAR]) {
 
     // The two Frames are not in intersection
+//printf("bound %f %f\n",bdgBoxLocal.min[SND_VAR],bdgBoxLocal.max[SND_VAR]);
     return false;
 
   // Else, if the bounds are consistent here it means
@@ -442,6 +446,7 @@ bool FMBTestIntersection2D(
   } else if (bdgBox == NULL) {
 
     // Immediately return true
+//printf("inter\n");
     return true;
 
   }
@@ -460,7 +465,7 @@ bool FMBTestIntersection2D(
       Mp, 
       Yp, 
       &nbRowsP);
-
+//printf("inconsistent B %d\n",inconsistency);
   // Get the bounds for the remaining first variable
   GetBound2D(
     FST_VAR,
@@ -468,6 +473,7 @@ bool FMBTestIntersection2D(
     Yp,
     nbRowsP,
     &bdgBoxLocal);
+//printf("bound %f %f\n",bdgBoxLocal.min[FST_VAR],bdgBoxLocal.max[FST_VAR]);
 
   // If the user requested the resulting bounding box
   if (bdgBox != NULL) {
@@ -478,6 +484,7 @@ bool FMBTestIntersection2D(
   }
 
   // If we've reached here the two Frames are intersecting
+//printf("inter\n");
   return true;
 
 }

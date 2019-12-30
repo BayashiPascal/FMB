@@ -16,7 +16,8 @@ bool CheckAxis3D(
 bool CheckAxis3DTime(
   const Frame3DTime* const that,
   const Frame3DTime* const tho,
-  const double* const axis);
+  const double* const axis,
+  const double* const relSpeed);
 
 // ------------- Functions implementation -------------
 
@@ -850,7 +851,8 @@ bool SATTestIntersection3DTime(
         CheckAxis3DTime(
           that, 
           tho, 
-          normFaces[iFace]);
+          normFaces[iFace],
+          relSpeed);
 
       // If the axis is separating the Frames
       if (isIntersection == false) {
@@ -901,7 +903,8 @@ bool SATTestIntersection3DTime(
         CheckAxis3DTime(
           that, 
           tho, 
-          axis);
+          axis,
+          relSpeed);
 
       // If the axis is separating the Frames
       if (isIntersection == false) {
@@ -1066,7 +1069,8 @@ bool CheckAxis3D(
 bool CheckAxis3DTime(
   const Frame3DTime* const that,
   const Frame3DTime* const tho,
-  const double* const axis) {
+  const double* const axis,
+  const double* const relSpeed) {
 
   // Declare variables to memorize the boundaries of projection
   // of the two frames on the current edge
@@ -1076,14 +1080,6 @@ bool CheckAxis3DTime(
   // Declare two variables to loop on Frames and commonalize code
   const Frame3DTime* frame = that;
   double* bdgBox = bdgBoxA;
-
-  // Declare a variable to memorize the speed of tho relative to that
-  // TODO: already calculated by TestIntersection, should be given
-  // in argument
-  double relSpeed[3];
-  relSpeed[0] = tho->speed[0] - that->speed[0];
-  relSpeed[1] = tho->speed[1] - that->speed[1];
-  relSpeed[2] = tho->speed[2] - that->speed[2];
 
   // Loop on Frames
   for (int iFrame = 2;

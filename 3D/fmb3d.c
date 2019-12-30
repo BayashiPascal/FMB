@@ -154,7 +154,7 @@ bool ElimVar3D(
         // If the right side of the inequality if lower than the sum of 
         // negative coefficients in the row
         // (Add epsilon for numerical imprecision)
-        if (Yp[*nbRemainRows] < sumNegCoeff + EPSILON) {
+        if (Yp[*nbRemainRows] < sumNegCoeff - EPSILON) {
 
           // Given that X is in [0,1], the system is inconsistent
           return true;

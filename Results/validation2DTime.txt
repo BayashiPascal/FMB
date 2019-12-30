@@ -1,5 +1,3 @@
 ===== 2D dynamic ======
-Validation2D has failed
-To(80.251984,-8.961652) s(-16.337240,3.450056) x(-35.419424,-34.767254) y(35.062838,34.417263) against Co(13.044010,-39.863230) s(60.154431,-79.721592) x(54.128710,-48.043931) y(49.003846,21.827402)
-FMB : no intersection
-SAT : intersection
+Validation2DTime has succeed.
+Tested 744114 intersections and 1255804 no intersections

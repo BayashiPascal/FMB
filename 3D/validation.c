@@ -8,8 +8,8 @@
 #include "fmb3d.h"
 #include "sat.h"
 
-// Espilon for numerical precision
-#define EPSILON 0.0001
+// Epsilon to detect degenerated triangles
+#define EPSILON 0.1
 // Range of values for the random generation of Frames
 #define RANGE_AXIS 100.0
 // Nb of tests of the validation

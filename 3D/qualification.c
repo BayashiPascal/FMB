@@ -9,12 +9,12 @@
 #include "fmb3d.h"
 #include "sat.h"
 
-// Espilon for numerical precision
-#define EPSILON 0.0001
+// Epsilon to detect degenerated triangles
+#define EPSILON 0.1
 // Range of values for the random generation of Frames
 #define RANGE_AXIS 100.0
 // Nb of run
-#define NB_RUNS 10
+#define NB_RUNS 9
 // Nb of tests per run
 #define NB_TESTS 100000
 // Nb of times the test is run on one pair of frame, used to 
@@ -443,6 +443,9 @@ void Qualify3DStatic(void) {
        iRun < NB_RUNS;
        ++iRun) {
 
+    // Ratio intersection/no intersection for the displayed results
+    double ratioInter = 0.1 + 0.8 * (double)iRun / (double)(NB_RUNS - 1);
+
     // Initialize counters
     minInter = 0.0;
     maxInter = 0.0;
@@ -560,8 +563,7 @@ void Qualify3DStatic(void) {
     // Display the results
     if (iRun == 0) {
 
-      printf("ratio (timeFMB / timeSAT)\n");
-      printf("run\t");
+      printf("percPairInter\t");
       printf("countInter\tcountNoInter\t");
       printf("minInter\tavgInter\tmaxInter\t");
       printf("minNoInter\tavgNoInter\tmaxNoInter\t");
@@ -589,7 +591,7 @@ void Qualify3DStatic(void) {
 
     }
 
-    printf("%d\t", iRun);
+    printf("%.1f\t", ratioInter);
 
     printf("%lu\t%lu\t", countInter, countNoInter);
     double avgInter = sumInter / (double)countInter;
@@ -597,7 +599,7 @@ void Qualify3DStatic(void) {
     double avgNoInter = sumNoInter / (double)countNoInter;
     printf("%f\t%f\t%f\t", minNoInter, avgNoInter, maxNoInter);
     double avg = 
-      (sumInter + sumNoInter) / (double)(countInter + countNoInter);
+      ratioInter * avgInter + (1.0 - ratioInter) * avgNoInter;
     printf("%f\t%f\t%f\t", 
       (minNoInter < minInter ? minNoInter : minInter), 
       avg,
@@ -609,7 +611,7 @@ void Qualify3DStatic(void) {
     double avgNoInterCC = sumNoInterCC / (double)countNoInterCC;
     printf("%f\t%f\t%f\t", minNoInterCC, avgNoInterCC, maxNoInterCC);
     double avgCC = 
-      (sumInterCC + sumNoInterCC) / (double)(countInterCC + countNoInterCC);
+      ratioInter * avgInterCC + (1.0 - ratioInter) * avgNoInterCC;
     printf("%f\t%f\t%f\t", 
       (minNoInterCC < minInterCC ? minNoInterCC : minInterCC), 
       avgCC,
@@ -621,7 +623,7 @@ void Qualify3DStatic(void) {
     double avgNoInterCT = sumNoInterCT / (double)countNoInterCT;
     printf("%f\t%f\t%f\t", minNoInterCT, avgNoInterCT, maxNoInterCT);
     double avgCT = 
-      (sumInterCT + sumNoInterCT) / (double)(countInterCT + countNoInterCT);
+      ratioInter * avgInterCT + (1.0 - ratioInter) * avgNoInterCT;
     printf("%f\t%f\t%f\t", 
       (minNoInterCT < minInterCT ? minNoInterCT : minInterCT), 
       avgCT,
@@ -633,7 +635,7 @@ void Qualify3DStatic(void) {
     double avgNoInterTC = sumNoInterTC / (double)countNoInterTC;
     printf("%f\t%f\t%f\t", minNoInterTC, avgNoInterTC, maxNoInterTC);
     double avgTC = 
-      (sumInterTC + sumNoInterTC) / (double)(countInterTC + countNoInterTC);
+      ratioInter * avgInterTC + (1.0 - ratioInter) * avgNoInterTC;
     printf("%f\t%f\t%f\t", 
       (minNoInterTC < minInterTC ? minNoInterTC : minInterTC), 
       avgTC,
@@ -645,7 +647,7 @@ void Qualify3DStatic(void) {
     double avgNoInterTT = sumNoInterTT / (double)countNoInterTT;
     printf("%f\t%f\t%f\t", minNoInterTT, avgNoInterTT, maxNoInterTT);
     double avgTT = 
-      (sumInterTT + sumNoInterTT) / (double)(countInterTT + countNoInterTT);
+      ratioInter * avgInterTT + (1.0 - ratioInter) * avgNoInterTT;
     printf("%f\t%f\t%f\n", 
       (minNoInterTT < minInterTT ? minNoInterTT : minInterTT), 
       avgTT,
@@ -657,7 +659,6 @@ void Qualify3DStatic(void) {
 
 int main(int argc, char** argv) {
 
-  printf("===== 3D static ======\n");
   Qualify3DStatic();
 
   return 0;
