@@ -1,7 +1,7 @@
 set terminal pngcairo enhanced font "arial,10" fontscale 1.0 size 600, 400 
 set style data lines 
 set style fill solid border -1
-set xlabel "Ratio NbInter/NbNoInter"
+set xlabel "Ratio (nbPairInter/nbPair)"
 set ylabel "Ratio (timeFMB / timeSAT)"
 set logscale y 10
 set yrange [0.01:100]
