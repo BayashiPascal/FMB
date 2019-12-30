@@ -110,7 +110,19 @@ FUNCTION FMBTestIntersection3D(that, tho, bdgBox)
   IF Y[2] < neg(M[2][0]) + neg(M[2][1]) + neg(M[2][2])
     RETURN FALSE 
   END IF
-  nbRows = 3 
+  M[3][0] = -1.0 
+  M[3][1] = 0.0 
+  M[3][2] = 0.0 
+  Y[3] = 0.0 
+  M[4][0] = 0.0 
+  M[4][1] = -1.0 
+  M[4][2] = 0.0 
+  Y[4] = 0.0 
+  M[5][0] = 0.0 
+  M[5][1] = 0.0 
+  M[5][2] = -1.0 
+  Y[5] = 0.0 
+  nbRows = 6 
   IF that.type == FrameCuboid
     M[nbRows][0] = thoProj.comp[0][0] 
     M[nbRows][1] = thoProj.comp[1][0] 
@@ -177,21 +189,6 @@ FUNCTION FMBTestIntersection3D(that, tho, bdgBox)
     Y[nbRows] = 1.0 
     nbRows = nbRows + 1
   END
-  M[nbRows][0] = -1.0 
-  M[nbRows][1] = 0.0 
-  M[nbRows][2] = 0.0 
-  Y[nbRows] = 0.0 
-  nbRows = nbRows + 1
-  M[nbRows][0] = 0.0 
-  M[nbRows][1] = -1.0 
-  M[nbRows][2] = 0.0 
-  Y[nbRows] = 0.0 
-  nbRows = nbRows + 1
-  M[nbRows][0] = 0.0 
-  M[nbRows][1] = 0.0 
-  M[nbRows][2] = -1.0 
-  Y[nbRows] = 0.0 
-  nbRows = nbRows + 1
   inconsistency = 
     ElimVar3D(FST_VAR, M, Y, nbRows, 3, Mp, Yp, nbRowsP) 
   IF inconsistency == TRUE

@@ -300,8 +300,17 @@ bool FMBTestIntersection2D(
   if (Y[1] < neg(M[1][0]) + neg(M[1][1]))
     return false;
 
+  // -X_i <= 0.0
+  M[2][0] = -1.0;
+  M[2][1] = 0.0;
+  Y[2] = 0.0;
+
+  M[3][0] = 0.0;
+  M[3][1] = -1.0;
+  Y[3] = 0.0;
+
   // Variable to memorise the nb of rows in the system
-  int nbRows = 2;
+  int nbRows = 4;
 
   if (that->type == FrameCuboid) {
 
@@ -354,17 +363,6 @@ bool FMBTestIntersection2D(
     ++nbRows;
 
   }
-
-  // -X_i <= 0.0
-  M[nbRows][0] = -1.0;
-  M[nbRows][1] = 0.0;
-  Y[nbRows] = 0.0;
-  ++nbRows;
-
-  M[nbRows][0] = 0.0;
-  M[nbRows][1] = -1.0;
-  Y[nbRows] = 0.0;
-  ++nbRows;
 
   // Solve the system
   

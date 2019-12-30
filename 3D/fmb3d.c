@@ -309,8 +309,24 @@ bool FMBTestIntersection3D(
   if (Y[2] < neg(M[2][0]) + neg(M[2][1]) + neg(M[2][2]))
     return false;
 
+  // -X_i <= 0.0
+  M[3][0] = -1.0;
+  M[3][1] = 0.0;
+  M[3][2] = 0.0;
+  Y[3] = 0.0;
+
+  M[4][0] = 0.0;
+  M[4][1] = -1.0;
+  M[4][2] = 0.0;
+  Y[4] = 0.0;
+
+  M[5][0] = 0.0;
+  M[5][1] = 0.0;
+  M[5][2] = -1.0;
+  Y[5] = 0.0;
+
   // Variable to memorise the nb of rows in the system
-  int nbRows = 3;
+  int nbRows = 6;
 
   if (that->type == FrameCuboid) {
 
@@ -391,25 +407,6 @@ bool FMBTestIntersection3D(
     ++nbRows;
 
   }
-
-  // -X_i <= 0.0
-  M[nbRows][0] = -1.0;
-  M[nbRows][1] = 0.0;
-  M[nbRows][2] = 0.0;
-  Y[nbRows] = 0.0;
-  ++nbRows;
-
-  M[nbRows][0] = 0.0;
-  M[nbRows][1] = -1.0;
-  M[nbRows][2] = 0.0;
-  Y[nbRows] = 0.0;
-  ++nbRows;
-
-  M[nbRows][0] = 0.0;
-  M[nbRows][1] = 0.0;
-  M[nbRows][2] = -1.0;
-  Y[nbRows] = 0.0;
-  ++nbRows;
 
   // Solve the system
 
