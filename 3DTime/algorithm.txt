@@ -1,3 +1,219 @@
+ENUM FrameType
+  FrameCuboid,
+  FrameTetrahedron
+END ENUM
+
+STRUCT AABB3DTime
+  // x,y,z,t
+  real min[4]
+  real max[4]
+END STRUCT
+
+STRUCT Frame3DTime
+  FrameType type
+  real orig[3]
+  // comp[iComp][iAxis]
+  real comp[3][3]
+  AABB3DTime bdgBox
+  real invComp[3][3]
+  real speed[3]
+END STRUCT
+
+FUNCTION powi(base, exp)
+    res = 1 
+    FOR i=0..(exp - 1)
+      res = res * base  
+    END FOR
+    RETURN res 
+END FUNCTION
+
+FUNCTION Frame3DTimePrint(that)
+  IF that.type == FrameTetrahedron
+    PRINT "T" 
+  ELSE IF that.type == FrameCuboid
+    PRINT "C" 
+  END IF
+  PRINT "o(" 
+  FOR (i = 0..2
+    PRINT that.orig[i]
+    IF i < 2
+      PRINT "," 
+    END IF
+  END FOR
+  PRINT " s(" 
+  FOR i = 0..2
+    PRINT that.speed[i]
+    IF i < 2
+      PRINT ","
+    END IF
+  END FOR
+  comp = ['x', 'y', 'z']
+  FOR j = 0..2
+    PRINT " " comp[j] "("
+    FOR i = 0..2
+      PRINT that.comp[j][i]
+      IF i < 2
+        PRINT ","
+      END IF
+    END FOR
+  END FOR
+  PRINT ""
+END FUNCTION
+
+FUNCTION AABB3DTimePrint(that)
+  PRINT "minXYZT(" 
+  FOR i = 0..3
+    PRINT that.min[i]
+    IF i < 3
+      PRINT "," 
+    END IF
+  END FOR
+  PRINT ")-maxXYZT(" 
+  FOR i = 0..3
+    PRINT that.max[i]
+    IF i < 3
+      PRINT "," 
+    END IF
+  END FOR
+  PRINT ")" 
+END FUNCTION
+
+FUNCTION Frame3DTimeExportBdgBox(that, bdgBox, bdgBoxProj)
+  bdgBoxProj.min[3] = bdgBox.min[3] 
+  bdgBoxProj.max[3] = bdgBox.max[3] 
+  FOR i = 0..2
+    bdgBoxProj.max[i] = that.orig[i] + that.speed[i] * bdgBox.min[3] 
+    FOR j = 0..2
+      bdgBoxProj.max[i] = 
+        bdgBoxProj.max[i] + that.comp[j][i] * bdgBox.min[j] 
+    END FOR
+    bdgBoxProj.min[i] = bdgBoxProj.max[i] 
+  END FOR
+  nbVertices = powi(2, 3) 
+  FOR iVertex = 1..(nbVertices - 1) 
+    FOR i = 0..2
+      IF (iVertex & (1 << i)) == TRUE
+        v[i] = bdgBox.max[i]
+      ELSE
+        v[i] = bdgBox.min[i]
+      END IF
+    END FOR
+    FOR i = 0..2
+      w[i] = that.orig[i] 
+      FOR j = 0..2
+        w[i] = w[i] + that.comp[j][i] * v[j] 
+      END FOR
+    END FOR
+    FOR i = 0..2
+      IF bdgBoxProj.min[i] > w[i] + that.speed[i] * bdgBox.min[3]
+        bdgBoxProj.min[i] = w[i] + that.speed[i] * bdgBox.min[3] 
+      END IF
+      IF bdgBoxProj.min[i] > w[i] + that.speed[i] * bdgBox.max[3]
+        bdgBoxProj.min[i] = w[i] + that.speed[i] * bdgBox.max[3] 
+      END IF
+      IF bdgBoxProj.max[i] < w[i] + that.speed[i] * bdgBox.min[3]
+        bdgBoxProj.max[i] = w[i] + that.speed[i] * bdgBox.min[3] 
+      END IF
+      IF bdgBoxProj.max[i] < w[i] + that.speed[i] * bdgBox.max[3]
+        bdgBoxProj.max[i] = w[i] + that.speed[i] * bdgBox.max[3] 
+      END IF
+    END FOR
+  END FOR
+END FUNCTION
+
+FUNCTION Frame3DTimeImPortFrame(P, Q, Qp)
+  FOR i = 0..2
+    v[i] = Q.orig[i] - P.orig[i] 
+    s[i] = Q.speed[i] - P.speed[i] 
+  END FOR
+  FOR i = 0..2
+    Qp.orig[i] = 0.0 
+    Qp.speed[i] = 0.0 
+    FOR j = 0..2
+      Qp.orig[i] = Qp.orig[i] + P.invComp[j][i] * v[j] 
+      Qp.speed[i] = Qp.speed[i] + P.invComp[j][i] * s[j] 
+      Qp.comp[j][i] = 0.0 
+      FOR k = 0..2
+        Qp.comp[j][i] = Qp.comp[j][i] + P.invComp[k][i] * Q.comp[j][k] 
+      END FOR
+    END FOR
+  END FOR
+END FUNCTION
+
+FUNCTION Frame3DTimeUpdateInv(that)
+  det = 
+    that.comp[0][0] * 
+    (that.comp[1][1] * that.comp[2][2] - that.comp[1][2] * that.comp[2][1]) -
+    that.comp[1][0] * 
+    (that.comp[0][1] * that.comp[2][2] - that.comp[0][2] * that.comp[2][1]) +
+    that.comp[2][0] * 
+    (that.comp[0][1] * that.comp[1][2] - that.comp[0][2] * that.comp[1][1]) 
+  that.invComp[0][0] = (that.comp[1][1] * that.comp[2][2] - 
+    that.comp[2][1] * that.comp[1][2]) / det 
+  that.invComp[0][1] = (that.comp[2][1] * that.comp[0][2] - 
+    that.comp[2][2] * that.comp[0][1]) / det 
+  that.invComp[0][2] = (that.comp[0][1] * that.comp[1][2] - 
+    that.comp[0][2] * that.comp[1][1]) / det 
+  that.invComp[1][0] = (that.comp[2][0] * that.comp[1][2] - 
+    that.comp[2][2] * that.comp[1][0]) / det 
+  that.invComp[1][1] = (that.comp[0][0] * that.comp[2][2] - 
+    that.comp[2][0] * that.comp[0][2]) / det 
+  that.invComp[1][2] = (that.comp[0][2] * that.comp[1][0] - 
+    that.comp[1][2] * that.comp[0][0]) / det 
+  that.invComp[2][0] = (that.comp[1][0] * that.comp[2][1] - 
+    that.comp[2][0] * that.comp[1][1]) / det 
+  that.invComp[2][1] = (that.comp[0][1] * that.comp[2][0] - 
+    that.comp[2][1] * that.comp[0][0]) / det 
+  that.invComp[2][2] = (that.comp[0][0] * that.comp[1][1] - 
+    that.comp[1][0] * that.comp[0][1]) / det 
+END FUNCTION
+
+FUNCTION Frame3DTimeCreateStatic(type, orig, comp)
+  that.type = type 
+  FOR iAxis = 0..2
+    that.orig[iAxis] = orig[iAxis] 
+    that.speed[iAxis] = speed[iAxis] 
+    FOR iComp = 0..2
+      that.comp[iComp][iAxis] = comp[iComp][iAxis] 
+    END FOR
+  END FOR
+  FOR iAxis = 0..2
+    min = orig[iAxis] 
+    max = orig[iAxis] 
+    FOR iComp = 0..2
+      IF that.type == FrameCuboid
+        IF that.comp[iComp][iAxis] < 0.0
+          min += that.comp[iComp][iAxis] 
+        END IF
+        IF that.comp[iComp][iAxis] > 0.0
+          max += that.comp[iComp][iAxis] 
+        END IF
+      ELSE IF that.type == FrameTetrahedron
+        IF that.comp[iComp][iAxis] < 0.0 AND
+          min > orig[iAxis] + that.comp[iComp][iAxis]
+          min = orig[iAxis] + that.comp[iComp][iAxis] 
+        END IF
+        IF that.comp[iComp][iAxis] > 0.0 AND
+          max < orig[iAxis] + that.comp[iComp][iAxis]
+          max = orig[iAxis] + that.comp[iComp][iAxis] 
+        END IF
+      END IF
+    END FOR
+    IF that.speed[iAxis] < 0.0
+      min = min + that.speed[iAxis] 
+    END IF
+    IF that.speed[iAxis] > 0.0
+      max = max + that.speed[iAxis] 
+    END IF
+    that.bdgBox.min[iAxis] = min 
+    that.bdgBox.max[iAxis] = max 
+  END FOR
+  that.bdgBox.min[3] = 0.0 
+  that.bdgBox.max[3] = 1.0 
+  Frame3DTimeUpdateInv(that) 
+  RETURN that 
+END FUNCTION
+
 FUNCTION Sgn(v)
   IF 0.0 < v
     a = 1
@@ -24,15 +240,14 @@ FST_VAR = 0
 SND_VAR = 1
 THD_VAR = 2
 FOR_VAR = 3
-EPSILON = 0.0000001
 
 FUNCTION ElimVar3DTime(iVar, M, Y, nbRows, nbCols, Mp, Yp, nbRemainRows)
   nbRemainRows = 0
   FOR iRow = 0..(nbRows - 2)
     FOR jRow = (iRow + 1)..(nbRows - 1)
       IF Sgn(M[iRow][iVar]) <> sgn(M[jRow][iVar] AND 
-         fabs(M[iRow][iVar]) > EPSILON AND 
-         fabs(M[jRow][iVar]) > EPSILON:
+         M[iRow][iVar] <> 0.0 AND 
+         M[jRow][iVar] <> 0.0:
         sumNegCoeff = 0.0
         jCol = 0
         FOR iCol = 0..(nbCols - 1)
@@ -47,7 +262,7 @@ FUNCTION ElimVar3DTime(iVar, M, Y, nbRows, nbCols, Mp, Yp, nbRemainRows)
         Yp[nbRemainRows] = 
           Y[iRow] / fabs(M[iRow][iVar]) +
           Y[jRow] / fabs(M[jRow][iVar])
-        IF Yp[nbRemainRows] < sumNegCoeff - EPSILON
+        IF Yp[nbRemainRows] < sumNegCoeff
           RETURN TRUE
         END IF
         nbRemainRows = nbRemainRows + 1
@@ -55,7 +270,7 @@ FUNCTION ElimVar3DTime(iVar, M, Y, nbRows, nbCols, Mp, Yp, nbRemainRows)
     END FOR
   END FOR
   FOR iRow = 0..(nbRows - 1)
-    IF fabs(M[iRow][iVar]) < EPSILON
+    IF M[iRow][iVar] == 0.0
       jCol = 0
       FOR iCol = 0..(nbCols - 1)
         IF iCol <> iVar
@@ -74,12 +289,12 @@ FUNCTION GetBound3DTime(iVar, M, Y, nbRows, bdgBox)
   bdgBox.min[iVar] = 0.0
   bdgBox.max[iVar] = 1.0
   FOR jRow = 0..(nbRows - 1)
-    IF M[jRow][0] > EPSILON
+    IF M[jRow][0] > 0.0
       y = Y[jRow] / M[jRow][0]
       IF bdgBox.max[iVar] > y
         bdgBox.max[iVar] = y
       END IF
-    ELSE IF M[jRow][0] < -EPSILON
+    ELSE IF M[jRow][0] < 0.0
       y = Y[jRow] / M[jRow][0]
       IF bdgBox.min[iVar] < y
         bdgBox.min[iVar] = y
@@ -269,7 +484,7 @@ Q3DTime =
 isIntersecting3DTime = 
   FMBTestIntersection3DTime(P3DTime, Q3DTime, bdgBox3DTimeLocal)
 IF isIntersecting3DTime
-  PRINT "Intersection detected in AABB "
+  PRINT "Intersection detected."
   Frame3DTimeExportBdgBox(Q3DTime, bdgBox3DTimeLocal, bdgBox3DTime)
   AABB3DTimePrint(bdgBox3DTime)
 ELSE

@@ -199,7 +199,7 @@ void Test3DTime(void) {
     };
   paramQ = (Param3DTime)
     {.type = FrameCuboid,
-     .orig = {-1.0, -1.0, 0.0},
+     .orig = {-1.01, -1.01, 0.0},
      .comp = 
        {{1.0, 0.0, 0.0},
         {0.0, 1.0, 0.0},

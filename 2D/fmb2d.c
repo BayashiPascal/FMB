@@ -157,7 +157,7 @@ bool ElimVar2D(
 
     // If the coefficient of the eliminated variable is null on
     // this row
-    if (fabs(M[iRow][iVar]) < EPSILON) {
+    if (fabs(MiRow[iVar]) < EPSILON) {
 
       // Shortcut
       double* MpnbRemainRows = Mp[*nbRemainRows];

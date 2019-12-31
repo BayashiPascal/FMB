@@ -158,7 +158,7 @@ bool ElimVar2DTime(
 
     // If the coefficient of the eliminated variable is null on
     // this row
-    if (fabs(M[iRow][iVar]) < EPSILON) {
+    if (fabs(MiRow[iVar]) < EPSILON) {
 
       // Shortcut
       double* MpnbRemainRows = Mp[*nbRemainRows];
@@ -420,8 +420,8 @@ bool FMBTestIntersection2DTime(
   }
 
   // Declare variables to eliminate the second variable
-  double Mpp[169][3];
-  double Ypp[169];
+  double Mpp[157][3];
+  double Ypp[157];
   int nbRowsPP;
 
   // Eliminate the second variable (which is the first in the new system)

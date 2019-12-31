@@ -654,7 +654,7 @@ void Test2D(void) {
     };
   paramQ = (Param2D)
     {.type = FrameTetrahedron,
-     .orig = {1.0, 1.0},
+     .orig = {1.01, 1.01},
      .comp = 
        {{-1.0, 0.0},
         {0.0, -1.0}}
@@ -700,7 +700,7 @@ void Test2D(void) {
     };
   paramQ = (Param2D)
     {.type = FrameTetrahedron,
-     .orig = {1.0, 1.5},
+     .orig = {1.01, 1.5},
      .comp = 
        {{-0.5, -0.5},
         {0.0, -1.0}}

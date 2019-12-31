@@ -159,7 +159,7 @@ bool ElimVar3DTime(
 
     // If the coefficient of the eliminated variable is null on
     // this row
-    if (fabs(M[iRow][iVar]) < EPSILON) {
+    if (fabs(MiRow[iVar]) < EPSILON) {
 
       // Shortcut
       double* MpnbRemainRows = Mp[*nbRemainRows];
@@ -472,8 +472,8 @@ bool FMBTestIntersection3DTime(
   }
 
   // Declare variables to eliminate the second variable
-  double Mpp[625][4];
-  double Ypp[625];
+  double Mpp[601][4];
+  double Ypp[601];
   int nbRowsPP;
 
   // Eliminate the second variable (which is the first in the new system)
@@ -497,8 +497,8 @@ bool FMBTestIntersection3DTime(
   }
 
   // Declare variables to eliminate the third variable
-  double Mppp[97969][4];
-  double Yppp[97969];
+  double Mppp[90301][4];
+  double Yppp[90301];
   int nbRowsPPP;
 
   // Eliminate the third variable (which is the first in the new system)

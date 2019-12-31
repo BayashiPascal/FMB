@@ -399,24 +399,24 @@ void Frame3DUpdateInv(Frame3D* const that) {
 
   // Update the inverse components
   double det = 
-    tc[0][0] * (tc[1][1] * tc[2][2]- tc[1][2] * tc[2][1]) -
-    tc[1][0] * (tc[0][1] * tc[2][2]- tc[0][2] * tc[2][1]) +
-    tc[2][0] * (tc[0][1] * tc[1][2]- tc[0][2] * tc[1][1]);
+    tc[0][0] * (tc[1][1] * tc[2][2] - tc[1][2] * tc[2][1]) -
+    tc[1][0] * (tc[0][1] * tc[2][2] - tc[0][2] * tc[2][1]) +
+    tc[2][0] * (tc[0][1] * tc[1][2] - tc[0][2] * tc[1][1]);
   if (fabs(det) < EPSILON) {
     fprintf(stderr, 
       "FrameUpdateInv: det == 0.0\n");
     exit(1);
   }
 
-  tic[0][0] = (tc[1][1]* tc[2][2]- tc[2][1]* tc[1][2]) / det;
-  tic[0][1] = (tc[2][1]* tc[0][2]- tc[2][2]* tc[0][1]) / det;
-  tic[0][2] = (tc[0][1]* tc[1][2]- tc[0][2]* tc[1][1]) / det;
-  tic[1][0] = (tc[2][0]* tc[1][2]- tc[2][2]* tc[1][0]) / det;
-  tic[1][1] = (tc[0][0]* tc[2][2]- tc[2][0]* tc[0][2]) / det;
-  tic[1][2] = (tc[0][2]* tc[1][0]- tc[1][2]* tc[0][0]) / det;
-  tic[2][0] = (tc[1][0]* tc[2][1]- tc[2][0]* tc[1][1]) / det;
-  tic[2][1] = (tc[0][1]* tc[2][0]- tc[2][1]* tc[0][0]) / det;
-  tic[2][2] = (tc[0][0]* tc[1][1]- tc[1][0]* tc[0][1]) / det;
+  tic[0][0] = (tc[1][1] * tc[2][2] - tc[2][1] * tc[1][2]) / det;
+  tic[0][1] = (tc[2][1] * tc[0][2] - tc[2][2] * tc[0][1]) / det;
+  tic[0][2] = (tc[0][1] * tc[1][2] - tc[0][2] * tc[1][1]) / det;
+  tic[1][0] = (tc[2][0] * tc[1][2] - tc[2][2] * tc[1][0]) / det;
+  tic[1][1] = (tc[0][0] * tc[2][2] - tc[2][0] * tc[0][2]) / det;
+  tic[1][2] = (tc[0][2] * tc[1][0] - tc[1][2] * tc[0][0]) / det;
+  tic[2][0] = (tc[1][0] * tc[2][1] - tc[2][0] * tc[1][1]) / det;
+  tic[2][1] = (tc[0][1] * tc[2][0] - tc[2][1] * tc[0][0]) / det;
+  tic[2][2] = (tc[0][0] * tc[1][1] - tc[1][0] * tc[0][1]) / det;
 
 }
 
@@ -449,24 +449,24 @@ void Frame3DTimeUpdateInv(Frame3DTime* const that) {
 
   // Update the inverse components
   double det = 
-    tc[0][0] * (tc[1][1] * tc[2][2]- tc[1][2] * tc[2][1]) -
-    tc[1][0] * (tc[0][1] * tc[2][2]- tc[0][2] * tc[2][1]) +
-    tc[2][0] * (tc[0][1] * tc[1][2]- tc[0][2] * tc[1][1]);
+    tc[0][0] * (tc[1][1] * tc[2][2] - tc[1][2] * tc[2][1]) -
+    tc[1][0] * (tc[0][1] * tc[2][2] - tc[0][2] * tc[2][1]) +
+    tc[2][0] * (tc[0][1] * tc[1][2] - tc[0][2] * tc[1][1]);
   if (fabs(det) < EPSILON) {
     fprintf(stderr, 
       "FrameUpdateInv: det == 0.0\n");
     exit(1);
   }
 
-  tic[0][0] = (tc[1][1]* tc[2][2]- tc[2][1]* tc[1][2]) / det;
-  tic[0][1] = (tc[2][1]* tc[0][2]- tc[2][2]* tc[0][1]) / det;
-  tic[0][2] = (tc[0][1]* tc[1][2]- tc[0][2]* tc[1][1]) / det;
-  tic[1][0] = (tc[2][0]* tc[1][2]- tc[2][2]* tc[1][0]) / det;
-  tic[1][1] = (tc[0][0]* tc[2][2]- tc[2][0]* tc[0][2]) / det;
-  tic[1][2] = (tc[0][2]* tc[1][0]- tc[1][2]* tc[0][0]) / det;
-  tic[2][0] = (tc[1][0]* tc[2][1]- tc[2][0]* tc[1][1]) / det;
-  tic[2][1] = (tc[0][1]* tc[2][0]- tc[2][1]* tc[0][0]) / det;
-  tic[2][2] = (tc[0][0]* tc[1][1]- tc[1][0]* tc[0][1]) / det;
+  tic[0][0] = (tc[1][1] * tc[2][2] - tc[2][1] * tc[1][2]) / det;
+  tic[0][1] = (tc[2][1] * tc[0][2] - tc[2][2] * tc[0][1]) / det;
+  tic[0][2] = (tc[0][1] * tc[1][2] - tc[0][2] * tc[1][1]) / det;
+  tic[1][0] = (tc[2][0] * tc[1][2] - tc[2][2] * tc[1][0]) / det;
+  tic[1][1] = (tc[0][0] * tc[2][2] - tc[2][0] * tc[0][2]) / det;
+  tic[1][2] = (tc[0][2] * tc[1][0] - tc[1][2] * tc[0][0]) / det;
+  tic[2][0] = (tc[1][0] * tc[2][1] - tc[2][0] * tc[1][1]) / det;
+  tic[2][1] = (tc[0][1] * tc[2][0] - tc[2][1] * tc[0][0]) / det;
+  tic[2][2] = (tc[0][0] * tc[1][1] - tc[1][0] * tc[0][1]) / det;
 
 }
 
@@ -1174,7 +1174,7 @@ void Frame2DPrint(const Frame2D* const that) {
       printf(",");
 
   }
-  char comp[2] = {'x','y'};
+  char comp[2] = {'x', 'y'};
   for (int j = 0;
        j < 2;
        ++j) {
@@ -1209,7 +1209,7 @@ void Frame3DPrint(const Frame3D* const that) {
       printf(",");
 
   }
-  char comp[3] = {'x','y','z'};
+  char comp[3] = {'x', 'y', 'z'};
   for (int j = 0;
        j < 3;
        ++j) {
@@ -1254,7 +1254,7 @@ void Frame2DTimePrint(const Frame2DTime* const that) {
       printf(",");
 
   }
-  char comp[2] = {'x','y'};
+  char comp[2] = {'x', 'y'};
   for (int j = 0;
        j < 2;
        ++j) {
@@ -1299,7 +1299,7 @@ void Frame3DTimePrint(const Frame3DTime* const that) {
       printf(",");
 
   }
-  char comp[3] = {'x','y', 'z'};
+  char comp[3] = {'x', 'y', 'z'};
   for (int j = 0;
        j < 3;
        ++j) {

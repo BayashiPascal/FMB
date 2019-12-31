@@ -21,11 +21,11 @@ int main(int argc, char** argv) {
       origP3D,
       compP3D);
  
-  double origQ3D[3] = {0.5, 0.5, 0.5};
+  double origQ3D[3] = {0.0, 0.0, 0.0};
   double compQ3D[3][3] = {
-    {2.0, 0.0, 0.0},
-    {0.0, 2.0, 0.0},
-    {0.0, 0.0, 2.0}};
+    {1.0, 0.0, 0.0},
+    {0.0, 1.0, 0.0},
+    {0.0, 0.0, 1.0}};
   Frame3D Q3D = 
     Frame3DCreateStatic(
       FrameTetrahedron,

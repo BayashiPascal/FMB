@@ -1,3 +1,200 @@
+ENUM FrameType
+  FrameCuboid,
+  FrameTetrahedron
+END ENUM
+
+STRUCT AABB2DTime
+  // x,y,t
+  real min[3]
+  real max[3]
+END STRUCT
+
+STRUCT Frame2DTime
+  FrameType type
+  real orig[2]
+  // comp[iComp][iAxis]
+  real comp[2][2]
+  AABB2DTime bdgBox
+  real invComp[2][2]
+  real speed[2]
+END STRUCT
+
+FUNCTION powi(base, exp)
+    res = 1 
+    FOR i=0..(exp - 1)
+      res = res * base  
+    END FOR
+    RETURN res 
+END FUNCTION
+
+FUNCTION Frame2DTimePrint(that)
+  IF that.type == FrameTetrahedron
+    PRINT "T" 
+  ELSE IF that.type == FrameCuboid
+    PRINT "C" 
+  END IF
+  PRINT "o(" 
+  FOR i = 0..1
+    PRINT that.orig[i] 
+    IF i < 1
+      PRINT "," 
+    END IF
+  END FOR
+  PRINT ") s(" 
+  FOR i = 0..1
+    PRINT that.speed[i]
+    IF i < 1
+      PRINT "," 
+    END IF
+  END FOR
+  comp = ['x', 'y']
+  FOR j = 0..1
+    PRINT ") " comp[j] "(" 
+    FOR i = 0..1
+      PRINT that.comp[j][i]
+      IF i < 1
+        PRINT ","
+      END IF
+    END FOR
+  END FOR
+  PRINT ")" 
+END FUNCTION
+
+FUNCTION AABB2DTimePrint(that)
+  PRINT "minXYT(" 
+  FOR i = 0..2
+    PRINT that.min[i]
+    IF i < 2
+      PRINT "," 
+    END IF
+  END FOR
+  PRINT ")-maxXYT(" 
+  FOR i = 0..2
+    PRINT that.max[i] 
+    IF i < 2
+      PRINT "," 
+    END IF
+  END FOR
+  PRINT ")" 
+END FUNCTION
+
+FUNCTION Frame2DTimeExportBdgBox(that, bdgBox, bdgBoxProj)
+  bdgBoxProj.min[2] = bdgBox.min[2] 
+  bdgBoxProj.max[2] = bdgBox.max[2] 
+  FOR i = 0..1
+    bdgBoxProj.max[i] = that.orig[i] + that.speed[i] * bdgBox.min[2] 
+    FOR j = 0..1
+      bdgBoxProj.max[i] = 
+        bdgBoxProj.max[i] + that.comp[j][i] * bdgBox.min[j] 
+    END FOR
+    bdgBoxProj.min[i] = bdgBoxProj.max[i] 
+  END FOR
+  nbVertices = powi(2, 2) 
+  FOR iVertex = 1..(nbVertices - 1) 
+    FOR i = 0..1
+      IF (iVertex & (1 << i)) == TRUE
+        v[i] = bdgBox.max[i]
+      ELSE
+        v[i] = bdgBox.min[i]
+      END IF
+    END FOR
+    FOR i = 0..1
+      w[i] = that.orig[i] 
+      FOR j = 0..1
+        w[i] = w[i] + that.comp[j][i] * v[j] 
+      END FOR
+    END FOR
+    FOR i = 0..1
+      IF bdgBoxProj.min[i] > w[i] + that.speed[i] * bdgBox.min[2]
+        bdgBoxProj.min[i] = w[i] + that.speed[i] * bdgBox.min[2] 
+      END IF
+      IF bdgBoxProj.min[i] > w[i] + that.speed[i] * bdgBox.max[2]
+        bdgBoxProj.min[i] = w[i] + that.speed[i] * bdgBox.max[2] 
+      END IF
+      IF bdgBoxProj.max[i] < w[i] + that.speed[i] * bdgBox.min[2]
+        bdgBoxProj.max[i] = w[i] + that.speed[i] * bdgBox.min[2] 
+      END IF
+      IF bdgBoxProj.max[i] < w[i] + that.speed[i] * bdgBox.max[2]
+        bdgBoxProj.max[i] = w[i] + that.speed[i] * bdgBox.max[2] 
+      END IF
+    END FOR
+  END FOR
+END FUNCTION
+
+FUNCTION Frame2DTimeImPortFrame(P, Q, Qp)
+  FOR i = 0..1
+    v[i] = Q.orig[i] - P.orig[i] 
+    s[i] = Q.speed[i] - P.speed[i] 
+  END FOR
+  FOR i = 0..1
+    Qp.orig[i] = 0.0 
+    Qp.speed[i] = 0.0 
+    FOR j = 0..1
+      Qp.orig[i] = Qp.orig[i] + P.invComp[j][i] * v[j] 
+      Qp.speed[i] = Qp.speed[i] + P.invComp[j][i] * s[j] 
+      Qp.comp[j][i] = 0.0 
+      FOR k = 0..1
+        Qp.comp[j][i] = Qp.comp[j][i] + P.invComp[k][i] * Q.comp[j][k] 
+      END FOR
+    END FOR
+  END FOR
+END FUNCTION
+
+FUNCTION Frame2DTimeUpdateInv(that)
+  det = that.comp[0][0] * that.comp[1][1] - 
+    that.comp[1][0] * that.comp[0][1] 
+  that.invComp[0][0] = that.comp[1][1] / det 
+  that.invComp[0][1] = -that.comp[0][1] / det 
+  that.invComp[1][0] = -that.comp[1][0] / det 
+  that.invComp[1][1] = that.comp[0][0] / det 
+END FUNCTION
+
+FUNCTION Frame2DTimeCreateStatic(type, orig, comp)
+  that.type = type 
+  FOR iAxis = 0..1
+    that.orig[iAxis] = orig[iAxis] 
+    that.speed[iAxis] = speed[iAxis] 
+    FOR iComp = 0..1
+      that.comp[iComp][iAxis] = comp[iComp][iAxis] 
+    END FOR
+  END FOR
+  FOR iAxis = 0..1
+    min = orig[iAxis] 
+    max = orig[iAxis] 
+    FOR iComp = 0..1
+      IF that.type == FrameCuboid
+        IF that.comp[iComp][iAxis] < 0.0
+          min += that.comp[iComp][iAxis] 
+        END IF
+        IF that.comp[iComp][iAxis] > 0.0
+          max += that.comp[iComp][iAxis] 
+        END IF
+      ELSE IF that.type == FrameTetrahedron
+        IF that.comp[iComp][iAxis] < 0.0 AND
+          min > orig[iAxis] + that.comp[iComp][iAxis]
+          min = orig[iAxis] + that.comp[iComp][iAxis] 
+        END IF
+        IF that.comp[iComp][iAxis] > 0.0 AND
+          max < orig[iAxis] + that.comp[iComp][iAxis]
+          max = orig[iAxis] + that.comp[iComp][iAxis] 
+        END IF
+      END IF
+    END FOR
+    IF that.speed[iAxis] < 0.0
+      min = min + that.speed[iAxis] 
+    END IF
+    IF that.speed[iAxis] > 0.0
+      max = max + that.speed[iAxis] 
+    END IF
+    that.bdgBox.min[iAxis] = min 
+    that.bdgBox.max[iAxis] = max 
+  END FOR
+  that.bdgBox.min[2] = 0.0 
+  that.bdgBox.max[2] = 1.0 
+  Frame2DTimeUpdateInv(that) 
+  RETURN that 
+END FUNCTION
+
 FUNCTION Sgn(v)
   IF 0.0 < v
     a = 1
@@ -23,524 +220,195 @@ END FUNCTION
 FST_VAR = 0
 SND_VAR = 1
 THD_VAR = 2
-EPSILON = 0.0000001
 
-// ------------- Functions declaration -------------
-
-// Eliminate the 'iVar'-th variable in the system 'M'.X<='Y'
-// using the Fourier-Motzkin method and RETURN
-// the resulting system in 'Mp' and 'Yp', and the number of rows of 
-// the resulting system in 'nbRemainRows'
-// Return FALSE IF the system becomes inconsistent during elimination,
-// ELSE RETURN TRUE
-bool ElimVar2DTime(
-     const int iVar, 
-  const double (*M)[3], 
-  const double* Y, 
-     const int nbRows, 
-     const int nbCols, 
-        double (*Mp)[3], 
-        double* Yp, 
-    int* const nbRemainRows) 
-
-// Get the bounds of the 'iVar'-th variable in the 'nbRows' rows
-// system 'M'.X<='Y' and store them in the 'iVar'-th axis of the
-// AABB 'bdgBox'
-// ('M' arrangement is [iRow][iCol])
-// The system is supposed to have been reduced to only one variable
-// per row, the one in argument, which can be located in a dIFferent
-// column than 'iVar'
-// May RETURN inconsistent values (max < min), which would
-// mean the system has no solution
-void GetBound2DTime(
-     const int iVar,
-  const double (*M)[3], 
-  const double* Y, 
-     const int nbRows, 
-   AABB2DTime* const bdgBox) 
-
-// ------------- Functions implementation -------------
-
-// Eliminate the 'iVar'-th variable in the system 'M'.X<='Y'
-// using the Fourier-Motzkin method and RETURN
-// the resulting system in 'Mp' and 'Yp', and the number of rows of 
-// the resulting system in 'nbRemainRows'
-// ('M' arrangement is [iRow][iCol])
-// Return TRUE IF the system becomes inconsistent during elimination,
-// ELSE RETURN FALSE
-bool ElimVar2DTime(
-     const int iVar, 
-  const double (*M)[3], 
-  const double* Y, 
-     const int nbRows, 
-     const int nbCols, 
-        double (*Mp)[3], 
-        double* Yp, 
-    int* const nbRemainRows) {
-
-  // Initialize the number of rows in the result system
+FUNCTION ElimVar2DTime(iVar, M, Y, nbRows, nbCols, Mp, Yp, nbRemainRows)
   nbRemainRows = 0 
-  
-  // First we process the rows where the eliminated variable is not null
-  
-  // For each row except the last one
-  FOR (int iRow = 0  
-       iRow < nbRows - 1  
-       ++iRow) {
-
-    // Shortcuts
-    int sgnMIRowIVar = sgn(M[iRow][iVar]) 
-    double fabsMIRowIVar = fabs(M[iRow][iVar]) 
-    double YIRowDivideByFabsMIRowIVar = Y[iRow] / fabsMIRowIVar 
-
-    // For each following rows
-    FOR (int jRow = iRow + 1  
-         jRow < nbRows  
-         ++jRow) {
-
-      // If coefficients of the eliminated variable in the two rows have
-      // dIFferent signs and are not null
-      IF (sgnMIRowIVar <> sgn(M[jRow][iVar]) AND 
-          fabsMIRowIVar > EPSILON AND 
-          fabs(M[jRow][iVar]) > EPSILON) {
-
-        // Declare a variable to memorize the sum of the negative 
-        // coefficients in the row
-        double sumNegCoeff = 0.0 
-        
-        // Add the sum of the two normed (relative to the eliminated
-        // variable) rows into the result system. This actually
-        // eliminate the variable while keeping the constraints on
-        // others variables
-        FOR (int iCol = 0, jCol = 0  
-             iCol < nbCols  
-             ++iCol ) {
-
-          IF (iCol <> iVar) {
-
+  FOR iRow = 0..(nbRows - 2)
+    FOR jRow = (iRow + 1)..(nbRows - 1)
+      IF sgn(M[iRow][iVar])  <> sgn(M[jRow][iVar]) AND 
+          M[iRow][iVar] <> 0.0 AND 
+          M[jRow][iVar] <> 0.0
+        sumNegCoeff = 0.0 
+        jCol = 0
+        FOR iCol = 0..(nbCols - 1)
+          IF iCol <> iVar
             Mp[nbRemainRows][jCol] = 
-              M[iRow][iCol] / fabsMIRowIVar + 
+              M[iRow][iCol] / fabs(M[iRow][iVar]) + 
               M[jRow][iCol] / fabs(M[jRow][iVar]) 
-
-            // Update the sum of the negative coefficient
             sumNegCoeff += neg(Mp[nbRemainRows][jCol]) 
-
-            // Increment the number of columns in the new inequality
-            ++jCol 
-
-          END
-
-        END
-
-        // Update the right side of the inequality
+            jCol = jCol + 1
+          END IF
+        END FOR
         Yp[nbRemainRows] = 
-          YIRowDivideByFabsMIRowIVar +
+          Y[iRow] / fabs(M[iRow][iVar]) +
           Y[jRow] / fabs(M[jRow][iVar]) 
-
-        // If the right side of the inequality IF lower than the sum of 
-        // negative coefficients in the row
-        // (Add epsilon FOR numerical imprecision)
-        IF (Yp[nbRemainRows] < sumNegCoeff - EPSILON) {
-
-          // Given that X is in [0,1], the system is inconsistent
+        IF Yp[nbRemainRows] < sumNegCoeff
           RETURN TRUE 
-
-        END
-
-        // Increment the nb of rows into the result system
-        ++(nbRemainRows) 
-
-      END
-
-    END
-
-  END
-
-  // Then we copy and compress the rows where the eliminated
-  // variable is null
-  
-  // Loop on rows of the input system
+        END IF
+      nbRemainRows = nbRemainRows + 1 
+      END IF
+    END FOR
+  END FOR
   FOR (int iRow = 0  
        iRow < nbRows  
        ++iRow) {
-
-    // Shortcut
-    const double* MiRow = M[iRow] 
-
-    // If the coefficient of the eliminated variable is null on
-    // this row
-    IF (fabs(M[iRow][iVar]) < EPSILON) {
-
-      // Shortcut
-      double* MpnbRemainRows = Mp[nbRemainRows] 
-
-      // Copy this row into the result system excluding the eliminated
-      // variable
-      FOR (int iCol = 0, jCol = 0  
-           iCol < nbCols  
-           ++iCol) {
-
-        IF (iCol <> iVar) {
-
-          MpnbRemainRows[jCol] = MiRow[iCol] 
-
-          ++jCol 
-
-        END
-
-      END
-
+    IF M[iRow][iVar] == 0.0
+      jCol = 0
+      FOR iCol = 0..(nbCols - 1)
+        IF iCol <> iVar
+          Mp[nbRemainRows][jCol] = M[iRow][iCol] 
+          jCol = jCol + 1
+        END IF
+      END FOR
       Yp[nbRemainRows] = Y[iRow] 
-
-      // Increment the nb of rows into the result system
-      ++(nbRemainRows) 
-
-    END
-
-  END
-
-  // If we reach here the system is not inconsistent
+      nbRemainRows = nbRemainRows + 1 
+    END IF
+  END FOR
   RETURN FALSE 
+END FUNCTION
 
-END
+FUNCTION GetBound2DTime(iVar, M, Y, nbRows, bdgBox)
+  bdgBox.min[iVar] = 0.0 
+  bdgBox.max[iVar] = 1.0 
+  FOR jRow = 0..(nbRows - 1)
+    IF M[jRow][0] > 0.0
+      double y = Y[jRow] / M[jRow][0] 
+      IF bdgBox.max[iVar] > y
+        bdgBox.max[iVar] = y 
+      END IF
+    ELSE IF M[jRow][0] < 0.0
+      double y = Y[jRow] / M[jRow][0] 
+      IF bdgBox.min[iVar] < y
+        bdgBox.min[iVar] = y 
+      END IF
+    END IF
+  END FOR
+END FUNCTION
 
-// Get the bounds of the 'iVar'-th variable in the 'nbRows' rows
-// system 'M'.X<='Y' and store them in the 'iVar'-th axis of the
-// AABB 'bdgBox'
-// ('M' arrangement is [iRow][iCol])
-// The system is supposed to have been reduced to only one variable
-// per row, the one in argument
-// May RETURN inconsistent values (max < min), which would
-// mean the system has no solution
-void GetBound2DTime(
-     const int iVar,
-  const double (*M)[3], 
-  const double* Y, 
-     const int nbRows, 
-   AABB2DTime* const bdgBox) {
-
-  // Shortcuts
-  double* min = bdgBox.min + iVar 
-  double* max = bdgBox.max + iVar 
-
-  // Initialize the bounds to there maximum maximum and minimum minimum
-  *min = 0.0 
-  *max = 1.0 
-
-  // Loop on rows
-  FOR (int jRow = 0  
-       jRow < nbRows  
-       ++jRow) {
-
-    // Shortcut
-    double MjRowiVar = M[jRow][0] 
-
-    // If this row has been reduced to the variable in argument
-    // and it has a strictly positive coefficient
-    IF (MjRowiVar > EPSILON) {
-
-      // Get the scaled value of Y FOR this row
-      double y = Y[jRow] / MjRowiVar 
-
-      // If the value is lower than the current maximum bound
-      IF (*max > y) {
-
-        // Update the maximum bound
-        *max = y 
-
-      END
-
-    // Else, IF this row has been reduced to the variable in argument
-    // and it has a strictly negative coefficient
-    ELSE IF (MjRowiVar < -EPSILON) {
-
-      // Get the scaled value of Y FOR this row
-      double y = Y[jRow] / MjRowiVar 
-
-      // If the value is greater than the current minimum bound
-      IF (*min < y) {
-
-        // Update the minimum bound
-        *min = y 
-
-      END
-
-    END
-
-  END
-
-END
-
-// Test FOR intersection between Frame 'that' and Frame 'tho'
-// Return TRUE IF the two Frames are intersecting, ELSE FALSE
-// If the Frame are intersecting the AABB of the intersection
-// is stored into 'bdgBox', ELSE 'bdgBox' is not modIFied
-// If 'bdgBox' is null, the result AABB is not memorized (to use IF
-// unnecessary and want to speed up the algorithm)
-// The resulting AABB may be larger than the smallest possible AABB
-// The resulting AABB of FMBTestIntersection(A,B) may be dIFferent
-// of the resulting AABB of FMBTestIntersection(B,A)
-// The resulting AABB is given in 'tho' 's local coordinates system
-bool FMBTestIntersection2DTime(
-  const Frame2DTime* const that, 
-  const Frame2DTime* const tho, 
-         AABB2DTime* const bdgBox) {
-
-  // Get the projection of the Frame 'tho' in Frame 'that' coordinates
-  // system
-  Frame2DTime thoProj 
+FUNCTION FMBTestIntersection2DTime(that, tho, bdgBox)
   Frame2DTimeImportFrame(that, tho, &thoProj) 
-
-  // Declare two variables to memorize the system to be solved M.X <= Y
-  // (M arrangement is [iRow][iCol])
-  double M[10][3] 
-  double Y[10] 
-
-  // Create the inequality system
-
-  // -V_jT-sum_iC_j,iX_i<=O_j
   M[0][0] = -thoProj.comp[0][0] 
   M[0][1] = -thoProj.comp[1][0] 
   M[0][2] = -thoProj.speed[0] 
   Y[0] = thoProj.orig[0] 
   IF (Y[0] < neg(M[0][0]) + neg(M[0][1]) + neg(M[0][2]))
     RETURN FALSE 
-
+  END IF
   M[1][0] = -thoProj.comp[0][1] 
   M[1][1] = -thoProj.comp[1][1] 
   M[1][2] = -thoProj.speed[1] 
   Y[1] = thoProj.orig[1] 
   IF (Y[1] < neg(M[1][0]) + neg(M[1][1]) + neg(M[1][2]))
     RETURN FALSE 
-
+  END IF
   M[2][0] = -1.0 
   M[2][1] = 0.0 
   M[2][2] = 0.0 
   Y[2] = 0.0 
-
   M[3][0] = 0.0 
   M[3][1] = -1.0 
   M[3][2] = 0.0 
   Y[3] = 0.0 
-
   M[4][0] = 0.0 
   M[4][1] = 0.0 
   M[4][2] = 1.0 
   Y[4] = 1.0 
-
   M[5][0] = 0.0 
   M[5][1] = 0.0 
   M[5][2] = -1.0 
   Y[5] = 0.0 
-
-  // Variable to memorise the nb of rows in the system
-  int nbRows = 6
-
-  IF (that.type == FrameCuboid) {
-
-    // V_jT+sum_iC_j,iX_i<=1.0-O_j
+  nbRows = 6
+  IF that.type == FrameCuboid
     M[nbRows][0] = thoProj.comp[0][0] 
     M[nbRows][1] = thoProj.comp[1][0] 
     M[nbRows][2] = thoProj.speed[0] 
     Y[nbRows] = 1.0 - thoProj.orig[0] 
-    IF (Y[nbRows] < neg(M[nbRows][0]) + neg(M[nbRows][1]) + 
-                    neg(M[nbRows][2]))
+    IF Y[nbRows] < neg(M[nbRows][0]) + neg(M[nbRows][1]) + 
+                    neg(M[nbRows][2])
       RETURN FALSE 
-    ++nbRows 
-
+    END IF
+    nbRows = nbRows + 1
     M[nbRows][0] = thoProj.comp[0][1] 
     M[nbRows][1] = thoProj.comp[1][1] 
     M[nbRows][2] = thoProj.speed[1] 
     Y[nbRows] = 1.0 - thoProj.orig[1] 
-    IF (Y[nbRows] < neg(M[nbRows][0]) + neg(M[nbRows][1]) + 
-                    neg(M[nbRows][2]))
+    IF Y[nbRows] < neg(M[nbRows][0]) + neg(M[nbRows][1]) + 
+                    neg(M[nbRows][2])
       RETURN FALSE 
-    ++nbRows 
-
+    nbRows = nbRows + 1
   ELSE
-
-    // sum_j(V_jT+sum_iC_j,iX_i)<=1.0-sum_iO_i
     M[nbRows][0] = thoProj.comp[0][0] + thoProj.comp[0][1] 
     M[nbRows][1] = thoProj.comp[1][0] + thoProj.comp[1][1] 
     M[nbRows][2] = thoProj.speed[0] + thoProj.speed[1] 
     Y[nbRows] = 1.0 - thoProj.orig[0] - thoProj.orig[1] 
-    IF (Y[nbRows] < neg(M[nbRows][0]) + neg(M[nbRows][1]) + 
-                    neg(M[nbRows][2]))
+    IF Y[nbRows] < neg(M[nbRows][0]) + neg(M[nbRows][1]) + 
+                    neg(M[nbRows][2])
       RETURN FALSE 
-    ++nbRows 
-
+    nbRows = nbRows + 1
   END
-
-  IF (tho.type == FrameCuboid) {
-
-    // X_i <= 1.0
+  IF tho.type == FrameCuboid
     M[nbRows][0] = 1.0 
     M[nbRows][1] = 0.0 
     M[nbRows][2] = 0.0 
     Y[nbRows] = 1.0 
-    ++nbRows 
-
+    nbRows = nbRows + 1
     M[nbRows][0] = 0.0 
     M[nbRows][1] = 1.0 
     M[nbRows][2] = 0.0 
     Y[nbRows] = 1.0 
-    ++nbRows 
-
+    nbRows = nbRows + 1
   ELSE
-    
-    // sum_iX_i<=1.0
     M[nbRows][0] = 1.0 
     M[nbRows][1] = 1.0 
     M[nbRows][2] = 0.0 
     Y[nbRows] = 1.0 
-    ++nbRows 
-
-  END
-
-  // Solve the system
-  
-  // Declare a AABB to memorize the bounding box of the intersection
-  // in the coordinates system of that
-  AABB2DTime bdgBoxLocal 
-  
-  // Declare variables to eliminate the first variable
-  double Mp[25][3] 
-  double Yp[25] 
-  int nbRowsP 
-
-  // Eliminate the first variable in the original system
-  bool inconsistency = 
-    ElimVar2DTime(
-      FST_VAR,
-      M, 
-      Y, 
-      nbRows, 
-      3,
-      Mp, 
-      Yp, 
-      &nbRowsP) 
-
-  // If the system is inconsistent
+    nbRows = nbRows + 1
+  END IF
+  inconsistency = 
+    ElimVar2DTime(FST_VAR, M, Y, nbRows, 3, Mp, Yp, nbRowsP) 
   IF inconsistency == TRUE
-
-    // The two Frames are not in intersection
     RETURN FALSE 
-
-  END
-
-  // Declare variables to eliminate the second variable
-  double Mpp[169][3] 
-  double Ypp[169] 
-  int nbRowsPP 
-
-  // Eliminate the second variable (which is the first in the new system)
+  END IF
   inconsistency = 
-    ElimVar2DTime(
-      FST_VAR,
-      Mp, 
-      Yp, 
-      nbRowsP, 
-      2,
-      Mpp, 
-      Ypp, 
-      &nbRowsPP) 
-
-  // If the system is inconsistent
+    ElimVar2DTime(FST_VAR, Mp, Yp, nbRowsP, 2, Mpp, Ypp, nbRowsPP) 
   IF inconsistency == TRUE
-
-    // The two Frames are not in intersection
     RETURN FALSE 
-
-  END
-
-  // Get the bounds FOR the remaining third variable
-  GetBound2DTime(
-    THD_VAR,
-    Mpp,
-    Ypp,
-    nbRowsPP,
-    &bdgBoxLocal) 
-
-  // If the bounds are inconstent
-  IF (bdgBoxLocal.min[THD_VAR] >= bdgBoxLocal.max[THD_VAR]) {
-
-    // The two Frames are not in intersection
+  END IF
+  GetBound2DTime(THD_VAR, Mpp, Ypp, nbRowsPP, bdgBoxLocal) 
+  IF bdgBoxLocal.min[THD_VAR] >= bdgBoxLocal.max[THD_VAR]
     RETURN FALSE 
-
-  // Else, IF the bounds are consistent here it means
-  // the two Frames are in intersection.
-  // If the user hasn't requested FOR the resulting bounding box
-  ELSE IF (bdgBox == NULL) {
-
-    // Immediately RETURN TRUE
-    RETURN TRUE 
-
-  END
-
-  // Eliminate the third variable (which is the second in the new
-  // system)
-  inconsistency = 
-    ElimVar2DTime(
-      SND_VAR,
-      Mp, 
-      Yp, 
-      nbRowsP, 
-      2,
-      Mpp, 
-      Ypp, 
-      &nbRowsPP) 
-
-  // Get the bounds FOR the remaining second variable
-  GetBound2DTime(
-    SND_VAR,
-    Mpp,
-    Ypp,
-    nbRowsPP,
-    &bdgBoxLocal) 
-
-  // Now starts again from the initial systems and eliminate the 
-  // second and third variables to get the bounds of the first variable
-  // No need to check FOR consistency because we already know here
-  // that the Frames are intersecting and the system is consistent
-  inconsistency = 
-    ElimVar2DTime(
-      THD_VAR,
-      M, 
-      Y, 
-      nbRows, 
-      3,
-      Mp, 
-      Yp, 
-      &nbRowsP) 
-
-  inconsistency = 
-    ElimVar2DTime(
-      SND_VAR,
-      Mp, 
-      Yp, 
-      nbRowsP, 
-      2,
-      Mpp, 
-      Ypp, 
-      &nbRowsPP) 
-
-  GetBound2DTime(
-    FST_VAR,
-    Mpp,
-    Ypp,
-    nbRowsPP,
-    &bdgBoxLocal) 
-
-  // If the user requested the resulting bounding box
-  IF (bdgBox <> NULL) {
-
-    // Memorize the result
-    *bdgBox = bdgBoxLocal 
-    
-  END
-
-  // If we've reached here the two Frames are intersecting
+  END IF
+  ElimVar2DTime(SND_VAR, Mp, Yp, nbRowsP, 2, Mpp, Ypp, nbRowsPP) 
+  GetBound2DTime(SND_VAR, Mpp, Ypp, nbRowsPP, bdgBoxLocal) 
+  ElimVar2DTime(THD_VAR, M, Y, nbRows, 3, Mp, Yp, nbRowsP) 
+  ElimVar2DTime(SND_VAR, Mp, Yp, nbRowsP, 2, Mpp, Ypp, nbRowsPP) 
+  GetBound2DTime(FST_VAR, Mpp, Ypp, nbRowsPP, bdgBoxLocal) 
+  bdgBox = bdgBoxLocal 
   RETURN TRUE 
+END FUNCTION
 
-END
-
+origP2DTime = [0.0, 0.0]
+speedP2DTime = [0.0, 0.0]
+compP2DTime = [
+  [1.0, 0.0],
+  [0.0, 1.0]]
+P2DTime = 
+  Frame2DTimeCreateStatic(
+    FrameCuboid, origP2DTime, speedP2DTime, compP2DTime)
+origQ2DTime = [0.0,0.0]
+speedQ2DTime = [0.0,0.0]
+compQ2DTime = [
+  [1.0, 0.0],
+  [0.0, 1.0]]
+Q2DTime = 
+  Frame2DTimeCreateStatic(
+    FrameCuboid, origQ2DTime, speedQ2DTime, compQ2DTime)
+isIntersecting2DTime = 
+  FMBTestIntersection2DTime(P2DTime, Q2DTime, bdgBox2DTimeLocal)
+IF isIntersecting2DTime == TRUE
+  PRINT "Intersection detected."
+  Frame2DTimeExportBdgBox(Q2DTime, bdgBox2DTimeLocal, bdgBox2DTime)
+  AABB2DTimePrint(bdgBox2DTime)
+ELSE
+  PRINT "No intersection."
+END IF

@@ -23,8 +23,8 @@ int main(int argc, char** argv) {
       speedP3DTime,
       compP3DTime);
  
-  double origQ3DTime[3] = {-1.0, 0.0, 0.0};
-  double speedQ3DTime[3] = {1.0, 0.0, 0.0};
+  double origQ3DTime[3] = {0.0, 0.0, 0.0};
+  double speedQ3DTime[3] = {0.0, 0.0, 0.0};
   double compQ3DTime[3][3] = {
     {1.0, 0.0, 0.0},
     {0.0, 1.0, 0.0},

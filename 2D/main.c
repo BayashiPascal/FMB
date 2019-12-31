@@ -20,10 +20,10 @@ int main(int argc, char** argv) {
       origP2D,
       compP2D);
  
-  double origQ2D[2] = {0.0,0.0};
+  double origQ2D[2] = {0.0, 0.0};
   double compQ2D[2][2] = {
-    {1.0, 1.0},
-    {-1.0, 1.0}};
+    {1.0, 0.0},
+    {0.0, 1.0}};
   Frame2D Q2D = 
     Frame2DCreateStatic(
       FrameCuboid,

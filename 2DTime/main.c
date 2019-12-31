@@ -22,8 +22,8 @@ int main(int argc, char** argv) {
       speedP2DTime,
       compP2DTime);
  
-  double origQ2DTime[2] = {-1.0,0.0};
-  double speedQ2DTime[2] = {1.0,0.0};
+  double origQ2DTime[2] = {0.0,0.0};
+  double speedQ2DTime[2] = {0.0,0.0};
   double compQ2DTime[2][2] = {
     {1.0, 0.0},
     {0.0, 1.0}};

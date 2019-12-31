@@ -15,30 +15,41 @@
 
 \begin{document}
 
-\title{The FMB Algorithm\\An intersection detection algorithm for 2D/3D cuboid and tetrahedron based on the Fourier-Motzkin elimination method}
+\title{The FMB Algorithm}
 \author{P. Baillehache}
 \date{\today}
 \maketitle
 
 \begin{abstract}
-This paper introduces how to perform intersection detection and localisation of pair of static/dynamic cuboid/tetrahedron in 2D/3D by using the Fourier-Motzkin elimination method. The mathematical definition and solution of the problem in the two first sections is followed by the algorithm of the solution and its implementation in the C programming language in the four following sections. The last two sections introduce the validation and qualification in term of relative performance of the FMB algorithm against the SAT algorithm.
+This paper introduces how to perform intersection detection of pair of static/dynamic cuboid/tetrahedron in 2D/3D by using the Fourier-Motzkin elimination method.
 \end{abstract}
 
 \newpage
 \tableofcontents
 
-\section{Notations}
+\section*{Introduction}
+
+This paper introduces the FMB (Fourier-Motzkin-Baillehache) algorithm which can be used to perform intersection detection of moving and resting parallelepipeds and triangles in 2D, and cuboids and tetrahedrons in 3D.\\
+
+The detection result is returned has a boolean (intersection / no intersection), and if there is intersection a bounding box of the intersection.\\
+
+The two first sections introduce how the problem can be expressed as a system of linear inequation, and its resolution using the Fourier-Motzkin method.\\
+
+The algorithm of the solution and its implementation in the C programming language are detailed in the four following sections.\\
+
+The last two sections introduce the validation and qualification in term of relative performance of the FMB algorithm against the SAT algorithm.
+ 
+\section{The problem as a system of linear inequations}
+
+\subsection{Notations and definitions}
 
 \begin{itemize}
 \item{$\left[M\right]_{r,c}$ is the component at column $c$ and row $r$ of the matrix $M$}
 \item{$\left[V\right]_r$ is the $r$-th component of the vector $\overrightarrow{V}$}
+\item the term "frame" is used indifferently for parallelepiped, triangle, cuboid and tetrahedron.
 \end{itemize}
 
-\section{Definition of the problem}
-
 \subsection{Static case}
-
-In this paper I'll use the term "Frame" to speak indifferently of cuboid and tetrahedron.\\
 
 The two Frames are represented as a vector origin and a number of component vectors equal to the dimension $D$ of the space where live the Frames. Each vector is of dimension equal to $D$.\\
 
@@ -451,9 +462,9 @@ t&\le&1.0\\
 \right.
 \end{equation}
 
-\section{Solution}
+\section{Resolution of the problem by Fourier-Motzkin method}
 
-\subsection{Fourier-Motzkin elimination method}
+\subsection{The Fourier-Motzkin elimination method}
 
 The Fourier-Motzkin elimination method has been introduced by J.J.-B. Fourier in 1827 \cite{fourier}, and described in the Ph.D. thesis of T.S. Motzkin in 1936 \cite{motzkin}. This is a generalization of the Gaussian elimination method to linear systems of inequalities. This method consists of eliminating one variable of the system and rewrite a new system accordingly. Then the elimination operation is repeated on another variable in the new system, and so on until we obtain a trivial system with only one variable. From there, a solution for each variable can be obtained if it exists. The variable elimination is performed as follow.\\
 Lets write the linear system $\mathcal{I}$ of $m$ inequalities and $n$ variables as 
@@ -479,6 +490,7 @@ b_j\in\mathbb{R}
 \end{equation}
 To eliminate the first variable $x_1$, lets multiply each inequality by $1.0/|a_{i1}|$ where $a_{i1}\not=0.0$. The system becomes
 \begin{equation}
+\label{eqn_elim_system}
 \left\{\
 \begin{array}{ccccc}
 x_1&+a'_{i2}.x_2&+\cdots&+a'_{in}.x_n &\le b'_i\qquad(i\in\mathcal{I}_+)\\
@@ -529,17 +541,79 @@ Y<\sum_{i\in I^-}a_i
 \end{equation}
 where $I^-=\left\lbrace i, a_i<0.0\right\rbrace$.\\
 
-\section{Algorithms}
+\subsection{About the size of system of linear inequation}
+
+During implementation in languages where the developper needs to manage memory itself the size of the systems (\ref{eqn_elim_system}) resulting from variable elimination is necessary but cannot be forecasted. Instead, a maximum size can be calculated as follow.\\
+
+Lets call $n_-$, $n_+$ and $n_0$ the size of, respectively, $\mathcal{I}_-$, $\mathcal{I}_+$ and $\mathcal{I}_0$, and $N$ the number of inequalities in the original system and $N'$ the number inequalities in the resulting system. We have:\\
+\begin{equation}
+n_-+n_++n_0=N
+\end{equation}
+and
+\begin{equation}
+\label{eqn_def_N_prime}
+n_-.n_++n_0=N'
+\end{equation}
+Now lets define $K=N-n_0$, then we have:\\
+\begin{equation}
+n_-+n_+=K
+\end{equation}
+then,
+\begin{equation}
+n_-.n_+=n_-(K-n_-)
+\end{equation}
+then,
+\begin{equation}
+n_-.n_+=K.n_-n_-^2
+\end{equation}
+The right part is polynomial whose maximum is reached for $n_-=K/2$. Then,
+\begin{equation}
+n_-.n_+\le K^2/2-K^2/4
+\end{equation}
+or,
+\begin{equation}
+n_-.n_+\le K^2/4
+\end{equation}
+and putting back the definition of $K$
+\begin{equation}
+n_-.n_+\le (N-n_0)^2/4
+\end{equation}
+which is also
+\begin{equation}
+n_-.n_+\le N^2/4
+\end{equation}
+From (\ref{eqn_def_N_prime}) we get,
+\begin{equation}
+N'\le N^2/4-n_0
+\end{equation}
+and getting rid of the $n_0$ knowing that $n_0\ge0$,
+\begin{equation}
+N'\le N^2/4
+\end{equation}
+The maximum number of inequation in the initial system is defined for each case (2D/3D, static/dynamic) in the previous section. This leads to the following maximum number of inequations:\\
+$$
+\begin{array}{|c|c|c|c|c|}
+\hline
+&N&N'&N''&N'''\\
+\hline
+2Dstatic&8&16&&\\
+\hline
+2Ddynamic&10&25&157&\\
+\hline
+3Dstatic&12&36&324&\\
+\hline
+3Ddynamic&14&49&601&90301\\
+\hline
+\end{array}
+$$
+
+\section{Algorithms of the solution}
 
 In this section I introduce the algorithms of the solution of the previous section for each case (static/dynamic and 2D/3D), and the algorithms to manipulate the structure used to represent the cuboid and tetrahedron.\\
 
-\subsection{Frames}
+Algorithms are given in pseudo code, and consequently without any optimization based on properties of one given language. One can refer to the C implementation in the following sections for possible optimization in this language.\\
 
-\begin{scriptsize}
-\begin{ttfamily}
-\lstinputlisting[breaklines]{../Frame/algorithm.txt}
-\end{ttfamily}
-\end{scriptsize}
+Algorithms are also given independantly from each other. Code commonalization may be possible if one plans to gather several cases together, but this is dependant of the implementation and thus left to the developper responsibility.\\
 
 \subsection{2D static}
 
@@ -573,7 +647,7 @@ In this section I introduce the algorithms of the solution of the previous secti
 \end{ttfamily}
 \end{scriptsize}
 
-\section{Implementation}
+\section{Implementation of the algorithms in C}
 
 In this section I introduce an implementation of the algorithms of the previous section in the C language.\\
 
@@ -669,7 +743,7 @@ In this section I introduce an implementation of the algorithms of the previous 
 \end{ttfamily}
 \end{scriptsize}
 
-\section{Example of use}
+\section{Minimal example of use}
 
 In this section I give a minimal example of how to use the code given in the previous section.
 
@@ -777,7 +851,7 @@ In this section I introduce the code I've used to test the algorithm and its imp
 \end{ttfamily}
 \end{scriptsize}
 
-\section{Validation}
+\section{Validation against SAT}
 
 In this section I introduce the code I've used to validate the algorithm and its implementation. The validation consists of running the FMB algorithm on randomly generated pairs of Frame and check that its result is equal to the one of running the SAT algorithm on the same pair of Frames. The code of the implementation of the SAT algorithm is given in annex (p.\pageref{sat_implementation})\\
 
@@ -1071,9 +1145,109 @@ In this section I introduce the code I've used to qualify the algorithm and its 
 
 The validation proves that the FMB algorithm correctly identifies intersection of pairs of Frames in accordance with the results of the SAT algorithm.\\
 
-The qualification proves that the FMB algorithm is in average 50\% slower than the SAT algorithm in 2D, and 17\% faster in 3D.\\
+The qualification shows that the FMB is 1.2 to 1.8 times slower than the SAT algorithm in the 2D dynamic case. However it is around 2 times faster in the 3D static case, and up to 1.25 times faster in 3D dynamic and up to 1.1 times faster in the 2D static case if the percentage of tested pairs in intersection is less than, respectively, around 40\% and 25\%.\\
+
+On one given pair of Frame, the relative speed of the FMB algorithm varies widely, from around 20 times slower to 50 times faster. This is explained by the way the 2 algorithms works: they both make the asumption that the Frames are intersecting and run through a series of tests to try to prove it wrong. This leads to best cases and worst cases for both algorithm: a non interesecting detected right from the first test, or one detected by the last test. These best and worst cases are different for the two algorithm as the tests they performed are completely different. But globally, the FMB algorithm has the advantage.\\
 
 \section{Annex}
+
+\subsection{Runtime environment}
+\label{runtime_environment}
+
+Results introduce in this paper have been produced by compiling and running the corresponding algorithms in the following environment:\\
+
+\begin{scriptsize}
+\begin{ttfamily}
+> uname -v
+#40~18.04.1-Ubuntu SMP Thu Nov 14 12:06:39 UTC 2019
+
+> lshw -short
+H/W path       Device      Class          Description
+=====================================================
+                           system         VC65-C1
+/0                         bus            VC65-C1
+/0/0                       memory         64KiB BIOS
+/0/2f                      memory         16GiB System Memory
+/0/2f/0                    memory         [empty]
+/0/2f/1                    memory         16GiB SODIMM DDR4 Synchronous 2400 MHz (0.4 ns)
+/0/39                      memory         384KiB L1 cache
+/0/3a                      memory         1536KiB L2 cache
+/0/3b                      memory         12MiB L3 cache
+/0/3c                      processor      Intel(R) Core(TM) i7-8700T CPU @ 2.40GHz
+/0/100                     bridge         8th Gen Core Processor Host Bridge/DRAM Registers
+/0/100/2                   display        Intel Corporation
+/0/100/12                  generic        Cannon Lake PCH Thermal Controller
+/0/100/14                  bus            Cannon Lake PCH USB 3.1 xHCI Host Controller
+/0/100/14/0    usb1        bus            xHCI Host Controller
+/0/100/14/0/5              input          ELECOM Wired Keyboard
+/0/100/14/0/6              input          PTZ-630
+/0/100/14/0/7              generic        USB2.0-CRW
+/0/100/14/0/e              communication  Bluetooth wireless interface
+/0/100/14/1    usb2        bus            xHCI Host Controller
+/0/100/14.2                memory         RAM memory
+/0/100/14.3    wlo1        network        Wireless-AC 9560 [Jefferson Peak]
+/0/100/16                  communication  Cannon Lake PCH HECI Controller
+/0/100/17                  storage        Cannon Lake PCH SATA AHCI Controller
+/0/100/1f                  bridge         Intel Corporation
+/0/100/1f.3                multimedia     Cannon Lake PCH cAVS
+/0/100/1f.4                bus            Cannon Lake PCH SMBus Controller
+/0/100/1f.5                bus            Cannon Lake PCH SPI Controller
+/0/100/1f.6    eno2        network        Ethernet Connection (7) I219-V
+/0/1           scsi0       storage        
+/0/1/0.0.0     /dev/sda    disk           128GB HFS128G39TND-N21
+/0/1/0.0.0/1               volume         99MiB Windows FAT volume
+/0/1/0.0.0/2   /dev/sda2   volume         15MiB reserved partition
+/0/1/0.0.0/3   /dev/sda3   volume         83GiB Windows NTFS volume
+/0/1/0.0.0/4   /dev/sda4   volume         499MiB Windows NTFS volume
+/0/1/0.0.0/5   /dev/sda5   volume         35GiB EXT4 volume
+/0/2           scsi2       storage        
+/0/2/0.0.0     /dev/sdb    disk           500GB ST500LM034-2GH17
+/0/2/0.0.0/1   /dev/sdb1   volume         463GiB EXT4 volume
+/0/2/0.0.0/2   /dev/sdb2   volume         499MiB Windows FAT volume
+/0/3           scsi5       storage        
+/0/3/0.0.0     /dev/cdrom  disk           BD-RE BU50N
+/1                         power          To Be Filled By O.E.M.
+
+> lscpu
+Architecture:        x86_64
+CPU op-mode(s):      32-bit, 64-bit
+Byte Order:          Little Endian
+CPU(s):              12
+On-line CPU(s) list: 0-11
+Thread(s) per core:  2
+Core(s) per socket:  6
+Socket(s):           1
+NUMA node(s):        1
+Vendor ID:           GenuineIntel
+CPU family:          6
+Model:               158
+Model name:          Intel(R) Core(TM) i7-8700T CPU @ 2.40GHz
+Stepping:            10
+CPU MHz:             1380.998
+CPU max MHz:         4000.0000
+CPU min MHz:         800.0000
+BogoMIPS:            4800.00
+Virtualization:      VT-x
+L1d cache:           32K
+L1i cache:           32K
+L2 cache:            256K
+L3 cache:            12288K
+NUMA node0 CPU(s):   0-11
+Flags:               fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc art arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf tsc_known_freq pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch cpuid_fault epb invpcid_single pti ssbd ibrs ibpb stibp tpr_shadow vnmi flexpriority ept vpid ept_ad fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm mpx rdseed adx smap clflushopt intel_pt xsaveopt xsavec xgetbv1 xsaves dtherm ida arat pln pts hwp hwp_notify hwp_act_window hwp_epp md_clear flush_l1d
+
+> gcc -v
+Using built-in specs.
+COLLECT_GCC=gcc
+COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper
+OFFLOAD_TARGET_NAMES=nvptx-none
+OFFLOAD_TARGET_DEFAULT=1
+Target: x86_64-linux-gnu
+Configured with: ../src/configure -v --with-pkgversion='Ubuntu 7.4.0-1ubuntu1~18.04.1' --with-bugurl=file:///usr/share/doc/gcc-7/README.Bugs --enable-languages=c,ada,c++,go,brig,d,fortran,objc,obj-c++ --prefix=/usr --with-gcc-major-version-only --program-suffix=-7 --program-prefix=x86_64-linux-gnu- --enable-shared --enable-linker-build-id --libexecdir=/usr/lib --without-included-gettext --enable-threads=posix --libdir=/usr/lib --enable-nls --with-sysroot=/ --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --with-default-libstdcxx-abi=new --enable-gnu-unique-object --disable-vtable-verify --enable-libmpx --enable-plugin --enable-default-pie --with-system-zlib --with-target-system-zlib --enable-objc-gc=auto --enable-multiarch --disable-werror --with-arch-32=i686 --with-abi=m64 --with-multilib-list=m32,m64,mx32 --enable-multilib --with-tune=generic --enable-offload-targets=nvptx-none --without-cuda-driver --enable-checking=release --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu
+Thread model: posix
+gcc version 7.4.0 (Ubuntu 7.4.0-1ubuntu1~18.04.1) 
+\end{ttfamily}
+\end{scriptsize}
+
 
 \subsection{SAT implementation}
 \label{sat_implementation}

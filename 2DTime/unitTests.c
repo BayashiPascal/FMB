@@ -196,7 +196,7 @@ void Test2DTime(void) {
     };
   paramQ = (Param2DTime)
     {.type = FrameCuboid,
-     .orig = {-1.0, -1.0},
+     .orig = {-1.01, -1.01},
      .comp = 
        {{1.0, 0.0},
         {0.0, 1.0}},
