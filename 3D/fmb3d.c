@@ -415,8 +415,8 @@ bool FMBTestIntersection3D(
   AABB3D bdgBoxLocal;
   
   // Declare variables to eliminate the first variable
-  double Mp[36][3];
-  double Yp[36];
+  double Mp[48][3];
+  double Yp[48];
   int nbRowsP;
 
   // Eliminate the first variable in the original system
@@ -440,8 +440,8 @@ bool FMBTestIntersection3D(
   }
 
   // Declare variables to eliminate the second variable
-  double Mpp[324][3];
-  double Ypp[324];
+  double Mpp[624][3];
+  double Ypp[624];
   int nbRowsPP;
 
   // Eliminate the second variable (which is the first in the new system)

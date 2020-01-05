@@ -371,8 +371,8 @@ bool FMBTestIntersection2D(
   AABB2D bdgBoxLocal;
   
   // Declare variables to eliminate the first variable
-  double Mp[16][2];
-  double Yp[16];
+  double Mp[24][2];
+  double Yp[24];
   int nbRowsP;
 
   // Eliminate the first variable

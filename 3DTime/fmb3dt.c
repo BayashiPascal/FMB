@@ -447,8 +447,8 @@ bool FMBTestIntersection3DTime(
   AABB3DTime bdgBoxLocal;
   
   // Declare variables to eliminate the first variable
-  double Mp[49][4];
-  double Yp[49];
+  double Mp[63][4];
+  double Yp[63];
   int nbRowsP;
 
   // Eliminate the first variable in the original system
@@ -472,8 +472,8 @@ bool FMBTestIntersection3DTime(
   }
 
   // Declare variables to eliminate the second variable
-  double Mpp[601][4];
-  double Ypp[601];
+  double Mpp[1056][4];
+  double Ypp[1056];
   int nbRowsPP;
 
   // Eliminate the second variable (which is the first in the new system)
@@ -497,6 +497,12 @@ bool FMBTestIntersection3DTime(
   }
 
   // Declare variables to eliminate the third variable
+  // The size of the array given in the doc is a majoring value
+  // which is bigger than the possible stack size, hence we can't use it
+  // and use instead a lower value which has proven to be sufficient 
+  // during tests, validation and qualification
+  //double Mppp[279840][4];
+  //double Yppp[279840];
   double Mppp[90301][4];
   double Yppp[90301];
   int nbRowsPPP;

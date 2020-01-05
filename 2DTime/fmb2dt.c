@@ -395,8 +395,8 @@ bool FMBTestIntersection2DTime(
   AABB2DTime bdgBoxLocal;
   
   // Declare variables to eliminate the first variable
-  double Mp[25][3];
-  double Yp[25];
+  double Mp[35][3];
+  double Yp[35];
   int nbRowsP;
 
   // Eliminate the first variable in the original system
@@ -420,8 +420,8 @@ bool FMBTestIntersection2DTime(
   }
 
   // Declare variables to eliminate the second variable
-  double Mpp[157][3];
-  double Ypp[157];
+  double Mpp[342][3];
+  double Ypp[342];
   int nbRowsPP;
 
   // Eliminate the second variable (which is the first in the new system)
