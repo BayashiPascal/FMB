@@ -415,8 +415,14 @@ bool FMBTestIntersection3D(
   AABB3D bdgBoxLocal;
   
   // Declare variables to eliminate the first variable
-  double Mp[48][3];
-  double Yp[48];
+  // The size of the array given in the doc is a majoring value.
+  // Instead I use a smaller value which has proven to be sufficient 
+  // during tests, validation and qualification, to avoid running
+  // into the heap limit and to optimize slightly the performance
+  //double Mp[48][3];
+  //double Yp[48];
+  double Mp[20][3];
+  double Yp[20];
   int nbRowsP;
 
   // Eliminate the first variable in the original system
@@ -440,8 +446,14 @@ bool FMBTestIntersection3D(
   }
 
   // Declare variables to eliminate the second variable
-  double Mpp[624][3];
-  double Ypp[624];
+  // The size of the array given in the doc is a majoring value.
+  // Instead I use a smaller value which has proven to be sufficient 
+  // during tests, validation and qualification, to avoid running
+  // into the heap limit and to optimize slightly the performance
+  //double Mpp[624][3];
+  //double Ypp[624];
+  double Mpp[55][3];
+  double Ypp[55];
   int nbRowsPP;
 
   // Eliminate the second variable (which is the first in the new system)

@@ -447,8 +447,14 @@ bool FMBTestIntersection3DTime(
   AABB3DTime bdgBoxLocal;
   
   // Declare variables to eliminate the first variable
-  double Mp[63][4];
-  double Yp[63];
+  // The size of the array given in the doc is a majoring value.
+  // Instead I use a smaller value which has proven to be sufficient 
+  // during tests, validation and qualification, to avoid running
+  // into the heap limit and to optimize slightly the performance
+  //double Mp[63][4];
+  //double Yp[63];
+  double Mp[22][4];
+  double Yp[22];
   int nbRowsP;
 
   // Eliminate the first variable in the original system
@@ -472,8 +478,14 @@ bool FMBTestIntersection3DTime(
   }
 
   // Declare variables to eliminate the second variable
-  double Mpp[1056][4];
-  double Ypp[1056];
+  // The size of the array given in the doc is a majoring value.
+  // Instead I use a smaller value which has proven to be sufficient 
+  // during tests, validation and qualification, to avoid running
+  // into the heap limit and to optimize slightly the performance
+  //double Mpp[1056][4];
+  //double Ypp[1056];
+  double Mpp[57][4];
+  double Ypp[57];
   int nbRowsPP;
 
   // Eliminate the second variable (which is the first in the new system)
@@ -497,14 +509,14 @@ bool FMBTestIntersection3DTime(
   }
 
   // Declare variables to eliminate the third variable
-  // The size of the array given in the doc is a majoring value
-  // which is bigger than the possible stack size, hence we can't use it
-  // and use instead a lower value which has proven to be sufficient 
-  // during tests, validation and qualification
+  // The size of the array given in the doc is a majoring value.
+  // Instead I use a smaller value which has proven to be sufficient 
+  // during tests, validation and qualification, to avoid running
+  // into the heap limit and to optimize slightly the performance
   //double Mppp[279840][4];
   //double Yppp[279840];
-  double Mppp[90301][4];
-  double Yppp[90301];
+  double Mppp[560][4];
+  double Yppp[560];
   int nbRowsPPP;
 
   // Eliminate the third variable (which is the first in the new system)

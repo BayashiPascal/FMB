@@ -395,8 +395,14 @@ bool FMBTestIntersection2DTime(
   AABB2DTime bdgBoxLocal;
   
   // Declare variables to eliminate the first variable
-  double Mp[35][3];
-  double Yp[35];
+  // The size of the array given in the doc is a majoring value.
+  // Instead I use a smaller value which has proven to be sufficient 
+  // during tests, validation and qualification, to avoid running
+  // into the heap limit and to optimize slightly the performance
+  //double Mp[35][3];
+  //double Yp[35];
+  double Mp[13][3];
+  double Yp[13];
   int nbRowsP;
 
   // Eliminate the first variable in the original system
@@ -420,8 +426,14 @@ bool FMBTestIntersection2DTime(
   }
 
   // Declare variables to eliminate the second variable
-  double Mpp[342][3];
-  double Ypp[342];
+  // The size of the array given in the doc is a majoring value.
+  // Instead I use a smaller value which has proven to be sufficient 
+  // during tests, validation and qualification, to avoid running
+  // into the heap limit and to optimize slightly the performance
+  //double Mpp[342][3];
+  //double Ypp[342];
+  double Mpp[21][3];
+  double Ypp[21];
   int nbRowsPP;
 
   // Eliminate the second variable (which is the first in the new system)

@@ -371,8 +371,14 @@ bool FMBTestIntersection2D(
   AABB2D bdgBoxLocal;
   
   // Declare variables to eliminate the first variable
-  double Mp[24][2];
-  double Yp[24];
+  // The size of the array given in the doc is a majoring value.
+  // Instead I use a smaller value which has proven to be sufficient 
+  // during tests, validation and qualification, to avoid running
+  // into the heap limit and to optimize slightly the performance
+  //double Mp[24][2];
+  //double Yp[24];
+  double Mp[11][2];
+  double Yp[11];
   int nbRowsP;
 
   // Eliminate the first variable

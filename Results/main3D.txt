@@ -1,1 +1,1 @@
-No intersection.
+Intersection detected in AABB minXYZ(0.000000,0.000000,0.000000)-maxXYZ(1.000000,1.000000,1.000000)
