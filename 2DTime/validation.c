@@ -4,7 +4,7 @@
 #include <stdbool.h>
 #include <time.h>
 
-// Include FMB and SAT algorithm library
+// Include the FMB and SAT algorithm library
 #include "fmb2dt.h"
 #include "sat.h"
 
@@ -34,7 +34,7 @@ typedef struct {
 // Validation function
 // Takes two Frame definition as input, run the intersection test on 
 // them with FMB and SAT, and check the results are identical
-void Validation2DTime(
+void ValidationOnePair2DTime(
   const Param2DTime paramP,
   const Param2DTime paramQ) {
 
@@ -119,7 +119,6 @@ void Validation2DTime(
 
 }
 
-// Main function
 void Validate2DTime(void) {
 
   // Initialise the random generator
@@ -182,7 +181,7 @@ void Validate2DTime(void) {
     if (fabs(detP) > EPSILON && fabs(detQ) > EPSILON) {
 
       // Run the validation on the two Frames
-      Validation2DTime(
+      ValidationOnePair2DTime(
         paramP,
         paramQ);
 

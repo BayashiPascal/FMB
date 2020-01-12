@@ -20,11 +20,11 @@ STRUCT Frame2DTime
 END STRUCT
 
 FUNCTION powi(base, exp)
-    res = 1 
-    FOR i=0..(exp - 1)
-      res = res * base  
-    END FOR
-    RETURN res 
+  res = 1 
+  FOR i=0 TO (exp - 1)
+    res = res * base  
+  END FOR
+  RETURN res 
 END FUNCTION
 
 FUNCTION Frame2DTimePrint(that)
@@ -34,23 +34,23 @@ FUNCTION Frame2DTimePrint(that)
     PRINT "C" 
   END IF
   PRINT "o(" 
-  FOR i = 0..1
+  FOR i = 0 TO 1
     PRINT that.orig[i] 
     IF i < 1
       PRINT "," 
     END IF
   END FOR
   PRINT ") s(" 
-  FOR i = 0..1
+  FOR i = 0 TO 1
     PRINT that.speed[i]
     IF i < 1
       PRINT "," 
     END IF
   END FOR
-  comp = ['x', 'y']
-  FOR j = 0..1
-    PRINT ") " comp[j] "(" 
-    FOR i = 0..1
+  comp = ["x", "y"]
+  FOR j = 0 TO 1
+    PRINT ") ", comp[j], "(" 
+    FOR i = 0 TO 1
       PRINT that.comp[j][i]
       IF i < 1
         PRINT ","
@@ -62,14 +62,14 @@ END FUNCTION
 
 FUNCTION AABB2DTimePrint(that)
   PRINT "minXYT(" 
-  FOR i = 0..2
+  FOR i = 0 TO 2
     PRINT that.min[i]
     IF i < 2
       PRINT "," 
     END IF
   END FOR
   PRINT ")-maxXYT(" 
-  FOR i = 0..2
+  FOR i = 0 TO 2
     PRINT that.max[i] 
     IF i < 2
       PRINT "," 
@@ -81,30 +81,30 @@ END FUNCTION
 FUNCTION Frame2DTimeExportBdgBox(that, bdgBox, bdgBoxProj)
   bdgBoxProj.min[2] = bdgBox.min[2] 
   bdgBoxProj.max[2] = bdgBox.max[2] 
-  FOR i = 0..1
+  FOR i = 0 TO 1
     bdgBoxProj.max[i] = that.orig[i] + that.speed[i] * bdgBox.min[2] 
-    FOR j = 0..1
+    FOR j = 0 TO 1
       bdgBoxProj.max[i] = 
         bdgBoxProj.max[i] + that.comp[j][i] * bdgBox.min[j] 
     END FOR
     bdgBoxProj.min[i] = bdgBoxProj.max[i] 
   END FOR
   nbVertices = powi(2, 2) 
-  FOR iVertex = 1..(nbVertices - 1) 
-    FOR i = 0..1
-      IF (iVertex & (1 << i)) == TRUE
+  FOR iVertex = 1 TO (nbVertices - 1) 
+    FOR i = 0 TO 1
+      IF BITWISEAND(iVertex, powi(2, i)) <> 0
         v[i] = bdgBox.max[i]
       ELSE
         v[i] = bdgBox.min[i]
       END IF
     END FOR
-    FOR i = 0..1
+    FOR i = 0 TO 1
       w[i] = that.orig[i] 
-      FOR j = 0..1
+      FOR j = 0 TO 1
         w[i] = w[i] + that.comp[j][i] * v[j] 
       END FOR
     END FOR
-    FOR i = 0..1
+    FOR i = 0 TO 1
       IF bdgBoxProj.min[i] > w[i] + that.speed[i] * bdgBox.min[2]
         bdgBoxProj.min[i] = w[i] + that.speed[i] * bdgBox.min[2] 
       END IF
@@ -122,18 +122,18 @@ FUNCTION Frame2DTimeExportBdgBox(that, bdgBox, bdgBoxProj)
 END FUNCTION
 
 FUNCTION Frame2DTimeImPortFrame(P, Q, Qp)
-  FOR i = 0..1
+  FOR i = 0 TO 1
     v[i] = Q.orig[i] - P.orig[i] 
     s[i] = Q.speed[i] - P.speed[i] 
   END FOR
-  FOR i = 0..1
+  FOR i = 0 TO 1
     Qp.orig[i] = 0.0 
     Qp.speed[i] = 0.0 
-    FOR j = 0..1
+    FOR j = 0 TO 1
       Qp.orig[i] = Qp.orig[i] + P.invComp[j][i] * v[j] 
       Qp.speed[i] = Qp.speed[i] + P.invComp[j][i] * s[j] 
       Qp.comp[j][i] = 0.0 
-      FOR k = 0..1
+      FOR k = 0 TO 1
         Qp.comp[j][i] = Qp.comp[j][i] + P.invComp[k][i] * Q.comp[j][k] 
       END FOR
     END FOR
@@ -151,23 +151,23 @@ END FUNCTION
 
 FUNCTION Frame2DTimeCreateStatic(type, orig, comp)
   that.type = type 
-  FOR iAxis = 0..1
+  FOR iAxis = 0 TO 1
     that.orig[iAxis] = orig[iAxis] 
     that.speed[iAxis] = speed[iAxis] 
-    FOR iComp = 0..1
+    FOR iComp = 0 TO 1
       that.comp[iComp][iAxis] = comp[iComp][iAxis] 
     END FOR
   END FOR
-  FOR iAxis = 0..1
+  FOR iAxis = 0 TO 1
     min = orig[iAxis] 
     max = orig[iAxis] 
-    FOR iComp = 0..1
+    FOR iComp = 0 TO 1
       IF that.type == FrameCuboid
         IF that.comp[iComp][iAxis] < 0.0
-          min += that.comp[iComp][iAxis] 
+          min = min + that.comp[iComp][iAxis] 
         END IF
         IF that.comp[iComp][iAxis] > 0.0
-          max += that.comp[iComp][iAxis] 
+          max = max + that.comp[iComp][iAxis] 
         END IF
       ELSE IF that.type == FrameTetrahedron
         IF that.comp[iComp][iAxis] < 0.0 AND
@@ -223,19 +223,19 @@ THD_VAR = 2
 
 FUNCTION ElimVar2DTime(iVar, M, Y, nbRows, nbCols, Mp, Yp, nbRemainRows)
   nbRemainRows = 0 
-  FOR iRow = 0..(nbRows - 2)
-    FOR jRow = (iRow + 1)..(nbRows - 1)
+  FOR iRow = 0 TO (nbRows - 2)
+    FOR jRow = (iRow + 1) TO (nbRows - 1)
       IF sgn(M[iRow][iVar])  <> sgn(M[jRow][iVar]) AND 
           M[iRow][iVar] <> 0.0 AND 
           M[jRow][iVar] <> 0.0
         sumNegCoeff = 0.0 
         jCol = 0
-        FOR iCol = 0..(nbCols - 1)
+        FOR iCol = 0 TO (nbCols - 1)
           IF iCol <> iVar
             Mp[nbRemainRows][jCol] = 
               M[iRow][iCol] / fabs(M[iRow][iVar]) + 
               M[jRow][iCol] / fabs(M[jRow][iVar]) 
-            sumNegCoeff += neg(Mp[nbRemainRows][jCol]) 
+            sumNegCoeff = sumNegCoeff + neg(Mp[nbRemainRows][jCol]) 
             jCol = jCol + 1
           END IF
         END FOR
@@ -249,12 +249,10 @@ FUNCTION ElimVar2DTime(iVar, M, Y, nbRows, nbCols, Mp, Yp, nbRemainRows)
       END IF
     END FOR
   END FOR
-  FOR (int iRow = 0  
-       iRow < nbRows  
-       ++iRow) {
+  FOR iRow = 0 TO (nbRows - 1)
     IF M[iRow][iVar] == 0.0
       jCol = 0
-      FOR iCol = 0..(nbCols - 1)
+      FOR iCol = 0 TO (nbCols - 1)
         IF iCol <> iVar
           Mp[nbRemainRows][jCol] = M[iRow][iCol] 
           jCol = jCol + 1
@@ -270,14 +268,14 @@ END FUNCTION
 FUNCTION GetBound2DTime(iVar, M, Y, nbRows, bdgBox)
   bdgBox.min[iVar] = 0.0 
   bdgBox.max[iVar] = 1.0 
-  FOR jRow = 0..(nbRows - 1)
+  FOR jRow = 0 TO (nbRows - 1)
     IF M[jRow][0] > 0.0
-      double y = Y[jRow] / M[jRow][0] 
+      y = Y[jRow] / M[jRow][0] 
       IF bdgBox.max[iVar] > y
         bdgBox.max[iVar] = y 
       END IF
     ELSE IF M[jRow][0] < 0.0
-      double y = Y[jRow] / M[jRow][0] 
+      y = Y[jRow] / M[jRow][0] 
       IF bdgBox.min[iVar] < y
         bdgBox.min[iVar] = y 
       END IF
@@ -286,7 +284,7 @@ FUNCTION GetBound2DTime(iVar, M, Y, nbRows, bdgBox)
 END FUNCTION
 
 FUNCTION FMBTestIntersection2DTime(that, tho, bdgBox)
-  Frame2DTimeImportFrame(that, tho, &thoProj) 
+  Frame2DTimeImportFrame(that, tho, thoProj) 
   M[0][0] = -thoProj.comp[0][0] 
   M[0][1] = -thoProj.comp[1][0] 
   M[0][2] = -thoProj.speed[0] 
@@ -335,6 +333,7 @@ FUNCTION FMBTestIntersection2DTime(that, tho, bdgBox)
     IF Y[nbRows] < neg(M[nbRows][0]) + neg(M[nbRows][1]) + 
                     neg(M[nbRows][2])
       RETURN FALSE 
+    END IF
     nbRows = nbRows + 1
   ELSE
     M[nbRows][0] = thoProj.comp[0][0] + thoProj.comp[0][1] 
@@ -344,6 +343,7 @@ FUNCTION FMBTestIntersection2DTime(that, tho, bdgBox)
     IF Y[nbRows] < neg(M[nbRows][0]) + neg(M[nbRows][1]) + 
                     neg(M[nbRows][2])
       RETURN FALSE 
+    END IF
     nbRows = nbRows + 1
   END
   IF tho.type == FrameCuboid

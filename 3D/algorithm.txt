@@ -19,11 +19,11 @@ STRUCT Frame3D
 END STRUCT
 
 FUNCTION powi(base, exp)
-    res = 1 
-    FOR i=0..(exp - 1)
-      res = res * base  
-    END FOR
-    RETURN res 
+  res = 1 
+  FOR i=0 TO (exp - 1)
+    res = res * base  
+  END FOR
+  RETURN res 
 END FUNCTION
 
 FUNCTION Frame3DPrint(that)
@@ -33,16 +33,16 @@ FUNCTION Frame3DPrint(that)
     PRINT "C" 
   END IF
   PRINT "o(" 
-  FOR i = 0..2
+  FOR i = 0 TO 2
     PRINT that.orig[i]
     IF i < 2
       PRINT "," 
     END IF
   END FOR
-  comp = ['x','y','z']
-  FOR j = 0..2
-    PRINT ") " comp[j] "(" 
-    FOR i = 0..2
+  comp = ["x","y","z"]
+  FOR j = 0 TO 2
+    PRINT ") ", comp[j], "(" 
+    FOR i = 0 TO 2
       PRINT that.comp[j][i]
       IF i < 2
         PRINT "," 
@@ -54,14 +54,14 @@ END FUNCTION
 
 FUNCTION AABB3DPrint(that)
   PRINT "minXYZ(" 
-  FOR i = 0..2
+  FOR i = 0 TO 2
     PRINT that.min[i]
     IF i < 2
       PRINT "," 
     END IF
   END FOR
   PRINT ")-maxXYZ(" 
-  FOR i = 0..2
+  FOR i = 0 TO 2
     PRINT that.max[i]
     IF i < 2
       PRINT "," 
@@ -71,30 +71,30 @@ FUNCTION AABB3DPrint(that)
 END FUNCTION
 
 FUNCTION Frame3DExportBdgBox(that, bdgBox, bdgBoxProj)
-  FOR i = 0..2
+  FOR i = 0 TO 2
     bdgBoxProj.max[i] = that.orig[i]
-    FOR j = 0..2
+    FOR j = 0 TO 2
       bdgBoxProj.max[i] = 
         bdgBoxProj.max[i] + that.comp[j][i] * bdgBox.min[j] 
     END FOR
     bdgBoxProj.min[i] = bdgBoxProj.max[i] 
   END FOR
   nbVertices = powi(2, 3) 
-  FOR iVertex = 1..(nbVertices - 1) 
-    FOR i = 0..2
-      IF (iVertex & (1 << i)) == TRUE
+  FOR iVertex = 1 TO (nbVertices - 1) 
+    FOR i = 0 TO 2
+      IF BITWISEAND(iVertex, powi(2, i)) <> 0
         v[i] = bdgBox.max[i]
       ELSE
         v[i] = bdgBox.min[i]
       END IF
     END FOR
-    FOR i = 0..2
+    FOR i = 0 TO 2
       w[i] = that.orig[i] 
-      FOR j = 0..2
+      FOR j = 0 TO 2
         w[i] = w[i] + that.comp[j][i] * v[j] 
       END FOR
     END FOR
-    FOR i = 0..2
+    FOR i = 0 TO 2
       IF bdgBoxProj.min[i] > w[i]
         bdgBoxProj.min[i] = w[i] 
       END IF
@@ -106,15 +106,15 @@ FUNCTION Frame3DExportBdgBox(that, bdgBox, bdgBoxProj)
 END FUNCTION
 
 FUNCTION Frame3DImPortFrame(P, Q, Qp)
-  FOR i = 0..2
+  FOR i = 0 TO 2
     v[i] = Q.orig[i] - P.orig[i] 
   END FOR
-  FOR i = 0..2
+  FOR i = 0 TO 2
     Qp.orig[i] = 0.0 
-    FOR j = 0..2
+    FOR j = 0 TO 2
       Qp.orig[i] = Qp.orig[i] + P.invComp[j][i] * v[j] 
       Qp.comp[j][i] = 0.0 
-      FOR k = 0..2
+      FOR k = 0 TO 2
         Qp.comp[j][i] = Qp.comp[j][i] + P.invComp[k][i] * Q.comp[j][k] 
       END FOR
     END FOR
@@ -151,22 +151,22 @@ END FUNCTION
 
 FUNCTION Frame3DCreateStatic(type, orig, comp)
   that.type = type 
-  FOR iAxis = 0..2
+  FOR iAxis = 0 TO 2
     that.orig[iAxis] = orig[iAxis] 
-    FOR iComp = 0..2
+    FOR iComp = 0 TO 2
       that.comp[iComp][iAxis] = comp[iComp][iAxis] 
     END FOR
   END FOR
-  FOR iAxis = 0..2
+  FOR iAxis = 0 TO 2
     min = orig[iAxis] 
     max = orig[iAxis] 
-    FOR iComp = 0..2
-      IF that.type == FrameCuboid) {
+    FOR iComp = 0 TO 2
+      IF that.type == FrameCuboid
         IF that.comp[iComp][iAxis] < 0.0
-          min += that.comp[iComp][iAxis] 
+          min = min + that.comp[iComp][iAxis] 
         END IF
         IF that.comp[iComp][iAxis] > 0.0
-          max += that.comp[iComp][iAxis] 
+          max = max + that.comp[iComp][iAxis] 
         END IF
       ELSE IF that.type == FrameTetrahedron
         IF that.comp[iComp][iAxis] < 0.0 AND
@@ -214,19 +214,19 @@ THD_VAR = 2
 
 FUNCTION ElimVar3D(iVar, M, Y, nbRows, nbCols, Mp, Yp, nbRemainRows)
   nbRemainRows = 0 
-  FOR iRow = 0..(nbRows - 2)
-    FOR jRow = (iRow + 1)..(nbRows - 1)
+  FOR iRow = 0 TO (nbRows - 2)
+    FOR jRow = (iRow + 1) TO (nbRows - 1)
       IF sgn(M[iRow][iVar]) <> sgn(M[jRow][iVar]) AND 
           M[iRow][iVar] <> 0.0 AND 
           M[jRow][iVar] <> 0.0
         sumNegCoeff = 0.0 
         jCol = 0
-        FOR iCol = 0..(nbCols - 1)
+        FOR iCol = 0 TO (nbCols - 1)
           IF iCol <> iVar
             Mp[nbRemainRows][jCol] = 
               M[iRow][iCol] / fabs(M[iRow][iVar]) + 
               M[jRow][iCol] / fabs(M[jRow][iVar]) 
-            sumNegCoeff += neg(Mp[nbRemainRows][jCol]) 
+            sumNegCoeff = sumNegCoeff + neg(Mp[nbRemainRows][jCol]) 
             jCol = jCol + 1
           END IF
         END FOR
@@ -236,14 +236,14 @@ FUNCTION ElimVar3D(iVar, M, Y, nbRows, nbCols, Mp, Yp, nbRemainRows)
         IF Yp[nbRemainRows] < sumNegCoeff
           RETURN TRUE 
         END IF
-        nbRemainRows = nbRemainRows
+        nbRemainRows = nbRemainRows + 1
       END IF
     END FOR
   END FOR
-  FOR iRow = 0..(nbRows - 1)
+  FOR iRow = 0 TO (nbRows - 1)
     IF M[iRow][iVar] == 0.0
       jCol = 0
-      FOR iCol = 0..(nbCols  -1)
+      FOR iCol = 0 TO (nbCols - 1)
         IF iCol <> iVar
           Mp[nbRemainRows][jCol] = M[iRow][iCol] 
           jCol = jCol + 1
@@ -259,7 +259,7 @@ END FUNCTION
 FUNCTION GetBound3D(iVar, M, Y, nbRows, bdgBox)
   bdgBox.min[iVar] = 0.0 
   bdgBox.max[iVar] = 1.0 
-  FOR jRow = 0..(nbRows - 1)
+  FOR jRow = 0 TO (nbRows - 1)
     IF M[jRow][0] > 0.0
       y = Y[jRow] / M[jRow][0] 
       IF bdgBox.max[iVar] > y
@@ -353,7 +353,7 @@ FUNCTION FMBTestIntersection3D(that, tho, bdgBox)
     END IF
     nbRows = nbRows + 1
   END
-  IF tho.type == FrameCuboid {
+  IF tho.type == FrameCuboid
     M[nbRows][0] = 1.0 
     M[nbRows][1] = 0.0 
     M[nbRows][2] = 0.0 
@@ -375,21 +375,21 @@ FUNCTION FMBTestIntersection3D(that, tho, bdgBox)
     M[nbRows][2] = 1.0 
     Y[nbRows] = 1.0 
     nbRows = nbRows + 1
-  END
+  END IF
   inconsistency = 
     ElimVar3D(FST_VAR, M, Y, nbRows, 3, Mp, Yp, nbRowsP) 
   IF inconsistency == TRUE
     RETURN FALSE 
-  END
+  END IF
   inconsistency = 
     ElimVar3D(FST_VAR, Mp, Yp, nbRowsP, 2, Mpp, Ypp, nbRowsPP) 
   IF inconsistency == TRUE
     RETURN FALSE 
-  END
+  END IF
   GetBound3D(THD_VAR, Mpp, Ypp, nbRowsPP, bdgBoxLocal) 
   IF bdgBoxLocal.min[THD_VAR] >= bdgBoxLocal.max[THD_VAR]
     RETURN FALSE 
-  END
+  END IF
   ElimVar3D(SND_VAR, Mp, Yp, nbRowsP, 2, Mpp, Ypp, nbRowsPP) 
   GetBound3D(SND_VAR, Mpp, Ypp, nbRowsPP, bdgBoxLocal) 
   ElimVar3D(THD_VAR, M, Y, nbRows, 3, Mp, Yp, nbRowsP) 
@@ -397,7 +397,7 @@ FUNCTION FMBTestIntersection3D(that, tho, bdgBox)
   GetBound3D(FST_VAR, Mpp, Ypp, nbRowsPP, bdgBoxLocal) 
   bdgBox = bdgBoxLocal 
   RETURN TRUE 
-END
+END FUNCTION
 
 origP3D = [0.0, 0.0, 0.0]
 compP3D = [
@@ -405,11 +405,11 @@ compP3D = [
   [0.0, 1.0, 0.0],
   [0.0, 0.0, 1.0]]
 P3D = Frame3DCreateStatic(FrameTetrahedron, origP3D, compP3D)
-origQ3D = [0.5, 0.5, 0.5]
+origQ3D = [0.0, 0.0, 0.0]
 compQ3D = [
-  [2.0, 0.0, 0.0],
-  [0.0, 2.0, 0.0],
-  [0.0, 0.0, 2.0]]
+  [1.0, 0.0, 0.0],
+  [0.0, 1.0, 0.0],
+  [0.0, 0.0, 1.0]]
 Q3D = Frame3DCreateStatic(FrameTetrahedron, origQ3D, compQ3D)
 isIntersecting3D = FMBTestIntersection3D(P3D, Q3D, bdgBox3DLocal)
 IF isIntersecting3D == TRUE

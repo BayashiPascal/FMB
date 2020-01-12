@@ -492,7 +492,7 @@ void Qualify3DStatic(void) {
     sumNoInterTT = 0.0;
     countNoInterTT = 0;
 
-    // Declare two variables to memozie the arguments to the
+    // Declare two variables to memorize the arguments to the
     // Qualification function
     Param3D paramP;
     Param3D paramQ;

@@ -211,7 +211,7 @@ void GetBound2D(
   double* min = bdgBox->min + iVar;
   double* max = bdgBox->max + iVar;
 
-  // Initialize the bounds to there maximum maximum and minimum minimum
+  // Initialize the bounds to their maximum maximum and minimum minimum
   *min = 0.0;
   *max = 1.0;
 
@@ -273,8 +273,7 @@ bool FMBTestIntersection2D(
   const Frame2D* const that, 
   const Frame2D* const tho, 
          AABB2D* const bdgBox) {
-//Frame2DPrint(that);printf("\n");
-//Frame2DPrint(tho);printf("\n");
+
   // Get the projection of the Frame 'tho' in Frame 'that' coordinates
   // system
   Frame2D thoProj;
@@ -309,7 +308,7 @@ bool FMBTestIntersection2D(
   M[3][1] = -1.0;
   Y[3] = 0.0;
 
-  // Variable to memorise the nb of rows in the system
+  // Variable to memorize the nb of rows in the system
   int nbRows = 4;
 
   if (that->type == FrameCuboid) {
@@ -367,7 +366,7 @@ bool FMBTestIntersection2D(
   // Solve the system
   
   // Declare a AABB to memorize the bounding box of the intersection
-  // in the coordinates system of that
+  // in the coordinates system of tho
   AABB2D bdgBoxLocal;
   
   // Declare variables to eliminate the first variable

@@ -33,7 +33,7 @@ typedef struct {
 // Validation function
 // Takes two Frame definition as input, run the intersection test on 
 // them with FMB and SAT, and check the results are identical
-void Validation2D(
+void ValidationOnePair2D(
   const Param2D paramP,
   const Param2D paramQ) {
 
@@ -116,7 +116,6 @@ void Validation2D(
 
 }
 
-// Main function
 void Validate2D(void) {
 
   // Initialise the random generator
@@ -178,7 +177,7 @@ void Validate2D(void) {
     if (fabs(detP) > EPSILON && fabs(detQ) > EPSILON) {
 
       // Run the validation on the two Frames
-      Validation2D(
+      ValidationOnePair2D(
         paramP,
         paramQ);
 

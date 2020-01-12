@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-// Include FMB algorithm library
+// Include the FMB algorithm library
 #include "fmb2dt.h"
 
 // Main function

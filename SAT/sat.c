@@ -6,13 +6,13 @@
 
 // ------------- Functions declaration -------------
 
-// Check the intersection constraint along one axis
+// Check the intersection constraint along one axis for 3D Frames
 bool CheckAxis3D(
   const Frame3D* const that,
   const Frame3D* const tho,
   const double* const axis);
 
-// Check the intersection constraint along one axis
+// Check the intersection constraint along one axis for moving 3D Frames
 bool CheckAxis3DTime(
   const Frame3DTime* const that,
   const Frame3DTime* const tho,

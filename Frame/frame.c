@@ -15,7 +15,7 @@ void Frame3DTimeUpdateInv(Frame3DTime* const that);
 // ------------- Functions implementation -------------
 
 // Create a static Frame structure of FrameType 'type',
-// at position 'orig' with components 'comp' 
+// at position 'orig' with components 'comp' and 'speed'
 // arrangement is comp[iComp][iAxis]
 Frame2D Frame2DCreateStatic(
   const FrameType type,
@@ -665,7 +665,7 @@ void Frame3DTimeImportFrame(
 }
 
 // Export the AABB 'bdgBox' from 'that' 's coordinates system to
-// the real coordinates system and update 'bdgBox' with the resulting
+// the real coordinates system and update 'bdgBoxProj' with the resulting
 // AABB
 void Frame2DExportBdgBox(
   const Frame2D* const that,
@@ -1154,10 +1154,13 @@ void AABB3DTimePrint(const AABB3DTime* const that) {
 }
 
 // Print the Frame 'that' on stdout
-// Output format is (orig[0], orig[1], orig[2])
-// (comp[0][0], comp[0][1], comp[0][2])
-// (comp[1][0], comp[1][1], comp[1][2])
-// (comp[2][0], comp[2][1], comp[2][2])
+// Output format is
+// T/C  <- type of Frame
+// o(orig[0], orig[1], orig[2])
+// s(speed[0], speed[1], speed[2])
+// x(comp[0][0], comp[0][1], comp[0][2])
+// y(comp[1][0], comp[1][1], comp[1][2])
+// z(comp[2][0], comp[2][1], comp[2][2])
 void Frame2DPrint(const Frame2D* const that) {
   if (that->type == FrameTetrahedron) {
     printf("T");

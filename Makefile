@@ -1,7 +1,7 @@
 COMPILER=gcc
 OPTIMIZATION=-O3
 
-all : compile run plot doc
+all : compile run plot getRuntimeEnvironment doc
 
 install :
 	sudo apt-get install gnuplot
@@ -125,3 +125,6 @@ plot3DTime:
 
 doc:
 	cd Doc; make latex; cd -
+
+getRuntimeEnvironment:
+	echo "uname -v\n" > runtimeEnv.txt; uname -v >> runtimeEnv.txt; echo "\n=============\n" >> runtimeEnv.txt; echo "lshw -short\n" >> runtimeEnv.txt; sudo lshw -short >> runtimeEnv.txt; echo "\n=============\n" >> runtimeEnv.txt; echo "lscpu\n" >> runtimeEnv.txt; lscpu >> runtimeEnv.txt; echo "\n=============\n" >> runtimeEnv.txt; echo "gcc -v\n" >> runtimeEnv.txt; gcc -v 1>> runtimeEnv.txt 2>> runtimeEnv.txt 

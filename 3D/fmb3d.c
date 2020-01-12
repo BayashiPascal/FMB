@@ -212,7 +212,7 @@ void GetBound3D(
   double* min = bdgBox->min + iVar;
   double* max = bdgBox->max + iVar;
 
-  // Initialize the bounds to there maximum maximum and minimum minimum
+  // Initialize the bounds to their maximum maximum and minimum minimum
   *min = 0.0;
   *max = 1.0;
 
@@ -325,7 +325,7 @@ bool FMBTestIntersection3D(
   M[5][2] = -1.0;
   Y[5] = 0.0;
 
-  // Variable to memorise the nb of rows in the system
+  // Variable to memorize the nb of rows in the system
   int nbRows = 6;
 
   if (that->type == FrameCuboid) {
@@ -411,7 +411,7 @@ bool FMBTestIntersection3D(
   // Solve the system
 
   // Declare a AABB to memorize the bounding box of the intersection
-  // in the coordinates system of that
+  // in the coordinates system of tho
   AABB3D bdgBoxLocal;
   
   // Declare variables to eliminate the first variable
@@ -484,7 +484,7 @@ bool FMBTestIntersection3D(
     nbRowsPP,
     &bdgBoxLocal);
 
-  // If the bounds are inconstent
+  // If the bounds are inconsistent
   if (bdgBoxLocal.min[THD_VAR] >= bdgBoxLocal.max[THD_VAR]) {
 
     // The two Frames are not in intersection

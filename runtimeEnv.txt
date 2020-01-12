@@ -1,0 +1,97 @@
+uname -v
+
+#40~18.04.1-Ubuntu SMP Thu Nov 14 12:06:39 UTC 2019
+
+=============
+
+lshw -short
+
+H/W path       Device      Class          Description
+=====================================================
+                           system         VC65-C1
+/0                         bus            VC65-C1
+/0/0                       memory         64KiB BIOS
+/0/2f                      memory         16GiB System Memory
+/0/2f/0                    memory         [empty]
+/0/2f/1                    memory         16GiB SODIMM DDR4 Synchronous 2400 MHz (0.4 ns)
+/0/39                      memory         384KiB L1 cache
+/0/3a                      memory         1536KiB L2 cache
+/0/3b                      memory         12MiB L3 cache
+/0/3c                      processor      Intel(R) Core(TM) i7-8700T CPU @ 2.40GHz
+/0/100                     bridge         8th Gen Core Processor Host Bridge/DRAM Registers
+/0/100/2                   display        Intel Corporation
+/0/100/12                  generic        Cannon Lake PCH Thermal Controller
+/0/100/14                  bus            Cannon Lake PCH USB 3.1 xHCI Host Controller
+/0/100/14/0    usb1        bus            xHCI Host Controller
+/0/100/14/0/5              input          ELECOM Wired Keyboard
+/0/100/14/0/6              input          PTZ-630
+/0/100/14/0/7              generic        USB2.0-CRW
+/0/100/14/0/e              communication  Bluetooth wireless interface
+/0/100/14/1    usb2        bus            xHCI Host Controller
+/0/100/14.2                memory         RAM memory
+/0/100/14.3    wlo1        network        Wireless-AC 9560 [Jefferson Peak]
+/0/100/16                  communication  Cannon Lake PCH HECI Controller
+/0/100/17                  storage        Cannon Lake PCH SATA AHCI Controller
+/0/100/1f                  bridge         Intel Corporation
+/0/100/1f.3                multimedia     Cannon Lake PCH cAVS
+/0/100/1f.4                bus            Cannon Lake PCH SMBus Controller
+/0/100/1f.5                bus            Cannon Lake PCH SPI Controller
+/0/100/1f.6    eno2        network        Ethernet Connection (7) I219-V
+/0/1           scsi0       storage        
+/0/1/0.0.0     /dev/sda    disk           128GB HFS128G39TND-N21
+/0/1/0.0.0/1               volume         99MiB Windows FAT volume
+/0/1/0.0.0/2   /dev/sda2   volume         15MiB reserved partition
+/0/1/0.0.0/3   /dev/sda3   volume         83GiB Windows NTFS volume
+/0/1/0.0.0/4   /dev/sda4   volume         499MiB Windows NTFS volume
+/0/1/0.0.0/5   /dev/sda5   volume         35GiB EXT4 volume
+/0/2           scsi2       storage        
+/0/2/0.0.0     /dev/sdb    disk           500GB ST500LM034-2GH17
+/0/2/0.0.0/1   /dev/sdb1   volume         463GiB EXT4 volume
+/0/2/0.0.0/2   /dev/sdb2   volume         499MiB Windows FAT volume
+/0/3           scsi5       storage        
+/0/3/0.0.0     /dev/cdrom  disk           BD-RE BU50N
+/1                         power          To Be Filled By O.E.M.
+
+=============
+
+lscpu
+
+Architecture:        x86_64
+CPU op-mode(s):      32-bit, 64-bit
+Byte Order:          Little Endian
+CPU(s):              12
+On-line CPU(s) list: 0-11
+Thread(s) per core:  2
+Core(s) per socket:  6
+Socket(s):           1
+NUMA node(s):        1
+Vendor ID:           GenuineIntel
+CPU family:          6
+Model:               158
+Model name:          Intel(R) Core(TM) i7-8700T CPU @ 2.40GHz
+Stepping:            10
+CPU MHz:             1672.330
+CPU max MHz:         4000.0000
+CPU min MHz:         800.0000
+BogoMIPS:            4800.00
+Virtualization:      VT-x
+L1d cache:           32K
+L1i cache:           32K
+L2 cache:            256K
+L3 cache:            12288K
+NUMA node0 CPU(s):   0-11
+Flags:               fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc art arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf tsc_known_freq pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch cpuid_fault epb invpcid_single pti ssbd ibrs ibpb stibp tpr_shadow vnmi flexpriority ept vpid ept_ad fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm mpx rdseed adx smap clflushopt intel_pt xsaveopt xsavec xgetbv1 xsaves dtherm ida arat pln pts hwp hwp_notify hwp_act_window hwp_epp md_clear flush_l1d
+
+=============
+
+gcc -v
+
+Using built-in specs.
+COLLECT_GCC=gcc
+COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper
+OFFLOAD_TARGET_NAMES=nvptx-none
+OFFLOAD_TARGET_DEFAULT=1
+Target: x86_64-linux-gnu
+Configured with: ../src/configure -v --with-pkgversion='Ubuntu 7.4.0-1ubuntu1~18.04.1' --with-bugurl=file:///usr/share/doc/gcc-7/README.Bugs --enable-languages=c,ada,c++,go,brig,d,fortran,objc,obj-c++ --prefix=/usr --with-gcc-major-version-only --program-suffix=-7 --program-prefix=x86_64-linux-gnu- --enable-shared --enable-linker-build-id --libexecdir=/usr/lib --without-included-gettext --enable-threads=posix --libdir=/usr/lib --enable-nls --with-sysroot=/ --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --with-default-libstdcxx-abi=new --enable-gnu-unique-object --disable-vtable-verify --enable-libmpx --enable-plugin --enable-default-pie --with-system-zlib --with-target-system-zlib --enable-objc-gc=auto --enable-multiarch --disable-werror --with-arch-32=i686 --with-abi=m64 --with-multilib-list=m32,m64,mx32 --enable-multilib --with-tune=generic --enable-offload-targets=nvptx-none --without-cuda-driver --enable-checking=release --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu
+Thread model: posix
+gcc version 7.4.0 (Ubuntu 7.4.0-1ubuntu1~18.04.1) 

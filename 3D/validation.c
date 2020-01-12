@@ -33,7 +33,7 @@ typedef struct {
 // Validation function
 // Takes two Frame definition as input, run the intersection test on 
 // them with FMB and SAT, and check the results are identical
-void Validation3D(
+void ValidationOnePair3D(
   const Param3D paramP,
   const Param3D paramQ) {
 
@@ -185,7 +185,7 @@ void Validate3D(void) {
     if (fabs(detP) > EPSILON && fabs(detQ) > EPSILON) {
 
       // Run the validation on the two Frames
-      Validation3D(
+      ValidationOnePair3D(
         paramP,
         paramQ);
 

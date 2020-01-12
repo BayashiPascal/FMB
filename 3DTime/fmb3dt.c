@@ -313,7 +313,7 @@ bool FMBTestIntersection3DTime(
   if (Y[2] < neg(M[2][0]) + neg(M[2][1]) + neg(M[2][2]) + neg(M[2][3]))
     return false;
 
-  // Variable to memorise the nb of rows in the system
+  // Variable to memorize the nb of rows in the system
   int nbRows = 3;
 
   if (that->type == FrameCuboid) {
@@ -547,7 +547,7 @@ bool FMBTestIntersection3DTime(
     nbRowsPPP,
     &bdgBoxLocal);
 
-  // If the bounds are inconstent
+  // If the bounds are inconsistent
   if (bdgBoxLocal.min[FOR_VAR] >= bdgBoxLocal.max[FOR_VAR]) {
 
     // The two Frames are not in intersection
