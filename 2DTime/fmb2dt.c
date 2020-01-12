@@ -68,7 +68,7 @@ bool ElimVar2DTime(
     int* const nbRemainRows) {
 
   // Initialize the number of rows in the result system
-  *nbRemainRows = 0;
+  int nbResRows = 0;
   
   // First we process the rows where the eliminated variable is not null
   
@@ -78,66 +78,73 @@ bool ElimVar2DTime(
        ++iRow) {
 
     // Shortcuts
-    int sgnMIRowIVar = sgn(M[iRow][iVar]);
     double fabsMIRowIVar = fabs(M[iRow][iVar]);
-    double YIRowDivideByFabsMIRowIVar = Y[iRow] / fabsMIRowIVar;
 
-    // For each following rows
-    for (int jRow = iRow + 1; 
-         jRow < nbRows; 
-         ++jRow) {
+    // If the coefficient for the eliminated vairable is not null
+    // in this row
+    if (fabsMIRowIVar > EPSILON) {
 
-      // If coefficients of the eliminated variable in the two rows have
-      // different signs and are not null
-      if (sgnMIRowIVar != sgn(M[jRow][iVar]) && 
-          fabsMIRowIVar > EPSILON && 
-          fabs(M[jRow][iVar]) > EPSILON) {
+      // Shortcuts
+      int sgnMIRowIVar = sgn(M[iRow][iVar]);
+      double YIRowDivideByFabsMIRowIVar = Y[iRow] / fabsMIRowIVar;
 
-        // Declare a variable to memorize the sum of the negative 
-        // coefficients in the row
-        double sumNegCoeff = 0.0;
-        
-        // Add the sum of the two normed (relative to the eliminated
-        // variable) rows into the result system. This actually
-        // eliminate the variable while keeping the constraints on
-        // others variables
-        for (int iCol = 0, jCol = 0; 
-             iCol < nbCols; 
-             ++iCol ) {
+      // For each following rows
+      for (int jRow = iRow + 1; 
+           jRow < nbRows; 
+           ++jRow) {
 
-          if (iCol != iVar) {
+        // If coefficients of the eliminated variable in the two rows have
+        // different signs and are not null
+        if (sgnMIRowIVar != sgn(M[jRow][iVar]) && 
+            fabs(M[jRow][iVar]) > EPSILON) {
 
-            Mp[*nbRemainRows][jCol] = 
-              M[iRow][iCol] / fabsMIRowIVar + 
-              M[jRow][iCol] / fabs(M[jRow][iVar]);
+          // Declare a variable to memorize the sum of the negative 
+          // coefficients in the row
+          double sumNegCoeff = 0.0;
+          
+          // Add the sum of the two normed (relative to the eliminated
+          // variable) rows into the result system. This actually
+          // eliminate the variable while keeping the constraints on
+          // others variables
+          for (int iCol = 0, jCol = 0; 
+               iCol < nbCols; 
+               ++iCol ) {
 
-            // Update the sum of the negative coefficient
-            sumNegCoeff += neg(Mp[*nbRemainRows][jCol]);
+            if (iCol != iVar) {
 
-            // Increment the number of columns in the new inequality
-            ++jCol;
+              Mp[nbResRows][jCol] = 
+                M[iRow][iCol] / fabsMIRowIVar + 
+                M[jRow][iCol] / fabs(M[jRow][iVar]);
+
+              // Update the sum of the negative coefficient
+              sumNegCoeff += neg(Mp[nbResRows][jCol]);
+
+              // Increment the number of columns in the new inequality
+              ++jCol;
+
+            }
 
           }
 
+          // Update the right side of the inequality
+          Yp[nbResRows] = 
+            YIRowDivideByFabsMIRowIVar +
+            Y[jRow] / fabs(M[jRow][iVar]);
+
+          // If the right side of the inequality if lower than the sum of 
+          // negative coefficients in the row
+          // (Add epsilon for numerical imprecision)
+          if (Yp[nbResRows] < sumNegCoeff - EPSILON) {
+
+            // Given that X is in [0,1], the system is inconsistent
+            return true;
+
+          }
+
+          // Increment the nb of rows into the result system
+          ++nbResRows;
+
         }
-
-        // Update the right side of the inequality
-        Yp[*nbRemainRows] = 
-          YIRowDivideByFabsMIRowIVar +
-          Y[jRow] / fabs(M[jRow][iVar]);
-
-        // If the right side of the inequality if lower than the sum of 
-        // negative coefficients in the row
-        // (Add epsilon for numerical imprecision)
-        if (Yp[*nbRemainRows] < sumNegCoeff - EPSILON) {
-
-          // Given that X is in [0,1], the system is inconsistent
-          return true;
-
-        }
-
-        // Increment the nb of rows into the result system
-        ++(*nbRemainRows);
 
       }
 
@@ -161,7 +168,7 @@ bool ElimVar2DTime(
     if (fabs(MiRow[iVar]) < EPSILON) {
 
       // Shortcut
-      double* MpnbRemainRows = Mp[*nbRemainRows];
+      double* MpnbResRows = Mp[nbResRows];
 
       // Copy this row into the result system excluding the eliminated
       // variable
@@ -171,7 +178,7 @@ bool ElimVar2DTime(
 
         if (iCol != iVar) {
 
-          MpnbRemainRows[jCol] = MiRow[iCol];
+          MpnbResRows[jCol] = MiRow[iCol];
 
           ++jCol;
 
@@ -179,14 +186,17 @@ bool ElimVar2DTime(
 
       }
 
-      Yp[*nbRemainRows] = Y[iRow];
+      Yp[nbResRows] = Y[iRow];
 
       // Increment the nb of rows into the result system
-      ++(*nbRemainRows);
+      ++nbResRows;
 
     }
 
   }
+
+  // Memorize the number of rows in the result system
+  *nbRemainRows = nbResRows;
 
   // If we reach here the system is not inconsistent
   return false;
@@ -302,30 +312,8 @@ bool FMBTestIntersection2DTime(
   if (Y[1] < neg(M[1][0]) + neg(M[1][1]) + neg(M[1][2]))
     return false;
 
-  // -X_i <= 0.0
-  M[2][0] = -1.0;
-  M[2][1] = 0.0;
-  M[2][2] = 0.0;
-  Y[2] = 0.0;
-
-  M[3][0] = 0.0;
-  M[3][1] = -1.0;
-  M[3][2] = 0.0;
-  Y[3] = 0.0;
-
-  // 0.0 <= t <= 1.0
-  M[4][0] = 0.0;
-  M[4][1] = 0.0;
-  M[4][2] = 1.0;
-  Y[4] = 1.0;
-
-  M[5][0] = 0.0;
-  M[5][1] = 0.0;
-  M[5][2] = -1.0;
-  Y[5] = 0.0;
-
-  // Variable to memorize the nb of rows in the system
-  int nbRows = 6;
+  // Variable to memorise the nb of rows in the system
+  int nbRows = 2;
 
   if (that->type == FrameCuboid) {
 
@@ -387,6 +375,32 @@ bool FMBTestIntersection2DTime(
     ++nbRows;
 
   }
+
+  // -X_i <= 0.0
+  M[nbRows][0] = -1.0;
+  M[nbRows][1] = 0.0;
+  M[nbRows][2] = 0.0;
+  Y[nbRows] = 0.0;
+  ++nbRows;
+
+  M[nbRows][0] = 0.0;
+  M[nbRows][1] = -1.0;
+  M[nbRows][2] = 0.0;
+  Y[nbRows] = 0.0;
+  ++nbRows;
+
+  // 0.0 <= t <= 1.0
+  M[nbRows][0] = 0.0;
+  M[nbRows][1] = 0.0;
+  M[nbRows][2] = 1.0;
+  Y[nbRows] = 1.0;
+  ++nbRows;
+
+  M[nbRows][0] = 0.0;
+  M[nbRows][1] = 0.0;
+  M[nbRows][2] = -1.0;
+  Y[nbRows] = 0.0;
+  ++nbRows;
 
   // Solve the system
   

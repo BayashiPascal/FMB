@@ -10,6 +10,7 @@
 \contentsline {subsection}{\numberline {3.1}2D static}{15}
 \contentsline {subsection}{\numberline {3.2}3D static}{21}
 \contentsline {subsection}{\numberline {3.3}2D dynamic}{28}
+<<<<<<< HEAD
 \contentsline {subsection}{\numberline {3.4}3D dynamic}{35}
 \contentsline {section}{\numberline {4}Implementation of the algorithms in C}{43}
 \contentsline {subsection}{\numberline {4.1}Frames}{43}
@@ -18,11 +19,22 @@
 \contentsline {subsection}{\numberline {4.2}FMB}{68}
 \contentsline {subsubsection}{\numberline {4.2.1}2D static}{68}
 \contentsline {subsubsection}{\numberline {4.2.2}3D static}{76}
+=======
+\contentsline {subsection}{\numberline {3.4}3D dynamic}{34}
+\contentsline {section}{\numberline {4}Implementation of the algorithms in C}{42}
+\contentsline {subsection}{\numberline {4.1}Frames}{43}
+\contentsline {subsubsection}{\numberline {4.1.1}Header}{43}
+\contentsline {subsubsection}{\numberline {4.1.2}Body}{46}
+\contentsline {subsection}{\numberline {4.2}FMB}{67}
+\contentsline {subsubsection}{\numberline {4.2.1}2D static}{67}
+\contentsline {subsubsection}{\numberline {4.2.2}3D static}{75}
+>>>>>>> test_optim
 \contentsline {subsubsection}{\numberline {4.2.3}2D dynamic}{85}
 \contentsline {subsubsection}{\numberline {4.2.4}3D dynamic}{95}
 \contentsline {section}{\numberline {5}Minimal example of use}{106}
 \contentsline {subsection}{\numberline {5.1}2D static}{106}
 \contentsline {subsection}{\numberline {5.2}3D static}{108}
+<<<<<<< HEAD
 \contentsline {subsection}{\numberline {5.3}2D dynamic}{109}
 \contentsline {subsection}{\numberline {5.4}3D dynamic}{110}
 \contentsline {section}{\numberline {6}Unit tests}{112}
@@ -71,3 +83,52 @@
 \contentsline {subsubsection}{\numberline {10.3.3}2D dynamic}{263}
 \contentsline {subsubsection}{\numberline {10.3.4}3D dynamic}{264}
 \contentsline {subsubsection}{\numberline {10.3.5}Doc}{265}
+=======
+\contentsline {subsection}{\numberline {5.3}2D dynamic}{110}
+\contentsline {subsection}{\numberline {5.4}3D dynamic}{111}
+\contentsline {section}{\numberline {6}Unit tests}{112}
+\contentsline {subsection}{\numberline {6.1}Code}{112}
+\contentsline {subsubsection}{\numberline {6.1.1}2D static}{112}
+\contentsline {subsubsection}{\numberline {6.1.2}3D static}{116}
+\contentsline {subsubsection}{\numberline {6.1.3}2D dynamic}{119}
+\contentsline {subsubsection}{\numberline {6.1.4}3D dynamic}{123}
+\contentsline {subsection}{\numberline {6.2}Results}{126}
+\contentsline {subsubsection}{\numberline {6.2.1}2D static}{126}
+\contentsline {subsubsection}{\numberline {6.2.2}3D static}{130}
+\contentsline {subsubsection}{\numberline {6.2.3}2D dynamic}{133}
+\contentsline {subsubsection}{\numberline {6.2.4}3D dynamic}{134}
+\contentsline {section}{\numberline {7}Validation against SAT}{136}
+\contentsline {subsection}{\numberline {7.1}Code}{136}
+\contentsline {subsubsection}{\numberline {7.1.1}2D static}{136}
+\contentsline {subsubsection}{\numberline {7.1.2}3D static}{139}
+\contentsline {subsubsection}{\numberline {7.1.3}2D dynamic}{143}
+\contentsline {subsubsection}{\numberline {7.1.4}3D dynamic}{146}
+\contentsline {subsection}{\numberline {7.2}Results}{150}
+\contentsline {subsubsection}{\numberline {7.2.1}Failures}{150}
+\contentsline {subsubsection}{\numberline {7.2.2}2D static}{151}
+\contentsline {subsubsection}{\numberline {7.2.3}2D dynamic}{151}
+\contentsline {subsubsection}{\numberline {7.2.4}3D static}{151}
+\contentsline {subsubsection}{\numberline {7.2.5}3D dynamic}{151}
+\contentsline {section}{\numberline {8}Qualification against SAT}{151}
+\contentsline {subsection}{\numberline {8.1}Code}{151}
+\contentsline {subsubsection}{\numberline {8.1.1}2D static}{151}
+\contentsline {subsubsection}{\numberline {8.1.2}3D static}{162}
+\contentsline {subsubsection}{\numberline {8.1.3}2D dynamic}{173}
+\contentsline {subsubsection}{\numberline {8.1.4}3D dynamic}{184}
+\contentsline {subsection}{\numberline {8.2}Results}{194}
+\contentsline {subsubsection}{\numberline {8.2.1}2D static}{194}
+\contentsline {subsubsection}{\numberline {8.2.2}3D static}{199}
+\contentsline {subsubsection}{\numberline {8.2.3}2D dynamic}{204}
+\contentsline {subsubsection}{\numberline {8.2.4}3D dynamic}{209}
+\contentsline {section}{\numberline {9}Conclusion}{215}
+\contentsline {section}{\numberline {10}Annex}{215}
+\contentsline {subsection}{\numberline {10.1}Runtime environment}{215}
+\contentsline {subsection}{\numberline {10.2}SAT implementation}{216}
+\contentsline {subsubsection}{\numberline {10.2.1}Header}{216}
+\contentsline {subsubsection}{\numberline {10.2.2}Body}{217}
+\contentsline {subsection}{\numberline {10.3}Makefile}{237}
+\contentsline {subsubsection}{\numberline {10.3.1}2D static}{239}
+\contentsline {subsubsection}{\numberline {10.3.2}3D static}{240}
+\contentsline {subsubsection}{\numberline {10.3.3}2D dynamic}{241}
+\contentsline {subsubsection}{\numberline {10.3.4}3D dynamic}{242}
+>>>>>>> test_optim

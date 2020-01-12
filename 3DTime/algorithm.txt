@@ -242,47 +242,48 @@ THD_VAR = 2
 FOR_VAR = 3
 
 FUNCTION ElimVar3DTime(iVar, M, Y, nbRows, nbCols, Mp, Yp, nbRemainRows)
-  nbRemainRows = 0
+  nbRemainRows = 0 
   FOR iRow = 0 TO (nbRows - 2)
-    FOR jRow = (iRow + 1) TO (nbRows - 1)
-      IF Sgn(M[iRow][iVar]) <> Sgn(M[jRow][iVar]) AND 
-         M[iRow][iVar] <> 0.0 AND 
-         M[jRow][iVar] <> 0.0
-        sumNegCoeff = 0.0
-        jCol = 0
-        FOR iCol = 0 TO (nbCols - 1)
-          IF iCol <> iVar
-            Mp[nbRemainRows][jCol] = 
-              M[iRow][iCol] / fabs(M[iRow][iVar]) + 
-              M[jRow][iCol] / fabs(M[jRow][iVar])
-            sumNegCoeff = sumNegCoeff + neg(Mp[nbRemainRows][jCol])
-            jCol = jCol + 1
+    IF M[iRow][iVar] <> 0.0
+      FOR jRow = (iRow + 1) TO (nbRows - 1)
+        IF sgn(M[iRow][iVar]) <> sgn(M[jRow][iVar]) AND 
+            M[jRow][iVar] <> 0.0
+          sumNegCoeff = 0.0 
+          jCol = 0
+          FOR iCol = 0 TO (nbCols - 1)
+            IF iCol <> iVar
+              Mp[nbRemainRows][jCol] = 
+                M[iRow][iCol] / fabs(M[iRow][iVar]) + 
+                M[jRow][iCol] / fabs(M[jRow][iVar]) 
+              sumNegCoeff = sumNegCoeff + neg(Mp[nbRemainRows][jCol]) 
+              jCol = jCol + 1 
+            END IF
+          END FOR
+          Yp[nbRemainRows] = 
+            Y[iRow] / fabs(M[iRow][iVar]) +
+            Y[jRow] / fabs(M[jRow][iVar]) 
+          IF Yp[nbRemainRows] < sumNegCoeff
+            RETURN TRUE 
           END IF
-        END FOR
-        Yp[nbRemainRows] = 
-          Y[iRow] / fabs(M[iRow][iVar]) +
-          Y[jRow] / fabs(M[jRow][iVar])
-        IF Yp[nbRemainRows] < sumNegCoeff
-          RETURN TRUE
+          nbRemainRows = nbRemainRows + 1 
         END IF
-        nbRemainRows = nbRemainRows + 1
-      END IF
-    END FOR
+      END FOR
+    END IF
   END FOR
   FOR iRow = 0 TO (nbRows - 1)
     IF M[iRow][iVar] == 0.0
       jCol = 0
       FOR iCol = 0 TO (nbCols - 1)
         IF iCol <> iVar
-          Mp[nbRemainRows][jCol] = M[iRow][iCol]
+          Mp[nbRemainRows][jCol] = M[iRow][iCol] 
           jCol = jCol + 1
         END IF
       END FOR
-      Yp[nbRemainRows] = Y[iRow]
-      nbRemainRows = nbRemainRows + 1
+      Yp[nbRemainRows] = Y[iRow] 
+      nbRemainRows = nbRemainRows + 1 
     END IF
   END FOR
-  RETURN FALSE
+  RETURN FALSE 
 END FUNCTION
 
 FUNCTION GetBound3DTime(iVar, M, Y, nbRows, bdgBox)

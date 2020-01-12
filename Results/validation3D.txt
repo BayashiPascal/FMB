@@ -1,3 +1,3 @@
 ===== 3D static ======
 Validation3D has succeed.
-Tested 314452 intersections and 1685546 no intersections
+Tested 315990 intersections and 1684010 no intersections
