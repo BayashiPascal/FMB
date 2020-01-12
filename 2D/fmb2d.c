@@ -77,14 +77,14 @@ bool ElimVar2D(
        ++iRow) {
 
     // Shortcuts
-    double fabsMIRowIVar = fabs(M[iRow][iVar]);
+    double fabsMIRowIVar = fabs(M[iRow][0]);
 
     // If the coefficient for the eliminated vairable is not null
     // in this row
     if (fabsMIRowIVar > EPSILON) {
 
       // Shortcuts
-      int sgnMIRowIVar = sgn(M[iRow][iVar]);
+      int sgnMIRowIVar = sgn(M[iRow][0]);
       double YIRowDivideByFabsMIRowIVar = Y[iRow] / fabsMIRowIVar;
 
       // For each following rows
@@ -94,8 +94,8 @@ bool ElimVar2D(
 
         // If coefficients of the eliminated variable in the two rows have
         // different signs and are not null
-        if (sgnMIRowIVar != sgn(M[jRow][iVar]) && 
-            fabs(M[jRow][iVar]) > EPSILON) {
+        if (sgnMIRowIVar != sgn(M[jRow][0]) && 
+            fabs(M[jRow][0]) > EPSILON) {
 
           // Declare a variable to memorize the sum of the negative 
           // coefficients in the row
@@ -105,30 +105,23 @@ bool ElimVar2D(
           // variable) rows into the result system. This actually
           // eliminate the variable while keeping the constraints on
           // others variables
-          for (int iCol = 0, jCol = 0; 
+          for (int iCol = 1; 
                iCol < nbCols; 
                ++iCol ) {
 
-            if (iCol != iVar) {
+            Mp[nbResRows][iCol - 1] = 
+              M[iRow][iCol] / fabsMIRowIVar + 
+              M[jRow][iCol] / fabs(M[jRow][0]);
 
-              Mp[nbResRows][jCol] = 
-                M[iRow][iCol] / fabsMIRowIVar + 
-                M[jRow][iCol] / fabs(M[jRow][iVar]);
-
-              // Update the sum of the negative coefficient
-              sumNegCoeff += neg(Mp[nbResRows][jCol]);
-
-              // Increment the number of columns in the new inequality
-              ++jCol;
-
-            }
+            // Update the sum of the negative coefficient
+            sumNegCoeff += neg(Mp[nbResRows][iCol - 1]);
 
           }
 
           // Update the right side of the inequality
           Yp[nbResRows] = 
             YIRowDivideByFabsMIRowIVar +
-            Y[jRow] / fabs(M[jRow][iVar]);
+            Y[jRow] / fabs(M[jRow][0]);
 
           // If the right side of the inequality if lower than the sum of 
           // negative coefficients in the row
@@ -164,24 +157,18 @@ bool ElimVar2D(
 
     // If the coefficient of the eliminated variable is null on
     // this row
-    if (fabs(MiRow[iVar]) < EPSILON) {
+    if (fabs(MiRow[0]) < EPSILON) {
 
       // Shortcut
       double* MpnbResRows = Mp[nbResRows];
 
       // Copy this row into the result system excluding the eliminated
       // variable
-      for (int iCol = 0, jCol = 0; 
+      for (int iCol = 1; 
            iCol < nbCols; 
            ++iCol) {
 
-        if (iCol != iVar) {
-
-          MpnbResRows[jCol] = MiRow[iCol];
-
-          ++jCol;
-
-        }
+        MpnbResRows[iCol - 1] = MiRow[iCol];
 
       }
 
@@ -436,36 +423,71 @@ bool FMBTestIntersection2D(
 
   }
 
-  // Now starts again from the initial systems and eliminate the 
-  // second variable to get the bounds of the first variable
-  // No need to check for consistency because we already know here
-  // that the Frames are intersecting and the system is consistent
-  inconsistency = 
-    ElimVar2D(
-      SND_VAR,
-      M, 
-      Y, 
-      nbRows, 
-      2,
-      Mp, 
-      Yp, 
-      &nbRowsP);
+  // Get the bounds of the first variable from the bounds of the
+  // second one
+  
+  int iVar = FST_VAR;
+  
+  // Initialize the bounds
+  bdgBoxLocal.min[iVar] = 0.0;
+  bdgBoxLocal.max[iVar] = 1.0;
 
-  // Get the bounds for the remaining first variable
-  GetBound2D(
-    FST_VAR,
-    Mp,
-    Yp,
-    nbRowsP,
-    &bdgBoxLocal);
+  // Loop on the rows
+  for (int iRow = 0;
+       iRow < nbRows;
+       ++iRow) {
 
-  // If the user requested the resulting bounding box
-  if (bdgBox != NULL) {
+    //Shortcut
+    double fabsMIRowIVar = fabs(M[iRow][0]);
 
-    // Memorize the result
-    *bdgBox = bdgBoxLocal;
+    // If the coefficient of the first variable on this row is not null
+    if (fabsMIRowIVar > EPSILON) {
+
+      // Declare two variables to memorize the min and max of the
+      // variable on this row
+      double min = -1.0 * Y[iRow];
+      double max = Y[iRow];
+
+      // Loop on columns except the first one which is the one of the 
+      // first variable
+      for (int iCol = 1;
+           iCol < 2;
+           ++iCol) {
+        
+        if (M[iRow][iCol] > EPSILON) {
+
+          min += M[iRow][iCol] * bdgBoxLocal.max[iCol];
+          max -= M[iRow][iCol] * bdgBoxLocal.max[iCol];
+
+        } else if (M[iRow][iCol] < EPSILON) {
+
+          min += M[iRow][iCol] * bdgBoxLocal.min[iCol];
+          max -= M[iRow][iCol] * bdgBoxLocal.min[iCol];
+
+        }
+        
+      }
+      
+      min /= -1.0 * M[iRow][0];
+      max /= M[iRow][0];
+
+      if (bdgBoxLocal.min[iVar] < min) {
+
+        bdgBoxLocal.min[iVar] = min;
+
+      }
+      if (bdgBoxLocal.max[iVar] > max) {
+
+        bdgBoxLocal.max[iVar] = max;
+
+      }
+
+    }
 
   }
+
+  // Memorize the result
+  *bdgBox = bdgBoxLocal;
 
   // If we've reached here the two Frames are intersecting
   return true;

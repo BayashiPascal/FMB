@@ -127,6 +127,9 @@ void UnitTest2D(
 
           // Display information
           printf("Succeed\n");
+          AABB2DPrint(&bdgBox);
+          printf("\n");
+          
 
         // Else, the bounding box wasn't the expected one
         } else {
@@ -138,7 +141,6 @@ void UnitTest2D(
           printf("\n");
           printf("     Got : ");
           AABB2DPrint(&bdgBox);
-          printf("\n");
 
           // Terminate the unit tests
           exit(0);
@@ -150,7 +152,7 @@ void UnitTest2D(
       } else {
 
         // Display information
-        printf(" Succeed\n");
+        printf(" Succeed (no inter)\n");
 
       }
 
