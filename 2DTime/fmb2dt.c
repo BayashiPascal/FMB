@@ -312,30 +312,8 @@ bool FMBTestIntersection2DTime(
   if (Y[1] < neg(M[1][0]) + neg(M[1][1]) + neg(M[1][2]))
     return false;
 
-  // -X_i <= 0.0
-  M[2][0] = -1.0;
-  M[2][1] = 0.0;
-  M[2][2] = 0.0;
-  Y[2] = 0.0;
-
-  M[3][0] = 0.0;
-  M[3][1] = -1.0;
-  M[3][2] = 0.0;
-  Y[3] = 0.0;
-
-  // 0.0 <= t <= 1.0
-  M[4][0] = 0.0;
-  M[4][1] = 0.0;
-  M[4][2] = 1.0;
-  Y[4] = 1.0;
-
-  M[5][0] = 0.0;
-  M[5][1] = 0.0;
-  M[5][2] = -1.0;
-  Y[5] = 0.0;
-
   // Variable to memorise the nb of rows in the system
-  int nbRows = 6;
+  int nbRows = 2;
 
   if (that->type == FrameCuboid) {
 
@@ -397,6 +375,32 @@ bool FMBTestIntersection2DTime(
     ++nbRows;
 
   }
+
+  // -X_i <= 0.0
+  M[nbRows][0] = -1.0;
+  M[nbRows][1] = 0.0;
+  M[nbRows][2] = 0.0;
+  Y[nbRows] = 0.0;
+  ++nbRows;
+
+  M[nbRows][0] = 0.0;
+  M[nbRows][1] = -1.0;
+  M[nbRows][2] = 0.0;
+  Y[nbRows] = 0.0;
+  ++nbRows;
+
+  // 0.0 <= t <= 1.0
+  M[nbRows][0] = 0.0;
+  M[nbRows][1] = 0.0;
+  M[nbRows][2] = 1.0;
+  Y[nbRows] = 1.0;
+  ++nbRows;
+
+  M[nbRows][0] = 0.0;
+  M[nbRows][1] = 0.0;
+  M[nbRows][2] = -1.0;
+  Y[nbRows] = 0.0;
+  ++nbRows;
 
   // Solve the system
   
