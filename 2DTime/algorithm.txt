@@ -224,34 +224,33 @@ THD_VAR = 2
 FUNCTION ElimVar2DTime(iVar, M, Y, nbRows, nbCols, Mp, Yp, nbRemainRows)
   nbRemainRows = 0 
   FOR iRow = 0..(nbRows - 2)
-    FOR jRow = (iRow + 1)..(nbRows - 1)
-      IF sgn(M[iRow][iVar])  <> sgn(M[jRow][iVar]) AND 
-          M[iRow][iVar] <> 0.0 AND 
-          M[jRow][iVar] <> 0.0
-        sumNegCoeff = 0.0 
-        jCol = 0
-        FOR iCol = 0..(nbCols - 1)
-          IF iCol <> iVar
-            Mp[nbRemainRows][jCol] = 
-              M[iRow][iCol] / fabs(M[iRow][iVar]) + 
-              M[jRow][iCol] / fabs(M[jRow][iVar]) 
-            sumNegCoeff += neg(Mp[nbRemainRows][jCol]) 
-            jCol = jCol + 1
+    IF M[iRow][iVar] <> 0.0
+      FOR jRow = (iRow + 1)..(nbRows - 1)
+        IF sgn(M[iRow][iVar]) <> sgn(M[jRow][iVar]) AND 
+            M[jRow][iVar] <> 0.0
+          sumNegCoeff = 0.0 
+          jCol = 0
+          FOR iCol = 0..(nbCols - 1)
+            IF iCol <> iVar
+              Mp[nbRemainRows][jCol] = 
+                M[iRow][iCol] / fabs(M[iRow][iVar]) + 
+                M[jRow][iCol] / fabs(M[jRow][iVar]) 
+              sumNegCoeff = sumNegCoeff + neg(Mp[nbRemainRows][jCol]) 
+              jCol = jCol + 1 
+            END IF
+          END FOR
+          Yp[nbRemainRows] = 
+            Y[iRow] / fabs(M[iRow][iVar]) +
+            Y[jRow] / fabs(M[jRow][iVar]) 
+          IF Yp[nbRemainRows] < sumNegCoeff
+            RETURN TRUE 
           END IF
-        END FOR
-        Yp[nbRemainRows] = 
-          Y[iRow] / fabs(M[iRow][iVar]) +
-          Y[jRow] / fabs(M[jRow][iVar]) 
-        IF Yp[nbRemainRows] < sumNegCoeff
-          RETURN TRUE 
+          nbRemainRows = nbRemainRows + 1 
         END IF
-      nbRemainRows = nbRemainRows + 1 
-      END IF
-    END FOR
+      END FOR
+    END IF
   END FOR
-  FOR (int iRow = 0  
-       iRow < nbRows  
-       ++iRow) {
+  FOR iRow = 0..(nbRows - 1)
     IF M[iRow][iVar] == 0.0
       jCol = 0
       FOR iCol = 0..(nbCols - 1)
@@ -301,23 +300,7 @@ FUNCTION FMBTestIntersection2DTime(that, tho, bdgBox)
   IF (Y[1] < neg(M[1][0]) + neg(M[1][1]) + neg(M[1][2]))
     RETURN FALSE 
   END IF
-  M[2][0] = -1.0 
-  M[2][1] = 0.0 
-  M[2][2] = 0.0 
-  Y[2] = 0.0 
-  M[3][0] = 0.0 
-  M[3][1] = -1.0 
-  M[3][2] = 0.0 
-  Y[3] = 0.0 
-  M[4][0] = 0.0 
-  M[4][1] = 0.0 
-  M[4][2] = 1.0 
-  Y[4] = 1.0 
-  M[5][0] = 0.0 
-  M[5][1] = 0.0 
-  M[5][2] = -1.0 
-  Y[5] = 0.0 
-  nbRows = 6
+  nbRows = 2
   IF that.type == FrameCuboid
     M[nbRows][0] = thoProj.comp[0][0] 
     M[nbRows][1] = thoProj.comp[1][0] 
@@ -364,6 +347,26 @@ FUNCTION FMBTestIntersection2DTime(that, tho, bdgBox)
     Y[nbRows] = 1.0 
     nbRows = nbRows + 1
   END IF
+  M[nbRows][0] = -1.0 
+  M[nbRows][1] = 0.0 
+  M[nbRows][2] = 0.0 
+  Y[nbRows] = 0.0 
+  nbRows = nbRows + 1
+  M[nbRows][0] = 0.0 
+  M[nbRows][1] = -1.0 
+  M[nbRows][2] = 0.0 
+  Y[nbRows] = 0.0 
+  nbRows = nbRows + 1
+  M[nbRows][0] = 0.0 
+  M[nbRows][1] = 0.0 
+  M[nbRows][2] = 1.0 
+  Y[nbRows] = 1.0 
+  nbRows = nbRows + 1
+  M[nbRows][0] = 0.0 
+  M[nbRows][1] = 0.0 
+  M[nbRows][2] = -1.0 
+  Y[nbRows] = 0.0 
+  nbRows = nbRows + 1
   inconsistency = 
     ElimVar2DTime(FST_VAR, M, Y, nbRows, 3, Mp, Yp, nbRowsP) 
   IF inconsistency == TRUE
