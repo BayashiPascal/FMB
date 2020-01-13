@@ -91,7 +91,7 @@ void UnitTest3D(
           &bdgBoxLocal, 
           &bdgBox);
 
-        for (int iAxis = 2; 
+        for (int iAxis = 3; 
              iAxis--;) {
 
           if (bdgBox.min[iAxis] < that->bdgBox.min[iAxis]) {
@@ -127,6 +127,8 @@ void UnitTest3D(
 
           // Display information
           printf("Succeed\n");
+          AABB3DPrint(&bdgBox);
+          printf("\n");
 
         // Else, the bounding box wasn't the expected one
         } else {
@@ -150,7 +152,7 @@ void UnitTest3D(
       } else {
 
         // Display information
-        printf(" Succeed\n");
+        printf(" Succeed (no inter)\n");
 
       }
 
@@ -477,7 +479,7 @@ void Test3D(void) {
     };
   correctBdgBox = (AABB3D) 
     {.min = {0.0, -0.5, 0.0},
-     .max = {0.5, -0.5 + 1.0 / 3.0, 0.5}
+     .max = {0.5, -1.0 / 3.0, 0.5}
     };
   UnitTest3D(
     paramP,

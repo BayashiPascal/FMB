@@ -16,14 +16,13 @@
 
 // ------------- Functions declaration -------------
 
-// Eliminate the 'iVar'-th variable in the system 'M'.X<='Y'
+// Eliminate the first variable in the system M.X<=Y
 // using the Fourier-Motzkin method and return
-// the resulting system in 'Mp' and 'Yp', and the number of rows of 
-// the resulting system in 'nbRemainRows'
+// the resulting system in Mp and Yp, and the number of rows of 
+// the resulting system in nbRemainRows
 // Return false if the system becomes inconsistent during elimination,
 // else return true
 bool ElimVar3D(
-     const int iVar, 
   const double (*M)[3], 
   const double* Y, 
      const int nbRows, 
@@ -32,33 +31,42 @@ bool ElimVar3D(
         double* Yp, 
     int* const nbRemainRows);
 
-// Get the bounds of the 'iVar'-th variable in the 'nbRows' rows
-// system 'M'.X<='Y' and store them in the 'iVar'-th axis of the
-// AABB 'bdgBox'
-// ('M' arrangement is [iRow][iCol])
-// The system is supposed to have been reduced to only one variable
-// per row, the one in argument, which can be located in a different
-// column than 'iVar'
+// Get the bounds of the iVar-th variable in the nbRows rows
+// system M.X<=Y which has been reduced to only one variable 
+// and store them in the iVar-th axis of the
+// AABB bdgBox
+// (M arrangement is [iRow][iCol])
 // May return inconsistent values (max < min), which would
 // mean the system has no solution
-void GetBound3D(
+void GetBoundLastVar3D(
      const int iVar,
   const double (*M)[3], 
   const double* Y, 
      const int nbRows, 
    AABB3D* const bdgBox);
 
+// Get the bounds of the iVar-th variable in the nbRows rows
+// system M.X<=Y where the iVar-th variable is on the first column
+// and store them in the iVar-th axis of the AABB bdgBox
+// (M arrangement is [iRow][iCol])
+void GetBoundVar3D(
+     const int iVar,
+  const double (*M)[3], 
+  const double* Y, 
+     const int nbRows, 
+     const int nbCols, 
+   AABB3D* const bdgBox);
+
 // ------------- Functions implementation -------------
 
-// Eliminate the 'iVar'-th variable in the system 'M'.X<='Y'
+// Eliminate the first variable in the system M.X<=Y
 // using the Fourier-Motzkin method and return
-// the resulting system in 'Mp' and 'Yp', and the number of rows of 
-// the resulting system in 'nbRemainRows'
-// ('M' arrangement is [iRow][iCol])
+// the resulting system in Mp and Yp, and the number of rows of 
+// the resulting system in nbRemainRows
+// (M arrangement is [iRow][iCol])
 // Return true if the system becomes inconsistent during elimination,
 // else return false
 bool ElimVar3D(
-     const int iVar, 
   const double (*M)[3], 
   const double* Y, 
      const int nbRows, 
@@ -78,15 +86,16 @@ bool ElimVar3D(
        ++iRow) {
 
     // Shortcuts
-    double fabsMIRowIVar = fabs(M[iRow][iVar]);
+    const double fabsMIRowIVar = fabs(M[iRow][0]);
 
     // If the coefficient for the eliminated vairable is not null
     // in this row
     if (fabsMIRowIVar > EPSILON) {
 
       // Shortcuts
-      int sgnMIRowIVar = sgn(M[iRow][iVar]);
-      double YIRowDivideByFabsMIRowIVar = Y[iRow] / fabsMIRowIVar;
+      const double* MiRow = M[iRow];
+      const int sgnMIRowIVar = sgn(MiRow[0]);
+      const double YIRowDivideByFabsMIRowIVar = Y[iRow] / fabsMIRowIVar;
 
       // For each following rows
       for (int jRow = iRow + 1; 
@@ -95,8 +104,12 @@ bool ElimVar3D(
 
         // If coefficients of the eliminated variable in the two rows have
         // different signs and are not null
-        if (sgnMIRowIVar != sgn(M[jRow][iVar]) && 
-            fabs(M[jRow][iVar]) > EPSILON) {
+        if (sgnMIRowIVar != sgn(M[jRow][0]) && 
+            fabs(M[jRow][0]) > EPSILON) {
+
+          // Shortcuts
+          const double* MjRow = M[jRow];
+          const double fabsMjRow = fabs(MjRow[0]);
 
           // Declare a variable to memorize the sum of the negative 
           // coefficients in the row
@@ -106,30 +119,23 @@ bool ElimVar3D(
           // variable) rows into the result system. This actually
           // eliminate the variable while keeping the constraints on
           // others variables
-          for (int iCol = 0, jCol = 0; 
+          for (int iCol = 1; 
                iCol < nbCols; 
                ++iCol ) {
 
-            if (iCol != iVar) {
+            Mp[nbResRows][iCol - 1] = 
+              MiRow[iCol] / fabsMIRowIVar + 
+              MjRow[iCol] / fabsMjRow;
 
-              Mp[nbResRows][jCol] = 
-                M[iRow][iCol] / fabsMIRowIVar + 
-                M[jRow][iCol] / fabs(M[jRow][iVar]);
-
-              // Update the sum of the negative coefficient
-              sumNegCoeff += neg(Mp[nbResRows][jCol]);
-
-              // Increment the number of columns in the new inequality
-              ++jCol;
-
-            }
+            // Update the sum of the negative coefficient
+            sumNegCoeff += neg(Mp[nbResRows][iCol - 1]);
 
           }
 
           // Update the right side of the inequality
           Yp[nbResRows] = 
             YIRowDivideByFabsMIRowIVar +
-            Y[jRow] / fabs(M[jRow][iVar]);
+            Y[jRow] / fabsMjRow;
 
           // If the right side of the inequality if lower than the sum of 
           // negative coefficients in the row
@@ -165,24 +171,18 @@ bool ElimVar3D(
 
     // If the coefficient of the eliminated variable is null on
     // this row
-    if (fabs(MiRow[iVar]) < EPSILON) {
+    if (fabs(MiRow[0]) < EPSILON) {
 
       // Shortcut
       double* MpnbResRows = Mp[nbResRows];
 
       // Copy this row into the result system excluding the eliminated
       // variable
-      for (int iCol = 0, jCol = 0; 
+      for (int iCol = 1; 
            iCol < nbCols; 
            ++iCol) {
 
-        if (iCol != iVar) {
-
-          MpnbResRows[jCol] = MiRow[iCol];
-
-          ++jCol;
-
-        }
+        MpnbResRows[iCol - 1] = MiRow[iCol];
 
       }
 
@@ -203,15 +203,14 @@ bool ElimVar3D(
 
 }
 
-// Get the bounds of the 'iVar'-th variable in the 'nbRows' rows
-// system 'M'.X<='Y' and store them in the 'iVar'-th axis of the
-// AABB 'bdgBox'
-// ('M' arrangement is [iRow][iCol])
-// The system is supposed to have been reduced to only one variable
-// per row, the one in argument
+// Get the bounds of the iVar-th variable in the nbRows rows
+// system M.X<=Y which has been reduced to only one variable 
+// and store them in the iVar-th axis of the
+// AABB bdgBox
+// (M arrangement is [iRow][iCol])
 // May return inconsistent values (max < min), which would
 // mean the system has no solution
-void GetBound3D(
+void GetBoundLastVar3D(
      const int iVar,
   const double (*M)[3], 
   const double* Y, 
@@ -270,16 +269,88 @@ void GetBound3D(
 
 }
 
-// Test for intersection between Frame 'that' and Frame 'tho'
+// Get the bounds of the iVar-th variable in the nbRows rows
+// system M.X<=Y where the iVar-th variable is on the first column
+// and store them in the iVar-th axis of the AABB bdgBox
+// (M arrangement is [iRow][iCol])
+void GetBoundVar3D(
+     const int iVar,
+  const double (*M)[3], 
+  const double* Y, 
+     const int nbRows, 
+     const int nbCols, 
+   AABB3D* const bdgBox) {
+
+  // Shortcuts
+  double* bdgBoxMin = bdgBox->min;
+  double* bdgBoxMax = bdgBox->max;
+  
+  // Initialize the bounds
+  bdgBoxMin[iVar] = 0.0;
+  bdgBoxMax[iVar] = 1.0;
+
+  // Loop on the rows
+  for (int iRow = 0;
+       iRow < nbRows;
+       ++iRow) {
+
+    // Shortcuts
+    const double* MIRow = M[iRow];
+    double fabsMIRowIVar = fabs(MIRow[0]);
+
+    // If the coefficient of the first variable on this row is not null
+    if (fabsMIRowIVar > EPSILON) {
+
+      // Declare two variables to memorize the min and max of the
+      // requested variable in this row
+      double min = -1.0 * Y[iRow];
+      double max = Y[iRow];
+
+      // Loop on columns except the first one which is the one of the 
+      // requested variable
+      for (int iCol = 1;
+           iCol < nbCols;
+           ++iCol) {
+
+        if (MIRow[iCol] > EPSILON) {
+          min += MIRow[iCol] * bdgBoxMin[iCol + iVar];
+          max -= MIRow[iCol] * bdgBoxMin[iCol + iVar];
+        } else if (MIRow[iCol] < EPSILON) {
+          min += MIRow[iCol] * bdgBoxMax[iCol + iVar];
+          max -= MIRow[iCol] * bdgBoxMax[iCol + iVar];
+        }
+
+      }
+      
+      min /= -1.0 * MIRow[0];
+      max /= MIRow[0];
+      if (bdgBoxMin[iVar] > min) {
+
+        bdgBoxMin[iVar] = min;
+
+      }
+      if (bdgBoxMax[iVar] < max) {
+
+        bdgBoxMax[iVar] = max;
+
+      }
+
+    }
+
+  }
+
+}
+
+// Test for intersection between Frame that and Frame tho
 // Return true if the two Frames are intersecting, else false
 // If the Frame are intersecting the AABB of the intersection
-// is stored into 'bdgBox', else 'bdgBox' is not modified
-// If 'bdgBox' is null, the result AABB is not memorized (to use if
+// is stored into bdgBox, else bdgBox is not modified
+// If bdgBox is null, the result AABB is not memorized (to use if
 // unnecessary and want to speed up the algorithm)
 // The resulting AABB may be larger than the smallest possible AABB
 // The resulting AABB of FMBTestIntersection(A,B) may be different
 // of the resulting AABB of FMBTestIntersection(B,A)
-// The resulting AABB is given in 'tho' 's local coordinates system
+// The resulting AABB is given in tho's local coordinates system
 bool FMBTestIntersection3D(
   const Frame3D* const that, 
   const Frame3D* const tho, 
@@ -425,7 +496,10 @@ bool FMBTestIntersection3D(
 
   // Declare a AABB to memorize the bounding box of the intersection
   // in the coordinates system of tho
-  AABB3D bdgBoxLocal;
+  AABB3D bdgBoxLocal = {
+    .min = {0.0, 0.0, 0.0},
+    .max = {0.0, 0.0, 0.0}
+  };
   
   // Declare variables to eliminate the first variable
   // The size of the array given in the doc is a majoring value.
@@ -441,7 +515,6 @@ bool FMBTestIntersection3D(
   // Eliminate the first variable in the original system
   bool inconsistency = 
     ElimVar3D(
-      FST_VAR,
       M, 
       Y, 
       nbRows, 
@@ -472,7 +545,6 @@ bool FMBTestIntersection3D(
   // Eliminate the second variable (which is the first in the new system)
   inconsistency = 
     ElimVar3D(
-      FST_VAR,
       Mp, 
       Yp, 
       nbRowsP, 
@@ -490,7 +562,7 @@ bool FMBTestIntersection3D(
   }
 
   // Get the bounds for the remaining third variable
-  GetBound3D(
+  GetBoundLastVar3D(
     THD_VAR,
     Mpp,
     Ypp,
@@ -505,74 +577,30 @@ bool FMBTestIntersection3D(
 
   // Else, if the bounds are consistent here it means
   // the two Frames are in intersection.
-  // If the user hasn't requested for the resulting bounding box
-  } else if (bdgBox == NULL) {
+  // If the user has requested for the resulting bounding box
+  } else if (bdgBox != NULL) {
 
-    // Immediately return true
-    return true;
+    // Get the bounds of the other variables
+    
+    GetBoundVar3D(
+       SND_VAR,
+       Mp, 
+       Yp, 
+       nbRowsP, 
+       2,
+       &bdgBoxLocal);
 
-  }
-
-  // Eliminate the third variable (which is the first in the new
-  // system)
-  inconsistency = 
-    ElimVar3D(
-      SND_VAR,
-      Mp, 
-      Yp, 
-      nbRowsP, 
-      2,
-      Mpp, 
-      Ypp, 
-      &nbRowsPP);
-
-  // Get the bounds for the remaining second variable
-  GetBound3D(
-    SND_VAR,
-    Mpp,
-    Ypp,
-    nbRowsPP,
-    &bdgBoxLocal);
-
-  // Now starts again from the initial systems and eliminate the 
-  // second and third variables to get the bounds of the first variable
-  // No need to check for consistency because we already know here
-  // that the Frames are intersecting and the system is consistent
-  inconsistency = 
-    ElimVar3D(
-      THD_VAR,
-      M, 
-      Y, 
-      nbRows, 
-      3,
-      Mp, 
-      Yp, 
-      &nbRowsP);
-
-  inconsistency = 
-    ElimVar3D(
-      SND_VAR,
-      Mp, 
-      Yp, 
-      nbRowsP, 
-      2,
-      Mpp, 
-      Ypp, 
-      &nbRowsPP);
-
-  GetBound3D(
-    FST_VAR,
-    Mpp,
-    Ypp,
-    nbRowsPP,
-    &bdgBoxLocal);
-
-  // If the user requested the resulting bounding box
-  if (bdgBox != NULL) {
+    GetBoundVar3D(
+       FST_VAR,
+       M, 
+       Y, 
+       nbRows, 
+       3,
+       &bdgBoxLocal);
 
     // Memorize the result
     *bdgBox = bdgBoxLocal;
-    
+
   }
 
   // If we've reached here the two Frames are intersecting

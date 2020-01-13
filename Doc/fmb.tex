@@ -11,6 +11,8 @@
 \usepackage{rotating}
 \usepackage{tikz}
 \usepackage{verbatim}
+\usepackage{csvsimple}
+\usepackage{adjustbox}
 \pdfgentounicode=1
 
 \begin{document}
@@ -1047,6 +1049,15 @@ In this subsection I give the results of the qualification for each case. These 
 
 \subsubsection{3D static}
 
+\begin{adjustbox}{angle=90}
+\begin{scriptsize}
+\begin{ttfamily}
+\csvautotabular{../Results/qualification3D.txt}
+\end{ttfamily}
+\end{scriptsize}
+\end{adjustbox}
+
+
 \begin{scriptsize}
 \begin{ttfamily}
 \lstinputlisting[breaklines]{../Results/qualification3D.txt}
@@ -1246,6 +1257,14 @@ In this section I introduce the Makefile used to compile the code given in the p
 \begin{scriptsize}
 \begin{ttfamily}
 \lstinputlisting[breaklines]{../Doc/Makefile}
+\end{ttfamily}
+\end{scriptsize}
+
+\subsection{Dynamic analysis}
+
+\begin{scriptsize}
+\begin{ttfamily}
+\lstinputlisting[breaklines]{../dynamicAnalysis.txt}
 \end{ttfamily}
 \end{scriptsize}
 

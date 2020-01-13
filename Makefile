@@ -1,7 +1,7 @@
 COMPILER=gcc
 OPTIMIZATION=-O3
 
-all : compile run plot getRuntimeEnvironment doc
+all : compile run plot dynamicAnalysis doc
 
 install :
 	sudo apt-get install gnuplot
@@ -127,4 +127,7 @@ doc:
 	cd Doc; make latex; cd -
 
 getRuntimeEnvironment:
-	echo "uname -v\n" > runtimeEnv.txt; uname -v >> runtimeEnv.txt; echo "\n=============\n" >> runtimeEnv.txt; echo "lshw -short\n" >> runtimeEnv.txt; sudo lshw -short >> runtimeEnv.txt; echo "\n=============\n" >> runtimeEnv.txt; echo "lscpu\n" >> runtimeEnv.txt; lscpu >> runtimeEnv.txt; echo "\n=============\n" >> runtimeEnv.txt; echo "gcc -v\n" >> runtimeEnv.txt; gcc -v 1>> runtimeEnv.txt 2>> runtimeEnv.txt 
+	echo "uname -v\n" > runtimeEnv.txt; uname -v >> runtimeEnv.txt; echo "\n=============\n" >> runtimeEnv.txt; echo "lshw -short\n" >> runtimeEnv.txt; sudo lshw -short >> runtimeEnv.txt; echo "\n=============\n" >> runtimeEnv.txt; echo "lscpu\n" >> runtimeEnv.txt; lscpu >> runtimeEnv.txt; echo "\n=============\n" >> runtimeEnv.txt; echo "$(COMPILER) -v\n" >> runtimeEnv.txt; $(COMPILER) -v 1>> runtimeEnv.txt 2>> runtimeEnv.txt 
+
+dynamicAnalysis:
+	make valgrind 1> dynamicAnalysis.txt 2> dynamicAnalysis.txt

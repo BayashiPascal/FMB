@@ -57,7 +57,7 @@ int main(int argc, char** argv) {
       &bdgBox3D);
 
     // Clip with the AABB of 'Q3D' and 'P3D' to improve results
-    for (int iAxis = 2; 
+    for (int iAxis = 3; 
          iAxis--;) {
 
       if (bdgBox3D.min[iAxis] < P3D.bdgBox.min[iAxis]) {

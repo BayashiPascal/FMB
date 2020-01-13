@@ -21,7 +21,7 @@ bool CheckAxis3DTime(
 
 // ------------- Functions implementation -------------
 
-// Test for intersection between 2D Frame 'that' and 2D Frame 'tho'
+// Test for intersection between 2D Frame that and 2D Frame tho
 // Return true if the two Frames are intersecting, else false
 bool SATTestIntersection2D(
   const Frame2D* const that, 
@@ -178,8 +178,8 @@ bool SATTestIntersection2D(
 
 }
 
-// Test for intersection between moving 2D Frame 'that' and 2D
-// Frame 'tho'
+// Test for intersection between moving 2D Frame that and 2D
+// Frame tho
 // Return true if the two Frames are intersecting, else false
 bool SATTestIntersection2DTime(
   const Frame2DTime* const that, 
@@ -370,7 +370,7 @@ bool SATTestIntersection2DTime(
 
 }
 
-// Test for intersection between 3D Frame 'that' and 3D Frame 'tho'
+// Test for intersection between 3D Frame that and 3D Frame tho
 // Return true if the two Frames are intersecting, else false
 bool SATTestIntersection3D(
   const Frame3D* const that, 
@@ -591,8 +591,8 @@ bool SATTestIntersection3D(
 
 }
 
-// Test for intersection between moving 3D Frame 'that' and 3D
-// Frame 'tho'
+// Test for intersection between moving 3D Frame that and 3D
+// Frame tho
 // Return true if the two Frames are intersecting, else false
 bool SATTestIntersection3DTime(
   const Frame3DTime* const that, 
@@ -922,8 +922,8 @@ bool SATTestIntersection3DTime(
 
 }
 
-// Check the intersection constraint for Frames 'that' and 'tho' 
-// relatively to 'axis'
+// Check the intersection constraint for Frames that and tho
+// relatively to axis
 bool CheckAxis3D(
   const Frame3D* const that,
   const Frame3D* const tho,
@@ -1062,8 +1062,8 @@ bool CheckAxis3D(
 
 }
 
-// Check the intersection constraint for Frames 'that' and 'tho' 
-// relatively to 'axis'
+// Check the intersection constraint for Frames that and tho 
+// relatively to axis
 bool CheckAxis3DTime(
   const Frame3DTime* const that,
   const Frame3DTime* const tho,

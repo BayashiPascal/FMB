@@ -58,6 +58,34 @@ int main(int argc, char** argv) {
       &bdgBox2DTimeLocal, 
       &bdgBox2DTime);
 
+    // Clip with the AABB of 'Q2DTime' and 'P2DTime' to improve results
+    for (int iAxis = 3; 
+         iAxis--;) {
+
+      if (bdgBox2DTime.min[iAxis] < P2DTime.bdgBox.min[iAxis]) {
+
+        bdgBox2DTime.min[iAxis] = P2DTime.bdgBox.min[iAxis];
+
+      }
+      if (bdgBox2DTime.max[iAxis] > P2DTime.bdgBox.max[iAxis]) {
+
+        bdgBox2DTime.max[iAxis] = P2DTime.bdgBox.max[iAxis];
+
+      }
+
+      if (bdgBox2DTime.min[iAxis] < Q2DTime.bdgBox.min[iAxis]) {
+
+        bdgBox2DTime.min[iAxis] = Q2DTime.bdgBox.min[iAxis];
+
+      }
+      if (bdgBox2DTime.max[iAxis] > Q2DTime.bdgBox.max[iAxis]) {
+
+        bdgBox2DTime.max[iAxis] = Q2DTime.bdgBox.max[iAxis];
+
+      }
+
+    }
+
     AABB2DTimePrint(&bdgBox2DTime);
     printf("\n");
 

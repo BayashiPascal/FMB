@@ -60,6 +60,34 @@ int main(int argc, char** argv) {
       &bdgBox3DTimeLocal, 
       &bdgBox3DTime);
 
+    // Clip with the AABB of 'Q3DTime' and 'P3DTime' to improve results
+    for (int iAxis = 3; 
+         iAxis--;) {
+
+      if (bdgBox3DTime.min[iAxis] < P3DTime.bdgBox.min[iAxis]) {
+
+        bdgBox3DTime.min[iAxis] = P3DTime.bdgBox.min[iAxis];
+
+      }
+      if (bdgBox3DTime.max[iAxis] > P3DTime.bdgBox.max[iAxis]) {
+
+        bdgBox3DTime.max[iAxis] = P3DTime.bdgBox.max[iAxis];
+
+      }
+
+      if (bdgBox3DTime.min[iAxis] < Q3DTime.bdgBox.min[iAxis]) {
+
+        bdgBox3DTime.min[iAxis] = Q3DTime.bdgBox.min[iAxis];
+
+      }
+      if (bdgBox3DTime.max[iAxis] > Q3DTime.bdgBox.max[iAxis]) {
+
+        bdgBox3DTime.max[iAxis] = Q3DTime.bdgBox.max[iAxis];
+
+      }
+
+    }
+
     AABB3DTimePrint(&bdgBox3DTime);
     printf("\n");
 

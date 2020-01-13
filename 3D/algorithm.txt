@@ -212,27 +212,25 @@ FST_VAR = 0
 SND_VAR = 1
 THD_VAR = 2
 
-FUNCTION ElimVar3D(iVar, M, Y, nbRows, nbCols, Mp, Yp, nbRemainRows)
+FUNCTION ElimVar3D(M, Y, nbRows, nbCols, Mp, Yp, nbRemainRows)
   nbRemainRows = 0 
   FOR iRow = 0 TO (nbRows - 2)
-    IF M[iRow][iVar] <> 0.0
+    IF M[iRow][0] <> 0.0
       FOR jRow = (iRow + 1) TO (nbRows - 1)
-        IF sgn(M[iRow][iVar]) <> sgn(M[jRow][iVar]) AND 
-            M[jRow][iVar] <> 0.0
+        IF sgn(M[iRow][0]) <> sgn(M[jRow][0]) AND 
+            M[jRow][0] <> 0.0
           sumNegCoeff = 0.0 
           jCol = 0
-          FOR iCol = 0 TO (nbCols - 1)
-            IF iCol <> iVar
-              Mp[nbRemainRows][jCol] = 
-                M[iRow][iCol] / fabs(M[iRow][iVar]) + 
-                M[jRow][iCol] / fabs(M[jRow][iVar]) 
-              sumNegCoeff = sumNegCoeff + neg(Mp[nbRemainRows][jCol]) 
-              jCol = jCol + 1 
-            END IF
+          FOR iCol = 1 TO (nbCols - 1)
+            Mp[nbRemainRows][jCol] = 
+              M[iRow][iCol] / ABS(M[iRow][0]) + 
+              M[jRow][iCol] / ABS(M[jRow][0]) 
+            sumNegCoeff = sumNegCoeff + neg(Mp[nbRemainRows][jCol]) 
+            jCol = jCol + 1 
           END FOR
           Yp[nbRemainRows] = 
-            Y[iRow] / fabs(M[iRow][iVar]) +
-            Y[jRow] / fabs(M[jRow][iVar]) 
+            Y[iRow] / ABS(M[iRow][0]) +
+            Y[jRow] / ABS(M[jRow][0]) 
           IF Yp[nbRemainRows] < sumNegCoeff
             RETURN TRUE 
           END IF
@@ -242,13 +240,11 @@ FUNCTION ElimVar3D(iVar, M, Y, nbRows, nbCols, Mp, Yp, nbRemainRows)
     END IF
   END FOR
   FOR iRow = 0 TO (nbRows - 1)
-    IF M[iRow][iVar] == 0.0
+    IF M[iRow][0] == 0.0
       jCol = 0
-      FOR iCol = 0 TO (nbCols - 1)
-        IF iCol <> iVar
-          Mp[nbRemainRows][jCol] = M[iRow][iCol] 
-          jCol = jCol + 1
-        END IF
+      FOR iCol = 1 TO (nbCols - 1)
+        Mp[nbRemainRows][jCol] = M[iRow][iCol] 
+        jCol = jCol + 1
       END FOR
       Yp[nbRemainRows] = Y[iRow] 
       nbRemainRows = nbRemainRows + 1 
@@ -257,7 +253,7 @@ FUNCTION ElimVar3D(iVar, M, Y, nbRows, nbCols, Mp, Yp, nbRemainRows)
   RETURN FALSE 
 END FUNCTION
 
-FUNCTION GetBound3D(iVar, M, Y, nbRows, bdgBox)
+FUNCTION GetBoundLastVar3D(iVar, M, Y, nbRows, bdgBox)
   bdgBox.min[iVar] = 0.0 
   bdgBox.max[iVar] = 1.0 
   FOR jRow = 0 TO (nbRows - 1)
@@ -270,6 +266,34 @@ FUNCTION GetBound3D(iVar, M, Y, nbRows, bdgBox)
       y = Y[jRow] / M[jRow][0]
       IF bdgBox.min[iVar] < y
         bdgBox.min[iVar] = y 
+      END IF
+    END IF
+  END FOR
+END FUNCTION
+
+FUNCTION GetBoundVar3D(iVar, M, Y, nbRows, nbCols, bdgBox)
+  bdgBox.min[iVar] = 0.0
+  bdgBox.max[iVar] = 1.0
+  FOR iRow = 0 .. TO (nbRows - 1)
+    IF M[iRow][0] <> 0.0
+      min = -1.0 * Y[iRow]
+      max = Y[iRow]
+      FOR iCol = 1 .. TO (nbCols - 1)
+        IF M[iRow][iCol] > 0.0
+          min = min + M[iRow][iCol] * bdgBox.min[iCol + iVar]
+          max = max - M[iRow][iCol] * bdgBox.min[iCol + iVar]
+        ELSE IF M[iRow][iCol] < 0.0
+          min = min + M[iRow][iCol] * bdgBox.max[iCol + iVar]
+          max = max - M[iRow][iCol] * bdgBox.max[iCol + iVar]
+        END IF
+      END FOR
+      min = min / (-1.0 * M[iRow][0])
+      max = max / M[iRow][0]
+      IF bdgBox.min[iVar] > min
+        bdgBox.min[iVar] = min
+      END IF
+      IF bdgBox.max[iVar] < max
+        bdgBox.max[iVar] = max
       END IF
     END IF
   END FOR
@@ -381,25 +405,23 @@ FUNCTION FMBTestIntersection3D(that, tho, bdgBox)
   Y[nbRows] = 0.0 
   nbRows = nbRows + 1
   inconsistency = 
-    ElimVar3D(FST_VAR, M, Y, nbRows, 3, Mp, Yp, nbRowsP) 
+    ElimVar3D(M, Y, nbRows, 3, Mp, Yp, nbRowsP) 
   IF inconsistency == TRUE
     RETURN FALSE 
   END IF
   inconsistency = 
-    ElimVar3D(FST_VAR, Mp, Yp, nbRowsP, 2, Mpp, Ypp, nbRowsPP) 
+    ElimVar3D(Mp, Yp, nbRowsP, 2, Mpp, Ypp, nbRowsPP) 
   IF inconsistency == TRUE
     RETURN FALSE 
   END IF
-  GetBound3D(THD_VAR, Mpp, Ypp, nbRowsPP, bdgBoxLocal) 
+  GetBoundLastVar3D(THD_VAR, Mpp, Ypp, nbRowsPP, bdgBoxLocal) 
   IF bdgBoxLocal.min[THD_VAR] >= bdgBoxLocal.max[THD_VAR]
     RETURN FALSE 
+  ELSE
+    GetBoundVar3D(SND_VAR, Mp, Yp, nbRowsP, 2, bdgBoxLocal) 
+    GetBoundVar3D(FST_VAR, M, Y, nbRows, 3, bdgBoxLocal) 
+    bdgBox = bdgBoxLocal 
   END IF
-  ElimVar3D(SND_VAR, Mp, Yp, nbRowsP, 2, Mpp, Ypp, nbRowsPP) 
-  GetBound3D(SND_VAR, Mpp, Ypp, nbRowsPP, bdgBoxLocal) 
-  ElimVar3D(THD_VAR, M, Y, nbRows, 3, Mp, Yp, nbRowsP) 
-  ElimVar3D( SND_VAR, Mp, Yp, nbRowsP, 2, Mpp, Ypp, nbRowsPP) 
-  GetBound3D(FST_VAR, Mpp, Ypp, nbRowsPP, bdgBoxLocal) 
-  bdgBox = bdgBoxLocal 
   RETURN TRUE 
 END FUNCTION
 

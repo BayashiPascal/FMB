@@ -568,92 +568,92 @@ void Qualify3DDynamic(void) {
     // Display the results
     if (iRun == 0) {
 
-      printf("percPairInter\t");
-      printf("countInter\tcountNoInter\t");
-      printf("minInter\tavgInter\tmaxInter\t");
-      printf("minNoInter\tavgNoInter\tmaxNoInter\t");
-      printf("minTotal\tavgTotal\tmaxTotal\t");
+      printf("percPairInter,");
+      printf("countInter,countNoInter,");
+      printf("minInter,avgInter,maxInter,");
+      printf("minNoInter,avgNoInter,maxNoInter,");
+      printf("minTotal,avgTotal,maxTotal,");
 
-      printf("countInterCC\tcountNoInterCC\t");
-      printf("minInterCC\tavgInterCC\tmaxInterCC\t");
-      printf("minNoInterCC\tavgNoInterCC\tmaxNoInterCC\t");
-      printf("minTotalCC\tavgTotalCC\tmaxTotalCC\t");
+      printf("countInterCC,countNoInterCC,");
+      printf("minInterCC,avgInterCC,maxInterCC,");
+      printf("minNoInterCC,avgNoInterCC,maxNoInterCC,");
+      printf("minTotalCC,avgTotalCC,maxTotalCC,");
 
-      printf("countInterCT\tcountNoInterCT\t");
-      printf("minInterCT\tavgInterCT\tmaxInterCT\t");
-      printf("minNoInterCT\tavgNoInterCT\tmaxNoInterCT\t");
-      printf("minTotalCT\tavgTotalCT\tmaxTotalCT\t");
+      printf("countInterCT,countNoInterCT,");
+      printf("minInterCT,avgInterCT,maxInterCT,");
+      printf("minNoInterCT,avgNoInterCT,maxNoInterCT,");
+      printf("minTotalCT,avgTotalCT,maxTotalCT,");
 
-      printf("countInterTC\tcountNoInterTC\t");
-      printf("minInterTC\tavgInterTC\tmaxInterTC\t");
-      printf("minNoInterTC\tavgNoInterTC\tmaxNoInterTC\t");
-      printf("minTotalTC\tavgTotalTC\tmaxTotalTC\t");
+      printf("countInterTC,countNoInterTC,");
+      printf("minInterTC,avgInterTC,maxInterTC,");
+      printf("minNoInterTC,avgNoInterTC,maxNoInterTC,");
+      printf("minTotalTC,avgTotalTC,maxTotalTC,");
 
-      printf("countInterTT\tcountNoInterTT\t");
-      printf("minInterTT\tavgInterTT\tmaxInterTT\t");
-      printf("minNoInterTT\tavgNoInterTT\tmaxNoInterTT\t");
-      printf("minTotalTT\tavgTotalTT\tmaxTotalTT\n");
+      printf("countInterTT,countNoInterTT,");
+      printf("minInterTT,avgInterTT,maxInterTT,");
+      printf("minNoInterTT,avgNoInterTT,maxNoInterTT,");
+      printf("minTotalTT,avgTotalTT,maxTotalTT\n");
 
     }
 
-    printf("%.1f\t", ratioInter);
+    printf("%.1f,", ratioInter);
 
-    printf("%lu\t%lu\t", countInter, countNoInter);
+    printf("%lu,%lu,", countInter, countNoInter);
     double avgInter = sumInter / (double)countInter;
-    printf("%f\t%f\t%f\t", minInter, avgInter, maxInter);
+    printf("%f,%f,%f,", minInter, avgInter, maxInter);
     double avgNoInter = sumNoInter / (double)countNoInter;
-    printf("%f\t%f\t%f\t", minNoInter, avgNoInter, maxNoInter);
+    printf("%f,%f,%f,", minNoInter, avgNoInter, maxNoInter);
     double avg = 
       ratioInter * avgInter + (1.0 - ratioInter) * avgNoInter;
-    printf("%f\t%f\t%f\t", 
+    printf("%f,%f,%f,", 
       (minNoInter < minInter ? minNoInter : minInter), 
       avg,
       (maxNoInter > maxInter ? maxNoInter : maxInter));
 
-    printf("%lu\t%lu\t", countInterCC, countNoInterCC);
+    printf("%lu,%lu,", countInterCC, countNoInterCC);
     double avgInterCC = sumInterCC / (double)countInterCC;
-    printf("%f\t%f\t%f\t", minInterCC, avgInterCC, maxInterCC);
+    printf("%f,%f,%f,", minInterCC, avgInterCC, maxInterCC);
     double avgNoInterCC = sumNoInterCC / (double)countNoInterCC;
-    printf("%f\t%f\t%f\t", minNoInterCC, avgNoInterCC, maxNoInterCC);
+    printf("%f,%f,%f,", minNoInterCC, avgNoInterCC, maxNoInterCC);
     double avgCC = 
       ratioInter * avgInterCC + (1.0 - ratioInter) * avgNoInterCC;
-    printf("%f\t%f\t%f\t", 
+    printf("%f,%f,%f,", 
       (minNoInterCC < minInterCC ? minNoInterCC : minInterCC), 
       avgCC,
       (maxNoInterCC > maxInterCC ? maxNoInterCC : maxInterCC));
 
-    printf("%lu\t%lu\t", countInterCT, countNoInterCT);
+    printf("%lu,%lu,", countInterCT, countNoInterCT);
     double avgInterCT = sumInterCT / (double)countInterCT;
-    printf("%f\t%f\t%f\t", minInterCT, avgInterCT, maxInterCT);
+    printf("%f,%f,%f,", minInterCT, avgInterCT, maxInterCT);
     double avgNoInterCT = sumNoInterCT / (double)countNoInterCT;
-    printf("%f\t%f\t%f\t", minNoInterCT, avgNoInterCT, maxNoInterCT);
+    printf("%f,%f,%f,", minNoInterCT, avgNoInterCT, maxNoInterCT);
     double avgCT = 
       ratioInter * avgInterCT + (1.0 - ratioInter) * avgNoInterCT;
-    printf("%f\t%f\t%f\t", 
+    printf("%f,%f,%f,", 
       (minNoInterCT < minInterCT ? minNoInterCT : minInterCT), 
       avgCT,
       (maxNoInterCT > maxInterCT ? maxNoInterCT : maxInterCT));
 
-    printf("%lu\t%lu\t", countInterTC, countNoInterTC);
+    printf("%lu,%lu,", countInterTC, countNoInterTC);
     double avgInterTC = sumInterTC / (double)countInterTC;
-    printf("%f\t%f\t%f\t", minInterTC, avgInterTC, maxInterTC);
+    printf("%f,%f,%f,", minInterTC, avgInterTC, maxInterTC);
     double avgNoInterTC = sumNoInterTC / (double)countNoInterTC;
-    printf("%f\t%f\t%f\t", minNoInterTC, avgNoInterTC, maxNoInterTC);
+    printf("%f,%f,%f,", minNoInterTC, avgNoInterTC, maxNoInterTC);
     double avgTC = 
       ratioInter * avgInterTC + (1.0 - ratioInter) * avgNoInterTC;
-    printf("%f\t%f\t%f\t", 
+    printf("%f,%f,%f,", 
       (minNoInterTC < minInterTC ? minNoInterTC : minInterTC), 
       avgTC,
       (maxNoInterTC > maxInterTC ? maxNoInterTC : maxInterTC));
 
-    printf("%lu\t%lu\t", countInterTT, countNoInterTT);
+    printf("%lu,%lu,", countInterTT, countNoInterTT);
     double avgInterTT = sumInterTT / (double)countInterTT;
-    printf("%f\t%f\t%f\t", minInterTT, avgInterTT, maxInterTT);
+    printf("%f,%f,%f,", minInterTT, avgInterTT, maxInterTT);
     double avgNoInterTT = sumNoInterTT / (double)countNoInterTT;
-    printf("%f\t%f\t%f\t", minNoInterTT, avgNoInterTT, maxNoInterTT);
+    printf("%f,%f,%f,", minNoInterTT, avgNoInterTT, maxNoInterTT);
     double avgTT = 
       ratioInter * avgInterTT + (1.0 - ratioInter) * avgNoInterTT;
-    printf("%f\t%f\t%f\n", 
+    printf("%f,%f,%f\n", 
       (minNoInterTT < minInterTT ? minNoInterTT : minInterTT), 
       avgTT,
       (maxNoInterTT > maxInterTT ? maxNoInterTT : maxInterTT));

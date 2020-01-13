@@ -15,14 +15,13 @@
 
 // ------------- Functions declaration -------------
 
-// Eliminate the 'iVar'-th variable in the system 'M'.X<='Y'
+// Eliminate the first variable in the system M.X<=Y
 // using the Fourier-Motzkin method and return
-// the resulting system in 'Mp' and 'Yp', and the number of rows of 
-// the resulting system in 'nbRemainRows'
+// the resulting system in Mp and Yp, and the number of rows of 
+// the resulting system in nbRemainRows
 // Return false if the system becomes inconsistent during elimination,
 // else return true
 bool ElimVar2D(
-     const int iVar, 
   const double (*M)[2], 
   const double* Y, 
      const int nbRows, 
@@ -31,33 +30,42 @@ bool ElimVar2D(
         double* Yp, 
     int* const nbRemainRows);
 
-// Get the bounds of the 'iVar'-th variable in the 'nbRows' rows
-// system 'M'.X<='Y' and store them in the 'iVar'-th axis of the
-// AABB 'bdgBox'
-// ('M' arrangement is [iRow][iCol])
-// The system is supposed to have been reduced to only one variable
-// per row, the one in argument, which can be located in a different
-// column than 'iVar'
+// Get the bounds of the iVar-th variable in the nbRows rows
+// system M.X<=Y which has been reduced to only one variable 
+// and store them in the iVar-th axis of the
+// AABB bdgBox
+// (M arrangement is [iRow][iCol])
 // May return inconsistent values (max < min), which would
 // mean the system has no solution
-void GetBound2D(
+void GetBoundLastVar2D(
      const int iVar,
   const double (*M)[2], 
   const double* Y, 
      const int nbRows, 
    AABB2D* const bdgBox);
 
+// Get the bounds of the iVar-th variable in the nbRows rows
+// system M.X<=Y where the iVar-th variable is on the first column
+// and store them in the iVar-th axis of the AABB bdgBox
+// (M arrangement is [iRow][iCol])
+void GetBoundVar2D(
+     const int iVar,
+  const double (*M)[2], 
+  const double* Y, 
+     const int nbRows, 
+     const int nbCols, 
+   AABB2D* const bdgBox);
+
 // ------------- Functions implementation -------------
 
-// Eliminate the 'iVar'-th variable in the system 'M'.X<='Y'
+// Eliminate the first variable in the system M.X<=Y
 // using the Fourier-Motzkin method and return
-// the resulting system in 'Mp' and 'Yp', and the number of rows of 
-// the resulting system in 'nbRemainRows'
-// ('M' arrangement is [iRow][iCol])
+// the resulting system in Mp and Yp, and the number of rows of 
+// the resulting system in nbRemainRows
+// (M arrangement is [iRow][iCol])
 // Return true if the system becomes inconsistent during elimination,
 // else return false
 bool ElimVar2D(
-     const int iVar, 
   const double (*M)[2], 
   const double* Y, 
      const int nbRows, 
@@ -77,15 +85,16 @@ bool ElimVar2D(
        ++iRow) {
 
     // Shortcuts
-    double fabsMIRowIVar = fabs(M[iRow][0]);
+    const double fabsMIRowIVar = fabs(M[iRow][0]);
 
     // If the coefficient for the eliminated vairable is not null
     // in this row
     if (fabsMIRowIVar > EPSILON) {
 
       // Shortcuts
-      int sgnMIRowIVar = sgn(M[iRow][0]);
-      double YIRowDivideByFabsMIRowIVar = Y[iRow] / fabsMIRowIVar;
+      const double* MiRow = M[iRow];
+      const int sgnMIRowIVar = sgn(MiRow[0]);
+      const double YIRowDivideByFabsMIRowIVar = Y[iRow] / fabsMIRowIVar;
 
       // For each following rows
       for (int jRow = iRow + 1; 
@@ -96,6 +105,10 @@ bool ElimVar2D(
         // different signs and are not null
         if (sgnMIRowIVar != sgn(M[jRow][0]) && 
             fabs(M[jRow][0]) > EPSILON) {
+
+          // Shortcuts
+          const double* MjRow = M[jRow];
+          const double fabsMjRow = fabs(MjRow[0]);
 
           // Declare a variable to memorize the sum of the negative 
           // coefficients in the row
@@ -110,8 +123,8 @@ bool ElimVar2D(
                ++iCol ) {
 
             Mp[nbResRows][iCol - 1] = 
-              M[iRow][iCol] / fabsMIRowIVar + 
-              M[jRow][iCol] / fabs(M[jRow][0]);
+              MiRow[iCol] / fabsMIRowIVar + 
+              MjRow[iCol] / fabsMjRow;
 
             // Update the sum of the negative coefficient
             sumNegCoeff += neg(Mp[nbResRows][iCol - 1]);
@@ -121,7 +134,7 @@ bool ElimVar2D(
           // Update the right side of the inequality
           Yp[nbResRows] = 
             YIRowDivideByFabsMIRowIVar +
-            Y[jRow] / fabs(M[jRow][0]);
+            Y[jRow] / fabsMjRow;
 
           // If the right side of the inequality if lower than the sum of 
           // negative coefficients in the row
@@ -189,15 +202,14 @@ bool ElimVar2D(
 
 }
 
-// Get the bounds of the 'iVar'-th variable in the 'nbRows' rows
-// system 'M'.X<='Y' and store them in the 'iVar'-th axis of the
-// AABB 'bdgBox'
-// ('M' arrangement is [iRow][iCol])
-// The system is supposed to have been reduced to only one variable
-// per row, the one in argument
+// Get the bounds of the iVar-th variable in the nbRows rows
+// system M.X<=Y which has been reduced to only one variable 
+// and store them in the iVar-th axis of the
+// AABB bdgBox
+// (M arrangement is [iRow][iCol])
 // May return inconsistent values (max < min), which would
 // mean the system has no solution
-void GetBound2D(
+void GetBoundLastVar2D(
      const int iVar,
   const double (*M)[2], 
   const double* Y, 
@@ -256,16 +268,88 @@ void GetBound2D(
 
 }
 
-// Test for intersection between Frame 'that' and Frame 'tho'
+// Get the bounds of the iVar-th variable in the nbRows rows
+// system M.X<=Y where the iVar-th variable is on the first column
+// and store them in the iVar-th axis of the AABB bdgBox
+// (M arrangement is [iRow][iCol])
+void GetBoundVar2D(
+     const int iVar,
+  const double (*M)[2], 
+  const double* Y, 
+     const int nbRows, 
+     const int nbCols, 
+   AABB2D* const bdgBox) {
+
+  // Shortcuts
+  double* bdgBoxMin = bdgBox->min;
+  double* bdgBoxMax = bdgBox->max;
+  
+  // Initialize the bounds
+  bdgBoxMin[iVar] = 0.0;
+  bdgBoxMax[iVar] = 1.0;
+
+  // Loop on the rows
+  for (int iRow = 0;
+       iRow < nbRows;
+       ++iRow) {
+
+    // Shortcuts
+    const double* MIRow = M[iRow];
+    double fabsMIRowIVar = fabs(MIRow[0]);
+
+    // If the coefficient of the first variable on this row is not null
+    if (fabsMIRowIVar > EPSILON) {
+
+      // Declare two variables to memorize the min and max of the
+      // requested variable in this row
+      double min = -1.0 * Y[iRow];
+      double max = Y[iRow];
+
+      // Loop on columns except the first one which is the one of the 
+      // requested variable
+      for (int iCol = 1;
+           iCol < nbCols;
+           ++iCol) {
+
+        if (MIRow[iCol] > EPSILON) {
+          min += MIRow[iCol] * bdgBoxMin[iCol + iVar];
+          max -= MIRow[iCol] * bdgBoxMin[iCol + iVar];
+        } else if (MIRow[iCol] < EPSILON) {
+          min += MIRow[iCol] * bdgBoxMax[iCol + iVar];
+          max -= MIRow[iCol] * bdgBoxMax[iCol + iVar];
+        }
+
+      }
+      
+      min /= -1.0 * MIRow[0];
+      max /= MIRow[0];
+      if (bdgBoxMin[iVar] > min) {
+
+        bdgBoxMin[iVar] = min;
+
+      }
+      if (bdgBoxMax[iVar] < max) {
+
+        bdgBoxMax[iVar] = max;
+
+      }
+
+    }
+
+  }
+
+}
+
+// Test for intersection between Frame that and Frame tho
 // Return true if the two Frames are intersecting, else false
 // If the Frame are intersecting the AABB of the intersection
-// is stored into 'bdgBox', else 'bdgBox' is not modified
-// If 'bdgBox' is null, the result AABB is not memorized (to use if
+// is stored into bdgBox, else bdgBox is not modified
+// If bdgBox is null, the result AABB is not memorized (to use if
 // unnecessary and want to speed up the algorithm)
 // The resulting AABB may be larger than the smallest possible AABB
 // The resulting AABB of FMBTestIntersection(A,B) may be different
 // of the resulting AABB of FMBTestIntersection(B,A)
-// The resulting AABB is given in 'tho' 's local coordinates system
+// The resulting AABB is given in tho's local coordinates system
 bool FMBTestIntersection2D(
   const Frame2D* const that, 
   const Frame2D* const tho, 
@@ -366,7 +450,10 @@ bool FMBTestIntersection2D(
   
   // Declare a AABB to memorize the bounding box of the intersection
   // in the coordinates system of tho
-  AABB2D bdgBoxLocal;
+  AABB2D bdgBoxLocal = {
+    .min = {0.0, 0.0},
+    .max = {0.0, 0.0}
+  };
   
   // Declare variables to eliminate the first variable
   // The size of the array given in the doc is a majoring value.
@@ -382,7 +469,6 @@ bool FMBTestIntersection2D(
   // Eliminate the first variable
   bool inconsistency = 
     ElimVar2D(
-      FST_VAR,
       M, 
       Y, 
       nbRows, 
@@ -400,7 +486,7 @@ bool FMBTestIntersection2D(
   }
 
   // Get the bounds for the remaining second variable
-  GetBound2D(
+  GetBoundLastVar2D(
     SND_VAR,
     Mp,
     Yp,
@@ -415,79 +501,24 @@ bool FMBTestIntersection2D(
 
   // Else, if the bounds are consistent here it means
   // the two Frames are in intersection.
-  // If the user hasn't requested for the resulting bounding box
-  } else if (bdgBox == NULL) {
+  // If the user has requested for the resulting bounding box
+  } else if (bdgBox != NULL) {
 
-    // Immediately return true
-    return true;
+    // Get the bounds of the first variable from the bounds of the
+    // second one
+    
+    GetBoundVar2D(
+       FST_VAR,
+       M, 
+       Y, 
+       nbRows, 
+       2,
+       &bdgBoxLocal);
 
-  }
-
-  // Get the bounds of the first variable from the bounds of the
-  // second one
-  
-  int iVar = FST_VAR;
-  
-  // Initialize the bounds
-  bdgBoxLocal.min[iVar] = 0.0;
-  bdgBoxLocal.max[iVar] = 1.0;
-
-  // Loop on the rows
-  for (int iRow = 0;
-       iRow < nbRows;
-       ++iRow) {
-
-    //Shortcut
-    double fabsMIRowIVar = fabs(M[iRow][0]);
-
-    // If the coefficient of the first variable on this row is not null
-    if (fabsMIRowIVar > EPSILON) {
-
-      // Declare two variables to memorize the min and max of the
-      // variable on this row
-      double min = -1.0 * Y[iRow];
-      double max = Y[iRow];
-
-      // Loop on columns except the first one which is the one of the 
-      // first variable
-      for (int iCol = 1;
-           iCol < 2;
-           ++iCol) {
-        
-        if (M[iRow][iCol] > EPSILON) {
-
-          min += M[iRow][iCol] * bdgBoxLocal.max[iCol];
-          max -= M[iRow][iCol] * bdgBoxLocal.max[iCol];
-
-        } else if (M[iRow][iCol] < EPSILON) {
-
-          min += M[iRow][iCol] * bdgBoxLocal.min[iCol];
-          max -= M[iRow][iCol] * bdgBoxLocal.min[iCol];
-
-        }
-        
-      }
-      
-      min /= -1.0 * M[iRow][0];
-      max /= M[iRow][0];
-
-      if (bdgBoxLocal.min[iVar] < min) {
-
-        bdgBoxLocal.min[iVar] = min;
-
-      }
-      if (bdgBoxLocal.max[iVar] > max) {
-
-        bdgBoxLocal.max[iVar] = max;
-
-      }
-
-    }
+    // Memorize the result
+    *bdgBox = bdgBoxLocal;
 
   }
-
-  // Memorize the result
-  *bdgBox = bdgBoxLocal;
 
   // If we've reached here the two Frames are intersecting
   return true;

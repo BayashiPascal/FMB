@@ -112,6 +112,8 @@ void UnitTest2DTime(
 
           // Display information
           printf("Succeed\n");
+          AABB2DTimePrint(&bdgBox);
+          printf("\n");
 
         // Else, the bounding box wasn't the expected one
         } else {
@@ -135,7 +137,7 @@ void UnitTest2DTime(
       } else {
 
         // Display information
-        printf(" Succeed\n");
+        printf(" Succeed (no inter)\n");
 
       }
 

@@ -88,7 +88,7 @@ typedef struct {
 
 // ------------- Functions declaration -------------
 
-// Print the AABB 'that' on stdout
+// Print the AABB that on stdout
 // Output format is
 // (min[0], min[1], min[2], min[3])-(max[0], max[1], max[2], max[3])
 void AABB2DPrint(const AABB2D* const that);
@@ -96,7 +96,7 @@ void AABB3DPrint(const AABB3D* const that);
 void AABB2DTimePrint(const AABB2DTime* const that);
 void AABB3DTimePrint(const AABB3DTime* const that);
 
-// Print the Frame 'that' on stdout
+// Print the Frame that on stdout
 // Output format is
 // T/C  <- type of Frame
 // o(orig[0], orig[1], orig[2])
@@ -109,9 +109,9 @@ void Frame3DPrint(const Frame3D* const that);
 void Frame2DTimePrint(const Frame2DTime* const that);
 void Frame3DTimePrint(const Frame3DTime* const that);
 
-// Create a static Frame structure of FrameType 'type',
-// at position 'orig' with components 'comp' ([iComp][iAxis])
-// and 'speed'
+// Create a static Frame structure of FrameType type,
+// at position orig with components comp ([iComp][iAxis])
+// and speed
 Frame2D Frame2DCreateStatic(
   const FrameType type,
      const double orig[2],
@@ -131,8 +131,8 @@ Frame3DTime Frame3DTimeCreateStatic(
      const double speed[3],
      const double comp[3][3]);
 
-// Project the Frame 'Q' in the Frame 'P' 's coordinates system and 
-// memorize the result in the Frame 'Qp'
+// Project the Frame Q in the Frame P's coordinates system and 
+// memorize the result in the Frame Qp
 void Frame2DImportFrame(
   const Frame2D* const P, 
   const Frame2D* const Q, 
@@ -150,8 +150,8 @@ void Frame3DTimeImportFrame(
   const Frame3DTime* const Q, 
         Frame3DTime* const Qp);
 
-// Export the AABB 'bdgBox' from 'that' 's coordinates system to
-// the real coordinates system and update 'bdgBoxProj' with the resulting
+// Export the AABB bdgBox from that's coordinates system to
+// the real coordinates system and update bdgBoxProj with the resulting
 // AABB
 void Frame2DExportBdgBox(
   const Frame2D* const that,
@@ -171,7 +171,7 @@ void Frame3DTimeExportBdgBox(
          AABB3DTime* const bdgBoxProj);
 
 // Power function for integer base and exponent
-// Return 'base' ^ 'exp'
+// Return base^exp
 int powi(
            int base,
   unsigned int exp);

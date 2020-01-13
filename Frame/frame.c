@@ -6,7 +6,7 @@
 
 // ------------- Functions declaration -------------
 
-// Update the inverse components of the Frame 'that'
+// Update the inverse components of the Frame that
 void Frame2DUpdateInv(Frame2D* const that);
 void Frame3DUpdateInv(Frame3D* const that);
 void Frame2DTimeUpdateInv(Frame2DTime* const that);
@@ -14,8 +14,8 @@ void Frame3DTimeUpdateInv(Frame3DTime* const that);
 
 // ------------- Functions implementation -------------
 
-// Create a static Frame structure of FrameType 'type',
-// at position 'orig' with components 'comp' and 'speed'
+// Create a static Frame structure of FrameType type,
+// at position orig with components comp and speed
 // arrangement is comp[iComp][iAxis]
 Frame2D Frame2DCreateStatic(
   const FrameType type,
@@ -370,7 +370,7 @@ Frame3DTime Frame3DTimeCreateStatic(
 
 }
 
-// Update the inverse components of the Frame 'that'
+// Update the inverse components of the Frame that
 void Frame2DUpdateInv(Frame2D* const that) {
 
   // Shortcuts
@@ -420,7 +420,7 @@ void Frame3DUpdateInv(Frame3D* const that) {
 
 }
 
-// Update the inverse components of the Frame 'that'
+// Update the inverse components of the Frame that
 void Frame2DTimeUpdateInv(Frame2DTime* const that) {
 
   // Shortcuts
@@ -470,8 +470,8 @@ void Frame3DTimeUpdateInv(Frame3DTime* const that) {
 
 }
 
-// Project the Frame 'Q' in the Frame 'P' 's coordinates system and 
-// memorize the result in the Frame 'Qp'
+// Project the Frame Q in the Frame P's coordinates system and 
+// memorize the result in the Frame Qp
 void Frame2DImportFrame(
   const Frame2D* const P, 
   const Frame2D* const Q, 
@@ -664,8 +664,8 @@ void Frame3DTimeImportFrame(
   }
 }
 
-// Export the AABB 'bdgBox' from 'that' 's coordinates system to
-// the real coordinates system and update 'bdgBoxProj' with the resulting
+// Export the AABB bdgBox from that's coordinates system to
+// the real coordinates system and update bdgBoxProj with the resulting
 // AABB
 void Frame2DExportBdgBox(
   const Frame2D* const that,
@@ -1047,7 +1047,7 @@ void Frame3DTimeExportBdgBox(
 
 }
 
-// Print the AABB 'that' on stdout
+// Print the AABB that on stdout
 // Output format is (min[0], min[1], ...)-(max[0], max[1], ...)
 void AABB2DPrint(const AABB2D* const that) {
   
@@ -1153,7 +1153,7 @@ void AABB3DTimePrint(const AABB3DTime* const that) {
   
 }
 
-// Print the Frame 'that' on stdout
+// Print the Frame that on stdout
 // Output format is
 // T/C  <- type of Frame
 // o(orig[0], orig[1], orig[2])
@@ -1322,7 +1322,7 @@ void Frame3DTimePrint(const Frame3DTime* const that) {
 }
 
 // Power function for integer base and exponent
-// Return 'base' ^ 'exp'
+// Return base^exp
 int powi(
            int base,
   unsigned int exp) {
