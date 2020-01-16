@@ -12,7 +12,8 @@
 \usepackage{tikz}
 \usepackage{verbatim}
 \usepackage{csvsimple}
-\usepackage{adjustbox}
+\usepackage{rotating}
+\usepackage{changepage}
 \pdfgentounicode=1
 
 \begin{document}
@@ -1012,11 +1013,21 @@ In this subsection I give the results of the qualification for each case. These 
 
 \subsubsection{2D static}
 
-\begin{scriptsize}
+\begin{turn}{-90}
+%\begin{adjustwidth}{-3cm}{-3.5cm}
+\vbox{
+\begin{tiny}
 \begin{ttfamily}
-\lstinputlisting[breaklines]{../Results/qualification2D.txt}
+\csvautotabular{../Results/qualification2D.txt}\\
+\csvautotabular{../Results/qualification2DCC.txt}\\
+\csvautotabular{../Results/qualification2DCT.txt}\\
+\csvautotabular{../Results/qualification2DTC.txt}\\
+\csvautotabular{../Results/qualification2DTT.txt}\\
 \end{ttfamily}
 \end{scriptsize}
+}
+%\end{adjustwidth}
+\end{turn}
 
 \begin{center}
 \begin{figure}[H]
@@ -1048,15 +1059,6 @@ In this subsection I give the results of the qualification for each case. These 
 \end{center}
 
 \subsubsection{3D static}
-
-\begin{adjustbox}{angle=90}
-\begin{scriptsize}
-\begin{ttfamily}
-\csvautotabular{../Results/qualification3D.txt}
-\end{ttfamily}
-\end{scriptsize}
-\end{adjustbox}
-
 
 \begin{scriptsize}
 \begin{ttfamily}
