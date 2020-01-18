@@ -11,58 +11,58 @@ compile : main unitTests validation qualification
 main : main2D main2DTime main3D main3DTime
 
 main2D:
-	cd 2D; make main; cd -
+	cd 2D; make main OPTIMIZATION=$(OPTIMIZATION); cd -
 
 main2DTime:
-	cd 2DTime; make main; cd -
+	cd 2DTime; make main OPTIMIZATION=$(OPTIMIZATION); cd -
 
 main3D:
-	cd 3D; make main; cd -
+	cd 3D; make main OPTIMIZATION=$(OPTIMIZATION); cd -
 
 main3DTime:
-	cd 3DTime; make main; cd -
+	cd 3DTime; make main OPTIMIZATION=$(OPTIMIZATION); cd -
 
 unitTests : unitTests2D unitTests2DTime unitTests3D unitTests3DTime
 
 unitTests2D:
-	cd 2D; make unitTests; cd -
+	cd 2D; make unitTests OPTIMIZATION=$(OPTIMIZATION); cd -
 
 unitTests2DTime:
-	cd 2DTime; make unitTests; cd -
+	cd 2DTime; make unitTests OPTIMIZATION=$(OPTIMIZATION); cd -
 
 unitTests3D:
-	cd 3D; make unitTests; cd -
+	cd 3D; make unitTests OPTIMIZATION=$(OPTIMIZATION); cd -
 
 unitTests3DTime:
-	cd 3DTime; make unitTests; cd -
+	cd 3DTime; make unitTests OPTIMIZATION=$(OPTIMIZATION); cd -
 
 validation : validation2D validation2DTime validation3D validation3DTime
 
 validation2D:
-	cd 2D; make validation; cd -
+	cd 2D; make validation OPTIMIZATION=$(OPTIMIZATION); cd -
 
 validation2DTime:
-	cd 2DTime; make validation; cd -
+	cd 2DTime; make validation OPTIMIZATION=$(OPTIMIZATION); cd -
 
 validation3D:
-	cd 3D; make validation; cd -
+	cd 3D; make validation OPTIMIZATION=$(OPTIMIZATION); cd -
 
 validation3DTime:
-	cd 3DTime; make validation; cd -
+	cd 3DTime; make validation OPTIMIZATION=$(OPTIMIZATION); cd -
 
 qualification : qualification2D qualification2DTime qualification3D qualification3DTime
 
 qualification2D:
-	cd 2D; make qualification; cd -
+	cd 2D; make qualification OPTIMIZATION=$(OPTIMIZATION); cd -
 
 qualification2DTime:
-	cd 2DTime; make qualification; cd -
+	cd 2DTime; make qualification OPTIMIZATION=$(OPTIMIZATION); cd -
 
 qualification3D:
-	cd 3D; make qualification; cd -
+	cd 3D; make qualification OPTIMIZATION=$(OPTIMIZATION); cd -
 
 qualification3DTime:
-	cd 3DTime; make qualification; cd -
+	cd 3DTime; make qualification OPTIMIZATION=$(OPTIMIZATION); cd -
 
 clean : clean2D clean2DTime clean3D clean3DTime
 

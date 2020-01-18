@@ -1,11 +1,11 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.12.30)  18 JAN 2020 22:07
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.10.17)  18 JAN 2020 23:56
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
 **fmb.tex
 (./fmb.tex
-LaTeX2e <2016/02/01>
-Babel <3.9q> and hyphenation patterns for 81 language(s) loaded.
+LaTeX2e <2017-04-15>
+Babel <3.18> and hyphenation patterns for 56 language(s) loaded.
 (/usr/share/texlive/texmf-dist/tex/latex/base/article.cls
 Document Class: article 2014/09/29 v1.4h Standard LaTeX document class
 (/usr/share/texlive/texmf-dist/tex/latex/base/size12.clo
@@ -24,24 +24,24 @@ File: size12.clo 2014/09/29 v1.4h Standard LaTeX file (size option)
 \bibindent=\dimen102
 )
 (/usr/share/texlive/texmf-dist/tex/latex/graphics/graphics.sty
-Package: graphics 2016/01/03 v1.0q Standard LaTeX Graphics (DPC,SPQR)
+Package: graphics 2017/06/25 v1.2c Standard LaTeX Graphics (DPC,SPQR)
 
 (/usr/share/texlive/texmf-dist/tex/latex/graphics/trig.sty
 Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
 )
-(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/graphics.cfg
-File: graphics.cfg 2010/04/23 v1.9 graphics configuration of TeX Live
+(/usr/share/texlive/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
+File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
 )
-Package graphics Info: Driver file: dvips.def on input line 95.
+Package graphics Info: Driver file: dvips.def on input line 99.
 
-(/usr/share/texlive/texmf-dist/tex/latex/graphics/dvips.def
-File: dvips.def 2015/12/30 v3.0k Driver-dependent file (DPC,SPQR)
+(/usr/share/texlive/texmf-dist/tex/latex/graphics-def/dvips.def
+File: dvips.def 2017/06/20 v3.1d Graphics/color driver for dvips
 ))
 (/usr/share/texlive/texmf-dist/tex/latex/tools/tabularx.sty
-Package: tabularx 2014/10/28 v2.10 `tabularx' package (DPC)
+Package: tabularx 2016/02/03 v2.11 `tabularx' package (DPC)
 
 (/usr/share/texlive/texmf-dist/tex/latex/tools/array.sty
-Package: array 2014/10/28 v2.4c Tabular extension package (FMi)
+Package: array 2016/10/06 v2.4d Tabular extension package (FMi)
 \col@sep=\dimen103
 \extrarowheight=\dimen104
 \NC@list=\toks14
@@ -57,7 +57,7 @@ Package: array 2014/10/28 v2.4c Tabular extension package (FMi)
 \TX@ftn=\toks15
 )
 (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsmath.sty
-Package: amsmath 2016/03/03 v2.15a AMS math features
+Package: amsmath 2017/09/02 v2.17a AMS math features
 \@mathmargin=\skip45
 
 For additional information on amsmath, use the `?' option.
@@ -74,23 +74,23 @@ Package: amsbsy 1999/11/29 v1.2d Bold Symbols
 \pmbraise@=\dimen111
 )
 (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsopn.sty
-Package: amsopn 1999/12/14 v2.01 operator names
+Package: amsopn 2016/03/08 v2.02 operator names
 )
 \inf@bad=\count88
-LaTeX Info: Redefining \frac on input line 199.
+LaTeX Info: Redefining \frac on input line 213.
 \uproot@=\count89
 \leftroot@=\count90
-LaTeX Info: Redefining \overline on input line 297.
+LaTeX Info: Redefining \overline on input line 375.
 \classnum@=\count91
 \DOTSCASE@=\count92
-LaTeX Info: Redefining \ldots on input line 394.
-LaTeX Info: Redefining \dots on input line 397.
-LaTeX Info: Redefining \cdots on input line 518.
+LaTeX Info: Redefining \ldots on input line 472.
+LaTeX Info: Redefining \dots on input line 475.
+LaTeX Info: Redefining \cdots on input line 596.
 \Mathstrutbox@=\box26
 \strutbox@=\box27
 \big@size=\dimen112
-LaTeX Font Info:    Redeclaring font encoding OML on input line 630.
-LaTeX Font Info:    Redeclaring font encoding OMS on input line 631.
+LaTeX Font Info:    Redeclaring font encoding OML on input line 712.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 713.
 \macc@depth=\count93
 \c@MaxMatrixCols=\count94
 \dotsspace@=\muskip10
@@ -111,8 +111,8 @@ LaTeX Font Info:    Redeclaring font encoding OMS on input line 631.
 \multlinegap=\skip46
 \multlinetaggap=\skip47
 \mathdisplay@stack=\toks20
-LaTeX Info: Redefining \[ on input line 2735.
-LaTeX Info: Redefining \] on input line 2736.
+LaTeX Info: Redefining \[ on input line 2817.
+LaTeX Info: Redefining \] on input line 2818.
 )
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/amsfonts.sty
 Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
@@ -125,7 +125,7 @@ LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
 Package: amssymb 2013/01/14 v3.01 AMS font symbols
 )
 (/usr/share/texlive/texmf-dist/tex/latex/graphics/graphicx.sty
-Package: graphicx 2014/10/28 v1.0g Enhanced LaTeX Graphics (DPC,SPQR)
+Package: graphicx 2017/06/01 v1.1a Enhanced LaTeX Graphics (DPC,SPQR)
 
 (/usr/share/texlive/texmf-dist/tex/latex/graphics/keyval.sty
 Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
@@ -167,8 +167,8 @@ File: listings.cfg 2015/06/04 1.6 listings configuration
 ))
 Package: listings 2015/06/04 1.6 (Carsten Heinz)
 
-(/usr/share/texlive/texmf-dist/tex/latex/rotating/rotating.sty
-Package: rotating 2009/03/28 v2.16a rotated objects in LaTeX
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/rotating.sty
+Package: rotating 2016/08/11 v2.16d rotated objects in LaTeX
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/ifthen.sty
 Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
@@ -251,32 +251,24 @@ File: pgfsyssoftpath.code.tex 2013/09/09  (rcs-revision 1.9)
 tex
 File: pgfsysprotocol.code.tex 2006/10/16  (rcs-revision 1.4)
 )) (/usr/share/texlive/texmf-dist/tex/latex/xcolor/xcolor.sty
-Package: xcolor 2007/01/21 v2.11 LaTeX color extensions (UK)
+Package: xcolor 2016/05/11 v2.12 LaTeX color extensions (UK)
 
-(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/color.cfg
-File: color.cfg 2007/01/18 v1.5 color configuration of teTeX/TeXLive
+(/usr/share/texlive/texmf-dist/tex/latex/graphics-cfg/color.cfg
+File: color.cfg 2016/01/02 v1.6 sample color configuration
 )
 Package xcolor Info: Driver file: pdftex.def on input line 225.
 
-(/usr/share/texlive/texmf-dist/tex/latex/pdftex-def/pdftex.def
-File: pdftex.def 2011/05/27 v0.06d Graphics/color for pdfTeX
-
-(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/infwarerr.sty
-Package: infwarerr 2010/04/08 v1.3 Providing info/warning/error messages (HO)
+(/usr/share/texlive/texmf-dist/tex/latex/graphics-def/pdftex.def
+File: pdftex.def 2018/01/08 v1.0l Graphics/color driver for pdftex
 )
-(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ltxcmds.sty
-Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
-)
-\Gread@gobject=\count117
-)
-Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1337.
-Package xcolor Info: Model `RGB' extended on input line 1353.
-Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1355.
-Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1356.
-Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1357.
-Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1358.
-Package xcolor Info: Model `Gray' substituted by `gray' on input line 1359.
-Package xcolor Info: Model `wave' substituted by `hsb' on input line 1360.
+Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1348.
+Package xcolor Info: Model `RGB' extended on input line 1364.
+Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1366.
+Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1367.
+Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1368.
+Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1369.
+Package xcolor Info: Model `Gray' substituted by `gray' on input line 1370.
+Package xcolor Info: Model `wave' substituted by `hsb' on input line 1371.
 )
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcore.code.tex
 Package: pgfcore 2010/04/11 v3.0.1a (rcs-revision 1.7)
@@ -286,7 +278,7 @@ Package: pgfcore 2010/04/11 v3.0.1a (rcs-revision 1.7)
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathutil.code.tex)
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathparser.code.tex
 \pgfmath@dimen=\dimen135
-\pgfmath@count=\count118
+\pgfmath@count=\count117
 \pgfmath@box=\box34
 \pgfmath@toks=\toks33
 \pgfmath@stack@operand=\toks34
@@ -310,7 +302,7 @@ tex)
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.integerari
 thmetics.code.tex)))
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfloat.code.tex
-\c@pgfmathroundto@lastzeros=\count119
+\c@pgfmathroundto@lastzeros=\count118
 ))
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepoints.code.te
 x
@@ -348,7 +340,7 @@ File: pgfcorescopes.code.tex 2015/05/08  (rcs-revision 1.46)
 \pgfpic=\box35
 \pgf@hbox=\box36
 \pgf@layerbox@main=\box37
-\pgf@picture@serial@count=\count120
+\pgf@picture@serial@count=\count119
 )
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcoregraphicstate.c
 ode.tex
@@ -381,7 +373,7 @@ File: pgfcorearrows.code.tex 2015/05/14  (rcs-revision 1.43)
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreshade.code.tex
 File: pgfcoreshade.code.tex 2013/07/15  (rcs-revision 1.15)
 \pgf@max=\dimen159
-\pgf@sys@shading@range@num=\count121
+\pgf@sys@shading@range@num=\count120
 )
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreimage.code.tex
 File: pgfcoreimage.code.tex 2013/07/15  (rcs-revision 1.18)
@@ -438,7 +430,7 @@ Package: tikz 2015/08/07 v3.0.1a (rcs-revision 1.151)
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/libraries/pgflibraryplothandlers
 .code.tex
 File: pgflibraryplothandlers.code.tex 2013/08/31 v3.0.1a (rcs-revision 1.20)
-\pgf@plot@mark@count=\count122
+\pgf@plot@mark@count=\count121
 \pgfplotmarksize=\dimen164
 )
 \tikz@lastx=\dimen165
@@ -451,18 +443,18 @@ File: pgflibraryplothandlers.code.tex 2013/08/31 v3.0.1a (rcs-revision 1.20)
 \tikz@figbox@bg=\box41
 \tikz@tempbox=\box42
 \tikz@tempbox@bg=\box43
-\tikztreelevel=\count123
-\tikznumberofchildren=\count124
-\tikznumberofcurrentchild=\count125
-\tikz@fig@count=\count126
+\tikztreelevel=\count122
+\tikznumberofchildren=\count123
+\tikznumberofcurrentchild=\count124
+\tikz@fig@count=\count125
 
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/modules/pgfmodulematrix.code.tex
 File: pgfmodulematrix.code.tex 2013/09/17  (rcs-revision 1.8)
-\pgfmatrixcurrentrow=\count127
-\pgfmatrixcurrentcolumn=\count128
-\pgf@matrix@numberofcolumns=\count129
+\pgfmatrixcurrentrow=\count126
+\pgfmatrixcurrentcolumn=\count127
+\pgf@matrix@numberofcolumns=\count128
 )
-\tikz@expandcount=\count130
+\tikz@expandcount=\count129
 
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tik
 zlibrarytopaths.code.tex
@@ -475,7 +467,16 @@ Package: verbatim 2014/10/28 v1.5q LaTeX2e package for verbatim enhancements
 \verbatim@in@stream=\read2
 )
 (/usr/share/texlive/texmf-dist/tex/latex/csvsimple/csvsimple.sty
-Package: csvsimple 2014/07/14 version 1.12 LaTeX CSV file processing
+Package: csvsimple 2016/07/01 version 1.20 LaTeX CSV file processing
+
+(/usr/share/texlive/texmf-dist/tex/latex/etoolbox/etoolbox.sty
+Package: etoolbox 2018/02/11 v2.5e e-TeX tools for LaTeX (JAW)
+\etb@tempcnta=\count130
+)
+(/usr/share/texlive/texmf-dist/tex/latex/tools/shellesc.sty
+Package: shellesc 2016/06/07 v0.02a unified shell escape interface for LaTeX
+Package shellesc Info: Unrestricted shell escape enabled on input line 67.
+)
 \csv@file=\read3
 \c@csvinputline=\count131
 \c@csvrow=\count132
@@ -501,60 +502,9 @@ LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 19.
 LaTeX Font Info:    ... okay on input line 19.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 19.
 LaTeX Font Info:    ... okay on input line 19.
-(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
-Package: pdftexcmds 2011/11/29 v0.20 Utility functions of pdfTeX for LuaTeX (HO
-)
-
-(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ifluatex.sty
-Package: ifluatex 2010/03/01 v1.3 Provides the ifluatex switch (HO)
-Package ifluatex Info: LuaTeX not detected.
-)
-(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ifpdf.sty
-Package: ifpdf 2011/01/30 v2.3 Provides the ifpdf switch (HO)
-Package ifpdf Info: pdfTeX in PDF mode is detected.
-)
-Package pdftexcmds Info: LuaTeX not detected.
-Package pdftexcmds Info: \pdf@primitive is available.
-Package pdftexcmds Info: \pdf@ifprimitive is available.
-Package pdftexcmds Info: \pdfdraftmode found.
-)
-(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
-Package: epstopdf-base 2010/02/09 v2.5 Base part for package epstopdf
-
-(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/grfext.sty
-Package: grfext 2010/08/19 v1.1 Manage graphics extensions (HO)
-
-(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/kvdefinekeys.sty
-Package: kvdefinekeys 2011/04/07 v1.3 Define keys (HO)
-))
-(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/kvoptions.sty
-Package: kvoptions 2011/06/30 v3.11 Key value format for package options (HO)
-
-(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/kvsetkeys.sty
-Package: kvsetkeys 2012/04/25 v1.16 Key value parser (HO)
-
-(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/etexcmds.sty
-Package: etexcmds 2011/02/16 v1.5 Avoid name clashes with e-TeX commands (HO)
-Package etexcmds Info: Could not find \expanded.
-(etexcmds)             That can mean that you are not using pdfTeX 1.50 or
-(etexcmds)             that some package has redefined \expanded.
-(etexcmds)             In the latter case, load this package earlier.
-)))
-Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
-34.
-Package grfext Info: Graphics extension search list:
-(grfext)             [.png,.pdf,.jpg,.mps,.jpeg,.jbig2,.jb2,.PNG,.PDF,.JPG,.JPE
-G,.JBIG2,.JB2,.eps]
-(grfext)             \AppendGraphicsExtensions on input line 452.
-
-(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
-File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
-e
-))
 \c@lstlisting=\count136
-
 ABD: EveryShipout initializing macros
-(/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
+(/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count137
 \scratchdimen=\dimen171
@@ -567,9 +517,65 @@ ABD: EveryShipout initializing macros
 \MPnumerator=\count141
 \makeMPintoPDFobject=\count142
 \everyMPtoPDFconversion=\toks41
+) (/usr/share/texlive/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
+Package: epstopdf-base 2016/05/15 v2.6 Base part for package epstopdf
+
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/infwarerr.sty
+Package: infwarerr 2016/05/16 v1.4 Providing info/warning/error messages (HO)
 )
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/grfext.sty
+Package: grfext 2016/05/16 v1.2 Manage graphics extensions (HO)
+
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/kvdefinekeys.sty
+Package: kvdefinekeys 2016/05/16 v1.4 Define keys (HO)
+
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ltxcmds.sty
+Package: ltxcmds 2016/05/16 v1.23 LaTeX kernel commands for general use (HO)
+)))
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/kvoptions.sty
+Package: kvoptions 2016/05/16 v3.12 Key value format for package options (HO)
+
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/kvsetkeys.sty
+Package: kvsetkeys 2016/05/16 v1.17 Key value parser (HO)
+
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/etexcmds.sty
+Package: etexcmds 2016/05/16 v1.6 Avoid name clashes with e-TeX commands (HO)
+
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ifluatex.sty
+Package: ifluatex 2016/05/16 v1.4 Provides the ifluatex switch (HO)
+Package ifluatex Info: LuaTeX not detected.
+)
+Package etexcmds Info: Could not find \expanded.
+(etexcmds)             That can mean that you are not using pdfTeX 1.50 or
+(etexcmds)             that some package has redefined \expanded.
+(etexcmds)             In the latter case, load this package earlier.
+)))
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
+Package: pdftexcmds 2018/01/21 v0.26 Utility functions of pdfTeX for LuaTeX (HO
+)
+
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ifpdf.sty
+Package: ifpdf 2017/03/15 v3.2 Provides the ifpdf switch
+)
+Package pdftexcmds Info: LuaTeX not detected.
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+)
+Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
+38.
+Package grfext Info: Graphics extension search list:
+(grfext)             [.pdf,.png,.jpg,.mps,.jpeg,.jbig2,.jb2,.PDF,.PNG,.JPG,.JPE
+G,.JBIG2,.JB2,.eps]
+(grfext)             \AppendGraphicsExtensions on input line 456.
+
+(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
+e
+))
 LaTeX Font Info:    Try loading font information for U+msa on input line 24.
- (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
+
+(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
 LaTeX Font Info:    Try loading font information for U+msb on input line 24.
@@ -577,6 +583,7 @@ LaTeX Font Info:    Try loading font information for U+msb on input line 24.
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) [1
+Non-PDF special ignored!
 Non-PDF special ignored!
 Non-PDF special ignored!
 Non-PDF special ignored!
@@ -848,13 +855,11 @@ Underfull \hbox (badness 10000) in paragraph at lines 924--931
 
 <./degeneratedFrame.png, id=567, 576.1525pt x 336.25626pt>
 File: ./degeneratedFrame.png Graphic file (type png)
-
 <use ./degeneratedFrame.png>
-Package pdftex.def Info: ./degeneratedFrame.png used on input line 934.
+Package pdftex.def Info: ./degeneratedFrame.png  used on input line 934.
 (pdftex.def)             Requested size: 284.52756pt x 166.05998pt.
- [173] (../Results/validation2D.txt)
-(../Results/validation2DTime.txt) (../Results/validation3D.txt)
-(../Results/validation3DTime.txt)
+[173] (../Results/validation2D.txt) (../Results/validation2DTime.txt)
+(../Results/validation3D.txt) (../Results/validation3DTime.txt)
 Underfull \hbox (badness 10000) in paragraph at lines 974--975
 
  []
@@ -912,93 +917,76 @@ Underfull \hbox (badness 10000) in paragraph at lines 1021--1028
 
  []
 
-[220] <../Results/qualification2D.png, id=723, 602.25pt x 401.5pt>
+[220]
+<../Results/qualification2D.png, id=723, 602.25pt x 401.5pt>
 File: ../Results/qualification2D.png Graphic file (type png)
-
 <use ../Results/qualification2D.png>
-Package pdftex.def Info: ../Results/qualification2D.png used on input line 1034
-.
+Package pdftex.def Info: ../Results/qualification2D.png  used on input line 103
+4.
 (pdftex.def)             Requested size: 341.43306pt x 227.6321pt.
  [221]
 <../Results/qualification2Dinter.png, id=727, 602.25pt x 401.5pt>
 File: ../Results/qualification2Dinter.png Graphic file (type png)
-
 <use ../Results/qualification2Dinter.png>
-Package pdftex.def Info: ../Results/qualification2Dinter.png used on input line
- 1040.
+Package pdftex.def Info: ../Results/qualification2Dinter.png  used on input lin
+e 1040.
 (pdftex.def)             Requested size: 341.43306pt x 227.6321pt.
-
 <../Results/qualification2Dnointer.png, id=728, 602.25pt x 401.5pt>
 File: ../Results/qualification2Dnointer.png Graphic file (type png)
-
 <use ../Results/qualification2Dnointer.png>
-Package pdftex.def Info: ../Results/qualification2Dnointer.png used on input li
-ne 1041.
+Package pdftex.def Info: ../Results/qualification2Dnointer.png  used on input l
+ine 1041.
 (pdftex.def)             Requested size: 341.43306pt x 227.6321pt.
- [222 <../Results/qualification2D.png>] <../Results/qualification2DCCinter.png,
- id=732, 602.25pt x 401.5pt>
+ [222 <../Results/qualification2D.png>]
+<../Results/qualification2DCCinter.png, id=732, 602.25pt x 401.5pt>
 File: ../Results/qualification2DCCinter.png Graphic file (type png)
-
 <use ../Results/qualification2DCCinter.png>
-Package pdftex.def Info: ../Results/qualification2DCCinter.png used on input li
-ne 1046.
+Package pdftex.def Info: ../Results/qualification2DCCinter.png  used on input l
+ine 1046.
 (pdftex.def)             Requested size: 199.16928pt x 132.77722pt.
-
 <../Results/qualification2DCTinter.png, id=733, 602.25pt x 401.5pt>
 File: ../Results/qualification2DCTinter.png Graphic file (type png)
-
 <use ../Results/qualification2DCTinter.png>
-Package pdftex.def Info: ../Results/qualification2DCTinter.png used on input li
-ne 1047.
+Package pdftex.def Info: ../Results/qualification2DCTinter.png  used on input l
+ine 1047.
 (pdftex.def)             Requested size: 199.16928pt x 132.77722pt.
-
 <../Results/qualification2DTCinter.png, id=734, 602.25pt x 401.5pt>
 File: ../Results/qualification2DTCinter.png Graphic file (type png)
-
 <use ../Results/qualification2DTCinter.png>
-Package pdftex.def Info: ../Results/qualification2DTCinter.png used on input li
-ne 1048.
+Package pdftex.def Info: ../Results/qualification2DTCinter.png  used on input l
+ine 1048.
 (pdftex.def)             Requested size: 199.16928pt x 132.77722pt.
-
 <../Results/qualification2DTTinter.png, id=735, 602.25pt x 401.5pt>
 File: ../Results/qualification2DTTinter.png Graphic file (type png)
-
 <use ../Results/qualification2DTTinter.png>
-Package pdftex.def Info: ../Results/qualification2DTTinter.png used on input li
-ne 1049.
+Package pdftex.def Info: ../Results/qualification2DTTinter.png  used on input l
+ine 1049.
 (pdftex.def)             Requested size: 199.16928pt x 132.77722pt.
  [223 <../Results/qualification2Dinter.png> <../Results/qualification2Dnointer.
 png>]
 <../Results/qualification2DCCnointer.png, id=740, 602.25pt x 401.5pt>
 File: ../Results/qualification2DCCnointer.png Graphic file (type png)
-
 <use ../Results/qualification2DCCnointer.png>
-Package pdftex.def Info: ../Results/qualification2DCCnointer.png used on input 
-line 1054.
+Package pdftex.def Info: ../Results/qualification2DCCnointer.png  used on input
+ line 1054.
 (pdftex.def)             Requested size: 199.16928pt x 132.77722pt.
-
 <../Results/qualification2DCTnointer.png, id=741, 602.25pt x 401.5pt>
 File: ../Results/qualification2DCTnointer.png Graphic file (type png)
-
 <use ../Results/qualification2DCTnointer.png>
-Package pdftex.def Info: ../Results/qualification2DCTnointer.png used on input 
-line 1055.
+Package pdftex.def Info: ../Results/qualification2DCTnointer.png  used on input
+ line 1055.
 (pdftex.def)             Requested size: 199.16928pt x 132.77722pt.
-
 <../Results/qualification2DTCnointer.png, id=742, 602.25pt x 401.5pt>
 File: ../Results/qualification2DTCnointer.png Graphic file (type png)
-
 <use ../Results/qualification2DTCnointer.png>
-Package pdftex.def Info: ../Results/qualification2DTCnointer.png used on input 
-line 1056.
+Package pdftex.def Info: ../Results/qualification2DTCnointer.png  used on input
+ line 1056.
 (pdftex.def)             Requested size: 199.16928pt x 132.77722pt.
-
 <../Results/qualification2DTTnointer.png, id=743, 602.25pt x 401.5pt>
 File: ../Results/qualification2DTTnointer.png Graphic file (type png)
-
 <use ../Results/qualification2DTTnointer.png>
-Package pdftex.def Info: ../Results/qualification2DTTnointer.png used on input 
-line 1057.
+Package pdftex.def Info: ../Results/qualification2DTTnointer.png  used on input
+ line 1057.
 (pdftex.def)             Requested size: 199.16928pt x 132.77722pt.
  [224 <../Results/qualification2DCCinter.png> <../Results/qualification2DCTinte
 r.png> <../Results/qualification2DTCinter.png> <../Results/qualification2DTTint
@@ -1048,93 +1036,76 @@ Underfull \hbox (badness 10000) in paragraph at lines 1068--1075
 
 [225 <../Results/qualification2DCCnointer.png> <../Results/qualification2DCTnoi
 nter.png> <../Results/qualification2DTCnointer.png> <../Results/qualification2D
-TTnointer.png>] <../Results/qualification3D.png, id=750, 602.25pt x 401.5pt>
+TTnointer.png>]
+<../Results/qualification3D.png, id=750, 602.25pt x 401.5pt>
 File: ../Results/qualification3D.png Graphic file (type png)
-
 <use ../Results/qualification3D.png>
-Package pdftex.def Info: ../Results/qualification3D.png used on input line 1081
-.
+Package pdftex.def Info: ../Results/qualification3D.png  used on input line 108
+1.
 (pdftex.def)             Requested size: 341.43306pt x 227.6321pt.
  [226]
 <../Results/qualification3Dinter.png, id=754, 602.25pt x 401.5pt>
 File: ../Results/qualification3Dinter.png Graphic file (type png)
-
 <use ../Results/qualification3Dinter.png>
-Package pdftex.def Info: ../Results/qualification3Dinter.png used on input line
- 1087.
+Package pdftex.def Info: ../Results/qualification3Dinter.png  used on input lin
+e 1087.
 (pdftex.def)             Requested size: 341.43306pt x 227.6321pt.
-
 <../Results/qualification3Dnointer.png, id=755, 602.25pt x 401.5pt>
 File: ../Results/qualification3Dnointer.png Graphic file (type png)
-
 <use ../Results/qualification3Dnointer.png>
-Package pdftex.def Info: ../Results/qualification3Dnointer.png used on input li
-ne 1088.
+Package pdftex.def Info: ../Results/qualification3Dnointer.png  used on input l
+ine 1088.
 (pdftex.def)             Requested size: 341.43306pt x 227.6321pt.
- [227 <../Results/qualification3D.png>] <../Results/qualification3DCCinter.png,
- id=759, 602.25pt x 401.5pt>
+ [227 <../Results/qualification3D.png>]
+<../Results/qualification3DCCinter.png, id=759, 602.25pt x 401.5pt>
 File: ../Results/qualification3DCCinter.png Graphic file (type png)
-
 <use ../Results/qualification3DCCinter.png>
-Package pdftex.def Info: ../Results/qualification3DCCinter.png used on input li
-ne 1093.
+Package pdftex.def Info: ../Results/qualification3DCCinter.png  used on input l
+ine 1093.
 (pdftex.def)             Requested size: 199.16928pt x 132.77722pt.
-
 <../Results/qualification3DCTinter.png, id=760, 602.25pt x 401.5pt>
 File: ../Results/qualification3DCTinter.png Graphic file (type png)
-
 <use ../Results/qualification3DCTinter.png>
-Package pdftex.def Info: ../Results/qualification3DCTinter.png used on input li
-ne 1094.
+Package pdftex.def Info: ../Results/qualification3DCTinter.png  used on input l
+ine 1094.
 (pdftex.def)             Requested size: 199.16928pt x 132.77722pt.
-
 <../Results/qualification3DTCinter.png, id=761, 602.25pt x 401.5pt>
 File: ../Results/qualification3DTCinter.png Graphic file (type png)
-
 <use ../Results/qualification3DTCinter.png>
-Package pdftex.def Info: ../Results/qualification3DTCinter.png used on input li
-ne 1095.
+Package pdftex.def Info: ../Results/qualification3DTCinter.png  used on input l
+ine 1095.
 (pdftex.def)             Requested size: 199.16928pt x 132.77722pt.
-
 <../Results/qualification3DTTinter.png, id=762, 602.25pt x 401.5pt>
 File: ../Results/qualification3DTTinter.png Graphic file (type png)
-
 <use ../Results/qualification3DTTinter.png>
-Package pdftex.def Info: ../Results/qualification3DTTinter.png used on input li
-ne 1096.
+Package pdftex.def Info: ../Results/qualification3DTTinter.png  used on input l
+ine 1096.
 (pdftex.def)             Requested size: 199.16928pt x 132.77722pt.
  [228 <../Results/qualification3Dinter.png> <../Results/qualification3Dnointer.
 png>]
 <../Results/qualification3DCCnointer.png, id=766, 602.25pt x 401.5pt>
 File: ../Results/qualification3DCCnointer.png Graphic file (type png)
-
 <use ../Results/qualification3DCCnointer.png>
-Package pdftex.def Info: ../Results/qualification3DCCnointer.png used on input 
-line 1101.
+Package pdftex.def Info: ../Results/qualification3DCCnointer.png  used on input
+ line 1101.
 (pdftex.def)             Requested size: 199.16928pt x 132.77722pt.
-
 <../Results/qualification3DCTnointer.png, id=767, 602.25pt x 401.5pt>
 File: ../Results/qualification3DCTnointer.png Graphic file (type png)
-
 <use ../Results/qualification3DCTnointer.png>
-Package pdftex.def Info: ../Results/qualification3DCTnointer.png used on input 
-line 1102.
+Package pdftex.def Info: ../Results/qualification3DCTnointer.png  used on input
+ line 1102.
 (pdftex.def)             Requested size: 199.16928pt x 132.77722pt.
-
 <../Results/qualification3DTCnointer.png, id=768, 602.25pt x 401.5pt>
 File: ../Results/qualification3DTCnointer.png Graphic file (type png)
-
 <use ../Results/qualification3DTCnointer.png>
-Package pdftex.def Info: ../Results/qualification3DTCnointer.png used on input 
-line 1103.
+Package pdftex.def Info: ../Results/qualification3DTCnointer.png  used on input
+ line 1103.
 (pdftex.def)             Requested size: 199.16928pt x 132.77722pt.
-
 <../Results/qualification3DTTnointer.png, id=769, 602.25pt x 401.5pt>
 File: ../Results/qualification3DTTnointer.png Graphic file (type png)
-
 <use ../Results/qualification3DTTnointer.png>
-Package pdftex.def Info: ../Results/qualification3DTTnointer.png used on input 
-line 1104.
+Package pdftex.def Info: ../Results/qualification3DTTnointer.png  used on input
+ line 1104.
 (pdftex.def)             Requested size: 199.16928pt x 132.77722pt.
  [229 <../Results/qualification3DCCinter.png> <../Results/qualification3DCTinte
 r.png> <../Results/qualification3DTCinter.png> <../Results/qualification3DTTint
@@ -1187,95 +1158,78 @@ nter.png> <../Results/qualification3DTCnointer.png> <../Results/qualification3D
 TTnointer.png>]
 <../Results/qualification2DTime.png, id=777, 602.25pt x 401.5pt>
 File: ../Results/qualification2DTime.png Graphic file (type png)
-
 <use ../Results/qualification2DTime.png>
-Package pdftex.def Info: ../Results/qualification2DTime.png used on input line 
-1128.
+Package pdftex.def Info: ../Results/qualification2DTime.png  used on input line
+ 1128.
 (pdftex.def)             Requested size: 341.43306pt x 227.6321pt.
  [231]
 <../Results/qualification2DTimeinter.png, id=781, 602.25pt x 401.5pt>
 File: ../Results/qualification2DTimeinter.png Graphic file (type png)
-
 <use ../Results/qualification2DTimeinter.png>
-Package pdftex.def Info: ../Results/qualification2DTimeinter.png used on input 
-line 1134.
+Package pdftex.def Info: ../Results/qualification2DTimeinter.png  used on input
+ line 1134.
 (pdftex.def)             Requested size: 341.43306pt x 227.6321pt.
-
 <../Results/qualification2DTimenointer.png, id=782, 602.25pt x 401.5pt>
 File: ../Results/qualification2DTimenointer.png Graphic file (type png)
-
 <use ../Results/qualification2DTimenointer.png>
-Package pdftex.def Info: ../Results/qualification2DTimenointer.png used on inpu
-t line 1135.
+Package pdftex.def Info: ../Results/qualification2DTimenointer.png  used on inp
+ut line 1135.
 (pdftex.def)             Requested size: 341.43306pt x 227.6321pt.
  [232 <../Results/qualification2DTime.png>]
 <../Results/qualification2DTimeCCinter.png, id=786, 602.25pt x 401.5pt>
 File: ../Results/qualification2DTimeCCinter.png Graphic file (type png)
-
 <use ../Results/qualification2DTimeCCinter.png>
-Package pdftex.def Info: ../Results/qualification2DTimeCCinter.png used on inpu
-t line 1140.
+Package pdftex.def Info: ../Results/qualification2DTimeCCinter.png  used on inp
+ut line 1140.
 (pdftex.def)             Requested size: 199.16928pt x 132.77722pt.
-
 <../Results/qualification2DTimeCTinter.png, id=787, 602.25pt x 401.5pt>
 File: ../Results/qualification2DTimeCTinter.png Graphic file (type png)
-
 <use ../Results/qualification2DTimeCTinter.png>
-Package pdftex.def Info: ../Results/qualification2DTimeCTinter.png used on inpu
-t line 1141.
+Package pdftex.def Info: ../Results/qualification2DTimeCTinter.png  used on inp
+ut line 1141.
 (pdftex.def)             Requested size: 199.16928pt x 132.77722pt.
-
 <../Results/qualification2DTimeTCinter.png, id=788, 602.25pt x 401.5pt>
 File: ../Results/qualification2DTimeTCinter.png Graphic file (type png)
-
 <use ../Results/qualification2DTimeTCinter.png>
-Package pdftex.def Info: ../Results/qualification2DTimeTCinter.png used on inpu
-t line 1142.
+Package pdftex.def Info: ../Results/qualification2DTimeTCinter.png  used on inp
+ut line 1142.
 (pdftex.def)             Requested size: 199.16928pt x 132.77722pt.
-
 <../Results/qualification2DTimeTTinter.png, id=789, 602.25pt x 401.5pt>
 File: ../Results/qualification2DTimeTTinter.png Graphic file (type png)
-
 <use ../Results/qualification2DTimeTTinter.png>
-Package pdftex.def Info: ../Results/qualification2DTimeTTinter.png used on inpu
-t line 1143.
+Package pdftex.def Info: ../Results/qualification2DTimeTTinter.png  used on inp
+ut line 1143.
 (pdftex.def)             Requested size: 199.16928pt x 132.77722pt.
  [233 <../Results/qualification2DTimeinter.png> <../Results/qualification2DTime
 nointer.png>]
 <../Results/qualification2DTimeCCnointer.png, id=793, 602.25pt x 401.5pt>
 File: ../Results/qualification2DTimeCCnointer.png Graphic file (type png)
-
 <use ../Results/qualification2DTimeCCnointer.png>
-Package pdftex.def Info: ../Results/qualification2DTimeCCnointer.png used on in
-put line 1148.
+Package pdftex.def Info: ../Results/qualification2DTimeCCnointer.png  used on i
+nput line 1148.
 (pdftex.def)             Requested size: 199.16928pt x 132.77722pt.
-
 <../Results/qualification2DTimeCTnointer.png, id=794, 602.25pt x 401.5pt>
 File: ../Results/qualification2DTimeCTnointer.png Graphic file (type png)
-
 <use ../Results/qualification2DTimeCTnointer.png>
-Package pdftex.def Info: ../Results/qualification2DTimeCTnointer.png used on in
-put line 1149.
+Package pdftex.def Info: ../Results/qualification2DTimeCTnointer.png  used on i
+nput line 1149.
 (pdftex.def)             Requested size: 199.16928pt x 132.77722pt.
-
 <../Results/qualification2DTimeTCnointer.png, id=795, 602.25pt x 401.5pt>
 File: ../Results/qualification2DTimeTCnointer.png Graphic file (type png)
-
 <use ../Results/qualification2DTimeTCnointer.png>
-Package pdftex.def Info: ../Results/qualification2DTimeTCnointer.png used on in
-put line 1150.
+Package pdftex.def Info: ../Results/qualification2DTimeTCnointer.png  used on i
+nput line 1150.
 (pdftex.def)             Requested size: 199.16928pt x 132.77722pt.
-
 <../Results/qualification2DTimeTTnointer.png, id=796, 602.25pt x 401.5pt>
 File: ../Results/qualification2DTimeTTnointer.png Graphic file (type png)
-
 <use ../Results/qualification2DTimeTTnointer.png>
-Package pdftex.def Info: ../Results/qualification2DTimeTTnointer.png used on in
-put line 1151.
+Package pdftex.def Info: ../Results/qualification2DTimeTTnointer.png  used on i
+nput line 1151.
 (pdftex.def)             Requested size: 199.16928pt x 132.77722pt.
- [234 <../Results/qualification2DTimeCCinter.png> <../Results/qualification2DTi
-meCTinter.png> <../Results/qualification2DTimeTCinter.png> <../Results/qualific
-ation2DTimeTTinter.png>]
+
+[234 <../Results/qualification2DTimeCCinter.png> <../Results/qualification2DTim
+eCTinter.png> <../Results/qualification2DTimeTCinter.png> <../Results/qualifica
+tion2DTimeTTinter.png>]
 
 ! LaTeX Error: \begin{tiny} on input line 1160 ended by \end{scriptsize}.
 
@@ -1324,91 +1278,73 @@ imeCTnointer.png> <../Results/qualification2DTimeTCnointer.png> <../Results/qua
 lification2DTimeTTnointer.png>]
 <../Results/qualification3DTime.png, id=804, 602.25pt x 401.5pt>
 File: ../Results/qualification3DTime.png Graphic file (type png)
-
 <use ../Results/qualification3DTime.png>
-Package pdftex.def Info: ../Results/qualification3DTime.png used on input line 
-1175.
+Package pdftex.def Info: ../Results/qualification3DTime.png  used on input line
+ 1175.
 (pdftex.def)             Requested size: 341.43306pt x 227.6321pt.
  [236]
 <../Results/qualification3DTimeinter.png, id=808, 602.25pt x 401.5pt>
 File: ../Results/qualification3DTimeinter.png Graphic file (type png)
-
 <use ../Results/qualification3DTimeinter.png>
-Package pdftex.def Info: ../Results/qualification3DTimeinter.png used on input 
-line 1181.
+Package pdftex.def Info: ../Results/qualification3DTimeinter.png  used on input
+ line 1181.
 (pdftex.def)             Requested size: 341.43306pt x 227.6321pt.
-
 <../Results/qualification3DTimenointer.png, id=809, 602.25pt x 401.5pt>
 File: ../Results/qualification3DTimenointer.png Graphic file (type png)
-
 <use ../Results/qualification3DTimenointer.png>
-Package pdftex.def Info: ../Results/qualification3DTimenointer.png used on inpu
-t line 1182.
+Package pdftex.def Info: ../Results/qualification3DTimenointer.png  used on inp
+ut line 1182.
 (pdftex.def)             Requested size: 341.43306pt x 227.6321pt.
  [237 <../Results/qualification3DTime.png>]
 <../Results/qualification3DTimeCCinter.png, id=813, 602.25pt x 401.5pt>
 File: ../Results/qualification3DTimeCCinter.png Graphic file (type png)
-
 <use ../Results/qualification3DTimeCCinter.png>
-Package pdftex.def Info: ../Results/qualification3DTimeCCinter.png used on inpu
-t line 1187.
+Package pdftex.def Info: ../Results/qualification3DTimeCCinter.png  used on inp
+ut line 1187.
 (pdftex.def)             Requested size: 199.16928pt x 132.77722pt.
-
 <../Results/qualification3DTimeCTinter.png, id=814, 602.25pt x 401.5pt>
 File: ../Results/qualification3DTimeCTinter.png Graphic file (type png)
-
 <use ../Results/qualification3DTimeCTinter.png>
-Package pdftex.def Info: ../Results/qualification3DTimeCTinter.png used on inpu
-t line 1188.
+Package pdftex.def Info: ../Results/qualification3DTimeCTinter.png  used on inp
+ut line 1188.
 (pdftex.def)             Requested size: 199.16928pt x 132.77722pt.
-
 <../Results/qualification3DTimeTCinter.png, id=815, 602.25pt x 401.5pt>
 File: ../Results/qualification3DTimeTCinter.png Graphic file (type png)
-
 <use ../Results/qualification3DTimeTCinter.png>
-Package pdftex.def Info: ../Results/qualification3DTimeTCinter.png used on inpu
-t line 1189.
+Package pdftex.def Info: ../Results/qualification3DTimeTCinter.png  used on inp
+ut line 1189.
 (pdftex.def)             Requested size: 199.16928pt x 132.77722pt.
-
 <../Results/qualification3DTimeTTinter.png, id=816, 602.25pt x 401.5pt>
 File: ../Results/qualification3DTimeTTinter.png Graphic file (type png)
-
 <use ../Results/qualification3DTimeTTinter.png>
-Package pdftex.def Info: ../Results/qualification3DTimeTTinter.png used on inpu
-t line 1190.
+Package pdftex.def Info: ../Results/qualification3DTimeTTinter.png  used on inp
+ut line 1190.
 (pdftex.def)             Requested size: 199.16928pt x 132.77722pt.
  [238 <../Results/qualification3DTimeinter.png> <../Results/qualification3DTime
 nointer.png>]
 <../Results/qualification3DTimeCCnointer.png, id=820, 602.25pt x 401.5pt>
 File: ../Results/qualification3DTimeCCnointer.png Graphic file (type png)
-
 <use ../Results/qualification3DTimeCCnointer.png>
-Package pdftex.def Info: ../Results/qualification3DTimeCCnointer.png used on in
-put line 1195.
+Package pdftex.def Info: ../Results/qualification3DTimeCCnointer.png  used on i
+nput line 1195.
 (pdftex.def)             Requested size: 199.16928pt x 132.77722pt.
-
 <../Results/qualification3DTimeCTnointer.png, id=821, 602.25pt x 401.5pt>
 File: ../Results/qualification3DTimeCTnointer.png Graphic file (type png)
-
 <use ../Results/qualification3DTimeCTnointer.png>
-Package pdftex.def Info: ../Results/qualification3DTimeCTnointer.png used on in
-put line 1196.
+Package pdftex.def Info: ../Results/qualification3DTimeCTnointer.png  used on i
+nput line 1196.
 (pdftex.def)             Requested size: 199.16928pt x 132.77722pt.
-
 <../Results/qualification3DTimeTCnointer.png, id=822, 602.25pt x 401.5pt>
 File: ../Results/qualification3DTimeTCnointer.png Graphic file (type png)
-
 <use ../Results/qualification3DTimeTCnointer.png>
-Package pdftex.def Info: ../Results/qualification3DTimeTCnointer.png used on in
-put line 1197.
+Package pdftex.def Info: ../Results/qualification3DTimeTCnointer.png  used on i
+nput line 1197.
 (pdftex.def)             Requested size: 199.16928pt x 132.77722pt.
-
 <../Results/qualification3DTimeTTnointer.png, id=823, 602.25pt x 401.5pt>
 File: ../Results/qualification3DTimeTTnointer.png Graphic file (type png)
-
 <use ../Results/qualification3DTimeTTnointer.png>
-Package pdftex.def Info: ../Results/qualification3DTimeTTnointer.png used on in
-put line 1198.
+Package pdftex.def Info: ../Results/qualification3DTimeTTnointer.png  used on i
+nput line 1198.
 (pdftex.def)             Requested size: 199.16928pt x 132.77722pt.
  [239 <../Results/qualification3DTimeCCinter.png> <../Results/qualification3DTi
 meCTinter.png> <../Results/qualification3DTimeTCinter.png> <../Results/qualific
@@ -1449,39 +1385,39 @@ Underfull \hbox (badness 10000) in paragraph at lines 1247--1248
 (../Makefile [264] [265]) [266] (../2D/Makefile) (../3D/Makefile [267])
 (../2DTime/Makefile [268]) (../3DTime/Makefile [269]) (../Doc/Makefile)
 (../dynamicAnalysis.txt [270] [271] [272] [273] [274] [275] [276] [277]
-[278] [279] [280] [281] [282] [283] [284] [285] [286]) [287] (./fmb.aux) ) 
+[278] [279] [280] [281] [282] [283] [284] [285] [286] [287] [288] [289]
+[290]) [291] (./fmb.aux) ) 
 Here is how much of TeX's memory you used:
- 14760 strings out of 493029
- 291098 string characters out of 6136233
- 561533 words of memory out of 5000000
- 17821 multiletter control sequences out of 15000+600000
+ 15054 strings out of 493765
+ 294888 string characters out of 6151500
+ 558795 words of memory out of 5000000
+ 18087 multiletter control sequences out of 15000+600000
  14339 words of font info for 56 fonts, out of 8000000 for 9000
- 1141 hyphenation exceptions out of 8191
+ 622 hyphenation exceptions out of 8191
  55i,22n,54p,1117b,1472s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr
-/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share
-/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texli
-ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/tex
-mf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texlive/texmf-dis
-t/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texlive/texmf-dist/fonts
-/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/
-public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/
-amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfont
-s/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cm
-r6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><
-/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/s
-hare/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/share/te
-xlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/t
-exmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/share/texlive/texmf-d
-ist/fonts/type1/public/amsfonts/cm/cmtt8.pfb></usr/share/texlive/texmf-dist/fon
-ts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/texlive/texmf-dist/font
-s/type1/public/amsfonts/symbols/msbm7.pfb>
+</usr/share/texlive/texmf-dist/fonts/type1/public/ams
+fonts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cme
+x10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pf
+b></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr
+/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/
+texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive
+/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-
+dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fo
+nts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texlive/texmf-dist/fonts/type
+1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public
+/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfo
+nts/cm/cmsy6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/
+cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.
+pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb></u
+sr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></us
+r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm7.pfb>
 
 pdfTeX warning: pdflatex: no GlyphToUnicode entry has been inserted yet!
-Output written on fmb.pdf (287 pages, 1325692 bytes).
+Output written on fmb.pdf (291 pages, 1384719 bytes).
 PDF statistics:
- 1049 PDF objects out of 1200 (max. 8388607)
- 689 compressed objects within 7 object streams
+ 1063 PDF objects out of 1200 (max. 8388607)
+ 699 compressed objects within 7 object streams
  0 named destinations out of 1000 (max. 500000)
  226 words of extra memory for PDF output out of 10000 (max. 10000000)
 

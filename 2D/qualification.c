@@ -16,7 +16,7 @@
 // Nb of run
 #define NB_RUNS 9
 // Nb of tests per run
-#define NB_TESTS 2000
+#define NB_TESTS 100000
 // Nb of times the test is run on one pair of frame, used to 
 // slow down the processus and be able to measure time
 #define NB_REPEAT_2D 1500
