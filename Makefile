@@ -95,33 +95,33 @@ valgrind3DTime:
 run : run2D run2DTime run3D run3DTime
 
 run2D: 
-	cd 2D; ./main > ../Results/main2D.txt; ./unitTests > ../Results/unitTests2D.txt; ./validation > ../Results/validation2D.txt; grep failed ../Results/validation2D.txt; ./qualification; grep failed ../Results/qualification2D.txt; cd - 
+	cd 2D; ./main > ../Results/main2D.txt; ./unitTests > ../Results/unitTests2D.txt; ./validation > ../Results/validation2D.txt; ./qualification; cd - 
 
 run3D: 
-	cd 3D; ./main > ../Results/main3D.txt; ./unitTests > ../Results/unitTests3D.txt; ./validation > ../Results/validation3D.txt; grep failed ../Results/validation3D.txt; ./qualification > ../Results/qualification3D.txt; grep failed ../Results/qualification3D.txt; cd - 
+	cd 3D; ./main > ../Results/main3D.txt; ./unitTests > ../Results/unitTests3D.txt; ./validation > ../Results/validation3D.txt; ./qualification; cd - 
 
 run2DTime: 
-	cd 2DTime; ./main > ../Results/main2DTime.txt; ./unitTests > ../Results/unitTests2DTime.txt; ./validation > ../Results/validation2DTime.txt; grep failed ../Results/validation2DTime.txt; ./qualification > ../Results/qualification2DTime.txt; grep failed ../Results/qualification2DTime.txt; cd - 
+	cd 2DTime; ./main > ../Results/main2DTime.txt; ./unitTests > ../Results/unitTests2DTime.txt; ./validation > ../Results/validation2DTime.txt; ./qualification; cd - 
 
 run3DTime: 
-	cd 3DTime; ./main > ../Results/main3DTime.txt; ./unitTests > ../Results/unitTests3DTime.txt; ./validation > ../Results/validation3DTime.txt; grep failed ../Results/validation3DTime.txt; ./qualification > ../Results/qualification3DTime.txt; grep failed ../Results/qualification3DTime.txt; cd - 
+	cd 3DTime; ./main > ../Results/main3DTime.txt; ./unitTests > ../Results/unitTests3DTime.txt; ./validation > ../Results/validation3DTime.txt; ./qualification; cd - 
 
 plot: cleanPlot plot2D plot2DTime plot3D plot3DTime
 
 cleanPlot:
-	rm Results/*.png
+	rm -f Results/*.png
 
 plot2D:
 	cd Results; gnuplot qualification2D.gnu; cd -
 
 plot2DTime:
-	cd Results; gnuplot qualification2DTime.gnu < qualification2DTime.txt; cd -
+	cd Results; gnuplot qualification2DTime.gnu; cd -
 
 plot3D:
-	cd Results; gnuplot qualification3D.gnu < qualification3D.txt; cd -
+	cd Results; gnuplot qualification3D.gnu; cd -
 
 plot3DTime:
-	cd Results; gnuplot qualification3DTime.gnu < qualification3DTime.txt; cd -
+	cd Results; gnuplot qualification3DTime.gnu; cd -
 
 doc:
 	cd Doc; make latex; cd -

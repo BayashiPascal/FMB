@@ -16,7 +16,7 @@
 // Nb of run
 #define NB_RUNS 9
 // Nb of tests per run
-#define NB_TESTS 100000
+#define NB_TESTS 100 //000
 // Nb of times the test is run on one pair of frame, used to 
 // slow down the processus and be able to measure time
 #define NB_REPEAT_2D 1500
@@ -564,10 +564,10 @@ void Qualify2DStatic(void) {
     if (iRun == 0) {
 
       fprintf(fp, "percPairInter,");
-      fprintf(fp, "countInter,countNoInter,");
-      fprintf(fp, "minInter,avgInter,maxInter,");
-      fprintf(fp, "minNoInter,avgNoInter,maxNoInter,");
-      fprintf(fp, "minTotal,avgTotal,maxTotal\n");
+      fprintf(fp, "countInterTo,countNoInterTo,");
+      fprintf(fp, "minInterTo,avgInterTo,maxInterTo,");
+      fprintf(fp, "minNoInterTo,avgNoInterTo,maxNoInterTo,");
+      fprintf(fp, "minTotalTo,avgTotalTo,maxTotalTo\n");
 
       fprintf(fpCC, "percPairInter,");
       fprintf(fpCC, "countInterCC,countNoInterCC,");

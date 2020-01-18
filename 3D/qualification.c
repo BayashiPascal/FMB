@@ -16,7 +16,7 @@
 // Nb of run
 #define NB_RUNS 9
 // Nb of tests per run
-#define NB_TESTS 100000
+#define NB_TESTS 100 //000
 // Nb of times the test is run on one pair of frame, used to 
 // slow down the processus and be able to measure time
 #define NB_REPEAT_3D 800
@@ -438,6 +438,13 @@ void Qualify3DStatic(void) {
   // Initialise the random generator
   srandom(time(NULL));
 
+  // Open the files to save the results
+  FILE* fp = fopen("../Results/qualification3D.txt", "w");
+  FILE* fpCC = fopen("../Results/qualification3DCC.txt", "w");
+  FILE* fpCT = fopen("../Results/qualification3DCT.txt", "w");
+  FILE* fpTC = fopen("../Results/qualification3DTC.txt", "w");
+  FILE* fpTT = fopen("../Results/qualification3DTT.txt", "w");
+
   // Loop on runs
   for (int iRun = 0;
        iRun < NB_RUNS;
@@ -563,98 +570,127 @@ void Qualify3DStatic(void) {
     // Display the results
     if (iRun == 0) {
 
-      printf("percPairInter,");
-      printf("countInter,countNoInter,");
-      printf("minInter,avgInter,maxInter,");
-      printf("minNoInter,avgNoInter,maxNoInter,");
-      printf("minTotal,avgTotal,maxTotal,");
+      fprintf(fp, "percPairInter,");
+      fprintf(fp, "countInterTo,countNoInterTo,");
+      fprintf(fp, "minInterTo,avgInterTo,maxInterTo,");
+      fprintf(fp, "minNoInterTo,avgNoInterTo,maxNoInterTo,");
+      fprintf(fp, "minTotalTo,avgTotalTo,maxTotalTo\n");
 
-      printf("countInterCC,countNoInterCC,");
-      printf("minInterCC,avgInterCC,maxInterCC,");
-      printf("minNoInterCC,avgNoInterCC,maxNoInterCC,");
-      printf("minTotalCC,avgTotalCC,maxTotalCC,");
+      fprintf(fpCC, "percPairInter,");
+      fprintf(fpCC, "countInterCC,countNoInterCC,");
+      fprintf(fpCC, "minInterCC,avgInterCC,maxInterCC,");
+      fprintf(fpCC, "minNoInterCC,avgNoInterCC,maxNoInterCC,");
+      fprintf(fpCC, "minTotalCC,avgTotalCC,maxTotalCC\n");
 
-      printf("countInterCT,countNoInterCT,");
-      printf("minInterCT,avgInterCT,maxInterCT,");
-      printf("minNoInterCT,avgNoInterCT,maxNoInterCT,");
-      printf("minTotalCT,avgTotalCT,maxTotalCT,");
+      fprintf(fpCT, "percPairInter,");
+      fprintf(fpCT, "countInterCT,countNoInterCT,");
+      fprintf(fpCT, "minInterCT,avgInterCT,maxInterCT,");
+      fprintf(fpCT, "minNoInterCT,avgNoInterCT,maxNoInterCT,");
+      fprintf(fpCT, "minTotalCT,avgTotalCT,maxTotalCT\n");
 
-      printf("countInterTC,countNoInterTC,");
-      printf("minInterTC,avgInterTC,maxInterTC,");
-      printf("minNoInterTC,avgNoInterTC,maxNoInterTC,");
-      printf("minTotalTC,avgTotalTC,maxTotalTC,");
+      fprintf(fpTC, "percPairInter,");
+      fprintf(fpTC, "countInterTC,countNoInterTC,");
+      fprintf(fpTC, "minInterTC,avgInterTC,maxInterTC,");
+      fprintf(fpTC, "minNoInterTC,avgNoInterTC,maxNoInterTC,");
+      fprintf(fpTC, "minTotalTC,avgTotalTC,maxTotalTC\n");
 
-      printf("countInterTT,countNoInterTT,");
-      printf("minInterTT,avgInterTT,maxInterTT,");
-      printf("minNoInterTT,avgNoInterTT,maxNoInterTT,");
-      printf("minTotalTT,avgTotalTT,maxTotalTT\n");
+      fprintf(fpTT, "percPairInter,");
+      fprintf(fpTT, "countInterTT,countNoInterTT,");
+      fprintf(fpTT, "minInterTT,avgInterTT,maxInterTT,");
+      fprintf(fpTT, "minNoInterTT,avgNoInterTT,maxNoInterTT,");
+      fprintf(fpTT, "minTotalTT,avgTotalTT,maxTotalTT\n");
 
     }
 
-    printf("%.1f,", ratioInter);
-
-    printf("%lu,%lu,", countInter, countNoInter);
+    fprintf(fp, "%.1f,", ratioInter);
+    fprintf(fp, "%lu,%lu,", countInter, countNoInter);
     double avgInter = sumInter / (double)countInter;
-    printf("%f,%f,%f,", minInter, avgInter, maxInter);
+    fprintf(fp, "%f,%f,%f,", minInter, avgInter, maxInter);
     double avgNoInter = sumNoInter / (double)countNoInter;
-    printf("%f,%f,%f,", minNoInter, avgNoInter, maxNoInter);
+    fprintf(fp, "%f,%f,%f,", minNoInter, avgNoInter, maxNoInter);
     double avg = 
       ratioInter * avgInter + (1.0 - ratioInter) * avgNoInter;
-    printf("%f,%f,%f,", 
+    fprintf(fp, "%f,%f,%f", 
       (minNoInter < minInter ? minNoInter : minInter), 
       avg,
       (maxNoInter > maxInter ? maxNoInter : maxInter));
+    if (iRun < NB_RUNS - 1) {
+      fprintf(fp, "\n"); 
+    }
 
-    printf("%lu,%lu,", countInterCC, countNoInterCC);
+    fprintf(fpCC, "%.1f,", ratioInter);
+    fprintf(fpCC, "%lu,%lu,", countInterCC, countNoInterCC);
     double avgInterCC = sumInterCC / (double)countInterCC;
-    printf("%f,%f,%f,", minInterCC, avgInterCC, maxInterCC);
+    fprintf(fpCC, "%f,%f,%f,", minInterCC, avgInterCC, maxInterCC);
     double avgNoInterCC = sumNoInterCC / (double)countNoInterCC;
-    printf("%f,%f,%f,", minNoInterCC, avgNoInterCC, maxNoInterCC);
+    fprintf(fpCC, "%f,%f,%f,", minNoInterCC, avgNoInterCC, maxNoInterCC);
     double avgCC = 
       ratioInter * avgInterCC + (1.0 - ratioInter) * avgNoInterCC;
-    printf("%f,%f,%f,", 
+    fprintf(fpCC, "%f,%f,%f", 
       (minNoInterCC < minInterCC ? minNoInterCC : minInterCC), 
       avgCC,
       (maxNoInterCC > maxInterCC ? maxNoInterCC : maxInterCC));
+    if (iRun < NB_RUNS - 1) {
+      fprintf(fpCC, "\n"); 
+    }
 
-    printf("%lu,%lu,", countInterCT, countNoInterCT);
+    fprintf(fpCT, "%.1f,", ratioInter);
+    fprintf(fpCT, "%lu,%lu,", countInterCT, countNoInterCT);
     double avgInterCT = sumInterCT / (double)countInterCT;
-    printf("%f,%f,%f,", minInterCT, avgInterCT, maxInterCT);
+    fprintf(fpCT, "%f,%f,%f,", minInterCT, avgInterCT, maxInterCT);
     double avgNoInterCT = sumNoInterCT / (double)countNoInterCT;
-    printf("%f,%f,%f,", minNoInterCT, avgNoInterCT, maxNoInterCT);
+    fprintf(fpCT, "%f,%f,%f,", minNoInterCT, avgNoInterCT, maxNoInterCT);
     double avgCT = 
       ratioInter * avgInterCT + (1.0 - ratioInter) * avgNoInterCT;
-    printf("%f,%f,%f,", 
+    fprintf(fpCT, "%f,%f,%f", 
       (minNoInterCT < minInterCT ? minNoInterCT : minInterCT), 
       avgCT,
       (maxNoInterCT > maxInterCT ? maxNoInterCT : maxInterCT));
+    if (iRun < NB_RUNS - 1) {
+      fprintf(fpCT, "\n"); 
+    }
 
-    printf("%lu,%lu,", countInterTC, countNoInterTC);
+    fprintf(fpTC, "%.1f,", ratioInter);
+    fprintf(fpTC, "%lu,%lu,", countInterTC, countNoInterTC);
     double avgInterTC = sumInterTC / (double)countInterTC;
-    printf("%f,%f,%f,", minInterTC, avgInterTC, maxInterTC);
+    fprintf(fpTC, "%f,%f,%f,", minInterTC, avgInterTC, maxInterTC);
     double avgNoInterTC = sumNoInterTC / (double)countNoInterTC;
-    printf("%f,%f,%f,", minNoInterTC, avgNoInterTC, maxNoInterTC);
+    fprintf(fpTC, "%f,%f,%f,", minNoInterTC, avgNoInterTC, maxNoInterTC);
     double avgTC = 
       ratioInter * avgInterTC + (1.0 - ratioInter) * avgNoInterTC;
-    printf("%f,%f,%f,", 
+    fprintf(fpTC, "%f,%f,%f", 
       (minNoInterTC < minInterTC ? minNoInterTC : minInterTC), 
       avgTC,
       (maxNoInterTC > maxInterTC ? maxNoInterTC : maxInterTC));
+    if (iRun < NB_RUNS - 1) {
+      fprintf(fpTC, "\n"); 
+    }
 
-    printf("%lu,%lu,", countInterTT, countNoInterTT);
+    fprintf(fpTT, "%.1f,", ratioInter);
+    fprintf(fpTT, "%lu,%lu,", countInterTT, countNoInterTT);
     double avgInterTT = sumInterTT / (double)countInterTT;
-    printf("%f,%f,%f,", minInterTT, avgInterTT, maxInterTT);
+    fprintf(fpTT, "%f,%f,%f,", minInterTT, avgInterTT, maxInterTT);
     double avgNoInterTT = sumNoInterTT / (double)countNoInterTT;
-    printf("%f,%f,%f,", minNoInterTT, avgNoInterTT, maxNoInterTT);
+    fprintf(fpTT, "%f,%f,%f,", minNoInterTT, avgNoInterTT, maxNoInterTT);
     double avgTT = 
       ratioInter * avgInterTT + (1.0 - ratioInter) * avgNoInterTT;
-    printf("%f,%f,%f\n", 
+    fprintf(fpTT, "%f,%f,%f", 
       (minNoInterTT < minInterTT ? minNoInterTT : minInterTT), 
       avgTT,
       (maxNoInterTT > maxInterTT ? maxNoInterTT : maxInterTT));
+    if (iRun < NB_RUNS - 1) {
+      fprintf(fpTT, "\n"); 
+    }
 
   }
 
+  // Close the files
+  fclose(fp);
+  fclose(fpCC);
+  fclose(fpCT);
+  fclose(fpTC);
+  fclose(fpTT);
+  
 }
 
 int main(int argc, char** argv) {

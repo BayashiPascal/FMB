@@ -1,3 +1,3 @@
 ===== 3D dynamic ======
 Validation3DTime has succeed.
-Tested 523890 intersections and 1476110 no intersections
+Tested 523606 intersections and 1476392 no intersections
