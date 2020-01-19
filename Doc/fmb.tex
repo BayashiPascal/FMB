@@ -614,7 +614,24 @@ $$
 \hline
 \end{array}
 $$
-However, these theoretical values are much higher than the ones encountered in practice, and the maximum number of inequations encountered during validation were:\\
+However, these values are much higher than the ones encountered in the case of the systems correpsonding to the intersection problem. It can be noticed that $n_0$ can be better estimated as the inequations corresponding to the constraints $0.0\le x\le1.0$ leads to, for $N'$, $n_0\in\lbrace D-1,2(D-1)\rbrace$ in static case and $n_0\in\lbrace D+1,2D+1\rbrace$ in dynamic case. Thus we can reduce $N'$ to:\\
+$$
+\begin{array}{|c|c|c|}
+\hline
+&N&N'\\
+\hline
+2Dstatic&8&14\\
+\hline
+2Ddynamic&10&16\\
+\hline
+3Dstatic&12&27\\
+\hline
+3Ddynamic&14&29\\
+\hline
+\end{array}
+$$
+
+and so on for $N''$ and $N'''$. In pratice, the maximum number of inequations encountered during validation were:\\
 $$
 \begin{array}{|c|c|c|c|c|}
 \hline
@@ -1198,6 +1215,10 @@ In this subsection I give the results of the qualification for each case. These 
 \centering\includegraphics[width=7cm]{../Results/qualification3DTimeTTnointer.png}
 \end{figure}
 \end{center}
+
+\section{Comments about the qualification results}
+
+
 
 \section{Conclusion}
 

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.10.17)  18 JAN 2020 23:56
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.10.17)  19 JAN 2020 23:40
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -647,17 +647,17 @@ Underfull \hbox (badness 10000) in paragraph at lines 75--77
 
  []
 
-
+[5]
 Underfull \hbox (badness 10000) in paragraph at lines 134--135
 
  []
 
-[5] [6]
+[6] [7]
 Underfull \hbox (badness 10000) in paragraph at lines 256--257
 
  []
 
-[7]
+
 Underfull \hbox (badness 10000) in paragraph at lines 276--278
 
  []
@@ -713,33 +713,38 @@ Underfull \hbox (badness 10000) in paragraph at lines 616--618
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 636--637
+Underfull \hbox (badness 10000) in paragraph at lines 634--635
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 638--639
+Underfull \hbox (badness 10000) in paragraph at lines 653--654
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 640--641
+Underfull \hbox (badness 10000) in paragraph at lines 655--656
 
  []
 
-(../2D/algorithm.txt [15] [16] [17] [18] [19] [20]) (../3D/algorithm.txt
-[21] [22] [23] [24] [25] [26] [27] [28]) (../2DTime/algorithm.txt [29] [30]
-[31] [32] [33] [34] [35]) (../3DTime/algorithm.txt [36] [37] [38] [39] [40]
-[41] [42] [43])
-Underfull \hbox (badness 10000) in paragraph at lines 676--677
+
+Underfull \hbox (badness 10000) in paragraph at lines 657--658
 
  []
 
-[44] (../Frame/frame.h [45] [46]) [47] (../Frame/frame.c [48] [49] [50]
-[51] [52] [53] [54] [55] [56] [57] [58] [59] [60] [61] [62] [63] [64] [65]
-[66] [67] [68])
+[15] (../2D/algorithm.txt [16] [17] [18] [19] [20] [21]) (../3D/algorithm.txt
+[22] [23] [24] [25] [26] [27] [28]) (../2DTime/algorithm.txt [29] [30] [31]
+[32] [33] [34] [35]) (../3DTime/algorithm.txt [36] [37] [38] [39] [40] [41]
+[42] [43] [44])
+Underfull \hbox (badness 10000) in paragraph at lines 693--694
+
+ []
+
+(../Frame/frame.h [45] [46] [47]) (../Frame/frame.c [48] [49] [50] [51]
+[52] [53] [54] [55] [56] [57] [58] [59] [60] [61] [62] [63] [64] [65] [66]
+[67] [68])
 ! Undefined control sequence.
-l.700 \subsubsubsection
+l.717 \subsubsubsection
                        {Header}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -749,7 +754,7 @@ and I'll forget about whatever was undefined.
 
 (../2D/fmb2d.h [69])
 ! Undefined control sequence.
-l.708 \subsubsubsection
+l.725 \subsubsubsection
                        {Body}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -759,7 +764,7 @@ and I'll forget about whatever was undefined.
 
 (../2D/fmb2d.c [70] [71] [72] [73] [74] [75] [76] [77])
 ! Undefined control sequence.
-l.718 \subsubsubsection
+l.735 \subsubsubsection
                        {Header}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -769,7 +774,7 @@ and I'll forget about whatever was undefined.
 
 (../3D/fmb3d.h [78])
 ! Undefined control sequence.
-l.726 \subsubsubsection
+l.743 \subsubsubsection
                        {Body}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -779,7 +784,7 @@ and I'll forget about whatever was undefined.
 
 (../3D/fmb3d.c [79] [80] [81] [82] [83] [84] [85] [86] [87] [88])
 ! Undefined control sequence.
-l.736 \subsubsubsection
+l.753 \subsubsubsection
                        {Header}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -789,7 +794,7 @@ and I'll forget about whatever was undefined.
 
 (../2DTime/fmb2dt.h)
 ! Undefined control sequence.
-l.744 \subsubsubsection
+l.761 \subsubsubsection
                        {Body}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -799,7 +804,7 @@ and I'll forget about whatever was undefined.
 
 (../2DTime/fmb2dt.c [89] [90] [91] [92] [93] [94] [95] [96] [97] [98])
 ! Undefined control sequence.
-l.754 \subsubsubsection
+l.771 \subsubsubsection
                        {Header}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -809,7 +814,7 @@ and I'll forget about whatever was undefined.
 
 (../3DTime/fmb3dt.h)
 ! Undefined control sequence.
-l.762 \subsubsubsection
+l.779 \subsubsubsection
                        {Body}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -818,9 +823,9 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 (../3DTime/fmb3dt.c [99] [100] [101] [102] [103] [104] [105] [106] [107]
-[108] [109]) (../2D/main.c [110] [111]) (../3D/main.c [112] [113])
+[108] [109]) [110] (../2D/main.c [111]) (../3D/main.c [112] [113])
 (../2DTime/main.c [114]) (../3DTime/main.c [115] [116])
-Underfull \hbox (badness 10000) in paragraph at lines 808--809
+Underfull \hbox (badness 10000) in paragraph at lines 825--826
 
  []
 
@@ -828,92 +833,94 @@ Underfull \hbox (badness 10000) in paragraph at lines 808--809
 [126] [127] [128]) (../3D/unitTests.c [129] [130] [131] [132] [133] [134]
 [135] [136]) (../2DTime/unitTests.c [137] [138] [139] [140] [141] [142])
 (../3DTime/unitTests.c [143] [144] [145] [146] [147])
-(../Results/unitTests2D.txt [148] [149] [150] [151])
-(../Results/unitTests3D.txt [152] [153] [154]) (../Results/unitTests2DTime.txt
-[155] [156]) (../Results/unitTests3DTime.txt [157] [158])
-Underfull \hbox (badness 10000) in paragraph at lines 880--881
+(../Results/unitTests2D.txt [148] [149] [150] [151] [152])
+(../Results/unitTests3D.txt [153] [154] [155]) (../Results/unitTests2DTime.txt
+[156]) (../Results/unitTests3DTime.txt [157] [158])
+Underfull \hbox (badness 10000) in paragraph at lines 897--898
 
  []
 
-(../2D/validation.c [159] [160] [161] [162]) (../3D/validation.c [163] [164]
-[165]) (../2DTime/validation.c [166] [167] [168]) [169] (../3DTime/validation.c
+[159] (../2D/validation.c [160] [161] [162]) (../3D/validation.c [163] [164]
+[165]) (../2DTime/validation.c [166] [167] [168] [169]) (../3DTime/validation.c
 [170] [171] [172])
-Underfull \hbox (badness 10000) in paragraph at lines 920--921
+Underfull \hbox (badness 10000) in paragraph at lines 937--938
 
  []
 
 
-Overfull \hbox (52.00635pt too wide) in paragraph at lines 924--931
+Overfull \hbox (52.00635pt too wide) in paragraph at lines 941--948
 \OT1/cmtt/m/n/8 Co(-63.571705,-22.581119) x(55.239119,38.152177) y(-62.031537,-
 42.843548) against To(3.474294,22.751011)
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 924--931
+Underfull \hbox (badness 10000) in paragraph at lines 941--948
 
  []
 
-<./degeneratedFrame.png, id=567, 576.1525pt x 336.25626pt>
+[173]
+<./degeneratedFrame.png, id=570, 576.1525pt x 336.25626pt>
 File: ./degeneratedFrame.png Graphic file (type png)
 <use ./degeneratedFrame.png>
-Package pdftex.def Info: ./degeneratedFrame.png  used on input line 934.
+Package pdftex.def Info: ./degeneratedFrame.png  used on input line 951.
 (pdftex.def)             Requested size: 284.52756pt x 166.05998pt.
-[173] (../Results/validation2D.txt) (../Results/validation2DTime.txt)
-(../Results/validation3D.txt) (../Results/validation3DTime.txt)
-Underfull \hbox (badness 10000) in paragraph at lines 974--975
+ (../Results/validation2D.txt) (../Results/validation2DTime.txt)
+(../Results/validation3D.txt) (../Results/validation3DTime.txt) [174 <./degener
+atedFrame.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 991--992
 
  []
 
-[174 <./degeneratedFrame.png>] (../2D/qualification.c [175] [176] [177]
-[178] [179] [180] [181] [182] [183] [184] [185]) (../3D/qualification.c
-[186] [187] [188] [189] [190] [191] [192] [193] [194] [195] [196])
-(../2DTime/qualification.c [197] [198] [199] [200] [201] [202] [203] [204]
-[205] [206] [207] [208]) (../3DTime/qualification.c [209] [210] [211] [212]
-[213] [214] [215] [216] [217] [218] [219])
-Underfull \hbox (badness 10000) in paragraph at lines 1012--1013
+(../2D/qualification.c [175] [176] [177] [178] [179] [180] [181] [182] [183]
+[184] [185]) (../3D/qualification.c [186] [187] [188] [189] [190] [191]
+[192] [193] [194] [195] [196]) (../2DTime/qualification.c [197] [198] [199]
+[200] [201] [202] [203] [204] [205] [206] [207] [208])
+(../3DTime/qualification.c [209] [210] [211] [212] [213] [214] [215] [216]
+[217] [218] [219])
+Underfull \hbox (badness 10000) in paragraph at lines 1029--1030
 
  []
 
 
-! LaTeX Error: \begin{tiny} on input line 1019 ended by \end{scriptsize}.
+! LaTeX Error: \begin{tiny} on input line 1036 ended by \end{scriptsize}.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1027 \end{scriptsize}
+l.1044 \end{scriptsize}
                        
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
 
-Overfull \hbox (189.51878pt too wide) in paragraph at lines 1021--1028
+Overfull \hbox (189.51878pt too wide) in paragraph at lines 1038--1045
 [] 
  []
 
 
-Overfull \hbox (189.51878pt too wide) in paragraph at lines 1021--1028
+Overfull \hbox (189.51878pt too wide) in paragraph at lines 1038--1045
 [] 
  []
 
 
-Overfull \hbox (189.51878pt too wide) in paragraph at lines 1021--1028
+Overfull \hbox (189.51878pt too wide) in paragraph at lines 1038--1045
 [] 
  []
 
 
-Overfull \hbox (189.51878pt too wide) in paragraph at lines 1021--1028
+Overfull \hbox (189.51878pt too wide) in paragraph at lines 1038--1045
 [] 
  []
 
 
-Overfull \hbox (189.51878pt too wide) in paragraph at lines 1021--1028
+Overfull \hbox (189.51878pt too wide) in paragraph at lines 1038--1045
 [] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1021--1028
+Underfull \hbox (badness 10000) in paragraph at lines 1038--1045
 
  []
 
@@ -921,46 +928,46 @@ Underfull \hbox (badness 10000) in paragraph at lines 1021--1028
 <../Results/qualification2D.png, id=723, 602.25pt x 401.5pt>
 File: ../Results/qualification2D.png Graphic file (type png)
 <use ../Results/qualification2D.png>
-Package pdftex.def Info: ../Results/qualification2D.png  used on input line 103
-4.
+Package pdftex.def Info: ../Results/qualification2D.png  used on input line 105
+1.
 (pdftex.def)             Requested size: 341.43306pt x 227.6321pt.
  [221]
 <../Results/qualification2Dinter.png, id=727, 602.25pt x 401.5pt>
 File: ../Results/qualification2Dinter.png Graphic file (type png)
 <use ../Results/qualification2Dinter.png>
 Package pdftex.def Info: ../Results/qualification2Dinter.png  used on input lin
-e 1040.
+e 1057.
 (pdftex.def)             Requested size: 341.43306pt x 227.6321pt.
 <../Results/qualification2Dnointer.png, id=728, 602.25pt x 401.5pt>
 File: ../Results/qualification2Dnointer.png Graphic file (type png)
 <use ../Results/qualification2Dnointer.png>
 Package pdftex.def Info: ../Results/qualification2Dnointer.png  used on input l
-ine 1041.
+ine 1058.
 (pdftex.def)             Requested size: 341.43306pt x 227.6321pt.
  [222 <../Results/qualification2D.png>]
 <../Results/qualification2DCCinter.png, id=732, 602.25pt x 401.5pt>
 File: ../Results/qualification2DCCinter.png Graphic file (type png)
 <use ../Results/qualification2DCCinter.png>
 Package pdftex.def Info: ../Results/qualification2DCCinter.png  used on input l
-ine 1046.
+ine 1063.
 (pdftex.def)             Requested size: 199.16928pt x 132.77722pt.
 <../Results/qualification2DCTinter.png, id=733, 602.25pt x 401.5pt>
 File: ../Results/qualification2DCTinter.png Graphic file (type png)
 <use ../Results/qualification2DCTinter.png>
 Package pdftex.def Info: ../Results/qualification2DCTinter.png  used on input l
-ine 1047.
+ine 1064.
 (pdftex.def)             Requested size: 199.16928pt x 132.77722pt.
 <../Results/qualification2DTCinter.png, id=734, 602.25pt x 401.5pt>
 File: ../Results/qualification2DTCinter.png Graphic file (type png)
 <use ../Results/qualification2DTCinter.png>
 Package pdftex.def Info: ../Results/qualification2DTCinter.png  used on input l
-ine 1048.
+ine 1065.
 (pdftex.def)             Requested size: 199.16928pt x 132.77722pt.
 <../Results/qualification2DTTinter.png, id=735, 602.25pt x 401.5pt>
 File: ../Results/qualification2DTTinter.png Graphic file (type png)
 <use ../Results/qualification2DTTinter.png>
 Package pdftex.def Info: ../Results/qualification2DTTinter.png  used on input l
-ine 1049.
+ine 1066.
 (pdftex.def)             Requested size: 199.16928pt x 132.77722pt.
  [223 <../Results/qualification2Dinter.png> <../Results/qualification2Dnointer.
 png>]
@@ -968,69 +975,69 @@ png>]
 File: ../Results/qualification2DCCnointer.png Graphic file (type png)
 <use ../Results/qualification2DCCnointer.png>
 Package pdftex.def Info: ../Results/qualification2DCCnointer.png  used on input
- line 1054.
+ line 1071.
 (pdftex.def)             Requested size: 199.16928pt x 132.77722pt.
 <../Results/qualification2DCTnointer.png, id=741, 602.25pt x 401.5pt>
 File: ../Results/qualification2DCTnointer.png Graphic file (type png)
 <use ../Results/qualification2DCTnointer.png>
 Package pdftex.def Info: ../Results/qualification2DCTnointer.png  used on input
- line 1055.
+ line 1072.
 (pdftex.def)             Requested size: 199.16928pt x 132.77722pt.
 <../Results/qualification2DTCnointer.png, id=742, 602.25pt x 401.5pt>
 File: ../Results/qualification2DTCnointer.png Graphic file (type png)
 <use ../Results/qualification2DTCnointer.png>
 Package pdftex.def Info: ../Results/qualification2DTCnointer.png  used on input
- line 1056.
+ line 1073.
 (pdftex.def)             Requested size: 199.16928pt x 132.77722pt.
 <../Results/qualification2DTTnointer.png, id=743, 602.25pt x 401.5pt>
 File: ../Results/qualification2DTTnointer.png Graphic file (type png)
 <use ../Results/qualification2DTTnointer.png>
 Package pdftex.def Info: ../Results/qualification2DTTnointer.png  used on input
- line 1057.
+ line 1074.
 (pdftex.def)             Requested size: 199.16928pt x 132.77722pt.
  [224 <../Results/qualification2DCCinter.png> <../Results/qualification2DCTinte
 r.png> <../Results/qualification2DTCinter.png> <../Results/qualification2DTTint
 er.png>]
 
-! LaTeX Error: \begin{tiny} on input line 1066 ended by \end{scriptsize}.
+! LaTeX Error: \begin{tiny} on input line 1083 ended by \end{scriptsize}.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1074 \end{scriptsize}
+l.1091 \end{scriptsize}
                        
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
 
-Overfull \hbox (189.51878pt too wide) in paragraph at lines 1068--1075
+Overfull \hbox (189.51878pt too wide) in paragraph at lines 1085--1092
 [] 
  []
 
 
-Overfull \hbox (189.51878pt too wide) in paragraph at lines 1068--1075
+Overfull \hbox (189.51878pt too wide) in paragraph at lines 1085--1092
 [] 
  []
 
 
-Overfull \hbox (189.51878pt too wide) in paragraph at lines 1068--1075
+Overfull \hbox (189.51878pt too wide) in paragraph at lines 1085--1092
 [] 
  []
 
 
-Overfull \hbox (189.51878pt too wide) in paragraph at lines 1068--1075
+Overfull \hbox (189.51878pt too wide) in paragraph at lines 1085--1092
 [] 
  []
 
 
-Overfull \hbox (189.51878pt too wide) in paragraph at lines 1068--1075
+Overfull \hbox (189.51878pt too wide) in paragraph at lines 1085--1092
 [] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1068--1075
+Underfull \hbox (badness 10000) in paragraph at lines 1085--1092
 
  []
 
@@ -1040,46 +1047,46 @@ TTnointer.png>]
 <../Results/qualification3D.png, id=750, 602.25pt x 401.5pt>
 File: ../Results/qualification3D.png Graphic file (type png)
 <use ../Results/qualification3D.png>
-Package pdftex.def Info: ../Results/qualification3D.png  used on input line 108
-1.
+Package pdftex.def Info: ../Results/qualification3D.png  used on input line 109
+8.
 (pdftex.def)             Requested size: 341.43306pt x 227.6321pt.
  [226]
 <../Results/qualification3Dinter.png, id=754, 602.25pt x 401.5pt>
 File: ../Results/qualification3Dinter.png Graphic file (type png)
 <use ../Results/qualification3Dinter.png>
 Package pdftex.def Info: ../Results/qualification3Dinter.png  used on input lin
-e 1087.
+e 1104.
 (pdftex.def)             Requested size: 341.43306pt x 227.6321pt.
 <../Results/qualification3Dnointer.png, id=755, 602.25pt x 401.5pt>
 File: ../Results/qualification3Dnointer.png Graphic file (type png)
 <use ../Results/qualification3Dnointer.png>
 Package pdftex.def Info: ../Results/qualification3Dnointer.png  used on input l
-ine 1088.
+ine 1105.
 (pdftex.def)             Requested size: 341.43306pt x 227.6321pt.
  [227 <../Results/qualification3D.png>]
 <../Results/qualification3DCCinter.png, id=759, 602.25pt x 401.5pt>
 File: ../Results/qualification3DCCinter.png Graphic file (type png)
 <use ../Results/qualification3DCCinter.png>
 Package pdftex.def Info: ../Results/qualification3DCCinter.png  used on input l
-ine 1093.
+ine 1110.
 (pdftex.def)             Requested size: 199.16928pt x 132.77722pt.
 <../Results/qualification3DCTinter.png, id=760, 602.25pt x 401.5pt>
 File: ../Results/qualification3DCTinter.png Graphic file (type png)
 <use ../Results/qualification3DCTinter.png>
 Package pdftex.def Info: ../Results/qualification3DCTinter.png  used on input l
-ine 1094.
+ine 1111.
 (pdftex.def)             Requested size: 199.16928pt x 132.77722pt.
 <../Results/qualification3DTCinter.png, id=761, 602.25pt x 401.5pt>
 File: ../Results/qualification3DTCinter.png Graphic file (type png)
 <use ../Results/qualification3DTCinter.png>
 Package pdftex.def Info: ../Results/qualification3DTCinter.png  used on input l
-ine 1095.
+ine 1112.
 (pdftex.def)             Requested size: 199.16928pt x 132.77722pt.
 <../Results/qualification3DTTinter.png, id=762, 602.25pt x 401.5pt>
 File: ../Results/qualification3DTTinter.png Graphic file (type png)
 <use ../Results/qualification3DTTinter.png>
 Package pdftex.def Info: ../Results/qualification3DTTinter.png  used on input l
-ine 1096.
+ine 1113.
 (pdftex.def)             Requested size: 199.16928pt x 132.77722pt.
  [228 <../Results/qualification3Dinter.png> <../Results/qualification3Dnointer.
 png>]
@@ -1087,69 +1094,69 @@ png>]
 File: ../Results/qualification3DCCnointer.png Graphic file (type png)
 <use ../Results/qualification3DCCnointer.png>
 Package pdftex.def Info: ../Results/qualification3DCCnointer.png  used on input
- line 1101.
+ line 1118.
 (pdftex.def)             Requested size: 199.16928pt x 132.77722pt.
 <../Results/qualification3DCTnointer.png, id=767, 602.25pt x 401.5pt>
 File: ../Results/qualification3DCTnointer.png Graphic file (type png)
 <use ../Results/qualification3DCTnointer.png>
 Package pdftex.def Info: ../Results/qualification3DCTnointer.png  used on input
- line 1102.
+ line 1119.
 (pdftex.def)             Requested size: 199.16928pt x 132.77722pt.
 <../Results/qualification3DTCnointer.png, id=768, 602.25pt x 401.5pt>
 File: ../Results/qualification3DTCnointer.png Graphic file (type png)
 <use ../Results/qualification3DTCnointer.png>
 Package pdftex.def Info: ../Results/qualification3DTCnointer.png  used on input
- line 1103.
+ line 1120.
 (pdftex.def)             Requested size: 199.16928pt x 132.77722pt.
 <../Results/qualification3DTTnointer.png, id=769, 602.25pt x 401.5pt>
 File: ../Results/qualification3DTTnointer.png Graphic file (type png)
 <use ../Results/qualification3DTTnointer.png>
 Package pdftex.def Info: ../Results/qualification3DTTnointer.png  used on input
- line 1104.
+ line 1121.
 (pdftex.def)             Requested size: 199.16928pt x 132.77722pt.
  [229 <../Results/qualification3DCCinter.png> <../Results/qualification3DCTinte
 r.png> <../Results/qualification3DTCinter.png> <../Results/qualification3DTTint
 er.png>]
 
-! LaTeX Error: \begin{tiny} on input line 1113 ended by \end{scriptsize}.
+! LaTeX Error: \begin{tiny} on input line 1130 ended by \end{scriptsize}.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1121 \end{scriptsize}
+l.1138 \end{scriptsize}
                        
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
 
-Overfull \hbox (189.51878pt too wide) in paragraph at lines 1115--1122
+Overfull \hbox (189.51878pt too wide) in paragraph at lines 1132--1139
 [] 
  []
 
 
-Overfull \hbox (189.51878pt too wide) in paragraph at lines 1115--1122
+Overfull \hbox (189.51878pt too wide) in paragraph at lines 1132--1139
 [] 
  []
 
 
-Overfull \hbox (189.51878pt too wide) in paragraph at lines 1115--1122
+Overfull \hbox (189.51878pt too wide) in paragraph at lines 1132--1139
 [] 
  []
 
 
-Overfull \hbox (189.51878pt too wide) in paragraph at lines 1115--1122
+Overfull \hbox (189.51878pt too wide) in paragraph at lines 1132--1139
 [] 
  []
 
 
-Overfull \hbox (189.51878pt too wide) in paragraph at lines 1115--1122
+Overfull \hbox (189.51878pt too wide) in paragraph at lines 1132--1139
 [] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1115--1122
+Underfull \hbox (badness 10000) in paragraph at lines 1132--1139
 
  []
 
@@ -1160,45 +1167,45 @@ TTnointer.png>]
 File: ../Results/qualification2DTime.png Graphic file (type png)
 <use ../Results/qualification2DTime.png>
 Package pdftex.def Info: ../Results/qualification2DTime.png  used on input line
- 1128.
+ 1145.
 (pdftex.def)             Requested size: 341.43306pt x 227.6321pt.
  [231]
 <../Results/qualification2DTimeinter.png, id=781, 602.25pt x 401.5pt>
 File: ../Results/qualification2DTimeinter.png Graphic file (type png)
 <use ../Results/qualification2DTimeinter.png>
 Package pdftex.def Info: ../Results/qualification2DTimeinter.png  used on input
- line 1134.
+ line 1151.
 (pdftex.def)             Requested size: 341.43306pt x 227.6321pt.
 <../Results/qualification2DTimenointer.png, id=782, 602.25pt x 401.5pt>
 File: ../Results/qualification2DTimenointer.png Graphic file (type png)
 <use ../Results/qualification2DTimenointer.png>
 Package pdftex.def Info: ../Results/qualification2DTimenointer.png  used on inp
-ut line 1135.
+ut line 1152.
 (pdftex.def)             Requested size: 341.43306pt x 227.6321pt.
  [232 <../Results/qualification2DTime.png>]
 <../Results/qualification2DTimeCCinter.png, id=786, 602.25pt x 401.5pt>
 File: ../Results/qualification2DTimeCCinter.png Graphic file (type png)
 <use ../Results/qualification2DTimeCCinter.png>
 Package pdftex.def Info: ../Results/qualification2DTimeCCinter.png  used on inp
-ut line 1140.
+ut line 1157.
 (pdftex.def)             Requested size: 199.16928pt x 132.77722pt.
 <../Results/qualification2DTimeCTinter.png, id=787, 602.25pt x 401.5pt>
 File: ../Results/qualification2DTimeCTinter.png Graphic file (type png)
 <use ../Results/qualification2DTimeCTinter.png>
 Package pdftex.def Info: ../Results/qualification2DTimeCTinter.png  used on inp
-ut line 1141.
+ut line 1158.
 (pdftex.def)             Requested size: 199.16928pt x 132.77722pt.
 <../Results/qualification2DTimeTCinter.png, id=788, 602.25pt x 401.5pt>
 File: ../Results/qualification2DTimeTCinter.png Graphic file (type png)
 <use ../Results/qualification2DTimeTCinter.png>
 Package pdftex.def Info: ../Results/qualification2DTimeTCinter.png  used on inp
-ut line 1142.
+ut line 1159.
 (pdftex.def)             Requested size: 199.16928pt x 132.77722pt.
 <../Results/qualification2DTimeTTinter.png, id=789, 602.25pt x 401.5pt>
 File: ../Results/qualification2DTimeTTinter.png Graphic file (type png)
 <use ../Results/qualification2DTimeTTinter.png>
 Package pdftex.def Info: ../Results/qualification2DTimeTTinter.png  used on inp
-ut line 1143.
+ut line 1160.
 (pdftex.def)             Requested size: 199.16928pt x 132.77722pt.
  [233 <../Results/qualification2DTimeinter.png> <../Results/qualification2DTime
 nointer.png>]
@@ -1206,70 +1213,70 @@ nointer.png>]
 File: ../Results/qualification2DTimeCCnointer.png Graphic file (type png)
 <use ../Results/qualification2DTimeCCnointer.png>
 Package pdftex.def Info: ../Results/qualification2DTimeCCnointer.png  used on i
-nput line 1148.
+nput line 1165.
 (pdftex.def)             Requested size: 199.16928pt x 132.77722pt.
 <../Results/qualification2DTimeCTnointer.png, id=794, 602.25pt x 401.5pt>
 File: ../Results/qualification2DTimeCTnointer.png Graphic file (type png)
 <use ../Results/qualification2DTimeCTnointer.png>
 Package pdftex.def Info: ../Results/qualification2DTimeCTnointer.png  used on i
-nput line 1149.
+nput line 1166.
 (pdftex.def)             Requested size: 199.16928pt x 132.77722pt.
 <../Results/qualification2DTimeTCnointer.png, id=795, 602.25pt x 401.5pt>
 File: ../Results/qualification2DTimeTCnointer.png Graphic file (type png)
 <use ../Results/qualification2DTimeTCnointer.png>
 Package pdftex.def Info: ../Results/qualification2DTimeTCnointer.png  used on i
-nput line 1150.
+nput line 1167.
 (pdftex.def)             Requested size: 199.16928pt x 132.77722pt.
 <../Results/qualification2DTimeTTnointer.png, id=796, 602.25pt x 401.5pt>
 File: ../Results/qualification2DTimeTTnointer.png Graphic file (type png)
 <use ../Results/qualification2DTimeTTnointer.png>
 Package pdftex.def Info: ../Results/qualification2DTimeTTnointer.png  used on i
-nput line 1151.
+nput line 1168.
 (pdftex.def)             Requested size: 199.16928pt x 132.77722pt.
 
 [234 <../Results/qualification2DTimeCCinter.png> <../Results/qualification2DTim
 eCTinter.png> <../Results/qualification2DTimeTCinter.png> <../Results/qualifica
 tion2DTimeTTinter.png>]
 
-! LaTeX Error: \begin{tiny} on input line 1160 ended by \end{scriptsize}.
+! LaTeX Error: \begin{tiny} on input line 1177 ended by \end{scriptsize}.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1168 \end{scriptsize}
+l.1185 \end{scriptsize}
                        
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
 
-Overfull \hbox (189.51878pt too wide) in paragraph at lines 1162--1169
+Overfull \hbox (189.51878pt too wide) in paragraph at lines 1179--1186
 [] 
  []
 
 
-Overfull \hbox (189.51878pt too wide) in paragraph at lines 1162--1169
+Overfull \hbox (189.51878pt too wide) in paragraph at lines 1179--1186
 [] 
  []
 
 
-Overfull \hbox (189.51878pt too wide) in paragraph at lines 1162--1169
+Overfull \hbox (189.51878pt too wide) in paragraph at lines 1179--1186
 [] 
  []
 
 
-Overfull \hbox (189.51878pt too wide) in paragraph at lines 1162--1169
+Overfull \hbox (189.51878pt too wide) in paragraph at lines 1179--1186
 [] 
  []
 
 
-Overfull \hbox (189.51878pt too wide) in paragraph at lines 1162--1169
+Overfull \hbox (189.51878pt too wide) in paragraph at lines 1179--1186
 [] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1162--1169
+Underfull \hbox (badness 10000) in paragraph at lines 1179--1186
 
  []
 
@@ -1280,45 +1287,45 @@ lification2DTimeTTnointer.png>]
 File: ../Results/qualification3DTime.png Graphic file (type png)
 <use ../Results/qualification3DTime.png>
 Package pdftex.def Info: ../Results/qualification3DTime.png  used on input line
- 1175.
+ 1192.
 (pdftex.def)             Requested size: 341.43306pt x 227.6321pt.
  [236]
 <../Results/qualification3DTimeinter.png, id=808, 602.25pt x 401.5pt>
 File: ../Results/qualification3DTimeinter.png Graphic file (type png)
 <use ../Results/qualification3DTimeinter.png>
 Package pdftex.def Info: ../Results/qualification3DTimeinter.png  used on input
- line 1181.
+ line 1198.
 (pdftex.def)             Requested size: 341.43306pt x 227.6321pt.
 <../Results/qualification3DTimenointer.png, id=809, 602.25pt x 401.5pt>
 File: ../Results/qualification3DTimenointer.png Graphic file (type png)
 <use ../Results/qualification3DTimenointer.png>
 Package pdftex.def Info: ../Results/qualification3DTimenointer.png  used on inp
-ut line 1182.
+ut line 1199.
 (pdftex.def)             Requested size: 341.43306pt x 227.6321pt.
  [237 <../Results/qualification3DTime.png>]
 <../Results/qualification3DTimeCCinter.png, id=813, 602.25pt x 401.5pt>
 File: ../Results/qualification3DTimeCCinter.png Graphic file (type png)
 <use ../Results/qualification3DTimeCCinter.png>
 Package pdftex.def Info: ../Results/qualification3DTimeCCinter.png  used on inp
-ut line 1187.
+ut line 1204.
 (pdftex.def)             Requested size: 199.16928pt x 132.77722pt.
 <../Results/qualification3DTimeCTinter.png, id=814, 602.25pt x 401.5pt>
 File: ../Results/qualification3DTimeCTinter.png Graphic file (type png)
 <use ../Results/qualification3DTimeCTinter.png>
 Package pdftex.def Info: ../Results/qualification3DTimeCTinter.png  used on inp
-ut line 1188.
+ut line 1205.
 (pdftex.def)             Requested size: 199.16928pt x 132.77722pt.
 <../Results/qualification3DTimeTCinter.png, id=815, 602.25pt x 401.5pt>
 File: ../Results/qualification3DTimeTCinter.png Graphic file (type png)
 <use ../Results/qualification3DTimeTCinter.png>
 Package pdftex.def Info: ../Results/qualification3DTimeTCinter.png  used on inp
-ut line 1189.
+ut line 1206.
 (pdftex.def)             Requested size: 199.16928pt x 132.77722pt.
 <../Results/qualification3DTimeTTinter.png, id=816, 602.25pt x 401.5pt>
 File: ../Results/qualification3DTimeTTinter.png Graphic file (type png)
 <use ../Results/qualification3DTimeTTinter.png>
 Package pdftex.def Info: ../Results/qualification3DTimeTTinter.png  used on inp
-ut line 1190.
+ut line 1207.
 (pdftex.def)             Requested size: 199.16928pt x 132.77722pt.
  [238 <../Results/qualification3DTimeinter.png> <../Results/qualification3DTime
 nointer.png>]
@@ -1326,59 +1333,59 @@ nointer.png>]
 File: ../Results/qualification3DTimeCCnointer.png Graphic file (type png)
 <use ../Results/qualification3DTimeCCnointer.png>
 Package pdftex.def Info: ../Results/qualification3DTimeCCnointer.png  used on i
-nput line 1195.
+nput line 1212.
 (pdftex.def)             Requested size: 199.16928pt x 132.77722pt.
 <../Results/qualification3DTimeCTnointer.png, id=821, 602.25pt x 401.5pt>
 File: ../Results/qualification3DTimeCTnointer.png Graphic file (type png)
 <use ../Results/qualification3DTimeCTnointer.png>
 Package pdftex.def Info: ../Results/qualification3DTimeCTnointer.png  used on i
-nput line 1196.
+nput line 1213.
 (pdftex.def)             Requested size: 199.16928pt x 132.77722pt.
 <../Results/qualification3DTimeTCnointer.png, id=822, 602.25pt x 401.5pt>
 File: ../Results/qualification3DTimeTCnointer.png Graphic file (type png)
 <use ../Results/qualification3DTimeTCnointer.png>
 Package pdftex.def Info: ../Results/qualification3DTimeTCnointer.png  used on i
-nput line 1197.
+nput line 1214.
 (pdftex.def)             Requested size: 199.16928pt x 132.77722pt.
 <../Results/qualification3DTimeTTnointer.png, id=823, 602.25pt x 401.5pt>
 File: ../Results/qualification3DTimeTTnointer.png Graphic file (type png)
 <use ../Results/qualification3DTimeTTnointer.png>
 Package pdftex.def Info: ../Results/qualification3DTimeTTnointer.png  used on i
-nput line 1198.
+nput line 1215.
 (pdftex.def)             Requested size: 199.16928pt x 132.77722pt.
  [239 <../Results/qualification3DTimeCCinter.png> <../Results/qualification3DTi
 meCTinter.png> <../Results/qualification3DTimeTCinter.png> <../Results/qualific
 ation3DTimeTTinter.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 1204--1205
+Underfull \hbox (badness 10000) in paragraph at lines 1225--1226
 
  []
 
 [240 <../Results/qualification3DTimeCCnointer.png> <../Results/qualification3DT
 imeCTnointer.png> <../Results/qualification3DTimeTCnointer.png> <../Results/qua
 lification3DTimeTTnointer.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 1206--1207
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1208--1209
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1215--1216
-
- []
-
-(../runtimeEnv.txt [241] [242])
 Underfull \hbox (badness 10000) in paragraph at lines 1227--1228
 
  []
 
-(../SAT/sat.h [243]) (../SAT/sat.c [244] [245] [246] [247] [248] [249] [250]
+
+Underfull \hbox (badness 10000) in paragraph at lines 1229--1230
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1236--1237
+
+ []
+
+(../runtimeEnv.txt [241] [242])
+Underfull \hbox (badness 10000) in paragraph at lines 1248--1249
+
+ []
+
+[243] (../SAT/sat.h) (../SAT/sat.c [244] [245] [246] [247] [248] [249] [250]
 [251] [252] [253] [254] [255] [256] [257] [258] [259] [260] [261] [262]
 [263])
-Underfull \hbox (badness 10000) in paragraph at lines 1247--1248
+Underfull \hbox (badness 10000) in paragraph at lines 1268--1269
 
  []
 
@@ -1414,7 +1421,7 @@ sr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm7.pfb>
 
 pdfTeX warning: pdflatex: no GlyphToUnicode entry has been inserted yet!
-Output written on fmb.pdf (291 pages, 1384719 bytes).
+Output written on fmb.pdf (291 pages, 1386138 bytes).
 PDF statistics:
  1063 PDF objects out of 1200 (max. 8388607)
  699 compressed objects within 7 object streams
