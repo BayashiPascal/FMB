@@ -19,12 +19,13 @@
 \begin{document}
 
 \title{The FMB Algorithm}
-\author{P. Baillehache}
+\author{Pascal Baillehache\\bayashipascal@gmail.com}
 \date{\today}
 \maketitle
 
 \begin{abstract}
-This paper introduces how to perform intersection detection of pair of static/dynamic cuboid/tetrahedron in 2D/3D by using the Fourier-Motzkin elimination method.
+This paper introduces how to perform intersection detection of pair of static/dynamic cuboid/tetrahedron in 2D/3D by using the Fourier-Motzkin elimination method.\\
+It includes the mathematical definition of the problem, its mathematical resolution with the Fourier-Motzkin elimination method, the resulting algorithm and its implementation in C, and its validation and qualification against the SAT algorithm. Results are commented and show that the FMB algorithm can be in average up to 4.8 times faster than the SAT algorithm.
 \end{abstract}
 
 \newpage
@@ -1274,10 +1275,15 @@ Looking for other rearrangement of the inequations, I've come to the conclusion 
 \item B's origin is the nearest vertex of B relative to A's origin
 \item the projection of B's origin in A's coordinate system is such as components of $\overrightarrow{AB_A}$ are all positive
 \end{itemize}
-This the best possible case because it minimised the $a_i$ in (\ref{cond_non_intersec}) in the initial system or during Fourier-Motzkin algorithm, which leads quickly to '(\ref{cond_non_intersec}) is true' if the Frames are not in intersection. The Frame representation is invariant of the vertex choosen as origin, so it's possible to rearrange them to try to fit the conditions above (however it's not always possible to fit both). I've checked that it effectively leads to slightly better performances by first modifying the qualification program to generate only these cases, and then by adding a rearragnement of the origins at the beginning of the FMB algorithm. Unfortunately, the cost of the origin rearrangement is heavier than its benefit. Still, I believe one may find some clever rearrangement which would lead to even better performance for the FMB algorithm.\\
+This the best possible case because it minimised the $a_i$ in (\ref{cond_non_intersec}) in the initial system or during Fourier-Motzkin algorithm, which leads quickly to '(\ref{cond_non_intersec}) is true' if the Frames are not in intersection. The Frame representation is invariant of the vertex choosen as origin, so it's possible to rearrange them to try to fit the conditions above (however it's not always possible to fit both). I've checked that it effectively leads to slightly better performances by first modifying the qualification program to generate only these cases, and then by adding a rearrangement of the origins at the beginning of the FMB algorithm. Unfortunately, the cost of the origin rearrangement is heavier than its benefit. Still, I believe one may find some clever rearrangement which would lead to even better performance for the FMB algorithm.\\
 
 \section{Conclusion}
 
+In this paper I've introduced the FMB algorithm which solve efficiently the intersection detection problem of 2D/3D static/dynamic cuboid/tetrahedron by using the Fourier-Motzkin elimination method. All information necessary to implement and use the FMB algorithm, or reproduce the results introduced in this paper are included in this paper, and available on the GitHub repository https://github.com/BayashiPascal/FMB/ .\\
+
+Validation and qualification against the SAT algorithm prove the correctness of the results from the FMB algorithm and prove it's a valid alternative in term of performance to the SAT algorithm, especially when applied to tetrahedrons and/or in the 3D static case. It is also important to note its simplicity to implement, and the fact that the FMB algorithm returns a bounding box of the intersection, if any, while the SAT algorithm only returns a boolean answer.\\
+
+Idea on direction to explore with the view to improve the FMB algorithm is given. Steps of the Fourier-Motzkin could also be easily parallelized on an appropriate architecture to improve performance. Tests of implementation with others programming languages, or on other runtime environments, or against other algorithms (such as CJK) would also be interesting to perform. Finally, while the algorithm is introduced here in 2D and 3D, its extension to upper dimensions is straightforward.\\
 
 \section{Annex}
 
