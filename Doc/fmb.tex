@@ -545,6 +545,7 @@ Only one inconsistent inequality is sufficient to prove the absence of solution,
 
 A sufficient condition for one inequality $\sum_ia_iX_i\le Y$ to be inconsistent is, given that $\forall i,X_i\in[0.0,1.0]$:
 \begin{equation}
+\label{cond_non_intersec}
 Y<\sum_{i\in I^-}a_i
 \end{equation}
 where $I^-=\left\lbrace i, a_i<0.0\right\rbrace$.\\
@@ -1258,21 +1259,25 @@ For the 3D dynamic case:\\
 
 FMB is then in average always faster than SAT for a set of Tetrahedron, and faster than SAT for a combinaison of Tetrahedrons and Cuboids containining less than around 35\% of intersection.\\ 
 
-Overall, FMB is faster than SAT, at least if the percentage of intersecting Frames is low, for all cases but the 2D dynamic one. In practice, for example in applications where the Frames represents real world objects supposedly normally not in intersection, would be a better choice than SAT.\\
+Overall, FMB is faster than SAT, at least if the percentage of intersecting Frames is low, for all cases but the 2D dynamic one. In practice, for example in applications where the Frames represents real world objects supposedly normally not in intersection, FMB would be a better choice than SAT.\\
 
 SAT and FMB follows the same strategy: assume that the pair of Frames is in intersection and try to prove it is false by checking a list of conditions. These conditions are the difference between the two algorithms. The results of the qualification show that in average the conditions used by FMB allows to detect a non intersection faster than those of SAT.\\
 
-For one given pair in intersection, all the conditions must be checked before the algorithms give their answer. The algorithm with the fewest number of conditions is then the fastest, and the results shows that this is generally SAT (the number of conditions in FMB varies for each pair so we can't be more specific). This is shown in the result by the low variability of the ratio timeFMB/timeSAT for intersecting pairs.\\
+For one given pair in intersection, all the conditions must be checked before the algorithms give their answer. The algorithm with the smallest execution time of all these conditions is then the fastest, and the results shows that this is in general SAT (the exceptions are the 3D static case and 3D dynamic case for Tetrahedrons pairs). This is shown in the results by the low variability of the ratio timeFMB/timeSAT for intersecting pairs.\\
 
-For one given pair not in intersection, the algorithms reply as soon as one condition is verified. This may be the first one, as it may be the last one depending on the pair of Frames. Then, the variability of the ratio timeFMB/timeSAT varies widely, from 50 times faster to 29 times slower, but the resuts shows that in average the advantage goes to the FMB algorithm.\\
+For one given pair not in intersection, the algorithms reply as soon as one condition is verified. This may be the first one, as it may be the last one depending on the geometry of the pair of Frames. Then, the variability of the ratio timeFMB/timeSAT varies widely as shown in the results, from 50 times faster to 29 times slower, but the resuts shows that in general the advantage goes to the FMB algorithm (the exception is the 2D dynamic case).\\
+
+In the SAT algorithm, one must perform the projection of all vertices on one axis and then check the result which is the intersection condition. Every axis comes from the geometry of the Frames and one cannot preview which one will be lead to the checked condition for a non intersecting pair. In the FMB algorithm, the conditions depends on the way the system of linear inequation is built. Then, for best performances, it must be done in such a way that inequality (\ref{cond_non_intersec}) is encountered as soon as possible. With the FMB representation, contrary to the SAT one, it is possible to do so independantly of the geometry of the pair of Frames by reordering the inequalities of the system. For example, the $X_i\le1.0$ inequalities must be moved down to the end of the system of the linear inequalities for better performance, as they will never lead to '(\ref{cond_non_intersec}) is true' at the first step of the Fourier-Motzkin algorithm.\\
+
+Looking for other rearrangement of the inequations, I've come to the conclusion that the best possible case (in term of speed) is, when checking Frame A against Frame B, to have:\\
+\begin{itemize}
+\item B's origin is the nearest vertex of B relative to A's origin
+\item the projection of B's origin in A's coordinate system is such as components of $\overrightarrow{AB_A}$ are all positive
+\end{itemize}
+This the best possible case because it minimised the $a_i$ in (\ref{cond_non_intersec}) in the initial system or during Fourier-Motzkin algorithm, which leads quickly to '(\ref{cond_non_intersec}) is true' if the Frames are not in intersection. The Frame representation is invariant of the vertex choosen as origin, so it's possible to rearrange them to try to fit the conditions above (however it's not always possible to fit both). I've checked that it effectively leads to slightly better performances by first modifying the qualification program to generate only these cases, and then by adding a rearragnement of the origins at the beginning of the FMB algorithm. Unfortunately, the cost of the origin rearrangement is heavier than its benefit. Still, I believe one may find some clever rearrangement which would lead to even better performance for the FMB algorithm.\\
 
 \section{Conclusion}
 
-The validation proves that the FMB algorithm correctly identifies intersection of pairs of Frames in accordance with the results of the SAT algorithm.\\
-
-The qualification shows that the FMB is 1.2 to 1.8 times slower than the SAT algorithm in the 2D dynamic case. However it is around 2 times faster in the 3D static case, and up to 1.25 times faster in 3D dynamic and up to 1.1 times faster in the 2D static case if the percentage of tested pairs in intersection is less than, respectively, around 40\% and 25\%.\\
-
-On one given pair of Frame, the relative speed of the FMB algorithm varies widely, from around 20 times slower to 50 times faster. This is explained by the way the 2 algorithms works: they both make the asumption that the Frames are intersecting and run through a series of tests to try to prove it wrong. This leads to best cases and worst cases for both algorithm: a non interesecting detected right from the first test, or one detected by the last test. These best and worst cases are different for the two algorithms as the tests they performed are completely different. But in average, the FMB algorithm has the advantage for all but the 2D dynamic case.\\
 
 \section{Annex}
 
