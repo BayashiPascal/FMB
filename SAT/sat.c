@@ -24,7 +24,7 @@ bool CheckAxis3DTime(
 // Test for intersection between 2D Frame that and 2D Frame tho
 // Return true if the two Frames are intersecting, else false
 bool SATTestIntersection2D(
-  const Frame2D* const that, 
+  const Frame2D* const that,
   const Frame2D* const tho) {
 
   // Declare a variable to loop on Frames and commonalize code
@@ -39,7 +39,7 @@ bool SATTestIntersection2D(
     FrameType frameEdgeType = frameEdge->type;
     const double* frameEdgeCompA = frameEdge->comp[0];
     const double* frameEdgeCompB = frameEdge->comp[1];
-    
+
     // Declare a variable to memorize the number of edges, by default 2
     int nbEdges = 2;
 
@@ -64,7 +64,7 @@ bool SATTestIntersection2D(
          iEdge--;) {
 
       // Get the current edge
-      const double* edge = 
+      const double* edge =
         (iEdge == 2 ? thirdEdge : frameEdge->comp[iEdge]);
 
       // Declare variables to memorize the boundaries of projection
@@ -79,7 +79,7 @@ bool SATTestIntersection2D(
       // Loop on Frames
       for (int iFrame = 2;
            iFrame--;) {
-      
+
         // Shortcuts
         const double* frameOrig = frame->orig;
         const double* frameCompA = frame->comp[0];
@@ -96,12 +96,13 @@ bool SATTestIntersection2D(
         // Loop on vertices of the frame
         for (int iVertex = nbVertices;
              iVertex--;) {
-          
+
           // Get the vertex
           double vertex[2];
           vertex[0] = frameOrig[0];
           vertex[1] = frameOrig[1];
           switch (iVertex) {
+
             case 3:
               vertex[0] += frameCompA[0] + frameCompB[0];
               vertex[1] += frameCompA[1] + frameCompB[1];
@@ -116,6 +117,7 @@ bool SATTestIntersection2D(
               break;
             default:
               break;
+
           }
 
           // Get the projection of the vertex on the normal of the edge
@@ -157,7 +159,7 @@ bool SATTestIntersection2D(
 
       // If the projections of the two frames on the edge are
       // not intersecting
-      if (bdgBoxB[1] < bdgBoxA[0] || 
+      if (bdgBoxB[1] < bdgBoxA[0] ||
           bdgBoxA[1] < bdgBoxB[0]) {
 
          // There exists an axis which separates the Frames,
@@ -182,7 +184,7 @@ bool SATTestIntersection2D(
 // Frame tho
 // Return true if the two Frames are intersecting, else false
 bool SATTestIntersection2DTime(
-  const Frame2DTime* const that, 
+  const Frame2DTime* const that,
   const Frame2DTime* const tho) {
 
   // Declare a variable to loop on Frames and commonalize code
@@ -202,7 +204,7 @@ bool SATTestIntersection2DTime(
     FrameType frameEdgeType = frameEdge->type;
     const double* frameEdgeCompA = frameEdge->comp[0];
     const double* frameEdgeCompB = frameEdge->comp[1];
-    
+
     // Declare a variable to memorize the number of edges, by default 2
     int nbEdges = 2;
 
@@ -236,9 +238,9 @@ bool SATTestIntersection2DTime(
          iEdge--;) {
 
       // Get the current edge
-      const double* edge = 
-        (iEdge == 3 ? relSpeed : 
-          (iEdge == 2 ? 
+      const double* edge =
+        (iEdge == 3 ? relSpeed :
+          (iEdge == 2 ?
             (frameEdgeType == FrameTetrahedron ? thirdEdge : relSpeed) :
             frameEdge->comp[iEdge]));
 
@@ -254,7 +256,7 @@ bool SATTestIntersection2DTime(
       // Loop on Frames
       for (int iFrame = 2;
            iFrame--;) {
-      
+
         // Shortcuts
         const double* frameOrig = frame->orig;
         const double* frameCompA = frame->comp[0];
@@ -271,12 +273,13 @@ bool SATTestIntersection2DTime(
         // Loop on vertices of the frame
         for (int iVertex = nbVertices;
              iVertex--;) {
-          
+
           // Get the vertex
           double vertex[2];
           vertex[0] = frameOrig[0];
           vertex[1] = frameOrig[1];
           switch (iVertex) {
+
             case 3:
               vertex[0] += frameCompA[0] + frameCompB[0];
               vertex[1] += frameCompA[1] + frameCompB[1];
@@ -291,6 +294,7 @@ bool SATTestIntersection2DTime(
               break;
             default:
               break;
+
           }
 
           // Get the projection of the vertex on the normal of the edge
@@ -349,7 +353,7 @@ bool SATTestIntersection2DTime(
 
       // If the projections of the two frames on the edge are
       // not intersecting
-      if (bdgBoxB[1] < bdgBoxA[0] || 
+      if (bdgBoxB[1] < bdgBoxA[0] ||
           bdgBoxA[1] < bdgBoxB[0]) {
 
          // There exists an axis which separates the Frames,
@@ -373,7 +377,7 @@ bool SATTestIntersection2DTime(
 // Test for intersection between 3D Frame that and 3D Frame tho
 // Return true if the two Frames are intersecting, else false
 bool SATTestIntersection3D(
-  const Frame3D* const that, 
+  const Frame3D* const that,
   const Frame3D* const tho) {
 
   // Declare two variables to memorize the opposite edges in case
@@ -436,7 +440,7 @@ bool SATTestIntersection3D(
     nbEdgesTho = 6;
 
   }
-  
+
   // Declare variables to loop on Frames and commonalize code
   const Frame3D* frame = that;
   const double (*oppEdgesA)[3] = oppEdgesThat;
@@ -451,7 +455,7 @@ bool SATTestIntersection3D(
     const double* frameCompA = frame->comp[0];
     const double* frameCompB = frame->comp[1];
     const double* frameCompC = frame->comp[2];
-    
+
     // Declare a variable to memorize the number of faces, by default 3
     int nbFaces = 3;
 
@@ -460,33 +464,33 @@ bool SATTestIntersection3D(
     double normFaces[4][3];
 
     // Initialise the normal to faces
-    normFaces[0][0] = 
+    normFaces[0][0] =
       frameCompA[1] * frameCompB[2] -
       frameCompA[2] * frameCompB[1];
-    normFaces[0][1] = 
+    normFaces[0][1] =
       frameCompA[2] * frameCompB[0] -
       frameCompA[0] * frameCompB[2];
-    normFaces[0][2] = 
+    normFaces[0][2] =
       frameCompA[0] * frameCompB[1] -
       frameCompA[1] * frameCompB[0];
 
-    normFaces[1][0] = 
+    normFaces[1][0] =
       frameCompA[1] * frameCompC[2] -
       frameCompA[2] * frameCompC[1];
-    normFaces[1][1] = 
+    normFaces[1][1] =
       frameCompA[2] * frameCompC[0] -
       frameCompA[0] * frameCompC[2];
-    normFaces[1][2] = 
+    normFaces[1][2] =
       frameCompA[0] * frameCompC[1] -
       frameCompA[1] * frameCompC[0];
 
-    normFaces[2][0] = 
+    normFaces[2][0] =
       frameCompC[1] * frameCompB[2] -
       frameCompC[2] * frameCompB[1];
-    normFaces[2][1] = 
+    normFaces[2][1] =
       frameCompC[2] * frameCompB[0] -
       frameCompC[0] * frameCompB[2];
-    normFaces[2][2] = 
+    normFaces[2][2] =
       frameCompC[0] * frameCompB[1] -
       frameCompC[1] * frameCompB[0];
 
@@ -498,13 +502,13 @@ bool SATTestIntersection3D(
       const double* oppEdgeB = oppEdgesA[1];
 
       // Initialise the normal to the opposite face
-      normFaces[3][0] = 
+      normFaces[3][0] =
         oppEdgeA[1] * oppEdgeB[2] -
         oppEdgeA[2] * oppEdgeB[1];
-      normFaces[3][1] = 
+      normFaces[3][1] =
         oppEdgeA[2] * oppEdgeB[0] -
         oppEdgeA[0] * oppEdgeB[2];
-      normFaces[3][2] = 
+      normFaces[3][2] =
         oppEdgeA[0] * oppEdgeB[1] -
         oppEdgeA[1] * oppEdgeB[0];
 
@@ -518,10 +522,10 @@ bool SATTestIntersection3D(
          iFace--;) {
 
       // Check against the current face's normal
-      bool isIntersection = 
+      bool isIntersection =
         CheckAxis3D(
-          that, 
-          tho, 
+          that,
+          tho,
           normFaces[iFace]);
 
       // If the axis is separating the Frames
@@ -546,18 +550,18 @@ bool SATTestIntersection3D(
        iEdgeThat--;) {
 
     // Get the first edge
-    const double* edgeThat = 
-      (iEdgeThat < 3 ? 
-        that->comp[iEdgeThat] : 
+    const double* edgeThat =
+      (iEdgeThat < 3 ?
+        that->comp[iEdgeThat] :
         oppEdgesThat[iEdgeThat - 3]);
 
     for (int iEdgeTho = nbEdgesTho;
          iEdgeTho--;) {
 
       // Get the second edge
-      const double* edgeTho = 
-        (iEdgeTho < 3 ? 
-          tho->comp[iEdgeTho] : 
+      const double* edgeTho =
+        (iEdgeTho < 3 ?
+          tho->comp[iEdgeTho] :
           oppEdgesTho[iEdgeTho - 3]);
 
       // Get the cross product of the two edges
@@ -565,12 +569,12 @@ bool SATTestIntersection3D(
       axis[0] = edgeThat[1] * edgeTho[2] - edgeThat[2] * edgeTho[1];
       axis[1] = edgeThat[2] * edgeTho[0] - edgeThat[0] * edgeTho[2];
       axis[2] = edgeThat[0] * edgeTho[1] - edgeThat[1] * edgeTho[0];
-      
+
       // Check against the cross product of the two edges
-      bool isIntersection = 
+      bool isIntersection =
         CheckAxis3D(
-          that, 
-          tho, 
+          that,
+          tho,
           axis);
 
       // If the axis is separating the Frames
@@ -595,7 +599,7 @@ bool SATTestIntersection3D(
 // Frame tho
 // Return true if the two Frames are intersecting, else false
 bool SATTestIntersection3DTime(
-  const Frame3DTime* const that, 
+  const Frame3DTime* const that,
   const Frame3DTime* const tho) {
 
   // Declare two variables to memorize the opposite edges in case
@@ -679,7 +683,7 @@ bool SATTestIntersection3DTime(
     const double* frameCompA = frame->comp[0];
     const double* frameCompB = frame->comp[1];
     const double* frameCompC = frame->comp[2];
-    
+
     // Declare a variable to memorize the number of faces, by default 3
     int nbFaces = 3;
 
@@ -688,33 +692,33 @@ bool SATTestIntersection3DTime(
     double normFaces[10][3];
 
     // Initialise the normal to faces
-    normFaces[0][0] = 
+    normFaces[0][0] =
       frameCompA[1] * frameCompB[2] -
       frameCompA[2] * frameCompB[1];
-    normFaces[0][1] = 
+    normFaces[0][1] =
       frameCompA[2] * frameCompB[0] -
       frameCompA[0] * frameCompB[2];
-    normFaces[0][2] = 
+    normFaces[0][2] =
       frameCompA[0] * frameCompB[1] -
       frameCompA[1] * frameCompB[0];
 
-    normFaces[1][0] = 
+    normFaces[1][0] =
       frameCompA[1] * frameCompC[2] -
       frameCompA[2] * frameCompC[1];
-    normFaces[1][1] = 
+    normFaces[1][1] =
       frameCompA[2] * frameCompC[0] -
       frameCompA[0] * frameCompC[2];
-    normFaces[1][2] = 
+    normFaces[1][2] =
       frameCompA[0] * frameCompC[1] -
       frameCompA[1] * frameCompC[0];
 
-    normFaces[2][0] = 
+    normFaces[2][0] =
       frameCompC[1] * frameCompB[2] -
       frameCompC[2] * frameCompB[1];
-    normFaces[2][1] = 
+    normFaces[2][1] =
       frameCompC[2] * frameCompB[0] -
       frameCompC[0] * frameCompB[2];
-    normFaces[2][2] = 
+    normFaces[2][2] =
       frameCompC[0] * frameCompB[1] -
       frameCompC[1] * frameCompB[0];
 
@@ -726,13 +730,13 @@ bool SATTestIntersection3DTime(
       const double* oppEdgeB = oppEdgesA[1];
 
       // Initialise the normal to the opposite face
-      normFaces[3][0] = 
+      normFaces[3][0] =
         oppEdgeA[1] * oppEdgeB[2] -
         oppEdgeA[2] * oppEdgeB[1];
-      normFaces[3][1] = 
+      normFaces[3][1] =
         oppEdgeA[2] * oppEdgeB[0] -
         oppEdgeA[0] * oppEdgeB[2];
-      normFaces[3][2] = 
+      normFaces[3][2] =
         oppEdgeA[0] * oppEdgeB[1] -
         oppEdgeA[1] * oppEdgeB[0];
 
@@ -745,48 +749,48 @@ bool SATTestIntersection3DTime(
     if (frame == tho) {
 
       // Add the normal to the virtual faces created by the speed
-      // of tho relative to that 
-      
-      normFaces[nbFaces][0] = 
+      // of tho relative to that
+
+      normFaces[nbFaces][0] =
         relSpeed[1] * frameCompA[2] -
         relSpeed[2] * frameCompA[1];
-      normFaces[nbFaces][1] = 
+      normFaces[nbFaces][1] =
         relSpeed[2] * frameCompA[0] -
         relSpeed[0] * frameCompA[2];
-      normFaces[nbFaces][2] = 
+      normFaces[nbFaces][2] =
         relSpeed[0] * frameCompA[1] -
         relSpeed[1] * frameCompA[0];
       if (fabs(normFaces[nbFaces][0]) > EPSILON ||
           fabs(normFaces[nbFaces][1]) > EPSILON ||
-          fabs(normFaces[nbFaces][2]) > EPSILON) 
+          fabs(normFaces[nbFaces][2]) > EPSILON)
         ++nbFaces;
 
-      normFaces[nbFaces][0] = 
+      normFaces[nbFaces][0] =
         relSpeed[1] * frameCompB[2] -
         relSpeed[2] * frameCompB[1];
-      normFaces[nbFaces][1] = 
+      normFaces[nbFaces][1] =
         relSpeed[2] * frameCompB[0] -
         relSpeed[0] * frameCompB[2];
-      normFaces[nbFaces][2] = 
+      normFaces[nbFaces][2] =
         relSpeed[0] * frameCompB[1] -
         relSpeed[1] * frameCompB[0];
       if (fabs(normFaces[nbFaces][0]) > EPSILON ||
           fabs(normFaces[nbFaces][1]) > EPSILON ||
-          fabs(normFaces[nbFaces][2]) > EPSILON) 
+          fabs(normFaces[nbFaces][2]) > EPSILON)
         ++nbFaces;
 
-      normFaces[nbFaces][0] = 
+      normFaces[nbFaces][0] =
         relSpeed[1] * frameCompC[2] -
         relSpeed[2] * frameCompC[1];
-      normFaces[nbFaces][1] = 
+      normFaces[nbFaces][1] =
         relSpeed[2] * frameCompC[0] -
         relSpeed[0] * frameCompC[2];
-      normFaces[nbFaces][2] = 
+      normFaces[nbFaces][2] =
         relSpeed[0] * frameCompC[1] -
         relSpeed[1] * frameCompC[0];
       if (fabs(normFaces[nbFaces][0]) > EPSILON ||
           fabs(normFaces[nbFaces][1]) > EPSILON ||
-          fabs(normFaces[nbFaces][2]) > EPSILON) 
+          fabs(normFaces[nbFaces][2]) > EPSILON)
         ++nbFaces;
 
       if (frameType == FrameTetrahedron) {
@@ -795,49 +799,50 @@ bool SATTestIntersection3DTime(
         const double* oppEdgeB = oppEdgesA[1];
         const double* oppEdgeC = oppEdgesA[2];
 
-        normFaces[nbFaces][0] = 
+        normFaces[nbFaces][0] =
           relSpeed[1] * oppEdgeA[2] -
           relSpeed[2] * oppEdgeA[1];
-        normFaces[nbFaces][1] = 
+        normFaces[nbFaces][1] =
           relSpeed[2] * oppEdgeA[0] -
           relSpeed[0] * oppEdgeA[2];
-        normFaces[nbFaces][2] = 
+        normFaces[nbFaces][2] =
           relSpeed[0] * oppEdgeA[1] -
           relSpeed[1] * oppEdgeA[0];
         if (fabs(normFaces[nbFaces][0]) > EPSILON ||
             fabs(normFaces[nbFaces][1]) > EPSILON ||
-            fabs(normFaces[nbFaces][2]) > EPSILON) 
+            fabs(normFaces[nbFaces][2]) > EPSILON)
           ++nbFaces;
 
-        normFaces[nbFaces][0] = 
+        normFaces[nbFaces][0] =
           relSpeed[1] * oppEdgeB[2] -
           relSpeed[2] * oppEdgeB[1];
-        normFaces[nbFaces][1] = 
+        normFaces[nbFaces][1] =
           relSpeed[2] * oppEdgeB[0] -
           relSpeed[0] * oppEdgeB[2];
-        normFaces[nbFaces][2] = 
+        normFaces[nbFaces][2] =
           relSpeed[0] * oppEdgeB[1] -
           relSpeed[1] * oppEdgeB[0];
         if (fabs(normFaces[nbFaces][0]) > EPSILON ||
             fabs(normFaces[nbFaces][1]) > EPSILON ||
-            fabs(normFaces[nbFaces][2]) > EPSILON) 
+            fabs(normFaces[nbFaces][2]) > EPSILON)
           ++nbFaces;
 
-        normFaces[nbFaces][0] = 
+        normFaces[nbFaces][0] =
           relSpeed[1] * oppEdgeC[2] -
           relSpeed[2] * oppEdgeC[1];
-        normFaces[nbFaces][1] = 
+        normFaces[nbFaces][1] =
           relSpeed[2] * oppEdgeC[0] -
           relSpeed[0] * oppEdgeC[2];
-        normFaces[nbFaces][2] = 
+        normFaces[nbFaces][2] =
           relSpeed[0] * oppEdgeC[1] -
           relSpeed[1] * oppEdgeC[0];
         if (fabs(normFaces[nbFaces][0]) > EPSILON ||
             fabs(normFaces[nbFaces][1]) > EPSILON ||
-            fabs(normFaces[nbFaces][2]) > EPSILON) 
+            fabs(normFaces[nbFaces][2]) > EPSILON)
           ++nbFaces;
 
       }
+
     }
 
     // Loop on the frame's faces
@@ -845,10 +850,10 @@ bool SATTestIntersection3DTime(
          iFace--;) {
 
       // Check against the current face's normal
-      bool isIntersection = 
+      bool isIntersection =
         CheckAxis3DTime(
-          that, 
-          tho, 
+          that,
+          tho,
           normFaces[iFace],
           relSpeed);
 
@@ -874,20 +879,20 @@ bool SATTestIntersection3DTime(
        iEdgeThat--;) {
 
     // Get the first edge
-    const double* edgeThat = 
-      (iEdgeThat < 3 ? 
-        that->comp[iEdgeThat] : 
+    const double* edgeThat =
+      (iEdgeThat < 3 ?
+        that->comp[iEdgeThat] :
         oppEdgesThat[iEdgeThat - 3]);
 
     for (int iEdgeTho = nbEdgesTho + 1;
          iEdgeTho--;) {
 
       // Get the second edge
-      const double* edgeTho = 
+      const double* edgeTho =
         (iEdgeTho == nbEdgesTho ?
           relSpeed :
-          (iEdgeTho < 3 ? 
-            tho->comp[iEdgeTho] : 
+          (iEdgeTho < 3 ?
+            tho->comp[iEdgeTho] :
             oppEdgesTho[iEdgeTho - 3]));
 
       // Get the cross product of the two edges
@@ -895,12 +900,12 @@ bool SATTestIntersection3DTime(
       axis[0] = edgeThat[1] * edgeTho[2] - edgeThat[2] * edgeTho[1];
       axis[1] = edgeThat[2] * edgeTho[0] - edgeThat[0] * edgeTho[2];
       axis[2] = edgeThat[0] * edgeTho[1] - edgeThat[1] * edgeTho[0];
-      
+
       // Check against the cross product of the two edges
-      bool isIntersection = 
+      bool isIntersection =
         CheckAxis3DTime(
-          that, 
-          tho, 
+          that,
+          tho,
           axis,
           relSpeed);
 
@@ -928,7 +933,7 @@ bool CheckAxis3D(
   const Frame3D* const that,
   const Frame3D* const tho,
   const double* const axis) {
-  
+
   // Declare variables to memorize the boundaries of projection
   // of the two frames on the current edge
   double bdgBoxA[2];
@@ -941,7 +946,7 @@ bool CheckAxis3D(
   // Loop on Frames
   for (int iFrame = 2;
        iFrame--;) {
-  
+
     // Shortcuts
     const double* frameOrig = frame->orig;
     const double* frameCompA = frame->comp[0];
@@ -959,19 +964,20 @@ bool CheckAxis3D(
     // Loop on vertices of the frame
     for (int iVertex = nbVertices;
          iVertex--;) {
-      
+
       // Get the vertex
       double vertex[3];
       vertex[0] = frameOrig[0];
       vertex[1] = frameOrig[1];
       vertex[2] = frameOrig[2];
       switch (iVertex) {
+
         case 7:
-          vertex[0] += 
+          vertex[0] +=
             frameCompA[0] +  frameCompB[0] + frameCompC[0];
-          vertex[1] += 
+          vertex[1] +=
             frameCompA[1] +  frameCompB[1] + frameCompC[1];
-          vertex[2] += 
+          vertex[2] +=
             frameCompA[2] +  frameCompB[2] + frameCompC[2];
           break;
         case 6:
@@ -1006,12 +1012,13 @@ bool CheckAxis3D(
           break;
         default:
           break;
+
       }
 
       // Get the projection of the vertex on the axis
-      double proj = 
-        vertex[0] * axis[0] + 
-        vertex[1] * axis[1] + 
+      double proj =
+        vertex[0] * axis[0] +
+        vertex[1] * axis[1] +
         vertex[2] * axis[2];
 
       // If it's the first vertex
@@ -1048,7 +1055,7 @@ bool CheckAxis3D(
 
   // If the projections of the two frames on the edge are
   // not intersecting
-  if (bdgBoxB[1] < bdgBoxA[0] || 
+  if (bdgBoxB[1] < bdgBoxA[0] ||
       bdgBoxA[1] < bdgBoxB[0]) {
 
      // There exists an axis which separates the Frames,
@@ -1062,7 +1069,7 @@ bool CheckAxis3D(
 
 }
 
-// Check the intersection constraint for Frames that and tho 
+// Check the intersection constraint for Frames that and tho
 // relatively to axis
 bool CheckAxis3DTime(
   const Frame3DTime* const that,
@@ -1082,7 +1089,7 @@ bool CheckAxis3DTime(
   // Loop on Frames
   for (int iFrame = 2;
        iFrame--;) {
-  
+
     // Shortcuts
     const double* frameOrig = frame->orig;
     const double* frameCompA = frame->comp[0];
@@ -1100,19 +1107,20 @@ bool CheckAxis3DTime(
     // Loop on vertices of the frame
     for (int iVertex = nbVertices;
          iVertex--;) {
-      
+
       // Get the vertex
       double vertex[3];
       vertex[0] = frameOrig[0];
       vertex[1] = frameOrig[1];
       vertex[2] = frameOrig[2];
       switch (iVertex) {
+
         case 7:
-          vertex[0] += 
+          vertex[0] +=
             frameCompA[0] +  frameCompB[0] + frameCompC[0];
-          vertex[1] += 
+          vertex[1] +=
             frameCompA[1] +  frameCompB[1] + frameCompC[1];
-          vertex[2] += 
+          vertex[2] +=
             frameCompA[2] +  frameCompB[2] + frameCompC[2];
           break;
         case 6:
@@ -1147,12 +1155,13 @@ bool CheckAxis3DTime(
           break;
         default:
           break;
+
       }
 
       // Get the projection of the vertex on the axis
-      double proj = 
-        vertex[0] * axis[0] + 
-        vertex[1] * axis[1] + 
+      double proj =
+        vertex[0] * axis[0] +
+        vertex[1] * axis[1] +
         vertex[2] * axis[2];
 
       // If it's the first vertex
@@ -1187,9 +1196,9 @@ bool CheckAxis3DTime(
         vertex[1] += relSpeed[1];
         vertex[2] += relSpeed[2];
 
-      proj = 
-        vertex[0] * axis[0] + 
-        vertex[1] * axis[1] + 
+      proj =
+        vertex[0] * axis[0] +
+        vertex[1] * axis[1] +
         vertex[2] * axis[2];
 
         if (bdgBox[0] > proj)
@@ -1210,7 +1219,7 @@ bool CheckAxis3DTime(
 
   // If the projections of the two frames on the edge are
   // not intersecting
-  if (bdgBoxB[1] < bdgBoxA[0] || 
+  if (bdgBoxB[1] < bdgBoxA[0] ||
       bdgBoxA[1] < bdgBoxB[0]) {
 
      // There exists an axis which separates the Frames,
@@ -1223,4 +1232,3 @@ bool CheckAxis3DTime(
   return true;
 
 }
-

@@ -25,26 +25,28 @@ unsigned long int nbNoInter;
 
 // Helper structure to pass arguments to the Validation function
 typedef struct {
+
   FrameType type;
   double orig[3];
   double comp[3][3];
+
 } Param3D;
 
 // Validation function
-// Takes two Frame definition as input, run the intersection test on 
+// Takes two Frame definition as input, run the intersection test on
 // them with FMB and SAT, and check the results are identical
 void ValidationOnePair3D(
   const Param3D paramP,
   const Param3D paramQ) {
 
   // Create the two Frames
-  Frame3D P = 
+  Frame3D P =
     Frame3DCreateStatic(
       paramP.type,
       paramP.orig,
       paramP.comp);
 
-  Frame3D Q = 
+  Frame3D Q =
     Frame3DCreateStatic(
       paramQ.type,
       paramQ.orig,
@@ -59,16 +61,16 @@ void ValidationOnePair3D(
        iPair--;) {
 
     // Test intersection with FMB
-    bool isIntersectingFMB = 
+    bool isIntersectingFMB =
       FMBTestIntersection3D(
-        that, 
-        tho, 
+        that,
+        tho,
         NULL);
 
     // Test intersection with SAT
-    bool isIntersectingSAT = 
+    bool isIntersectingSAT =
       SATTestIntersection3D(
-        that, 
+        that,
         tho);
 
     // If the results are different
@@ -153,7 +155,7 @@ void Validate3D(void) {
         for (int iComp = 3;
              iComp--;) {
 
-          param->comp[iComp][iAxis] = 
+          param->comp[iComp][iAxis] =
             -RANGE_AXIS + 2.0 * rnd() * RANGE_AXIS;
 
         }
@@ -165,20 +167,20 @@ void Validate3D(void) {
     }
 
     // Calculate the determinant of the Frames' components matrix
-    double detP = 
+    double detP =
       paramP.comp[0][0] * (paramP.comp[1][1] * paramP.comp[2][2]-
       paramP.comp[1][2] * paramP.comp[2][1]) -
-      paramP.comp[1][0] * (paramP.comp[0][1] * paramP.comp[2][2]- 
+      paramP.comp[1][0] * (paramP.comp[0][1] * paramP.comp[2][2]-
       paramP.comp[0][2] * paramP.comp[2][1]) +
-      paramP.comp[2][0] * (paramP.comp[0][1] * paramP.comp[1][2]- 
+      paramP.comp[2][0] * (paramP.comp[0][1] * paramP.comp[1][2]-
       paramP.comp[0][2] * paramP.comp[1][1]);
 
-    double detQ = 
+    double detQ =
       paramQ.comp[0][0] * (paramQ.comp[1][1] * paramQ.comp[2][2]-
       paramQ.comp[1][2] * paramQ.comp[2][1]) -
-      paramQ.comp[1][0] * (paramQ.comp[0][1] * paramQ.comp[2][2]- 
+      paramQ.comp[1][0] * (paramQ.comp[0][1] * paramQ.comp[2][2]-
       paramQ.comp[0][2] * paramQ.comp[2][1]) +
-      paramQ.comp[2][0] * (paramQ.comp[0][1] * paramQ.comp[1][2]- 
+      paramQ.comp[2][0] * (paramQ.comp[0][1] * paramQ.comp[1][2]-
       paramQ.comp[0][2] * paramQ.comp[1][1]);
 
     // If the determinants are not null, ie the Frame are not degenerate
@@ -207,4 +209,5 @@ int main(int argc, char** argv) {
   Validate3D();
 
   return 0;
+
 }

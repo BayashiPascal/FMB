@@ -12,39 +12,50 @@
 // ------------- Enumerations -------------
 
 typedef enum {
+
   FrameCuboid,
   FrameTetrahedron
+
 } FrameType;
 
 // ------------- Data structures -------------
 
 // Axis aligned bounding box structure
 typedef struct {
-  // x,y
+
+  // x, y
   double min[2];
   double max[2];
+
 } AABB2D;
 
 typedef struct {
-  // x,y,z
+
+  // x, y, z
   double min[3];
   double max[3];
+
 } AABB3D;
 
 typedef struct {
-  // x,y,t
+
+  // x, y, t
   double min[3];
   double max[3];
+
 } AABB2DTime;
 
 typedef struct {
-  // x,y,z,t
+
+  // x, y, z, t
   double min[4];
   double max[4];
+
 } AABB3DTime;
 
 // Axis unaligned cuboid and tetrahedron structure
 typedef struct {
+
   FrameType type;
   double orig[2];
   double comp[2][2];
@@ -52,9 +63,11 @@ typedef struct {
   AABB2D bdgBox;
   // Inverted components used during computation
   double invComp[2][2];
+
 } Frame2D;
 
 typedef struct {
+
   FrameType type;
   double orig[3];
   double comp[3][3];
@@ -62,9 +75,11 @@ typedef struct {
   AABB3D bdgBox;
   // Inverted components used during computation
   double invComp[3][3];
+
 } Frame3D;
 
 typedef struct {
+
   FrameType type;
   double orig[2];
   double comp[2][2];
@@ -73,9 +88,11 @@ typedef struct {
   // Inverted components used during computation
   double invComp[2][2];
   double speed[2];
+
 } Frame2DTime;
 
 typedef struct {
+
   FrameType type;
   double orig[3];
   double comp[3][3];
@@ -84,6 +101,7 @@ typedef struct {
   // Inverted components used during computation
   double invComp[3][3];
   double speed[3];
+
 } Frame3DTime;
 
 // ------------- Functions declaration -------------
@@ -131,23 +149,23 @@ Frame3DTime Frame3DTimeCreateStatic(
      const double speed[3],
      const double comp[3][3]);
 
-// Project the Frame Q in the Frame P's coordinates system and 
+// Project the Frame Q in the Frame P's coordinates system and
 // memorize the result in the Frame Qp
 void Frame2DImportFrame(
-  const Frame2D* const P, 
-  const Frame2D* const Q, 
+  const Frame2D* const P,
+  const Frame2D* const Q,
         Frame2D* const Qp);
 void Frame3DImportFrame(
-  const Frame3D* const P, 
-  const Frame3D* const Q, 
+  const Frame3D* const P,
+  const Frame3D* const Q,
         Frame3D* const Qp);
 void Frame2DTimeImportFrame(
-  const Frame2DTime* const P, 
-  const Frame2DTime* const Q, 
+  const Frame2DTime* const P,
+  const Frame2DTime* const Q,
         Frame2DTime* const Qp);
 void Frame3DTimeImportFrame(
-  const Frame3DTime* const P, 
-  const Frame3DTime* const Q, 
+  const Frame3DTime* const P,
+  const Frame3DTime* const Q,
         Frame3DTime* const Qp);
 
 // Export the AABB bdgBox from that's coordinates system to

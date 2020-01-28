@@ -38,7 +38,7 @@ Frame2D Frame2DCreateStatic(
     }
 
   }
-  
+
   // Create the bounding box
   for (int iAxis = 2;
        iAxis--;) {
@@ -87,9 +87,8 @@ Frame2D Frame2DCreateStatic(
     that.bdgBox.max[iAxis] = max;
 
   }
-  
 
-  // Calculate the inverse matrix 
+  // Calculate the inverse matrix
   Frame2DUpdateInv(&that);
 
   // Return the new Frame
@@ -118,7 +117,7 @@ Frame3D Frame3DCreateStatic(
     }
 
   }
-  
+
   // Create the bounding box
   for (int iAxis = 3;
        iAxis--;) {
@@ -167,9 +166,8 @@ Frame3D Frame3DCreateStatic(
     that.bdgBox.max[iAxis] = max;
 
   }
-  
 
-  // Calculate the inverse matrix 
+  // Calculate the inverse matrix
   Frame3DUpdateInv(&that);
 
   // Return the new Frame
@@ -200,7 +198,7 @@ Frame2DTime Frame2DTimeCreateStatic(
     }
 
   }
-  
+
   // Create the bounding box
   for (int iAxis = 2;
        iAxis--;) {
@@ -264,9 +262,8 @@ Frame2DTime Frame2DTimeCreateStatic(
 
   that.bdgBox.min[2] = 0.0;
   that.bdgBox.max[2] = 1.0;
-  
 
-  // Calculate the inverse matrix 
+  // Calculate the inverse matrix
   Frame2DTimeUpdateInv(&that);
 
   // Return the new Frame
@@ -297,7 +294,7 @@ Frame3DTime Frame3DTimeCreateStatic(
     }
 
   }
-  
+
   // Create the bounding box
   for (int iAxis = 3;
        iAxis--;) {
@@ -358,11 +355,11 @@ Frame3DTime Frame3DTimeCreateStatic(
     that.bdgBox.max[iAxis] = max;
 
   }
-  
+
   that.bdgBox.min[3] = 0.0;
   that.bdgBox.max[3] = 1.0;
 
-  // Calculate the inverse matrix 
+  // Calculate the inverse matrix
   Frame3DTimeUpdateInv(&that);
 
   // Return the new Frame
@@ -379,9 +376,11 @@ void Frame2DUpdateInv(Frame2D* const that) {
 
   double det = tc[0][0] * tc[1][1] - tc[1][0] * tc[0][1];
   if (fabs(det) < EPSILON) {
-    fprintf(stderr, 
+
+    fprintf(stderr,
       "FrameUpdateInv: det == 0.0\n");
     exit(1);
+
   }
 
   tic[0][0] = tc[1][1] / det;
@@ -398,14 +397,16 @@ void Frame3DUpdateInv(Frame3D* const that) {
   double (*tic)[3] = that->invComp;
 
   // Update the inverse components
-  double det = 
+  double det =
     tc[0][0] * (tc[1][1] * tc[2][2] - tc[1][2] * tc[2][1]) -
     tc[1][0] * (tc[0][1] * tc[2][2] - tc[0][2] * tc[2][1]) +
     tc[2][0] * (tc[0][1] * tc[1][2] - tc[0][2] * tc[1][1]);
   if (fabs(det) < EPSILON) {
-    fprintf(stderr, 
+
+    fprintf(stderr,
       "FrameUpdateInv: det == 0.0\n");
     exit(1);
+
   }
 
   tic[0][0] = (tc[1][1] * tc[2][2] - tc[2][1] * tc[1][2]) / det;
@@ -429,9 +430,11 @@ void Frame2DTimeUpdateInv(Frame2DTime* const that) {
 
   double det = tc[0][0] * tc[1][1] - tc[1][0] * tc[0][1];
   if (fabs(det) < EPSILON) {
-    fprintf(stderr, 
+
+    fprintf(stderr,
       "FrameUpdateInv: det == 0.0\n");
     exit(1);
+
   }
 
   tic[0][0] = tc[1][1] / det;
@@ -448,14 +451,16 @@ void Frame3DTimeUpdateInv(Frame3DTime* const that) {
   double (*tic)[3] = that->invComp;
 
   // Update the inverse components
-  double det = 
+  double det =
     tc[0][0] * (tc[1][1] * tc[2][2] - tc[1][2] * tc[2][1]) -
     tc[1][0] * (tc[0][1] * tc[2][2] - tc[0][2] * tc[2][1]) +
     tc[2][0] * (tc[0][1] * tc[1][2] - tc[0][2] * tc[1][1]);
   if (fabs(det) < EPSILON) {
-    fprintf(stderr, 
+
+    fprintf(stderr,
       "FrameUpdateInv: det == 0.0\n");
     exit(1);
+
   }
 
   tic[0][0] = (tc[1][1] * tc[2][2] - tc[2][1] * tc[1][2]) / det;
@@ -470,11 +475,11 @@ void Frame3DTimeUpdateInv(Frame3DTime* const that) {
 
 }
 
-// Project the Frame Q in the Frame P's coordinates system and 
+// Project the Frame Q in the Frame P's coordinates system and
 // memorize the result in the Frame Qp
 void Frame2DImportFrame(
-  const Frame2D* const P, 
-  const Frame2D* const Q, 
+  const Frame2D* const P,
+  const Frame2D* const Q,
         Frame2D* const Qp) {
 
   // Shortcuts
@@ -494,7 +499,7 @@ void Frame2DImportFrame(
     v[i] = qo[i] - po[i];
 
   }
-  
+
   for (int i = 2;
        i--;) {
 
@@ -512,13 +517,16 @@ void Frame2DImportFrame(
         qpc[j][i] += pi[k][i] * qc[j][k];
 
       }
+
     }
+
   }
+
 }
 
 void Frame3DImportFrame(
-  const Frame3D* const P, 
-  const Frame3D* const Q, 
+  const Frame3D* const P,
+  const Frame3D* const Q,
         Frame3D* const Qp) {
 
   // Shortcuts
@@ -538,7 +546,7 @@ void Frame3DImportFrame(
     v[i] = qo[i] - po[i];
 
   }
-  
+
   for (int i = 3;
        i--;) {
 
@@ -556,13 +564,16 @@ void Frame3DImportFrame(
         qpc[j][i] += pi[k][i] * qc[j][k];
 
       }
+
     }
+
   }
+
 }
 
 void Frame2DTimeImportFrame(
-  const Frame2DTime* const P, 
-  const Frame2DTime* const Q, 
+  const Frame2DTime* const P,
+  const Frame2DTime* const Q,
         Frame2DTime* const Qp) {
 
   // Shortcuts
@@ -588,7 +599,7 @@ void Frame2DTimeImportFrame(
     s[i] = qs[i] - ps[i];
 
   }
-  
+
   for (int i = 2;
        i--;) {
 
@@ -608,13 +619,16 @@ void Frame2DTimeImportFrame(
         qpc[j][i] += pi[k][i] * qc[j][k];
 
       }
+
     }
+
   }
+
 }
 
 void Frame3DTimeImportFrame(
-  const Frame3DTime* const P, 
-  const Frame3DTime* const Q, 
+  const Frame3DTime* const P,
+  const Frame3DTime* const Q,
         Frame3DTime* const Qp) {
 
   // Shortcuts
@@ -640,7 +654,7 @@ void Frame3DTimeImportFrame(
     s[i] = qs[i] - ps[i];
 
   }
-  
+
   for (int i = 3;
        i--;) {
 
@@ -660,8 +674,11 @@ void Frame3DTimeImportFrame(
         qpc[j][i] += pi[k][i] * qc[j][k];
 
       }
+
     }
+
   }
+
 }
 
 // Export the AABB bdgBox from that's coordinates system to
@@ -704,11 +721,11 @@ void Frame2DExportBdgBox(
   int nbVertices = powi(2, 2);
   for (int iVertex = nbVertices;
        iVertex-- && iVertex;) {
-    
+
     // Declare a variable to memorize the coordinates of the vertex in
     // 'that' 's coordinates system
     double v[2];
-    
+
     // Calculate the coordinates of the vertex in
     // 'that' 's coordinates system
     for (int i = 2;
@@ -717,11 +734,11 @@ void Frame2DExportBdgBox(
       v[i] = ((iVertex & (1 << i)) ? bbma[i] : bbmi[i]);
 
     }
-    
+
     // Declare a variable to memorize the projected coordinates
     // in real coordinates system
     double w[2];
-    
+
     // Project the vertex to real coordinates system
     for (int i = 2;
          i--;) {
@@ -734,10 +751,11 @@ void Frame2DExportBdgBox(
         w[i] += tc[j][i] * v[j];
 
       }
+
     }
 
     // Update the coordinates of the result AABB
-    for (int i = 2; 
+    for (int i = 2;
          i--;) {
 
       if (bbpmi[i] > w[i]) {
@@ -745,12 +763,15 @@ void Frame2DExportBdgBox(
         bbpmi[i] = w[i];
 
       }
+
       if (bbpma[i] < w[i]) {
 
         bbpma[i] = w[i];
 
       }
+
     }
+
   }
 
 }
@@ -792,11 +813,11 @@ void Frame3DExportBdgBox(
   int nbVertices = powi(2, 3);
   for (int iVertex = nbVertices;
        iVertex-- && iVertex;) {
-    
+
     // Declare a variable to memorize the coordinates of the vertex in
     // 'that' 's coordinates system
     double v[3];
-    
+
     // Calculate the coordinates of the vertex in
     // 'that' 's coordinates system
     for (int i = 3;
@@ -805,11 +826,11 @@ void Frame3DExportBdgBox(
       v[i] = ((iVertex & (1 << i)) ? bbma[i] : bbmi[i]);
 
     }
-    
+
     // Declare a variable to memorize the projected coordinates
     // in real coordinates system
     double w[3];
-    
+
     // Project the vertex to real coordinates system
     for (int i = 3;
          i--;) {
@@ -822,10 +843,11 @@ void Frame3DExportBdgBox(
         w[i] += tc[j][i] * v[j];
 
       }
+
     }
 
     // Update the coordinates of the result AABB
-    for (int i = 3; 
+    for (int i = 3;
          i--;) {
 
       if (bbpmi[i] > w[i]) {
@@ -833,12 +855,15 @@ void Frame3DExportBdgBox(
         bbpmi[i] = w[i];
 
       }
+
       if (bbpma[i] < w[i]) {
 
         bbpma[i] = w[i];
 
       }
+
     }
+
   }
 
 }
@@ -884,11 +909,11 @@ void Frame2DTimeExportBdgBox(
   int nbVertices = powi(2, 2);
   for (int iVertex = nbVertices;
        iVertex-- && iVertex;) {
-    
+
     // Declare a variable to memorize the coordinates of the vertex in
     // 'that' 's coordinates system
     double v[2];
-    
+
     // Calculate the coordinates of the vertex in
     // 'that' 's coordinates system
     for (int i = 2;
@@ -897,11 +922,11 @@ void Frame2DTimeExportBdgBox(
       v[i] = ((iVertex & (1 << i)) ? bbma[i] : bbmi[i]);
 
     }
-    
+
     // Declare a variable to memorize the projected coordinates
     // in real coordinates system
     double w[2];
-    
+
     // Project the vertex to real coordinates system
     for (int i = 2;
          i--;) {
@@ -914,10 +939,11 @@ void Frame2DTimeExportBdgBox(
         w[i] += tc[j][i] * v[j];
 
       }
+
     }
 
     // Update the coordinates of the result AABB
-    for (int i = 2; 
+    for (int i = 2;
          i--;) {
 
       if (bbpmi[i] > w[i] + ts[i] * bbmi[2]) {
@@ -925,22 +951,27 @@ void Frame2DTimeExportBdgBox(
         bbpmi[i] = w[i] + ts[i] * bbmi[2];
 
       }
+
       if (bbpmi[i] > w[i] + ts[i] * bbma[2]) {
 
         bbpmi[i] = w[i] + ts[i] * bbma[2];
 
       }
+
       if (bbpma[i] < w[i] + ts[i] * bbmi[2]) {
 
         bbpma[i] = w[i] + ts[i] * bbmi[2];
 
       }
+
       if (bbpma[i] < w[i] + ts[i] * bbma[2]) {
 
         bbpma[i] = w[i] + ts[i] * bbma[2];
 
       }
+
     }
+
   }
 
 }
@@ -986,11 +1017,11 @@ void Frame3DTimeExportBdgBox(
   int nbVertices = powi(2, 3);
   for (int iVertex = nbVertices;
        iVertex-- && iVertex;) {
-    
+
     // Declare a variable to memorize the coordinates of the vertex in
     // 'that' 's coordinates system
     double v[3];
-    
+
     // Calculate the coordinates of the vertex in
     // 'that' 's coordinates system
     for (int i = 3;
@@ -999,11 +1030,11 @@ void Frame3DTimeExportBdgBox(
       v[i] = ((iVertex & (1 << i)) ? bbma[i] : bbmi[i]);
 
     }
-    
+
     // Declare a variable to memorize the projected coordinates
     // in real coordinates system
     double w[3];
-    
+
     // Project the vertex to real coordinates system
     for (int i = 3;
          i--;) {
@@ -1016,10 +1047,11 @@ void Frame3DTimeExportBdgBox(
         w[i] += tc[j][i] * v[j];
 
       }
+
     }
 
     // Update the coordinates of the result AABB
-    for (int i = 3; 
+    for (int i = 3;
          i--;) {
 
       if (bbpmi[i] > w[i] + ts[i] * bbmi[3]) {
@@ -1027,22 +1059,27 @@ void Frame3DTimeExportBdgBox(
         bbpmi[i] = w[i] + ts[i] * bbmi[3];
 
       }
+
       if (bbpmi[i] > w[i] + ts[i] * bbma[3]) {
 
         bbpmi[i] = w[i] + ts[i] * bbma[3];
 
       }
+
       if (bbpma[i] < w[i] + ts[i] * bbmi[3]) {
 
         bbpma[i] = w[i] + ts[i] * bbmi[3];
 
       }
+
       if (bbpma[i] < w[i] + ts[i] * bbma[3]) {
 
         bbpma[i] = w[i] + ts[i] * bbma[3];
 
       }
+
     }
+
   }
 
 }
@@ -1050,7 +1087,7 @@ void Frame3DTimeExportBdgBox(
 // Print the AABB that on stdout
 // Output format is (min[0], min[1], ...)-(max[0], max[1], ...)
 void AABB2DPrint(const AABB2D* const that) {
-  
+
   printf("minXY(");
   for (int i = 0;
        i < 2;
@@ -1061,6 +1098,7 @@ void AABB2DPrint(const AABB2D* const that) {
       printf(",");
 
   }
+
   printf(")-maxXY(");
   for (int i = 0;
        i < 2;
@@ -1071,12 +1109,13 @@ void AABB2DPrint(const AABB2D* const that) {
       printf(",");
 
   }
+
   printf(")");
-  
+
 }
 
 void AABB3DPrint(const AABB3D* const that) {
-  
+
   printf("minXYZ(");
   for (int i = 0;
        i < 3;
@@ -1087,6 +1126,7 @@ void AABB3DPrint(const AABB3D* const that) {
       printf(",");
 
   }
+
   printf(")-maxXYZ(");
   for (int i = 0;
        i < 3;
@@ -1097,12 +1137,13 @@ void AABB3DPrint(const AABB3D* const that) {
       printf(",");
 
   }
+
   printf(")");
-  
+
 }
 
 void AABB2DTimePrint(const AABB2DTime* const that) {
-  
+
   printf("minXYT(");
   for (int i = 0;
        i < 3;
@@ -1113,6 +1154,7 @@ void AABB2DTimePrint(const AABB2DTime* const that) {
       printf(",");
 
   }
+
   printf(")-maxXYT(");
   for (int i = 0;
        i < 3;
@@ -1123,12 +1165,13 @@ void AABB2DTimePrint(const AABB2DTime* const that) {
       printf(",");
 
   }
+
   printf(")");
-  
+
 }
 
 void AABB3DTimePrint(const AABB3DTime* const that) {
-  
+
   printf("minXYZT(");
   for (int i = 0;
        i < 4;
@@ -1139,6 +1182,7 @@ void AABB3DTimePrint(const AABB3DTime* const that) {
       printf(",");
 
   }
+
   printf(")-maxXYZT(");
   for (int i = 0;
        i < 4;
@@ -1149,8 +1193,9 @@ void AABB3DTimePrint(const AABB3DTime* const that) {
       printf(",");
 
   }
+
   printf(")");
-  
+
 }
 
 // Print the Frame that on stdout
@@ -1162,11 +1207,17 @@ void AABB3DTimePrint(const AABB3DTime* const that) {
 // y(comp[1][0], comp[1][1], comp[1][2])
 // z(comp[2][0], comp[2][1], comp[2][2])
 void Frame2DPrint(const Frame2D* const that) {
+
   if (that->type == FrameTetrahedron) {
+
     printf("T");
+
   } else if (that->type == FrameCuboid) {
+
     printf("C");
+
   }
+
   printf("o(");
   for (int i = 0;
        i < 2;
@@ -1177,10 +1228,12 @@ void Frame2DPrint(const Frame2D* const that) {
       printf(",");
 
   }
+
   char comp[2] = {'x', 'y'};
   for (int j = 0;
        j < 2;
        ++j) {
+
     printf(") %c(", comp[j]);
     for (int i = 0;
          i < 2;
@@ -1191,17 +1244,25 @@ void Frame2DPrint(const Frame2D* const that) {
         printf(",");
 
     }
+
   }
+
   printf(")");
-  
+
 }
 
 void Frame3DPrint(const Frame3D* const that) {
+
   if (that->type == FrameTetrahedron) {
+
     printf("T");
+
   } else if (that->type == FrameCuboid) {
+
     printf("C");
+
   }
+
   printf("o(");
   for (int i = 0;
        i < 3;
@@ -1212,10 +1273,12 @@ void Frame3DPrint(const Frame3D* const that) {
       printf(",");
 
   }
+
   char comp[3] = {'x', 'y', 'z'};
   for (int j = 0;
        j < 3;
        ++j) {
+
     printf(") %c(", comp[j]);
     for (int i = 0;
          i < 3;
@@ -1226,17 +1289,25 @@ void Frame3DPrint(const Frame3D* const that) {
         printf(",");
 
     }
+
   }
+
   printf(")");
-  
+
 }
 
 void Frame2DTimePrint(const Frame2DTime* const that) {
+
   if (that->type == FrameTetrahedron) {
+
     printf("T");
+
   } else if (that->type == FrameCuboid) {
+
     printf("C");
+
   }
+
   printf("o(");
   for (int i = 0;
        i < 2;
@@ -1247,6 +1318,7 @@ void Frame2DTimePrint(const Frame2DTime* const that) {
       printf(",");
 
   }
+
   printf(") s(");
   for (int i = 0;
        i < 2;
@@ -1257,10 +1329,12 @@ void Frame2DTimePrint(const Frame2DTime* const that) {
       printf(",");
 
   }
+
   char comp[2] = {'x', 'y'};
   for (int j = 0;
        j < 2;
        ++j) {
+
     printf(") %c(", comp[j]);
     for (int i = 0;
          i < 2;
@@ -1271,17 +1345,25 @@ void Frame2DTimePrint(const Frame2DTime* const that) {
         printf(",");
 
     }
+
   }
+
   printf(")");
-  
+
 }
 
 void Frame3DTimePrint(const Frame3DTime* const that) {
+
   if (that->type == FrameTetrahedron) {
+
     printf("T");
+
   } else if (that->type == FrameCuboid) {
+
     printf("C");
+
   }
+
   printf("o(");
   for (int i = 0;
        i < 3;
@@ -1292,6 +1374,7 @@ void Frame3DTimePrint(const Frame3DTime* const that) {
       printf(",");
 
   }
+
   printf(") s(");
   for (int i = 0;
        i < 3;
@@ -1302,10 +1385,12 @@ void Frame3DTimePrint(const Frame3DTime* const that) {
       printf(",");
 
   }
+
   char comp[3] = {'x', 'y', 'z'};
   for (int j = 0;
        j < 3;
        ++j) {
+
     printf(") %c(", comp[j]);
     for (int i = 0;
          i < 3;
@@ -1316,9 +1401,11 @@ void Frame3DTimePrint(const Frame3DTime* const that) {
         printf(",");
 
     }
+
   }
+
   printf(")");
-  
+
 }
 
 // Power function for integer base and exponent
@@ -1332,8 +1419,10 @@ int powi(
          exp;
          --exp) {
 
-      res *= base; 
+      res *= base;
 
     }
+
     return res;
+
 }

@@ -11,9 +11,11 @@
 
 // Helper structure to pass arguments to the UnitTest function
 typedef struct {
+
   FrameType type;
   double orig[3];
   double comp[3][3];
+
 } Param3D;
 
 // Unit test function
@@ -28,13 +30,13 @@ void UnitTest3D(
   const AABB3D* const correctBdgBox) {
 
   // Create the two Frames
-  Frame3D P = 
+  Frame3D P =
     Frame3DCreateStatic(
       paramP.type,
       paramP.orig,
       paramP.comp);
 
-  Frame3D Q = 
+  Frame3D Q =
     Frame3DCreateStatic(
       paramQ.type,
       paramQ.orig,
@@ -58,10 +60,10 @@ void UnitTest3D(
     printf("\n");
 
     // Run the FMB intersection test
-    bool isIntersecting = 
+    bool isIntersecting =
       FMBTestIntersection3D(
-        that, 
-        tho, 
+        that,
+        tho,
         &bdgBoxLocal);
 
     // If the test hasn't given the expected answer about intersection
@@ -87,25 +89,37 @@ void UnitTest3D(
 
         AABB3D bdgBox;
         Frame3DExportBdgBox(
-          tho, 
-          &bdgBoxLocal, 
+          tho,
+          &bdgBoxLocal,
           &bdgBox);
 
-        for (int iAxis = 3; 
+        for (int iAxis = 3;
              iAxis--;) {
 
           if (bdgBox.min[iAxis] < that->bdgBox.min[iAxis]) {
+
             bdgBox.min[iAxis] = that->bdgBox.min[iAxis];
+
           }
+
           if (bdgBox.max[iAxis] > that->bdgBox.max[iAxis]) {
+
             bdgBox.max[iAxis] = that->bdgBox.max[iAxis];
+
           }
+
           if (bdgBox.min[iAxis] < tho->bdgBox.min[iAxis]) {
+
             bdgBox.min[iAxis] = tho->bdgBox.min[iAxis];
+
           }
+
           if (bdgBox.max[iAxis] > tho->bdgBox.max[iAxis]) {
+
             bdgBox.max[iAxis] = tho->bdgBox.max[iAxis];
+
           }
+
         }
 
         // Check the bounding box
@@ -157,6 +171,7 @@ void UnitTest3D(
       }
 
     }
+
     printf("\n");
 
     // Flip the pair of Frames
@@ -164,7 +179,7 @@ void UnitTest3D(
     tho = &P;
 
   }
-  
+
 }
 
 void Test3D(void) {
@@ -180,25 +195,31 @@ void Test3D(void) {
   // Execute the unit test on various cases
 
   // ----------------------------
-  paramP = (Param3D)
-    {.type = FrameCuboid,
-     .orig = {0.0, 0.0, 0.0},
-     .comp = 
-       {{1.0, 0.0, 0.0},
-        {0.0, 1.0, 0.0},
-        {0.0, 0.0, 1.0}}
+  paramP = (Param3D) {
+
+    .type = FrameCuboid,
+    .orig = {0.0, 0.0, 0.0},
+    .comp =
+      {{1.0, 0.0, 0.0},
+       {0.0, 1.0, 0.0},
+       {0.0, 0.0, 1.0}}
+
     };
-  paramQ = (Param3D)
-    {.type = FrameCuboid,
-     .orig = {0.0, 0.0, 0.0},
-     .comp = 
-       {{1.0, 0.0, 0.0},
-        {0.0, 1.0, 0.0},
-        {0.0, 0.0, 1.0}}
+  paramQ = (Param3D) {
+
+    .type = FrameCuboid,
+    .orig = {0.0, 0.0, 0.0},
+    .comp =
+      {{1.0, 0.0, 0.0},
+       {0.0, 1.0, 0.0},
+       {0.0, 0.0, 1.0}}
+
     };
-  correctBdgBox = (AABB3D) 
-    {.min = {0.0, 0.0, 0.0},
-     .max = {1.0, 1.0, 1.0}
+  correctBdgBox = (AABB3D) {
+
+    .min = {0.0, 0.0, 0.0},
+    .max = {1.0, 1.0, 1.0}
+
     };
   UnitTest3D(
     paramP,
@@ -207,25 +228,31 @@ void Test3D(void) {
     &correctBdgBox);
 
   // ----------------------------
-  paramP = (Param3D)
-    {.type = FrameCuboid,
-     .orig = {0.0, 0.0, 0.0},
-     .comp = 
-       {{1.0, 0.0, 0.0},
-        {0.0, 1.0, 0.0},
-        {0.0, 0.0, 1.0}}
+  paramP = (Param3D) {
+
+    .type = FrameCuboid,
+    .orig = {0.0, 0.0, 0.0},
+    .comp =
+      {{1.0, 0.0, 0.0},
+       {0.0, 1.0, 0.0},
+       {0.0, 0.0, 1.0}}
+
     };
-  paramQ = (Param3D)
-    {.type = FrameCuboid,
-     .orig = {0.5, 0.5, 0.5},
-     .comp = 
-       {{1.0, 0.0, 0.0},
-        {0.0, 1.0, 0.0},
-        {0.0, 0.0, 1.0}}
+  paramQ = (Param3D) {
+
+    .type = FrameCuboid,
+    .orig = {0.5, 0.5, 0.5},
+    .comp =
+      {{1.0, 0.0, 0.0},
+       {0.0, 1.0, 0.0},
+       {0.0, 0.0, 1.0}}
+
     };
-  correctBdgBox = (AABB3D) 
-    {.min = {0.5, 0.5, 0.5},
-     .max = {1.0, 1.0, 1.0}
+  correctBdgBox = (AABB3D) {
+
+    .min = {0.5, 0.5, 0.5},
+    .max = {1.0, 1.0, 1.0}
+
     };
   UnitTest3D(
     paramP,
@@ -234,25 +261,31 @@ void Test3D(void) {
     &correctBdgBox);
 
   // ----------------------------
-  paramP = (Param3D)
-    {.type = FrameCuboid,
-     .orig = {0.0, 0.0, 0.0},
-     .comp = 
-       {{1.0, 0.0, 0.0},
-        {0.0, 1.0, 0.0},
-        {0.0, 0.0, 1.0}}
+  paramP = (Param3D) {
+
+    .type = FrameCuboid,
+    .orig = {0.0, 0.0, 0.0},
+    .comp =
+      {{1.0, 0.0, 0.0},
+       {0.0, 1.0, 0.0},
+       {0.0, 0.0, 1.0}}
+
     };
-  paramQ = (Param3D)
-    {.type = FrameCuboid,
-     .orig = {-0.5, -0.5, -0.5},
-     .comp = 
-       {{1.0, 0.0, 0.0},
-        {0.0, 1.0, 0.0},
-        {0.0, 0.0, 1.0}}
+  paramQ = (Param3D) {
+
+    .type = FrameCuboid,
+    .orig = {-0.5, -0.5, -0.5},
+    .comp =
+      {{1.0, 0.0, 0.0},
+       {0.0, 1.0, 0.0},
+       {0.0, 0.0, 1.0}}
+
     };
-  correctBdgBox = (AABB3D) 
-    {.min = {0.0, 0.0, 0.0},
-     .max = {0.5, 0.5, 0.5}
+  correctBdgBox = (AABB3D) {
+
+    .min = {0.0, 0.0, 0.0},
+    .max = {0.5, 0.5, 0.5}
+
     };
   UnitTest3D(
     paramP,
@@ -261,25 +294,31 @@ void Test3D(void) {
     &correctBdgBox);
 
   // ----------------------------
-  paramP = (Param3D)
-    {.type = FrameCuboid,
-     .orig = {0.0, 0.0, 0.0},
-     .comp = 
-       {{1.0, 0.0, 0.0},
-        {0.0, 1.0, 0.0},
-        {0.0, 0.0, 1.0}}
+  paramP = (Param3D) {
+
+    .type = FrameCuboid,
+    .orig = {0.0, 0.0, 0.0},
+    .comp =
+      {{1.0, 0.0, 0.0},
+       {0.0, 1.0, 0.0},
+       {0.0, 0.0, 1.0}}
+
     };
-  paramQ = (Param3D)
-    {.type = FrameCuboid,
-     .orig = {1.5, 1.5, 1.5},
-     .comp = 
-       {{-1.0, 0.0, 0.0},
-        {0.0, -1.0, 0.0},
-        {0.0, 0.0, -1.0}}
+  paramQ = (Param3D) {
+
+    .type = FrameCuboid,
+    .orig = {1.5, 1.5, 1.5},
+    .comp =
+      {{-1.0, 0.0, 0.0},
+       {0.0, -1.0, 0.0},
+       {0.0, 0.0, -1.0}}
+
     };
-  correctBdgBox = (AABB3D) 
-    {.min = {0.5, 0.5, 0.5},
-     .max = {1.0, 1.0, 1.0}
+  correctBdgBox = (AABB3D) {
+
+    .min = {0.5, 0.5, 0.5},
+    .max = {1.0, 1.0, 1.0}
+
     };
   UnitTest3D(
     paramP,
@@ -288,21 +327,25 @@ void Test3D(void) {
     &correctBdgBox);
 
   // ----------------------------
-  paramP = (Param3D)
-    {.type = FrameCuboid,
-     .orig = {0.0, 0.0, 0.0},
-     .comp = 
-       {{1.0, 0.0, 0.0},
-        {0.0, 1.0, 0.0},
-        {0.0, 0.0, 1.0}}
+  paramP = (Param3D) {
+
+    .type = FrameCuboid,
+    .orig = {0.0, 0.0, 0.0},
+    .comp =
+      {{1.0, 0.0, 0.0},
+       {0.0, 1.0, 0.0},
+       {0.0, 0.0, 1.0}}
+
     };
-  paramQ = (Param3D)
-    {.type = FrameCuboid,
-     .orig = {0.5, 1.5, -1.5},
-     .comp = 
-       {{1.0, 0.0, 0.0},
-        {0.0, -1.0, 0.0},
-        {0.0, 0.0, 1.0}}
+  paramQ = (Param3D) {
+
+    .type = FrameCuboid,
+    .orig = {0.5, 1.5, -1.5},
+    .comp =
+      {{1.0, 0.0, 0.0},
+       {0.0, -1.0, 0.0},
+       {0.0, 0.0, 1.0}}
+
     };
   UnitTest3D(
     paramP,
@@ -311,25 +354,31 @@ void Test3D(void) {
     NULL);
 
   // ----------------------------
-  paramP = (Param3D)
-    {.type = FrameCuboid,
-     .orig = {0.0, 0.0, 0.0},
-     .comp = 
-       {{1.0, 0.0, 0.0},
-        {0.0, 1.0, 0.0},
-        {0.0, 0.0, -1.0}}
+  paramP = (Param3D) {
+
+    .type = FrameCuboid,
+    .orig = {0.0, 0.0, 0.0},
+    .comp =
+      {{1.0, 0.0, 0.0},
+       {0.0, 1.0, 0.0},
+       {0.0, 0.0, -1.0}}
+
     };
-  paramQ = (Param3D)
-    {.type = FrameCuboid,
-     .orig = {0.5, 1.5, -1.5},
-     .comp = 
-       {{1.0, 0.0, 0.0},
-        {0.0, -1.0, 0.0},
-        {0.0, 0.0, 1.0}}
+  paramQ = (Param3D) {
+
+    .type = FrameCuboid,
+    .orig = {0.5, 1.5, -1.5},
+    .comp =
+      {{1.0, 0.0, 0.0},
+       {0.0, -1.0, 0.0},
+       {0.0, 0.0, 1.0}}
+
     };
-  correctBdgBox = (AABB3D) 
-    {.min = {0.5, 0.5, -1.0},
-     .max = {1.0, 1.0, -0.5}
+  correctBdgBox = (AABB3D) {
+
+    .min = {0.5, 0.5, -1.0},
+    .max = {1.0, 1.0, -0.5}
+
     };
   UnitTest3D(
     paramP,
@@ -338,21 +387,25 @@ void Test3D(void) {
     &correctBdgBox);
 
   // ----------------------------
-  paramP = (Param3D)
-    {.type = FrameCuboid,
-     .orig = {-1.01, -1.01, -1.01},
-     .comp = 
-       {{1.0, 0.0, 0.0},
-        {1.0, 1.0, 1.0},
-        {0.0, 0.0, 1.0}}
+  paramP = (Param3D) {
+
+    .type = FrameCuboid,
+    .orig = {-1.01, -1.01, -1.01},
+    .comp =
+      {{1.0, 0.0, 0.0},
+       {1.0, 1.0, 1.0},
+       {0.0, 0.0, 1.0}}
+
     };
-  paramQ = (Param3D)
-    {.type = FrameCuboid,
-     .orig = {0.0, 0.0, 0.0},
-     .comp = 
-       {{1.0, 0.0, 0.0},
-        {0.0, 1.0, 0.0},
-        {0.0, 0.0, 1.0}}
+  paramQ = (Param3D) {
+
+    .type = FrameCuboid,
+    .orig = {0.0, 0.0, 0.0},
+    .comp =
+      {{1.0, 0.0, 0.0},
+       {0.0, 1.0, 0.0},
+       {0.0, 0.0, 1.0}}
+
     };
   UnitTest3D(
     paramP,
@@ -361,25 +414,32 @@ void Test3D(void) {
     NULL);
 
   // ----------------------------
-  paramP = (Param3D)
-    {.type = FrameCuboid,
-     .orig = {-1.0, -1.0, -1.0},
-     .comp = 
-       {{1.0, 0.0, 0.0},
-        {1.0, 1.0, 1.0},
-        {0.0, 0.0, 1.0}}
+  paramP = (Param3D) {
+
+    .type = FrameCuboid,
+    .orig = {-1.0, -1.0, -1.0},
+    .comp = {
+
+      {1.0, 0.0, 0.0},
+      {1.0, 1.0, 1.0},
+      {0.0, 0.0, 1.0}}
+
     };
-  paramQ = (Param3D)
-    {.type = FrameCuboid,
-     .orig = {0.0, -0.5, 0.0},
-     .comp = 
-       {{1.0, 0.0, 0.0},
-        {0.0, 1.0, 0.0},
-        {0.0, 0.0, 1.0}}
+  paramQ = (Param3D){
+
+    .type = FrameCuboid,
+    .orig = {0.0, -0.5, 0.0},
+    .comp =
+      {{1.0, 0.0, 0.0},
+       {0.0, 1.0, 0.0},
+       {0.0, 0.0, 1.0}}
+
     };
-  correctBdgBox = (AABB3D) 
-    {.min = {0.0, -0.5, 0.0},
-     .max = {1.0, 0.0, 1.0}
+  correctBdgBox = (AABB3D) {
+
+    .min = {0.0, -0.5, 0.0},
+    .max = {1.0, 0.0, 1.0}
+
     };
   UnitTest3D(
     paramP,
@@ -388,21 +448,25 @@ void Test3D(void) {
     &correctBdgBox);
 
   // ----------------------------
-  paramP = (Param3D)
-    {.type = FrameTetrahedron,
-     .orig = {-1.0, -1.0, -1.0},
-     .comp = 
-       {{1.0, 0.0, 0.0},
-        {1.0, 1.0, 1.0},
-        {0.0, 0.0, 1.0}}
+  paramP = (Param3D){
+
+    .type = FrameTetrahedron,
+    .orig = {-1.0, -1.0, -1.0},
+    .comp =
+      {{1.0, 0.0, 0.0},
+       {1.0, 1.0, 1.0},
+       {0.0, 0.0, 1.0}}
+
     };
-  paramQ = (Param3D)
-    {.type = FrameCuboid,
-     .orig = {0.0, -0.5, 0.0},
-     .comp = 
-       {{1.0, 0.0, 0.0},
-        {0.0, 1.0, 0.0},
-        {0.0, 0.0, 1.0}}
+  paramQ = (Param3D){
+
+    .type = FrameCuboid,
+    .orig = {0.0, -0.5, 0.0},
+    .comp =
+      {{1.0, 0.0, 0.0},
+       {0.0, 1.0, 0.0},
+       {0.0, 0.0, 1.0}}
+
     };
   UnitTest3D(
     paramP,
@@ -411,25 +475,31 @@ void Test3D(void) {
     NULL);
 
   // ----------------------------
-  paramP = (Param3D)
-    {.type = FrameCuboid,
-     .orig = {-1.0, -1.0, -1.0},
-     .comp = 
-       {{1.0, 0.0, 0.0},
-        {1.0, 1.0, 1.0},
-        {0.0, 0.0, 1.0}}
+  paramP = (Param3D){
+
+    .type = FrameCuboid,
+    .orig = {-1.0, -1.0, -1.0},
+    .comp =
+      {{1.0, 0.0, 0.0},
+       {1.0, 1.0, 1.0},
+       {0.0, 0.0, 1.0}}
+
     };
-  paramQ = (Param3D)
-    {.type = FrameTetrahedron,
-     .orig = {0.0, -0.5, 0.0},
-     .comp = 
-       {{1.0, 0.0, 0.0},
-        {0.0, 1.0, 0.0},
-        {0.0, 0.0, 1.0}}
+  paramQ = (Param3D){
+
+    .type = FrameTetrahedron,
+    .orig = {0.0, -0.5, 0.0},
+    .comp =
+      {{1.0, 0.0, 0.0},
+       {0.0, 1.0, 0.0},
+       {0.0, 0.0, 1.0}}
+
     };
-  correctBdgBox = (AABB3D) 
-    {.min = {0.0, -0.5, 0.0},
-     .max = {0.75, 0.0, 0.75}
+  correctBdgBox = (AABB3D) {
+
+    .min = {0.0, -0.5, 0.0},
+    .max = {0.75, 0.0, 0.75}
+
     };
   UnitTest3D(
     paramP,
@@ -438,21 +508,31 @@ void Test3D(void) {
     &correctBdgBox);
 
   // ----------------------------
-  paramP = (Param3D)
-    {.type = FrameTetrahedron,
-     .orig = {-1.0, -1.0, -1.0},
-     .comp = 
-       {{1.0, 0.0, 0.0},
+  paramP = (Param3D) {
+
+    .type = FrameTetrahedron,
+    .orig = {-1.0, -1.0, -1.0},
+    .comp = {
+
+        {1.0, 0.0, 0.0},
         {1.0, 1.0, 1.0},
-        {0.0, 0.0, 1.0}}
+        {0.0, 0.0, 1.0}
+
+      }
+
     };
-  paramQ = (Param3D)
-    {.type = FrameTetrahedron,
-     .orig = {0.0, -0.5, 0.0},
-     .comp = 
-       {{1.0, 0.0, 0.0},
+  paramQ = (Param3D) {
+
+    .type = FrameTetrahedron,
+    .orig = {0.0, -0.5, 0.0},
+    .comp = {
+
+        {1.0, 0.0, 0.0},
         {0.0, 1.0, 0.0},
-        {0.0, 0.0, 1.0}}
+        {0.0, 0.0, 1.0}
+
+      }
+
     };
   UnitTest3D(
     paramP,
@@ -461,32 +541,43 @@ void Test3D(void) {
     NULL);
 
   // ----------------------------
-  paramP = (Param3D)
-    {.type = FrameTetrahedron,
-     .orig = {-0.5, -1.0, -0.5},
-     .comp = 
-       {{1.0, 0.0, 0.0},
+  paramP = (Param3D){
+
+    .type = FrameTetrahedron,
+    .orig = {-0.5, -1.0, -0.5},
+    .comp = {
+
+        {1.0, 0.0, 0.0},
         {1.0, 1.0, 1.0},
-        {0.0, 0.0, 1.0}}
+        {0.0, 0.0, 1.0}
+
+      }
+
     };
-  paramQ = (Param3D)
-    {.type = FrameTetrahedron,
-     .orig = {0.0, -0.5, 0.0},
-     .comp = 
-       {{1.0, 0.0, 0.0},
-        {0.0, 1.0, 0.0},
-        {0.0, 0.0, 1.0}}
+  paramQ = (Param3D){
+
+    .type = FrameTetrahedron,
+    .orig = {0.0, -0.5, 0.0},
+    .comp = {
+
+          {1.0, 0.0, 0.0},
+          {0.0, 1.0, 0.0},
+          {0.0, 0.0, 1.0}
+
+        }
+
     };
-  correctBdgBox = (AABB3D) 
-    {.min = {0.0, -0.5, 0.0},
-     .max = {0.5, -1.0 / 3.0, 0.5}
+  correctBdgBox = (AABB3D) {
+
+    .min = {0.0, -0.5, 0.0},
+    .max = {0.5, -1.0 / 3.0, 0.5},
+
     };
   UnitTest3D(
     paramP,
     paramQ,
     true,
     &correctBdgBox);
-
 
   // If we reached here, it means all the unit tests succeed
   printf("All unit tests 3D have succeed.\n");
@@ -497,6 +588,7 @@ void Test3D(void) {
 int main(int argc, char** argv) {
 
   Test3D();
-  
+
   return 0;
+
 }
