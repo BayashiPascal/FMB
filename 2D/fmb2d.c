@@ -17,21 +17,21 @@
 
 // Eliminate the first variable in the system M.X<=Y
 // using the Fourier-Motzkin method and return
-// the resulting system in Mp and Yp, and the number of rows of 
+// the resulting system in Mp and Yp, and the number of rows of
 // the resulting system in nbRemainRows
 // Return false if the system becomes inconsistent during elimination,
 // else return true
 bool ElimVar2D(
-  const double (*M)[2], 
-  const double* Y, 
-     const int nbRows, 
-     const int nbCols, 
-        double (*Mp)[2], 
-        double* Yp, 
+  const double (*M)[2],
+  const double* Y,
+     const int nbRows,
+     const int nbCols,
+        double (*Mp)[2],
+        double* Yp,
     int* const nbRemainRows);
 
 // Get the bounds of the iVar-th variable in the nbRows rows
-// system M.X<=Y which has been reduced to only one variable 
+// system M.X<=Y which has been reduced to only one variable
 // and store them in the iVar-th axis of the
 // AABB bdgBox
 // (M arrangement is [iRow][iCol])
@@ -39,9 +39,9 @@ bool ElimVar2D(
 // mean the system has no solution
 void GetBoundLastVar2D(
      const int iVar,
-  const double (*M)[2], 
-  const double* Y, 
-     const int nbRows, 
+  const double (*M)[2],
+  const double* Y,
+     const int nbRows,
    AABB2D* const bdgBox);
 
 // Get the bounds of the iVar-th variable in the nbRows rows
@@ -50,38 +50,38 @@ void GetBoundLastVar2D(
 // (M arrangement is [iRow][iCol])
 void GetBoundVar2D(
      const int iVar,
-  const double (*M)[2], 
-  const double* Y, 
-     const int nbRows, 
-     const int nbCols, 
+  const double (*M)[2],
+  const double* Y,
+     const int nbRows,
+     const int nbCols,
    AABB2D* const bdgBox);
 
 // ------------- Functions implementation -------------
 
 // Eliminate the first variable in the system M.X<=Y
 // using the Fourier-Motzkin method and return
-// the resulting system in Mp and Yp, and the number of rows of 
+// the resulting system in Mp and Yp, and the number of rows of
 // the resulting system in nbRemainRows
 // (M arrangement is [iRow][iCol])
 // Return true if the system becomes inconsistent during elimination,
 // else return false
 bool ElimVar2D(
-  const double (*M)[2], 
-  const double* Y, 
-     const int nbRows, 
-     const int nbCols, 
-        double (*Mp)[2], 
-        double* Yp, 
+  const double (*M)[2],
+  const double* Y,
+     const int nbRows,
+     const int nbCols,
+        double (*Mp)[2],
+        double* Yp,
     int* const nbRemainRows) {
 
   // Initialize the number of rows in the result system
   int nbResRows = 0;
-  
+
   // First we process the rows where the eliminated variable is not null
-  
+
   // For each row except the last one
-  for (int iRow = 0; 
-       iRow < nbRows - 1; 
+  for (int iRow = 0;
+       iRow < nbRows - 1;
        ++iRow) {
 
     // Shortcuts
@@ -97,33 +97,33 @@ bool ElimVar2D(
       const double YIRowDivideByFabsMIRowIVar = Y[iRow] / fabsMIRowIVar;
 
       // For each following rows
-      for (int jRow = iRow + 1; 
-           jRow < nbRows; 
+      for (int jRow = iRow + 1;
+           jRow < nbRows;
            ++jRow) {
 
         // If coefficients of the eliminated variable in the two rows have
         // different signs and are not null
-        if (sgnMIRowIVar != sgn(M[jRow][0]) && 
+        if (sgnMIRowIVar != sgn(M[jRow][0]) &&
             fabs(M[jRow][0]) > EPSILON) {
 
           // Shortcuts
           const double* MjRow = M[jRow];
           const double fabsMjRow = fabs(MjRow[0]);
 
-          // Declare a variable to memorize the sum of the negative 
+          // Declare a variable to memorize the sum of the negative
           // coefficients in the row
           double sumNegCoeff = 0.0;
-          
+
           // Add the sum of the two normed (relative to the eliminated
           // variable) rows into the result system. This actually
           // eliminate the variable while keeping the constraints on
           // others variables
-          for (int iCol = 1; 
-               iCol < nbCols; 
+          for (int iCol = 1;
+               iCol < nbCols;
                ++iCol ) {
 
-            Mp[nbResRows][iCol - 1] = 
-              MiRow[iCol] / fabsMIRowIVar + 
+            Mp[nbResRows][iCol - 1] =
+              MiRow[iCol] / fabsMIRowIVar +
               MjRow[iCol] / fabsMjRow;
 
             // Update the sum of the negative coefficient
@@ -132,11 +132,11 @@ bool ElimVar2D(
           }
 
           // Update the right side of the inequality
-          Yp[nbResRows] = 
+          Yp[nbResRows] =
             YIRowDivideByFabsMIRowIVar +
             Y[jRow] / fabsMjRow;
 
-          // If the right side of the inequality if lower than the sum of 
+          // If the right side of the inequality if lower than the sum of
           // negative coefficients in the row
           // (Add epsilon for numerical imprecision)
           if (Yp[nbResRows] < sumNegCoeff - EPSILON) {
@@ -159,10 +159,10 @@ bool ElimVar2D(
 
   // Then we copy and compress the rows where the eliminated
   // variable is null
-  
+
   // Loop on rows of the input system
-  for (int iRow = 0; 
-       iRow < nbRows; 
+  for (int iRow = 0;
+       iRow < nbRows;
        ++iRow) {
 
     // Shortcut
@@ -177,8 +177,8 @@ bool ElimVar2D(
 
       // Copy this row into the result system excluding the eliminated
       // variable
-      for (int iCol = 1; 
-           iCol < nbCols; 
+      for (int iCol = 1;
+           iCol < nbCols;
            ++iCol) {
 
         MpnbResRows[iCol - 1] = MiRow[iCol];
@@ -203,7 +203,7 @@ bool ElimVar2D(
 }
 
 // Get the bounds of the iVar-th variable in the nbRows rows
-// system M.X<=Y which has been reduced to only one variable 
+// system M.X<=Y which has been reduced to only one variable
 // and store them in the iVar-th axis of the
 // AABB bdgBox
 // (M arrangement is [iRow][iCol])
@@ -211,9 +211,9 @@ bool ElimVar2D(
 // mean the system has no solution
 void GetBoundLastVar2D(
      const int iVar,
-  const double (*M)[2], 
-  const double* Y, 
-     const int nbRows, 
+  const double (*M)[2],
+  const double* Y,
+     const int nbRows,
    AABB2D* const bdgBox) {
 
   // Shortcuts
@@ -225,8 +225,8 @@ void GetBoundLastVar2D(
   *max = 1.0;
 
   // Loop on rows
-  for (int jRow = 0; 
-       jRow < nbRows; 
+  for (int jRow = 0;
+       jRow < nbRows;
        ++jRow) {
 
     // Shortcut
@@ -274,16 +274,16 @@ void GetBoundLastVar2D(
 // (M arrangement is [iRow][iCol])
 void GetBoundVar2D(
      const int iVar,
-  const double (*M)[2], 
-  const double* Y, 
-     const int nbRows, 
-     const int nbCols, 
+  const double (*M)[2],
+  const double* Y,
+     const int nbRows,
+     const int nbCols,
    AABB2D* const bdgBox) {
 
   // Shortcuts
   double* bdgBoxMin = bdgBox->min;
   double* bdgBoxMax = bdgBox->max;
-  
+
   // Initialize the bounds
   bdgBoxMin[iVar] = 0.0;
   bdgBoxMax[iVar] = 1.0;
@@ -305,7 +305,7 @@ void GetBoundVar2D(
       double min = -1.0 * Y[iRow];
       double max = Y[iRow];
 
-      // Loop on columns except the first one which is the one of the 
+      // Loop on columns except the first one which is the one of the
       // requested variable
       for (int iCol = 1;
            iCol < nbCols;
@@ -320,7 +320,7 @@ void GetBoundVar2D(
         }
 
       }
-      
+
       min /= -1.0 * MIRow[0];
       max /= MIRow[0];
       if (bdgBoxMin[iVar] > min) {
@@ -351,8 +351,8 @@ void GetBoundVar2D(
 // of the resulting AABB of FMBTestIntersection(B,A)
 // The resulting AABB is given in tho's local coordinates system
 bool FMBTestIntersection2D(
-  const Frame2D* const that, 
-  const Frame2D* const tho, 
+  const Frame2D* const that,
+  const Frame2D* const tho,
          AABB2D* const bdgBox) {
 
   // Get the projection of the Frame 'tho' in Frame 'that' coordinates
@@ -426,7 +426,7 @@ bool FMBTestIntersection2D(
     ++nbRows;
 
   } else {
-    
+
     // sum_iX_i<=1.0
     M[nbRows][0] = 1.0;
     M[nbRows][1] = 1.0;
@@ -447,17 +447,17 @@ bool FMBTestIntersection2D(
   ++nbRows;
 
   // Solve the system
-  
+
   // Declare a AABB to memorize the bounding box of the intersection
   // in the coordinates system of tho
   AABB2D bdgBoxLocal = {
     .min = {0.0, 0.0},
     .max = {0.0, 0.0}
   };
-  
+
   // Declare variables to eliminate the first variable
   // The size of the array given in the doc is a majoring value.
-  // Instead I use a smaller value which has proven to be sufficient 
+  // Instead I use a smaller value which has proven to be sufficient
   // during tests, validation and qualification, to avoid running
   // into the heap limit and to optimize slightly the performance
   //double Mp[24][2];
@@ -467,14 +467,14 @@ bool FMBTestIntersection2D(
   int nbRowsP;
 
   // Eliminate the first variable
-  bool inconsistency = 
+  bool inconsistency =
     ElimVar2D(
-      M, 
-      Y, 
-      nbRows, 
+      M,
+      Y,
+      nbRows,
       2,
-      Mp, 
-      Yp, 
+      Mp,
+      Yp,
       &nbRowsP);
 
   // If the system is inconsistent
@@ -506,12 +506,12 @@ bool FMBTestIntersection2D(
 
     // Get the bounds of the first variable from the bounds of the
     // second one
-    
+
     GetBoundVar2D(
        FST_VAR,
-       M, 
-       Y, 
-       nbRows, 
+       M,
+       Y,
+       nbRows,
        2,
        &bdgBoxLocal);
 

@@ -11,9 +11,11 @@
 
 // Helper structure to pass arguments to the UnitTest function
 typedef struct {
+
   FrameType type;
   double orig[2];
   double comp[2][2];
+
 } Param2D;
 
 // Unit test function
@@ -28,13 +30,13 @@ void UnitTest2D(
   const AABB2D* const correctBdgBox) {
 
   // Create the two Frames
-  Frame2D P = 
+  Frame2D P =
     Frame2DCreateStatic(
       paramP.type,
       paramP.orig,
       paramP.comp);
 
-  Frame2D Q = 
+  Frame2D Q =
     Frame2DCreateStatic(
       paramQ.type,
       paramQ.orig,
@@ -58,10 +60,10 @@ void UnitTest2D(
     printf("\n");
 
     // Run the FMB intersection test
-    bool isIntersecting = 
+    bool isIntersecting =
       FMBTestIntersection2D(
-        that, 
-        tho, 
+        that,
+        tho,
         &bdgBoxLocal);
 
     // If the test hasn't given the expected answer about intersection
@@ -87,25 +89,37 @@ void UnitTest2D(
 
         AABB2D bdgBox;
         Frame2DExportBdgBox(
-          tho, 
-          &bdgBoxLocal, 
+          tho,
+          &bdgBoxLocal,
           &bdgBox);
 
-        for (int iAxis = 2; 
+        for (int iAxis = 2;
              iAxis--;) {
 
           if (bdgBox.min[iAxis] < that->bdgBox.min[iAxis]) {
+
             bdgBox.min[iAxis] = that->bdgBox.min[iAxis];
+
           }
+
           if (bdgBox.max[iAxis] > that->bdgBox.max[iAxis]) {
+
             bdgBox.max[iAxis] = that->bdgBox.max[iAxis];
+
           }
+
           if (bdgBox.min[iAxis] < tho->bdgBox.min[iAxis]) {
+
             bdgBox.min[iAxis] = tho->bdgBox.min[iAxis];
+
           }
+
           if (bdgBox.max[iAxis] > tho->bdgBox.max[iAxis]) {
+
             bdgBox.max[iAxis] = tho->bdgBox.max[iAxis];
+
           }
+
         }
 
         // Check the bounding box
@@ -129,7 +143,6 @@ void UnitTest2D(
           printf("Succeed\n");
           AABB2DPrint(&bdgBox);
           printf("\n");
-          
 
         // Else, the bounding box wasn't the expected one
         } else {
@@ -157,6 +170,7 @@ void UnitTest2D(
       }
 
     }
+
     printf("\n");
 
     // Flip the pair of Frames
@@ -164,7 +178,7 @@ void UnitTest2D(
     tho = &P;
 
   }
-  
+
 }
 
 void Test2D(void) {
@@ -183,20 +197,23 @@ void Test2D(void) {
   paramP = (Param2D)
     {.type = FrameCuboid,
      .orig = {0.0, 0.0},
-     .comp = 
+     .comp =
        {{1.0, 0.0},
         {0.0, 1.0}}
+
     };
   paramQ = (Param2D)
     {.type = FrameCuboid,
      .orig = {0.0, 0.0},
-     .comp = 
+     .comp =
        {{1.0, 0.0},
         {0.0, 1.0}}
+
     };
-  correctBdgBox = (AABB2D) 
+  correctBdgBox = (AABB2D)
     {.min = {0.0, 0.0},
      .max = {1.0, 1.0}
+
     };
   UnitTest2D(
     paramP,
@@ -208,20 +225,23 @@ void Test2D(void) {
   paramP = (Param2D)
     {.type = FrameCuboid,
      .orig = {0.0, 0.0},
-     .comp = 
+     .comp =
        {{1.0, 0.0},
         {0.0, 1.0}}
+
     };
   paramQ = (Param2D)
     {.type = FrameCuboid,
      .orig = {0.5, 0.5},
-     .comp = 
+     .comp =
        {{1.0, 0.0},
         {0.0, 1.0}}
+
     };
-  correctBdgBox = (AABB2D) 
+  correctBdgBox = (AABB2D)
     {.min = {0.5, 0.5},
      .max = {1.0, 1.0}
+
     };
   UnitTest2D(
     paramP,
@@ -233,16 +253,18 @@ void Test2D(void) {
   paramP = (Param2D)
     {.type = FrameCuboid,
      .orig = {-0.5, -0.5},
-     .comp = 
+     .comp =
        {{1.0, 0.0},
         {0.0, 1.0}}
+
     };
   paramQ = (Param2D)
     {.type = FrameCuboid,
      .orig = {0.5, 0.5},
-     .comp = 
+     .comp =
        {{1.0, 0.0},
         {0.0, 1.0}}
+
     };
   UnitTest2D(
     paramP,
@@ -254,20 +276,23 @@ void Test2D(void) {
   paramP = (Param2D)
     {.type = FrameCuboid,
      .orig = {0.0, 0.0},
-     .comp = 
+     .comp =
        {{1.0, 0.0},
         {0.0, 1.0}}
+
     };
   paramQ = (Param2D)
     {.type = FrameCuboid,
      .orig = {0.25, -0.25},
-     .comp = 
+     .comp =
        {{0.5, 0.0},
         {0.0, 2.0}}
+
     };
-  correctBdgBox = (AABB2D) 
+  correctBdgBox = (AABB2D)
     {.min = {0.25, 0.0},
      .max = {0.75, 1.0}
+
     };
   UnitTest2D(
     paramP,
@@ -279,20 +304,23 @@ void Test2D(void) {
   paramP = (Param2D)
     {.type = FrameCuboid,
      .orig = {0.0, 0.0},
-     .comp = 
+     .comp =
        {{1.0, 0.0},
         {0.0, 1.0}}
+
     };
   paramQ = (Param2D)
     {.type = FrameCuboid,
      .orig = {-0.25, 0.25},
-     .comp = 
+     .comp =
        {{2.0, 0.0},
         {0.0, 0.5}}
+
     };
-  correctBdgBox = (AABB2D) 
+  correctBdgBox = (AABB2D)
     {.min = {0.0, 0.25},
      .max = {1.0, 0.75}
+
     };
   UnitTest2D(
     paramP,
@@ -304,20 +332,23 @@ void Test2D(void) {
   paramP = (Param2D)
     {.type = FrameCuboid,
      .orig = {0.0, 0.0},
-     .comp = 
+     .comp =
        {{1.0, 1.0},
         {-1.0, 1.0}}
+
     };
   paramQ = (Param2D)
     {.type = FrameCuboid,
      .orig = {0.0, 0.0},
-     .comp = 
+     .comp =
        {{1.0, 0.0},
         {0.0, 1.0}}
+
     };
-  correctBdgBox = (AABB2D) 
+  correctBdgBox = (AABB2D)
     {.min = {0.0, 0.0},
      .max = {1.0, 1.0}
+
     };
   UnitTest2D(
     paramP,
@@ -329,20 +360,23 @@ void Test2D(void) {
   paramP = (Param2D)
     {.type = FrameCuboid,
      .orig = {-0.5, -0.5},
-     .comp = 
+     .comp =
        {{1.0, 1.0},
         {-1.0, 1.0}}
+
     };
   paramQ = (Param2D)
     {.type = FrameCuboid,
      .orig = {0.0, 0.0},
-     .comp = 
+     .comp =
        {{1.0, 0.0},
         {0.0, 1.0}}
+
     };
-  correctBdgBox = (AABB2D) 
+  correctBdgBox = (AABB2D)
     {.min = {0.0, 0.0},
      .max = {0.5, 1.0}
+
     };
   UnitTest2D(
     paramP,
@@ -354,20 +388,23 @@ void Test2D(void) {
   paramP = (Param2D)
     {.type = FrameCuboid,
      .orig = {1.5, 1.5},
-     .comp = 
+     .comp =
        {{1.0, -1.0},
         {-1.0, -1.0}}
+
     };
   paramQ = (Param2D)
     {.type = FrameCuboid,
      .orig = {1.0, 0.0},
-     .comp = 
+     .comp =
        {{-1.0, 0.0},
         {0.0, 1.0}}
+
     };
-  correctBdgBox = (AABB2D) 
+  correctBdgBox = (AABB2D)
     {.min = {0.5, 0.0},
      .max = {1.0, 1.0}
+
     };
   UnitTest2D(
     paramP,
@@ -379,20 +416,23 @@ void Test2D(void) {
   paramP = (Param2D)
     {.type = FrameCuboid,
      .orig = {1.0, 0.5},
-     .comp = 
+     .comp =
        {{-0.5, 0.5},
         {-0.5, -0.5}}
+
     };
   paramQ = (Param2D)
     {.type = FrameCuboid,
      .orig = {0.0, 1.0},
-     .comp = 
+     .comp =
        {{1.0, 0.0},
         {0.0, -1.0}}
+
     };
-  correctBdgBox = (AABB2D) 
+  correctBdgBox = (AABB2D)
     {.min = {0.0, 0.0},
      .max = {1.0, 1.0}
+
     };
   UnitTest2D(
     paramP,
@@ -404,20 +444,23 @@ void Test2D(void) {
   paramP = (Param2D)
     {.type = FrameCuboid,
      .orig = {0.0, 0.0},
-     .comp = 
+     .comp =
        {{1.0, 0.0},
         {1.0, 1.0}}
+
     };
   paramQ = (Param2D)
     {.type = FrameCuboid,
      .orig = {2.0, -1.0},
-     .comp = 
+     .comp =
        {{0.0, 1.0},
         {-0.5, 1.0}}
+
     };
-  correctBdgBox = (AABB2D) 
+  correctBdgBox = (AABB2D)
     {.min = {1.5, 0.5},
      .max = {1.5 + 0.5 / 3.0, 1.0}
+
     };
   UnitTest2D(
     paramP,
@@ -429,20 +472,23 @@ void Test2D(void) {
   paramP = (Param2D)
     {.type = FrameCuboid,
      .orig = {0.0, 0.0},
-     .comp = 
+     .comp =
        {{1.0, 0.5},
         {0.5, 1.0}}
+
     };
   paramQ = (Param2D)
     {.type = FrameCuboid,
      .orig = {1.0, 1.0},
-     .comp = 
+     .comp =
        {{-0.5, -0.5},
         {0.0, -1.0}}
+
     };
-  correctBdgBox = (AABB2D) 
+  correctBdgBox = (AABB2D)
     {.min = {0.5, 0.25},
      .max = {1.0, 1.0}
+
     };
   UnitTest2D(
     paramP,
@@ -454,20 +500,23 @@ void Test2D(void) {
   paramP = (Param2D)
     {.type = FrameCuboid,
      .orig = {0.0, 0.0},
-     .comp = 
+     .comp =
        {{1.0, 0.5},
         {0.5, 1.0}}
+
     };
   paramQ = (Param2D)
     {.type = FrameCuboid,
      .orig = {1.0, 2.0},
-     .comp = 
+     .comp =
        {{-0.5, -0.5},
         {0.0, -1.0}}
+
     };
-  correctBdgBox = (AABB2D) 
+  correctBdgBox = (AABB2D)
     {.min = {0.5, 0.75},
      .max = {1.0, 1.25}
+
     };
   UnitTest2D(
     paramP,
@@ -479,20 +528,23 @@ void Test2D(void) {
   paramP = (Param2D)
     {.type = FrameTetrahedron,
      .orig = {0.0, 0.0},
-     .comp = 
+     .comp =
        {{1.0, 0.5},
         {0.5, 1.0}}
+
     };
   paramQ = (Param2D)
     {.type = FrameCuboid,
      .orig = {1.0, 2.0},
-     .comp = 
+     .comp =
        {{-0.5, -0.5},
         {0.0, -1.0}}
+
     };
-  correctBdgBox = (AABB2D) 
+  correctBdgBox = (AABB2D)
     {.min = {0.5, 0.5},
      .max = {0.75, 1.0}
+
     };
   UnitTest2D(
     paramP,
@@ -504,20 +556,23 @@ void Test2D(void) {
   paramP = (Param2D)
     {.type = FrameCuboid,
      .orig = {0.0, 0.0},
-     .comp = 
+     .comp =
        {{1.0, 0.5},
         {0.5, 1.0}}
+
     };
   paramQ = (Param2D)
     {.type = FrameTetrahedron,
      .orig = {1.0, 2.0},
-     .comp = 
+     .comp =
        {{-0.5, -0.5},
         {0.0, -1.0}}
+
     };
-  correctBdgBox = (AABB2D) 
+  correctBdgBox = (AABB2D)
     {.min = {0.5 + 1.0 / 3.0, 1.0},
      .max = {1.0, 1.0 + 1.0 / 3.0}
+
     };
   UnitTest2D(
     paramP,
@@ -529,20 +584,23 @@ void Test2D(void) {
   paramP = (Param2D)
     {.type = FrameCuboid,
      .orig = {0.0, 0.0},
-     .comp = 
+     .comp =
        {{1.0, 0.0},
         {0.0, 1.0}}
+
     };
   paramQ = (Param2D)
     {.type = FrameTetrahedron,
      .orig = {0.0, 0.0},
-     .comp = 
+     .comp =
        {{1.0, 0.0},
         {0.0, 1.0}}
+
     };
-  correctBdgBox = (AABB2D) 
+  correctBdgBox = (AABB2D)
     {.min = {0.0, 0.0},
      .max = {1.0, 1.0}
+
     };
   UnitTest2D(
     paramP,
@@ -554,20 +612,23 @@ void Test2D(void) {
   paramP = (Param2D)
     {.type = FrameCuboid,
      .orig = {0.0, 0.0},
-     .comp = 
+     .comp =
        {{1.0, 0.0},
         {0.0, 1.0}}
+
     };
   paramQ = (Param2D)
     {.type = FrameTetrahedron,
      .orig = {0.0, -0.5},
-     .comp = 
+     .comp =
        {{1.0, 0.0},
         {0.0, 1.0}}
+
     };
-  correctBdgBox = (AABB2D) 
+  correctBdgBox = (AABB2D)
     {.min = {0.0, 0.0},
      .max = {0.5, 0.5}
+
     };
   UnitTest2D(
     paramP,
@@ -579,20 +640,23 @@ void Test2D(void) {
   paramP = (Param2D)
     {.type = FrameCuboid,
      .orig = {0.5, 0.5},
-     .comp = 
+     .comp =
        {{-0.5, 0.0},
         {0.0, -0.5}}
+
     };
   paramQ = (Param2D)
     {.type = FrameTetrahedron,
      .orig = {0.0, -0.5},
-     .comp = 
+     .comp =
        {{1.0, 0.0},
         {0.0, 1.0}}
+
     };
-  correctBdgBox = (AABB2D) 
+  correctBdgBox = (AABB2D)
     {.min = {0.0, 0.0},
      .max = {0.5, 0.5}
+
     };
   UnitTest2D(
     paramP,
@@ -604,16 +668,18 @@ void Test2D(void) {
   paramP = (Param2D)
     {.type = FrameCuboid,
      .orig = {0.5, 0.5},
-     .comp = 
+     .comp =
        {{1.0, 0.0},
         {0.0, 1.0}}
+
     };
   paramQ = (Param2D)
     {.type = FrameTetrahedron,
      .orig = {0.0, 0.0},
-     .comp = 
+     .comp =
        {{1.0, 0.0},
         {0.0, 1.0}}
+
     };
   UnitTest2D(
     paramP,
@@ -625,20 +691,23 @@ void Test2D(void) {
   paramP = (Param2D)
     {.type = FrameCuboid,
      .orig = {0.0, 0.0},
-     .comp = 
+     .comp =
        {{1.0, 0.0},
         {0.0, 1.0}}
+
     };
   paramQ = (Param2D)
     {.type = FrameTetrahedron,
      .orig = {1.5, 1.5},
-     .comp = 
+     .comp =
        {{-1.5, 0.0},
         {0.0, -1.5}}
+
     };
-  correctBdgBox = (AABB2D) 
+  correctBdgBox = (AABB2D)
     {.min = {0.5, 0.5},
      .max = {1.0, 1.0}
+
     };
   UnitTest2D(
     paramP,
@@ -650,16 +719,18 @@ void Test2D(void) {
   paramP = (Param2D)
     {.type = FrameTetrahedron,
      .orig = {0.0, 0.0},
-     .comp = 
+     .comp =
        {{1.0, 0.0},
         {0.0, 1.0}}
+
     };
   paramQ = (Param2D)
     {.type = FrameTetrahedron,
      .orig = {1.01, 1.01},
-     .comp = 
+     .comp =
        {{-1.0, 0.0},
         {0.0, -1.0}}
+
     };
   UnitTest2D(
     paramP,
@@ -671,20 +742,23 @@ void Test2D(void) {
   paramP = (Param2D)
     {.type = FrameTetrahedron,
      .orig = {0.0, 0.0},
-     .comp = 
+     .comp =
        {{1.0, 0.5},
         {0.5, 1.0}}
+
     };
   paramQ = (Param2D)
     {.type = FrameTetrahedron,
      .orig = {1.0, 1.0},
-     .comp = 
+     .comp =
        {{-0.5, -0.5},
         {0.0, -1.0}}
+
     };
-  correctBdgBox = (AABB2D) 
+  correctBdgBox = (AABB2D)
     {.min = {0.5, 0.5 - 1.0 / 6.0},
      .max = {1.0, 0.75}
+
     };
   UnitTest2D(
     paramP,
@@ -696,16 +770,18 @@ void Test2D(void) {
   paramP = (Param2D)
     {.type = FrameTetrahedron,
      .orig = {0.0, 0.0},
-     .comp = 
+     .comp =
        {{1.0, 0.5},
         {0.5, 1.0}}
+
     };
   paramQ = (Param2D)
     {.type = FrameTetrahedron,
      .orig = {1.01, 1.5},
-     .comp = 
+     .comp =
        {{-0.5, -0.5},
         {0.0, -1.0}}
+
     };
   UnitTest2D(
     paramP,
@@ -724,4 +800,5 @@ int main(int argc, char** argv) {
   Test2D();
 
   return 0;
+
 }

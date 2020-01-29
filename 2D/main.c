@@ -14,17 +14,17 @@ int main(int argc, char** argv) {
   double compP2D[2][2] = {
     {1.0, 0.0},  // First component
     {0.0, 1.0}}; // Second component
-  Frame2D P2D = 
+  Frame2D P2D =
     Frame2DCreateStatic(
       FrameCuboid,
       origP2D,
       compP2D);
- 
+
   double origQ2D[2] = {0.0, 0.0};
   double compQ2D[2][2] = {
     {1.0, 0.0},
     {0.0, 1.0}};
-  Frame2D Q2D = 
+  Frame2D Q2D =
     Frame2DCreateStatic(
       FrameCuboid,
       origQ2D,
@@ -35,10 +35,10 @@ int main(int argc, char** argv) {
   AABB2D bdgBox2DLocal;
 
   // Test for intersection between P and Q
-  bool isIntersecting2D = 
+  bool isIntersecting2D =
     FMBTestIntersection2D(
-      &P2D, 
-      &Q2D, 
+      &P2D,
+      &Q2D,
       &bdgBox2DLocal);
 
   // If the two objects are intersecting
@@ -50,12 +50,12 @@ int main(int argc, char** argv) {
     // system
     AABB2D bdgBox2D;
     Frame2DExportBdgBox(
-      &Q2D, 
-      &bdgBox2DLocal, 
+      &Q2D,
+      &bdgBox2DLocal,
       &bdgBox2D);
 
     // Clip with the AABB of 'Q2D' and 'P2D' to improve results
-    for (int iAxis = 2; 
+    for (int iAxis = 2;
          iAxis--;) {
 
       if (bdgBox2D.min[iAxis] < P2D.bdgBox.min[iAxis]) {

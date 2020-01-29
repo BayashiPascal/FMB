@@ -25,26 +25,28 @@ unsigned long int nbNoInter;
 
 // Helper structure to pass arguments to the Validation function
 typedef struct {
+
   FrameType type;
   double orig[2];
   double comp[2][2];
+
 } Param2D;
 
 // Validation function
-// Takes two Frame definition as input, run the intersection test on 
+// Takes two Frame definition as input, run the intersection test on
 // them with FMB and SAT, and check the results are identical
 void ValidationOnePair2D(
   const Param2D paramP,
   const Param2D paramQ) {
 
   // Create the two Frames
-  Frame2D P = 
+  Frame2D P =
     Frame2DCreateStatic(
       paramP.type,
       paramP.orig,
       paramP.comp);
 
-  Frame2D Q = 
+  Frame2D Q =
     Frame2DCreateStatic(
       paramQ.type,
       paramQ.orig,
@@ -59,16 +61,16 @@ void ValidationOnePair2D(
        iPair--;) {
 
     // Test intersection with FMB
-    bool isIntersectingFMB = 
+    bool isIntersectingFMB =
       FMBTestIntersection2D(
-        that, 
-        tho, 
+        that,
+        tho,
         NULL);
 
     // Test intersection with SAT
-    bool isIntersectingSAT = 
+    bool isIntersectingSAT =
       SATTestIntersection2D(
-        that, 
+        that,
         tho);
 
     // If the results are different
@@ -153,7 +155,7 @@ void Validate2D(void) {
         for (int iComp = 2;
              iComp--;) {
 
-          param->comp[iComp][iAxis] = 
+          param->comp[iComp][iAxis] =
             -RANGE_AXIS + 2.0 * rnd() * RANGE_AXIS;
 
         }
@@ -165,12 +167,12 @@ void Validate2D(void) {
     }
 
     // Calculate the determinant of the Frames' components matrix
-    double detP = 
-      paramP.comp[0][0] * paramP.comp[1][1] - 
+    double detP =
+      paramP.comp[0][0] * paramP.comp[1][1] -
       paramP.comp[1][0] * paramP.comp[0][1];
 
-    double detQ = 
-      paramQ.comp[0][0] * paramQ.comp[1][1] - 
+    double detQ =
+      paramQ.comp[0][0] * paramQ.comp[1][1] -
       paramQ.comp[1][0] * paramQ.comp[0][1];
 
     // If the determinants are not null, ie the Frame are not degenerate
@@ -199,4 +201,5 @@ int main(int argc, char** argv) {
   Validate2D();
 
   return 0;
+
 }
