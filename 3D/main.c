@@ -12,21 +12,27 @@ int main(int argc, char** argv) {
   // Create the two objects to be tested for intersection
   double origP3D[3] = {0.0, 0.0, 0.0};
   double compP3D[3][3] = {
+
     {1.0, 0.0, 0.0},  // First component
     {0.0, 1.0, 0.0},  // Second component
-    {0.0, 0.0, 1.0}}; // Third component
-  Frame3D P3D = 
+    {0.0, 0.0, 1.0}   // Third component
+
+  };
+  Frame3D P3D =
     Frame3DCreateStatic(
       FrameTetrahedron,
       origP3D,
       compP3D);
- 
+
   double origQ3D[3] = {0.0, 0.0, 0.0};
   double compQ3D[3][3] = {
-    {1.0, 0.0, 0.0},
-    {0.0, 1.0, 0.0},
-    {0.0, 0.0, 1.0}};
-  Frame3D Q3D = 
+
+      {1.0, 0.0, 0.0},
+      {0.0, 1.0, 0.0},
+      {0.0, 0.0, 1.0}
+
+    };
+  Frame3D Q3D =
     Frame3DCreateStatic(
       FrameTetrahedron,
       origQ3D,
@@ -37,10 +43,10 @@ int main(int argc, char** argv) {
   AABB3D bdgBox3DLocal;
 
   // Test for intersection between P and Q
-  bool isIntersecting3D = 
+  bool isIntersecting3D =
     FMBTestIntersection3D(
-      &P3D, 
-      &Q3D, 
+      &P3D,
+      &Q3D,
       &bdgBox3DLocal);
 
   // If the two objects are intersecting
@@ -52,12 +58,12 @@ int main(int argc, char** argv) {
     // system
     AABB3D bdgBox3D;
     Frame3DExportBdgBox(
-      &Q3D, 
-      &bdgBox3DLocal, 
+      &Q3D,
+      &bdgBox3DLocal,
       &bdgBox3D);
 
     // Clip with the AABB of 'Q3D' and 'P3D' to improve results
-    for (int iAxis = 3; 
+    for (int iAxis = 3;
          iAxis--;) {
 
       if (bdgBox3D.min[iAxis] < P3D.bdgBox.min[iAxis]) {
@@ -65,6 +71,7 @@ int main(int argc, char** argv) {
         bdgBox3D.min[iAxis] = P3D.bdgBox.min[iAxis];
 
       }
+
       if (bdgBox3D.max[iAxis] > P3D.bdgBox.max[iAxis]) {
 
         bdgBox3D.max[iAxis] = P3D.bdgBox.max[iAxis];
@@ -76,6 +83,7 @@ int main(int argc, char** argv) {
         bdgBox3D.min[iAxis] = Q3D.bdgBox.min[iAxis];
 
       }
+
       if (bdgBox3D.max[iAxis] > Q3D.bdgBox.max[iAxis]) {
 
         bdgBox3D.max[iAxis] = Q3D.bdgBox.max[iAxis];
@@ -95,4 +103,5 @@ int main(int argc, char** argv) {
   }
 
   return 0;
+
 }
