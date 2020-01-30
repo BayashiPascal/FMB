@@ -17,8 +17,8 @@
 // of the resulting AABB of FMBTestIntersection(B,A)
 // The resulting AABB is given in tho's local coordinates system
 bool FMBTestIntersection2DTime(
-  const Frame2DTime* const that, 
-  const Frame2DTime* const tho, 
+  const Frame2DTime* const that,
+  const Frame2DTime* const tho,
          AABB2DTime* const bdgBox);
 
 #endif

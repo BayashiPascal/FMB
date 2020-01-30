@@ -32,21 +32,21 @@ typedef struct {
 } Param2DTime;
 
 // Validation function
-// Takes two Frame definition as input, run the intersection test on 
+// Takes two Frame definition as input, run the intersection test on
 // them with FMB and SAT, and check the results are identical
 void ValidationOnePair2DTime(
   const Param2DTime paramP,
   const Param2DTime paramQ) {
 
   // Create the two Frames
-  Frame2DTime P = 
+  Frame2DTime P =
     Frame2DTimeCreateStatic(
       paramP.type,
       paramP.orig,
       paramP.speed,
       paramP.comp);
 
-  Frame2DTime Q = 
+  Frame2DTime Q =
     Frame2DTimeCreateStatic(
       paramQ.type,
       paramQ.orig,
@@ -62,16 +62,16 @@ void ValidationOnePair2DTime(
        iPair--;) {
 
     // Test intersection with FMB
-    bool isIntersectingFMB = 
+    bool isIntersectingFMB =
       FMBTestIntersection2DTime(
-        that, 
-        tho, 
+        that,
+        tho,
         NULL);
 
     // Test intersection with SAT
-    bool isIntersectingSAT = 
+    bool isIntersectingSAT =
       SATTestIntersection2DTime(
-        that, 
+        that,
         tho);
 
     // If the results are different
@@ -157,7 +157,7 @@ void Validate2DTime(void) {
         for (int iComp = 2;
              iComp--;) {
 
-          param->comp[iComp][iAxis] = 
+          param->comp[iComp][iAxis] =
             -RANGE_AXIS + 2.0 * rnd() * RANGE_AXIS;
 
         }
@@ -169,12 +169,12 @@ void Validate2DTime(void) {
     }
 
     // Calculate the determinant of the Frames' components matrix
-    double detP = 
-      paramP.comp[0][0] * paramP.comp[1][1] - 
+    double detP =
+      paramP.comp[0][0] * paramP.comp[1][1] -
       paramP.comp[1][0] * paramP.comp[0][1];
 
-    double detQ = 
-      paramQ.comp[0][0] * paramQ.comp[1][1] - 
+    double detQ =
+      paramQ.comp[0][0] * paramQ.comp[1][1] -
       paramQ.comp[1][0] * paramQ.comp[0][1];
 
     // If the determinants are not null, ie the Frame are not degenerate

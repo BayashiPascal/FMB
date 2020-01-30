@@ -29,14 +29,14 @@ void UnitTest3DTime(
   const AABB3DTime* const correctBdgBox) {
 
   // Create the two Frames
-  Frame3DTime P = 
+  Frame3DTime P =
     Frame3DTimeCreateStatic(
       paramP.type,
       paramP.orig,
       paramP.speed,
       paramP.comp);
 
-  Frame3DTime Q = 
+  Frame3DTime Q =
     Frame3DTimeCreateStatic(
       paramQ.type,
       paramQ.orig,
@@ -61,10 +61,10 @@ void UnitTest3DTime(
     printf("\n");
 
     // Run the FMB intersection test
-    bool isIntersecting = 
+    bool isIntersecting =
       FMBTestIntersection3DTime(
-        that, 
-        tho, 
+        that,
+        tho,
         &bdgBoxLocal);
 
     // If the test hasn't given the expected answer about intersection
@@ -90,8 +90,8 @@ void UnitTest3DTime(
 
         AABB3DTime bdgBox;
         Frame3DTimeExportBdgBox(
-          tho, 
-          &bdgBoxLocal, 
+          tho,
+          &bdgBoxLocal,
           &bdgBox);
         // Check the bounding box
         bool flag = true;
@@ -149,7 +149,7 @@ void UnitTest3DTime(
     tho = &P;
 
   }
-  
+ 
 }
 
 void Test3DTime(void) {
@@ -168,7 +168,7 @@ void Test3DTime(void) {
   paramP = (Param3DTime)
     {.type = FrameCuboid,
      .orig = {0.0, 0.0, 0.0},
-     .comp = 
+     .comp =
        {{1.0, 0.0, 0.0},
         {0.0, 1.0, 0.0},
         {0.0, 0.0, 1.0}},
@@ -177,7 +177,7 @@ void Test3DTime(void) {
   paramQ = (Param3DTime)
     {.type = FrameCuboid,
      .orig = {-1.0, 0.0, 0.0},
-     .comp = 
+     .comp =
        {{1.0, 0.0, 0.0},
         {0.0, 1.0, 0.0},
         {0.0, 0.0, 1.0}},
@@ -193,7 +193,7 @@ void Test3DTime(void) {
   paramP = (Param3DTime)
     {.type = FrameCuboid,
      .orig = {0.0, 0.0, 0.0},
-     .comp = 
+     .comp =
        {{1.0, 0.0, 0.0},
         {0.0, 1.0, 0.0},
         {0.0, 0.0, 1.0}},
@@ -202,7 +202,7 @@ void Test3DTime(void) {
   paramQ = (Param3DTime)
     {.type = FrameCuboid,
      .orig = {-1.01, -1.01, 0.0},
-     .comp = 
+     .comp =
        {{1.0, 0.0, 0.0},
         {0.0, 1.0, 0.0},
         {0.0, 0.0, 1.0}},
@@ -218,7 +218,7 @@ void Test3DTime(void) {
   paramP = (Param3DTime)
     {.type = FrameCuboid,
      .orig = {0.0, 0.0, 0.0},
-     .comp = 
+     .comp =
        {{1.0, 0.0, 0.0},
         {0.0, 1.0, 0.0},
         {0.0, 0.0, 1.0}},
@@ -227,13 +227,13 @@ void Test3DTime(void) {
   paramQ = (Param3DTime)
     {.type = FrameCuboid,
      .orig = {-1.0, 0.0, 0.0},
-     .comp = 
+     .comp =
        {{1.0, 0.0, 0.0},
         {0.0, 1.0, 0.0},
         {0.0, 0.0, 1.0}},
      .speed = {1.0, 0.0, 0.0}
     };
-  correctBdgBox = (AABB3DTime) 
+  correctBdgBox = (AABB3DTime)
     {.min = {0.0, 0.0, 0.0, 0.0},
      .max = {1.0, 1.0, 1.0, 1.0}
     };
@@ -247,7 +247,7 @@ void Test3DTime(void) {
   paramP = (Param3DTime)
     {.type = FrameCuboid,
      .orig = {0.0, 0.0, 0.0},
-     .comp = 
+     .comp =
        {{1.0, 0.0, 0.0},
         {0.0, 1.0, 0.0},
         {0.0, 0.0, 1.0}},
@@ -256,13 +256,13 @@ void Test3DTime(void) {
   paramQ = (Param3DTime)
     {.type = FrameCuboid,
      .orig = {-1.0, 0.25, 0.0},
-     .comp = 
+     .comp =
        {{0.5, 0.0, 0.0},
         {0.0, 0.5, 0.0},
         {0.0, 0.0, 1.0}},
      .speed = {4.0, 0.0, 0.0}
     };
-  correctBdgBox = (AABB3DTime) 
+  correctBdgBox = (AABB3DTime)
     {.min = {0.0, 0.25, 0.0, 0.125},
      .max = {1.0, 0.75, 1.0, 0.5}
     };
@@ -276,7 +276,7 @@ void Test3DTime(void) {
   paramP = (Param3DTime)
     {.type = FrameCuboid,
      .orig = {0.0, 0.0, 0.0},
-     .comp = 
+     .comp =
        {{1.0, 0.0, 0.0},
         {0.0, 1.0, 0.0},
         {0.0, 0.0, 1.0}},
@@ -285,13 +285,13 @@ void Test3DTime(void) {
   paramQ = (Param3DTime)
     {.type = FrameCuboid,
      .orig = {0.25, -1.0, 0.0},
-     .comp = 
+     .comp =
        {{0.5, 0.0, 0.0},
         {0.0, 0.5, 0.0},
         {0.0, 0.0, 1.0}},
      .speed = {0.0, 4.0, 0.0}
     };
-  correctBdgBox = (AABB3DTime) 
+  correctBdgBox = (AABB3DTime)
     {.min = {0.25, 0.0, 0.0, 0.125},
      .max = {0.75, 1.0, 1.0, 0.5}
     };
@@ -305,7 +305,7 @@ void Test3DTime(void) {
   paramP = (Param3DTime)
     {.type = FrameCuboid,
      .orig = {0.0, 0.0, 0.0},
-     .comp = 
+     .comp =
        {{1.0, 0.0, 0.0},
         {0.0, 1.0, 0.0},
         {0.0, 0.0, 1.0}},
@@ -314,13 +314,13 @@ void Test3DTime(void) {
   paramQ = (Param3DTime)
     {.type = FrameCuboid,
      .orig = {0.9, -1.0, 0.0},
-     .comp = 
+     .comp =
        {{0.5, 0.0, 0.0},
         {0.0, 0.5, 0.0},
         {0.0, 0.0, 1.0}},
      .speed = {0.0, 4.0, 0.0}
     };
-  correctBdgBox = (AABB3DTime) 
+  correctBdgBox = (AABB3DTime)
     {.min = {0.9, 0.0, 0.0, 0.125},
      .max = {1.0, 1.0, 1.0, 0.5}
     };

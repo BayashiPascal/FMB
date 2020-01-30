@@ -32,21 +32,21 @@ typedef struct {
 } Param3DTime;
 
 // Validation function
-// Takes two Frame definition as input, run the intersection test on 
+// Takes two Frame definition as input, run the intersection test on
 // them with FMB and SAT, and check the results are identical
 void ValidationOnePair3DTime(
   const Param3DTime paramP,
   const Param3DTime paramQ) {
 
   // Create the two Frames
-  Frame3DTime P = 
+  Frame3DTime P =
     Frame3DTimeCreateStatic(
       paramP.type,
       paramP.orig,
       paramP.speed,
       paramP.comp);
 
-  Frame3DTime Q = 
+  Frame3DTime Q =
     Frame3DTimeCreateStatic(
       paramQ.type,
       paramQ.orig,
@@ -62,16 +62,16 @@ void ValidationOnePair3DTime(
        iPair--;) {
 
     // Test intersection with FMB
-    bool isIntersectingFMB = 
+    bool isIntersectingFMB =
       FMBTestIntersection3DTime(
-        that, 
-        tho, 
+        that,
+        tho,
         NULL);
 
     // Test intersection with SAT
-    bool isIntersectingSAT = 
+    bool isIntersectingSAT =
       SATTestIntersection3DTime(
-        that, 
+        that,
         tho);
 
     // If the results are different
@@ -157,7 +157,7 @@ void Validate3DTime(void) {
         for (int iComp = 3;
              iComp--;) {
 
-          param->comp[iComp][iAxis] = 
+          param->comp[iComp][iAxis] =
             -RANGE_AXIS + 2.0 * rnd() * RANGE_AXIS;
 
         }
@@ -169,20 +169,20 @@ void Validate3DTime(void) {
     }
 
     // Calculate the determinant of the Frames' components matrix
-    double detP = 
+    double detP =
       paramP.comp[0][0] * (paramP.comp[1][1] * paramP.comp[2][2]-
       paramP.comp[1][2] * paramP.comp[2][1]) -
-      paramP.comp[1][0] * (paramP.comp[0][1] * paramP.comp[2][2]- 
+      paramP.comp[1][0] * (paramP.comp[0][1] * paramP.comp[2][2]-
       paramP.comp[0][2] * paramP.comp[2][1]) +
-      paramP.comp[2][0] * (paramP.comp[0][1] * paramP.comp[1][2]- 
+      paramP.comp[2][0] * (paramP.comp[0][1] * paramP.comp[1][2]-
       paramP.comp[0][2] * paramP.comp[1][1]);
 
-    double detQ = 
+    double detQ =
       paramQ.comp[0][0] * (paramQ.comp[1][1] * paramQ.comp[2][2]-
       paramQ.comp[1][2] * paramQ.comp[2][1]) -
-      paramQ.comp[1][0] * (paramQ.comp[0][1] * paramQ.comp[2][2]- 
+      paramQ.comp[1][0] * (paramQ.comp[0][1] * paramQ.comp[2][2]-
       paramQ.comp[0][2] * paramQ.comp[2][1]) +
-      paramQ.comp[2][0] * (paramQ.comp[0][1] * paramQ.comp[1][2]- 
+      paramQ.comp[2][0] * (paramQ.comp[0][1] * paramQ.comp[1][2]-
       paramQ.comp[0][2] * paramQ.comp[1][1]);
 
     // If the determinants are not null, ie the Frame are not degenerate

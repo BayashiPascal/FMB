@@ -16,20 +16,20 @@ int main(int argc, char** argv) {
     {1.0, 0.0, 0.0},  // First component
     {0.0, 1.0, 0.0},  // Second component
     {0.0, 0.0, 1.0}}; // Third component
-  Frame3DTime P3DTime = 
+  Frame3DTime P3DTime =
     Frame3DTimeCreateStatic(
       FrameCuboid,
       origP3DTime,
       speedP3DTime,
       compP3DTime);
- 
+
   double origQ3DTime[3] = {0.0, 0.0, 0.0};
   double speedQ3DTime[3] = {0.0, 0.0, 0.0};
   double compQ3DTime[3][3] = {
     {1.0, 0.0, 0.0},
     {0.0, 1.0, 0.0},
     {0.0, 0.0, 1.0}};
-  Frame3DTime Q3DTime = 
+  Frame3DTime Q3DTime =
     Frame3DTimeCreateStatic(
       FrameCuboid,
       origQ3DTime,
@@ -41,10 +41,10 @@ int main(int argc, char** argv) {
   AABB3DTime bdgBox3DTimeLocal;
 
   // Test for intersection between P and Q
-  bool isIntersecting3DTime = 
+  bool isIntersecting3DTime =
     FMBTestIntersection3DTime(
-      &P3DTime, 
-      &Q3DTime, 
+      &P3DTime,
+      &Q3DTime,
       &bdgBox3DTimeLocal);
 
   // If the two objects are intersecting
@@ -56,12 +56,12 @@ int main(int argc, char** argv) {
     // system
     AABB3DTime bdgBox3DTime;
     Frame3DTimeExportBdgBox(
-      &Q3DTime, 
-      &bdgBox3DTimeLocal, 
+      &Q3DTime,
+      &bdgBox3DTimeLocal,
       &bdgBox3DTime);
 
     // Clip with the AABB of 'Q3DTime' and 'P3DTime' to improve results
-    for (int iAxis = 3; 
+    for (int iAxis = 3;
          iAxis--;) {
 
       if (bdgBox3DTime.min[iAxis] < P3DTime.bdgBox.min[iAxis]) {

@@ -15,19 +15,19 @@ int main(int argc, char** argv) {
   double compP2DTime[2][2] = {
     {1.0, 0.0},  // First component
     {0.0, 1.0}}; // Second component
-  Frame2DTime P2DTime = 
+  Frame2DTime P2DTime =
     Frame2DTimeCreateStatic(
       FrameCuboid,
       origP2DTime,
       speedP2DTime,
       compP2DTime);
- 
+
   double origQ2DTime[2] = {0.0,0.0};
   double speedQ2DTime[2] = {0.0,0.0};
   double compQ2DTime[2][2] = {
     {1.0, 0.0},
     {0.0, 1.0}};
-  Frame2DTime Q2DTime = 
+  Frame2DTime Q2DTime =
     Frame2DTimeCreateStatic(
       FrameCuboid,
       origQ2DTime,
@@ -39,10 +39,10 @@ int main(int argc, char** argv) {
   AABB2DTime bdgBox2DTimeLocal;
 
   // Test for intersection between P and Q
-  bool isIntersecting2DTime = 
+  bool isIntersecting2DTime =
     FMBTestIntersection2DTime(
-      &P2DTime, 
-      &Q2DTime, 
+      &P2DTime,
+      &Q2DTime,
       &bdgBox2DTimeLocal);
 
   // If the two objects are intersecting
@@ -54,12 +54,12 @@ int main(int argc, char** argv) {
     // system
     AABB2DTime bdgBox2DTime;
     Frame2DTimeExportBdgBox(
-      &Q2DTime, 
-      &bdgBox2DTimeLocal, 
+      &Q2DTime,
+      &bdgBox2DTimeLocal,
       &bdgBox2DTime);
 
     // Clip with the AABB of 'Q2DTime' and 'P2DTime' to improve results
-    for (int iAxis = 3; 
+    for (int iAxis = 3;
          iAxis--;) {
 
       if (bdgBox2DTime.min[iAxis] < P2DTime.bdgBox.min[iAxis]) {
