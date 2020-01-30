@@ -11,9 +11,8 @@ int main(int argc, char** argv) {
 
   // Create the two objects to be tested for intersection
   double origP2D[2] = {0.0, 0.0};
-  double compP2D[2][2] = {
-    {1.0, 0.0},  // First component
-    {0.0, 1.0}}; // Second component
+  // {First component, Second component}
+  double compP2D[2][2] = {{1.0, 0.0}, {0.0, 1.0}};
   Frame2D P2D =
     Frame2DCreateStatic(
       FrameCuboid,
@@ -21,9 +20,7 @@ int main(int argc, char** argv) {
       compP2D);
 
   double origQ2D[2] = {0.0, 0.0};
-  double compQ2D[2][2] = {
-    {1.0, 0.0},
-    {0.0, 1.0}};
+  double compQ2D[2][2] = {{1.0, 0.0}, {0.0, 1.0}};
   Frame2D Q2D =
     Frame2DCreateStatic(
       FrameCuboid,
@@ -63,6 +60,7 @@ int main(int argc, char** argv) {
         bdgBox2D.min[iAxis] = P2D.bdgBox.min[iAxis];
 
       }
+
       if (bdgBox2D.max[iAxis] > P2D.bdgBox.max[iAxis]) {
 
         bdgBox2D.max[iAxis] = P2D.bdgBox.max[iAxis];
@@ -74,6 +72,7 @@ int main(int argc, char** argv) {
         bdgBox2D.min[iAxis] = Q2D.bdgBox.min[iAxis];
 
       }
+
       if (bdgBox2D.max[iAxis] > Q2D.bdgBox.max[iAxis]) {
 
         bdgBox2D.max[iAxis] = Q2D.bdgBox.max[iAxis];

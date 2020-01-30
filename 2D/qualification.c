@@ -26,9 +26,11 @@
 
 // Helper structure to pass arguments to the Qualification function
 typedef struct {
+
   FrameType type;
   double orig[2];
   double comp[2][2];
+
 } Param2D;
 
 // Global variables to count nb of tests resulting in intersection
@@ -124,6 +126,7 @@ void Qualification2DStatic(
           that,
           tho,
           NULL);
+
     }
 
     // Stop measuring time
@@ -133,18 +136,28 @@ void Qualification2DStatic(
     // Calculate the delay of execution
     unsigned long deltausFMB = 0;
     if (stop.tv_sec < start.tv_sec) {
+
       printf("time warps, try again\n");
       exit(0);
+
     }
+
     if (stop.tv_sec > start.tv_sec + 1) {
+
       printf("deltausFMB >> 1s, decrease NB_REPEAT\n");
       exit(0);
+
     }
+
     if (stop.tv_usec < start.tv_usec) {
+
       deltausFMB = stop.tv_sec - start.tv_sec;
       deltausFMB += stop.tv_usec + 1000000 - start.tv_usec;
+
     } else {
+
       deltausFMB = stop.tv_usec - start.tv_usec;
+
     }
 
     // Declare an array to memorize the results of the repeated
@@ -172,18 +185,28 @@ void Qualification2DStatic(
     // Calculate the delay of execution
     unsigned long deltausSAT = 0;
     if (stop.tv_sec < start.tv_sec) {
+
       printf("time warps, try again\n");
       exit(0);
+
     }
+
     if (stop.tv_sec > start.tv_sec + 1) {
+
       printf("deltausSAT >> 1s, decrease NB_REPEAT\n");
       exit(0);
+
     }
+
     if (stop.tv_usec < start.tv_usec) {
+
       deltausSAT = stop.tv_sec - start.tv_sec;
       deltausSAT += stop.tv_usec + 1000000 - start.tv_usec;
+
     } else {
+
       deltausSAT = stop.tv_usec - start.tv_usec;
+
     }
 
     // If the delays are greater than 10ms
@@ -231,6 +254,7 @@ void Qualification2DStatic(
             maxInter = ratio;
 
         }
+
         sumInter += ratio;
         ++countInter;
 
@@ -250,6 +274,7 @@ void Qualification2DStatic(
               maxInterCC = ratio;
 
           }
+
           sumInterCC += ratio;
           ++countInterCC;
 
@@ -269,6 +294,7 @@ void Qualification2DStatic(
               maxInterCT = ratio;
 
           }
+
           sumInterCT += ratio;
           ++countInterCT;
 
@@ -288,6 +314,7 @@ void Qualification2DStatic(
               maxInterTC = ratio;
 
           }
+
           sumInterTC += ratio;
           ++countInterTC;
 
@@ -307,6 +334,7 @@ void Qualification2DStatic(
               maxInterTT = ratio;
 
           }
+
           sumInterTT += ratio;
           ++countInterTT;
 
@@ -329,6 +357,7 @@ void Qualification2DStatic(
             maxNoInter = ratio;
 
         }
+
         sumNoInter += ratio;
         ++countNoInter;
 
@@ -348,6 +377,7 @@ void Qualification2DStatic(
               maxNoInterCC = ratio;
 
           }
+
           sumNoInterCC += ratio;
           ++countNoInterCC;
 
@@ -367,6 +397,7 @@ void Qualification2DStatic(
               maxNoInterCT = ratio;
 
           }
+
           sumNoInterCT += ratio;
           ++countNoInterCT;
 
@@ -386,6 +417,7 @@ void Qualification2DStatic(
               maxNoInterTC = ratio;
 
           }
+
           sumNoInterTC += ratio;
           ++countNoInterTC;
 
@@ -405,10 +437,12 @@ void Qualification2DStatic(
               maxNoInterTT = ratio;
 
           }
+
           sumNoInterTT += ratio;
           ++countNoInterTT;
 
         }
+
       }
 
     // Else, if time of execution for FMB was less than a 10ms
@@ -608,7 +642,9 @@ void Qualify2DStatic(void) {
       avg,
       (maxNoInter > maxInter ? maxNoInter : maxInter));
     if (iRun < NB_RUNS - 1) {
+
       fprintf(fp, "\n");
+
     }
 
     fprintf(fpCC, "%.1f,", ratioInter);
@@ -624,7 +660,9 @@ void Qualify2DStatic(void) {
       avgCC,
       (maxNoInterCC > maxInterCC ? maxNoInterCC : maxInterCC));
     if (iRun < NB_RUNS - 1) {
+
       fprintf(fpCC, "\n");
+
     }
 
     fprintf(fpCT, "%.1f,", ratioInter);
@@ -640,7 +678,9 @@ void Qualify2DStatic(void) {
       avgCT,
       (maxNoInterCT > maxInterCT ? maxNoInterCT : maxInterCT));
     if (iRun < NB_RUNS - 1) {
+
       fprintf(fpCT, "\n");
+
     }
 
     fprintf(fpTC, "%.1f,", ratioInter);
@@ -656,7 +696,9 @@ void Qualify2DStatic(void) {
       avgTC,
       (maxNoInterTC > maxInterTC ? maxNoInterTC : maxInterTC));
     if (iRun < NB_RUNS - 1) {
+
       fprintf(fpTC, "\n");
+
     }
 
     fprintf(fpTT, "%.1f,", ratioInter);
@@ -672,7 +714,9 @@ void Qualify2DStatic(void) {
       avgTT,
       (maxNoInterTT > maxInterTT ? maxNoInterTT : maxInterTT));
     if (iRun < NB_RUNS - 1) {
+
       fprintf(fpTT, "\n");
+
     }
 
   }
@@ -691,4 +735,5 @@ int main(int argc, char** argv) {
   Qualify2DStatic();
 
   return 0;
+
 }

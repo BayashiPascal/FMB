@@ -312,11 +312,15 @@ void GetBoundVar2D(
            ++iCol) {
 
         if (MIRow[iCol] > EPSILON) {
+
           min += MIRow[iCol] * bdgBoxMin[iCol + iVar];
           max -= MIRow[iCol] * bdgBoxMin[iCol + iVar];
+
         } else if (MIRow[iCol] < EPSILON) {
+
           min += MIRow[iCol] * bdgBoxMax[iCol + iVar];
           max -= MIRow[iCol] * bdgBoxMax[iCol + iVar];
+
         }
 
       }
@@ -328,6 +332,7 @@ void GetBoundVar2D(
         bdgBoxMin[iVar] = min;
 
       }
+
       if (bdgBoxMax[iVar] < max) {
 
         bdgBoxMax[iVar] = max;
@@ -451,8 +456,10 @@ bool FMBTestIntersection2D(
   // Declare a AABB to memorize the bounding box of the intersection
   // in the coordinates system of tho
   AABB2D bdgBoxLocal = {
+
     .min = {0.0, 0.0},
     .max = {0.0, 0.0}
+
   };
 
   // Declare variables to eliminate the first variable
@@ -524,4 +531,3 @@ bool FMBTestIntersection2D(
   return true;
 
 }
-
