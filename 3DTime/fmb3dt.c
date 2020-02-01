@@ -78,9 +78,9 @@ bool ElimVar3DTime(
 
   // Initialize the number of rows in the result system
   int nbResRows = 0;
- 
+
   // First we process the rows where the eliminated variable is not null
- 
+
   // For each row except the last one
   for (int iRow = 0;
        iRow < nbRows - 1;
@@ -115,7 +115,7 @@ bool ElimVar3DTime(
           // Declare a variable to memorize the sum of the negative
           // coefficients in the row
           double sumNegCoeff = 0.0;
-         
+
           // Add the sum of the two normed (relative to the eliminated
           // variable) rows into the result system. This actually
           // eliminate the variable while keeping the constraints on
@@ -161,7 +161,7 @@ bool ElimVar3DTime(
 
   // Then we copy and compress the rows where the eliminated
   // variable is null
- 
+
   // Loop on rows of the input system
   for (int iRow = 0;
        iRow < nbRows;
@@ -286,7 +286,7 @@ void GetBoundVar3DTime(
   // Shortcuts
   double* bdgBoxMin = bdgBox->min;
   double* bdgBoxMax = bdgBox->max;
- 
+
   // Initialize the bounds
   bdgBoxMin[iVar] = 0.0;
   bdgBoxMax[iVar] = 1.0;
@@ -315,15 +315,19 @@ void GetBoundVar3DTime(
            ++iCol) {
 
         if (MIRow[iCol] > EPSILON) {
+
           min += MIRow[iCol] * bdgBoxMin[iCol + iVar];
           max -= MIRow[iCol] * bdgBoxMin[iCol + iVar];
+
         } else if (MIRow[iCol] < EPSILON) {
+
           min += MIRow[iCol] * bdgBoxMax[iCol + iVar];
           max -= MIRow[iCol] * bdgBoxMax[iCol + iVar];
+
         }
 
       }
-     
+
       min /= -1.0 * MIRow[0];
       max /= MIRow[0];
       if (bdgBoxMin[iVar] > min) {
@@ -331,6 +335,7 @@ void GetBoundVar3DTime(
         bdgBoxMin[iVar] = min;
 
       }
+
       if (bdgBoxMax[iVar] < max) {
 
         bdgBoxMax[iVar] = max;
@@ -474,7 +479,7 @@ bool FMBTestIntersection3DTime(
     ++nbRows;
 
   } else {
-   
+
     // sum_iX_i<=1.0
     M[nbRows][0] = 1.0;
     M[nbRows][1] = 1.0;
@@ -527,10 +532,12 @@ bool FMBTestIntersection3DTime(
   // Declare a AABB to memorize the bounding box of the intersection
   // in the coordinates system of that
   AABB3DTime bdgBoxLocal = {
+
     .min = {0.0, 0.0, 0.0, 0.0},
     .max = {0.0, 0.0, 0.0, 0.0}
+
   };
- 
+
   // Declare variables to eliminate the first variable
   // The size of the array given in the doc is a majoring value.
   // Instead I use a smaller value which has proven to be sufficient
@@ -641,7 +648,7 @@ bool FMBTestIntersection3DTime(
   } else if (bdgBox != NULL) {
 
     // Get the bounds of the other variables
-   
+
     GetBoundVar3DTime(
        THD_VAR,
        Mpp,

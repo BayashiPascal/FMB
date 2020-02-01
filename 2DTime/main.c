@@ -12,9 +12,8 @@ int main(int argc, char** argv) {
   // Create the two objects to be tested for intersection
   double origP2DTime[2] = {0.0, 0.0};
   double speedP2DTime[2] = {0.0, 0.0};
-  double compP2DTime[2][2] = {
-    {1.0, 0.0},  // First component
-    {0.0, 1.0}}; // Second component
+  // First component, Second component
+  double compP2DTime[2][2] = {{1.0, 0.0}, {0.0, 1.0}};
   Frame2DTime P2DTime =
     Frame2DTimeCreateStatic(
       FrameCuboid,
@@ -22,11 +21,9 @@ int main(int argc, char** argv) {
       speedP2DTime,
       compP2DTime);
 
-  double origQ2DTime[2] = {0.0,0.0};
-  double speedQ2DTime[2] = {0.0,0.0};
-  double compQ2DTime[2][2] = {
-    {1.0, 0.0},
-    {0.0, 1.0}};
+  double origQ2DTime[2] = {0.0, 0.0};
+  double speedQ2DTime[2] = {0.0, 0.0};
+  double compQ2DTime[2][2] = {{1.0, 0.0}, {0.0, 1.0}};
   Frame2DTime Q2DTime =
     Frame2DTimeCreateStatic(
       FrameCuboid,
@@ -67,6 +64,7 @@ int main(int argc, char** argv) {
         bdgBox2DTime.min[iAxis] = P2DTime.bdgBox.min[iAxis];
 
       }
+
       if (bdgBox2DTime.max[iAxis] > P2DTime.bdgBox.max[iAxis]) {
 
         bdgBox2DTime.max[iAxis] = P2DTime.bdgBox.max[iAxis];
@@ -78,6 +76,7 @@ int main(int argc, char** argv) {
         bdgBox2DTime.min[iAxis] = Q2DTime.bdgBox.min[iAxis];
 
       }
+
       if (bdgBox2DTime.max[iAxis] > Q2DTime.bdgBox.max[iAxis]) {
 
         bdgBox2DTime.max[iAxis] = Q2DTime.bdgBox.max[iAxis];
@@ -97,4 +96,5 @@ int main(int argc, char** argv) {
   }
 
   return 0;
+
 }

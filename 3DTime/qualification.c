@@ -26,10 +26,12 @@
 
 // Helper structure to pass arguments to the Qualification function
 typedef struct {
+
   FrameType type;
   double orig[3];
   double comp[3][3];
   double speed[3];
+
 } Param3DTime;
 
 // Global variables to count nb of tests resulting in intersection
@@ -93,7 +95,7 @@ void Qualification3DDynamic(
       paramP.orig,
       paramP.speed,
       paramP.comp);
- 
+
   Frame3DTime Q =
     Frame3DTimeCreateStatic(
       paramQ.type,
@@ -127,6 +129,7 @@ void Qualification3DDynamic(
           that,
           tho,
           NULL);
+
     }
 
     // Stop measuring time
@@ -136,18 +139,28 @@ void Qualification3DDynamic(
     // Calculate the delay of execution
     unsigned long deltausFMB = 0;
     if (stop.tv_sec < start.tv_sec) {
+
       printf("time warps, try again\n");
       exit(0);
+
     }
+
     if (stop.tv_sec > start.tv_sec + 1) {
+
       printf("deltausFMB >> 1s, decrease NB_REPEAT\n");
       exit(0);
+
     }
+
     if (stop.tv_usec < start.tv_usec) {
+
       deltausFMB = stop.tv_sec - start.tv_sec;
       deltausFMB += stop.tv_usec + 1000000 - start.tv_usec;
+
     } else {
+
       deltausFMB = stop.tv_usec - start.tv_usec;
+
     }
 
     // Declare an array to memorize the results of the repeated
@@ -175,18 +188,28 @@ void Qualification3DDynamic(
     // Calculate the delay of execution
     unsigned long deltausSAT = 0;
     if (stop.tv_sec < start.tv_sec) {
+
       printf("time warps, try again\n");
       exit(0);
+
     }
+
     if (stop.tv_sec > start.tv_sec + 1) {
+
       printf("deltausSAT >> 1s, decrease NB_REPEAT\n");
       exit(0);
+
     }
+
     if (stop.tv_usec < start.tv_usec) {
+
       deltausSAT = stop.tv_sec - start.tv_sec;
       deltausSAT += stop.tv_usec + 1000000 - start.tv_usec;
+
     } else {
+
       deltausSAT = stop.tv_usec - start.tv_usec;
+
     }
 
     // If the delays are greater than 10ms
@@ -234,6 +257,7 @@ void Qualification3DDynamic(
             maxInter = ratio;
 
         }
+
         sumInter += ratio;
         ++countInter;
 
@@ -253,6 +277,7 @@ void Qualification3DDynamic(
               maxInterCC = ratio;
 
           }
+
           sumInterCC += ratio;
           ++countInterCC;
 
@@ -272,6 +297,7 @@ void Qualification3DDynamic(
               maxInterCT = ratio;
 
           }
+
           sumInterCT += ratio;
           ++countInterCT;
 
@@ -291,12 +317,13 @@ void Qualification3DDynamic(
               maxInterTC = ratio;
 
           }
+
           sumInterTC += ratio;
           ++countInterTC;
 
         } else if (paramP.type == FrameTetrahedron &&
                    paramQ.type == FrameTetrahedron) {
-             
+
           if (countInterTT == 0) {
 
             minInterTT = ratio;
@@ -310,6 +337,7 @@ void Qualification3DDynamic(
               maxInterTT = ratio;
 
           }
+
           sumInterTT += ratio;
           ++countInterTT;
 
@@ -332,6 +360,7 @@ void Qualification3DDynamic(
             maxNoInter = ratio;
 
         }
+
         sumNoInter += ratio;
         ++countNoInter;
 
@@ -351,6 +380,7 @@ void Qualification3DDynamic(
               maxNoInterCC = ratio;
 
           }
+
           sumNoInterCC += ratio;
           ++countNoInterCC;
 
@@ -370,6 +400,7 @@ void Qualification3DDynamic(
               maxNoInterCT = ratio;
 
           }
+
           sumNoInterCT += ratio;
           ++countNoInterCT;
 
@@ -389,6 +420,7 @@ void Qualification3DDynamic(
               maxNoInterTC = ratio;
 
           }
+
           sumNoInterTC += ratio;
           ++countNoInterTC;
 
@@ -408,10 +440,12 @@ void Qualification3DDynamic(
               maxNoInterTT = ratio;
 
           }
+
           sumNoInterTT += ratio;
           ++countNoInterTT;
 
         }
+
       }
 
     // Else, if time of execution for FMB was less than a 10ms
@@ -537,7 +571,7 @@ void Qualify3DDynamic(void) {
           }
 
         }
-       
+
         param = &paramQ;
 
       }
@@ -620,7 +654,9 @@ void Qualify3DDynamic(void) {
       avg,
       (maxNoInter > maxInter ? maxNoInter : maxInter));
     if (iRun < NB_RUNS - 1) {
+
       fprintf(fp, "\n");
+
     }
 
     fprintf(fpCC, "%.1f,", ratioInter);
@@ -636,7 +672,9 @@ void Qualify3DDynamic(void) {
       avgCC,
       (maxNoInterCC > maxInterCC ? maxNoInterCC : maxInterCC));
     if (iRun < NB_RUNS - 1) {
+
       fprintf(fpCC, "\n");
+
     }
 
     fprintf(fpCT, "%.1f,", ratioInter);
@@ -652,7 +690,9 @@ void Qualify3DDynamic(void) {
       avgCT,
       (maxNoInterCT > maxInterCT ? maxNoInterCT : maxInterCT));
     if (iRun < NB_RUNS - 1) {
+
       fprintf(fpCT, "\n");
+
     }
 
     fprintf(fpTC, "%.1f,", ratioInter);
@@ -668,7 +708,9 @@ void Qualify3DDynamic(void) {
       avgTC,
       (maxNoInterTC > maxInterTC ? maxNoInterTC : maxInterTC));
     if (iRun < NB_RUNS - 1) {
+
       fprintf(fpTC, "\n");
+
     }
 
     fprintf(fpTT, "%.1f,", ratioInter);
@@ -684,7 +726,9 @@ void Qualify3DDynamic(void) {
       avgTT,
       (maxNoInterTT > maxInterTT ? maxNoInterTT : maxInterTT));
     if (iRun < NB_RUNS - 1) {
+
       fprintf(fpTT, "\n");
+
     }
 
   }
@@ -695,7 +739,7 @@ void Qualify3DDynamic(void) {
   fclose(fpCT);
   fclose(fpTC);
   fclose(fpTT);
- 
+
 }
 
 int main(int argc, char** argv) {
@@ -703,4 +747,5 @@ int main(int argc, char** argv) {
   Qualify3DDynamic();
 
   return 0;
+
 }

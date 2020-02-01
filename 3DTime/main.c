@@ -12,10 +12,9 @@ int main(int argc, char** argv) {
   // Create the two objects to be tested for intersection
   double origP3DTime[3] = {0.0, 0.0, 0.0};
   double speedP3DTime[3] = {0.0, 0.0, 0.0};
-  double compP3DTime[3][3] = {
-    {1.0, 0.0, 0.0},  // First component
-    {0.0, 1.0, 0.0},  // Second component
-    {0.0, 0.0, 1.0}}; // Third component
+  // First component, Second component, Third component
+  double compP3DTime[3][3] =
+    {{1.0, 0.0, 0.0}, {0.0, 1.0, 0.0}, {0.0, 0.0, 1.0}};
   Frame3DTime P3DTime =
     Frame3DTimeCreateStatic(
       FrameCuboid,
@@ -25,10 +24,8 @@ int main(int argc, char** argv) {
 
   double origQ3DTime[3] = {0.0, 0.0, 0.0};
   double speedQ3DTime[3] = {0.0, 0.0, 0.0};
-  double compQ3DTime[3][3] = {
-    {1.0, 0.0, 0.0},
-    {0.0, 1.0, 0.0},
-    {0.0, 0.0, 1.0}};
+  double compQ3DTime[3][3] =
+    {{1.0, 0.0, 0.0}, {0.0, 1.0, 0.0}, {0.0, 0.0, 1.0}};
   Frame3DTime Q3DTime =
     Frame3DTimeCreateStatic(
       FrameCuboid,
@@ -69,6 +66,7 @@ int main(int argc, char** argv) {
         bdgBox3DTime.min[iAxis] = P3DTime.bdgBox.min[iAxis];
 
       }
+
       if (bdgBox3DTime.max[iAxis] > P3DTime.bdgBox.max[iAxis]) {
 
         bdgBox3DTime.max[iAxis] = P3DTime.bdgBox.max[iAxis];
@@ -80,6 +78,7 @@ int main(int argc, char** argv) {
         bdgBox3DTime.min[iAxis] = Q3DTime.bdgBox.min[iAxis];
 
       }
+
       if (bdgBox3DTime.max[iAxis] > Q3DTime.bdgBox.max[iAxis]) {
 
         bdgBox3DTime.max[iAxis] = Q3DTime.bdgBox.max[iAxis];
@@ -99,4 +98,5 @@ int main(int argc, char** argv) {
   }
 
   return 0;
+
 }

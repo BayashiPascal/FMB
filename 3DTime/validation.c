@@ -25,10 +25,12 @@ unsigned long int nbNoInter;
 
 // Helper structure to pass arguments to the Validation function
 typedef struct {
+
   FrameType type;
   double orig[3];
   double comp[3][3];
   double speed[3];
+
 } Param3DTime;
 
 // Validation function
@@ -211,4 +213,5 @@ int main(int argc, char** argv) {
   Validate3DTime();
 
   return 0;
+
 }
