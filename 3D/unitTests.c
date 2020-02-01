@@ -394,7 +394,7 @@ void Test3D(void) {
       {{1.0, 0.0, 0.0}, {1.0, 1.0, 1.0}, {0.0, 0.0, 1.0}}
 
     };
-  paramQ = (Param3D){
+  paramQ = (Param3D) {
 
     .type = FrameCuboid,
     .orig = {0.0, -0.5, 0.0},
@@ -415,7 +415,7 @@ void Test3D(void) {
     &correctBdgBox);
 
   // ----------------------------
-  paramP = (Param3D){
+  paramP = (Param3D) {
 
     .type = FrameTetrahedron,
     .orig = {-1.0, -1.0, -1.0},
@@ -423,7 +423,7 @@ void Test3D(void) {
       {{1.0, 0.0, 0.0}, {1.0, 1.0, 1.0}, {0.0, 0.0, 1.0}}
 
     };
-  paramQ = (Param3D){
+  paramQ = (Param3D) {
 
     .type = FrameCuboid,
     .orig = {0.0, -0.5, 0.0},
@@ -438,7 +438,7 @@ void Test3D(void) {
     NULL);
 
   // ----------------------------
-  paramP = (Param3D){
+  paramP = (Param3D) {
 
     .type = FrameCuboid,
     .orig = {-1.0, -1.0, -1.0},
@@ -446,7 +446,7 @@ void Test3D(void) {
       {{1.0, 0.0, 0.0}, {1.0, 1.0, 1.0}, {0.0, 0.0, 1.0}}
 
     };
-  paramQ = (Param3D){
+  paramQ = (Param3D) {
 
     .type = FrameTetrahedron,
     .orig = {0.0, -0.5, 0.0},
@@ -490,7 +490,7 @@ void Test3D(void) {
     NULL);
 
   // ----------------------------
-  paramP = (Param3D){
+  paramP = (Param3D) {
 
     .type = FrameTetrahedron,
     .orig = {-0.5, -1.0, -0.5},
@@ -498,7 +498,7 @@ void Test3D(void) {
       {{1.0, 0.0, 0.0}, {1.0, 1.0, 1.0}, {0.0, 0.0, 1.0}}
 
     };
-  paramQ = (Param3D){
+  paramQ = (Param3D) {
 
     .type = FrameTetrahedron,
     .orig = {0.0, -0.5, 0.0},

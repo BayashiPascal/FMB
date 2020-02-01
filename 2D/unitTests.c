@@ -194,21 +194,21 @@ void Test2D(void) {
   // Execute the unit test on various cases
 
   // ----------------------------
-  paramP = (Param2D){
+  paramP = (Param2D) {
 
     .type = FrameCuboid,
     .orig = {0.0, 0.0},
     .comp = {{1.0, 0.0}, {0.0, 1.0}}
 
     };
-  paramQ = (Param2D){
+  paramQ = (Param2D) {
 
     .type = FrameCuboid,
     .orig = {0.0, 0.0},
     .comp = {{1.0, 0.0}, {0.0, 1.0}}
 
     };
-  correctBdgBox = (AABB2D){
+  correctBdgBox = (AABB2D) {
 
     .min = {0.0, 0.0},
     .max = {1.0, 1.0}
@@ -228,14 +228,14 @@ void Test2D(void) {
     .comp = {{1.0, 0.0}, {0.0, 1.0}}
 
     };
-  paramQ = (Param2D){
+  paramQ = (Param2D) {
 
     .type = FrameCuboid,
     .orig = {0.5, 0.5},
     .comp = {{1.0, 0.0}, {0.0, 1.0}}
 
     };
-  correctBdgBox = (AABB2D){
+  correctBdgBox = (AABB2D) {
 
     .min = {0.5, 0.5},
     .max = {1.0, 1.0}
@@ -248,14 +248,14 @@ void Test2D(void) {
     &correctBdgBox);
 
   // ----------------------------
-  paramP = (Param2D){
+  paramP = (Param2D) {
 
     .type = FrameCuboid,
     .orig = {-0.5, -0.5},
     .comp = {{1.0, 0.0}, {0.0, 1.0}}
 
     };
-  paramQ = (Param2D){
+  paramQ = (Param2D) {
 
     .type = FrameCuboid,
     .orig = {0.5, 0.5},
@@ -269,21 +269,21 @@ void Test2D(void) {
     NULL);
 
   // ----------------------------
-  paramP = (Param2D){
+  paramP = (Param2D) {
 
     .type = FrameCuboid,
     .orig = {0.0, 0.0},
     .comp = {{1.0, 0.0}, {0.0, 1.0}}
 
     };
-  paramQ = (Param2D){
+  paramQ = (Param2D) {
 
     .type = FrameCuboid,
     .orig = {0.25, -0.25},
     .comp = {{0.5, 0.0}, {0.0, 2.0}}
 
     };
-  correctBdgBox = (AABB2D){
+  correctBdgBox = (AABB2D) {
 
     .min = {0.25, 0.0},
     .max = {0.75, 1.0}
@@ -296,21 +296,21 @@ void Test2D(void) {
     &correctBdgBox);
 
   // ----------------------------
-  paramP = (Param2D){
+  paramP = (Param2D) {
 
     .type = FrameCuboid,
     .orig = {0.0, 0.0},
     .comp = {{1.0, 0.0}, {0.0, 1.0}}
 
     };
-  paramQ = (Param2D){
+  paramQ = (Param2D) {
 
     .type = FrameCuboid,
     .orig = {-0.25, 0.25},
     .comp = {{2.0, 0.0}, {0.0, 0.5}}
 
     };
-  correctBdgBox = (AABB2D){
+  correctBdgBox = (AABB2D) {
 
     .min = {0.0, 0.25},
     .max = {1.0, 0.75}
@@ -330,14 +330,14 @@ void Test2D(void) {
     .comp = {{1.0, 1.0}, {-1.0, 1.0}}
 
     };
-  paramQ = (Param2D){
+  paramQ = (Param2D) {
 
     .type = FrameCuboid,
     .orig = {0.0, 0.0},
     .comp = {{1.0, 0.0}, {0.0, 1.0}}
 
     };
-  correctBdgBox = (AABB2D){
+  correctBdgBox = (AABB2D) {
 
     .min = {0.0, 0.0},
     .max = {1.0, 1.0}
@@ -350,21 +350,21 @@ void Test2D(void) {
     &correctBdgBox);
 
   // ----------------------------
-  paramP = (Param2D){
+  paramP = (Param2D) {
 
     .type = FrameCuboid,
     .orig = {-0.5, -0.5},
     .comp = {{1.0, 1.0}, {-1.0, 1.0}}
 
     };
-  paramQ = (Param2D){
+  paramQ = (Param2D) {
 
     .type = FrameCuboid,
     .orig = {0.0, 0.0},
     .comp = {{1.0, 0.0}, {0.0, 1.0}}
 
     };
-  correctBdgBox = (AABB2D){
+  correctBdgBox = (AABB2D) {
 
     .min = {0.0, 0.0},
     .max = {0.5, 1.0}
@@ -377,21 +377,21 @@ void Test2D(void) {
     &correctBdgBox);
 
   // ----------------------------
-  paramP = (Param2D){
+  paramP = (Param2D) {
 
     .type = FrameCuboid,
     .orig = {1.5, 1.5},
     .comp = {{1.0, -1.0}, {-1.0, -1.0}}
 
     };
-  paramQ = (Param2D){
+  paramQ = (Param2D) {
 
     .type = FrameCuboid,
     .orig = {1.0, 0.0},
     .comp = {{-1.0, 0.0}, {0.0, 1.0}}
 
     };
-  correctBdgBox = (AABB2D){
+  correctBdgBox = (AABB2D) {
 
     .min = {0.5, 0.0},
     .max = {1.0, 1.0}
@@ -404,21 +404,21 @@ void Test2D(void) {
     &correctBdgBox);
 
   // ----------------------------
-  paramP = (Param2D){
+  paramP = (Param2D) {
 
     .type = FrameCuboid,
     .orig = {1.0, 0.5},
     .comp = {{-0.5, 0.5}, {-0.5, -0.5}}
 
     };
-  paramQ = (Param2D){
+  paramQ = (Param2D) {
 
     .type = FrameCuboid,
     .orig = {0.0, 1.0},
     .comp = {{1.0, 0.0}, {0.0, -1.0}}
 
     };
-  correctBdgBox = (AABB2D){
+  correctBdgBox = (AABB2D) {
 
     .min = {0.0, 0.0},
     .max = {1.0, 1.0}
@@ -431,21 +431,21 @@ void Test2D(void) {
     &correctBdgBox);
 
   // ----------------------------
-  paramP = (Param2D){
+  paramP = (Param2D) {
 
     .type = FrameCuboid,
     .orig = {0.0, 0.0},
     .comp = {{1.0, 0.0}, {1.0, 1.0}}
 
     };
-  paramQ = (Param2D){
+  paramQ = (Param2D) {
 
     .type = FrameCuboid,
     .orig = {2.0, -1.0},
     .comp = {{0.0, 1.0}, {-0.5, 1.0}}
 
     };
-  correctBdgBox = (AABB2D){
+  correctBdgBox = (AABB2D) {
 
     .min = {1.5, 0.5},
     .max = {1.5 + 0.5 / 3.0, 1.0}
@@ -458,21 +458,21 @@ void Test2D(void) {
     &correctBdgBox);
 
   // ----------------------------
-  paramP = (Param2D){
+  paramP = (Param2D) {
 
     .type = FrameCuboid,
     .orig = {0.0, 0.0},
     .comp = {{1.0, 0.5}, {0.5, 1.0}}
 
     };
-  paramQ = (Param2D){
+  paramQ = (Param2D) {
 
     .type = FrameCuboid,
     .orig = {1.0, 1.0},
     .comp = {{-0.5, -0.5}, {0.0, -1.0}}
 
     };
-  correctBdgBox = (AABB2D){
+  correctBdgBox = (AABB2D) {
 
     .min = {0.5, 0.25},
     .max = {1.0, 1.0}
@@ -485,21 +485,21 @@ void Test2D(void) {
     &correctBdgBox);
 
   // ----------------------------
-  paramP = (Param2D){
+  paramP = (Param2D) {
 
     .type = FrameCuboid,
     .orig = {0.0, 0.0},
     .comp = {{1.0, 0.5}, {0.5, 1.0}}
 
     };
-  paramQ = (Param2D){
+  paramQ = (Param2D) {
 
     .type = FrameCuboid,
     .orig = {1.0, 2.0},
     .comp = {{-0.5, -0.5}, {0.0, -1.0}}
 
     };
-  correctBdgBox = (AABB2D){
+  correctBdgBox = (AABB2D) {
 
     .min = {0.5, 0.75},
     .max = {1.0, 1.25}
@@ -512,21 +512,21 @@ void Test2D(void) {
     &correctBdgBox);
 
   // ----------------------------
-  paramP = (Param2D){
+  paramP = (Param2D) {
 
     .type = FrameTetrahedron,
     .orig = {0.0, 0.0},
     .comp = {{1.0, 0.5}, {0.5, 1.0}}
 
     };
-  paramQ = (Param2D){
+  paramQ = (Param2D) {
 
     .type = FrameCuboid,
     .orig = {1.0, 2.0},
     .comp = {{-0.5, -0.5}, {0.0, -1.0}}
 
     };
-  correctBdgBox = (AABB2D){
+  correctBdgBox = (AABB2D) {
 
     .min = {0.5, 0.5},
     .max = {0.75, 1.0}
@@ -539,21 +539,21 @@ void Test2D(void) {
     &correctBdgBox);
 
   // ----------------------------
-  paramP = (Param2D){
+  paramP = (Param2D) {
 
     .type = FrameCuboid,
     .orig = {0.0, 0.0},
     .comp = {{1.0, 0.5}, {0.5, 1.0}}
 
     };
-  paramQ = (Param2D){
+  paramQ = (Param2D) {
 
     .type = FrameTetrahedron,
     .orig = {1.0, 2.0},
     .comp = {{-0.5, -0.5}, {0.0, -1.0}}
 
     };
-  correctBdgBox = (AABB2D){
+  correctBdgBox = (AABB2D) {
 
     .min = {0.5 + 1.0 / 3.0, 1.0},
     .max = {1.0, 1.0 + 1.0 / 3.0}
@@ -566,21 +566,21 @@ void Test2D(void) {
     &correctBdgBox);
 
   // ----------------------------
-  paramP = (Param2D){
+  paramP = (Param2D) {
 
     .type = FrameCuboid,
     .orig = {0.0, 0.0},
     .comp = {{1.0, 0.0}, {0.0, 1.0}}
 
     };
-  paramQ = (Param2D){
+  paramQ = (Param2D) {
 
     .type = FrameTetrahedron,
     .orig = {0.0, 0.0},
     .comp = {{1.0, 0.0}, {0.0, 1.0}}
 
     };
-  correctBdgBox = (AABB2D){
+  correctBdgBox = (AABB2D) {
 
     .min = {0.0, 0.0},
     .max = {1.0, 1.0}
@@ -593,21 +593,21 @@ void Test2D(void) {
     &correctBdgBox);
 
   // ----------------------------
-  paramP = (Param2D){
+  paramP = (Param2D) {
 
     .type = FrameCuboid,
     .orig = {0.0, 0.0},
     .comp = {{1.0, 0.0}, {0.0, 1.0}}
 
     };
-  paramQ = (Param2D){
+  paramQ = (Param2D) {
 
     .type = FrameTetrahedron,
     .orig = {0.0, -0.5},
     .comp = {{1.0, 0.0}, {0.0, 1.0}}
 
     };
-  correctBdgBox = (AABB2D){
+  correctBdgBox = (AABB2D) {
 
     .min = {0.0, 0.0},
     .max = {0.5, 0.5}
@@ -620,21 +620,21 @@ void Test2D(void) {
     &correctBdgBox);
 
   // ----------------------------
-  paramP = (Param2D){
+  paramP = (Param2D) {
 
     .type = FrameCuboid,
     .orig = {0.5, 0.5},
     .comp = {{-0.5, 0.0}, {0.0, -0.5}}
 
     };
-  paramQ = (Param2D){
+  paramQ = (Param2D) {
 
     .type = FrameTetrahedron,
     .orig = {0.0, -0.5},
     .comp = {{1.0, 0.0}, {0.0, 1.0}}
 
     };
-  correctBdgBox = (AABB2D){
+  correctBdgBox = (AABB2D) {
 
     .min = {0.0, 0.0},
     .max = {0.5, 0.5}
@@ -647,14 +647,14 @@ void Test2D(void) {
     &correctBdgBox);
 
   // ----------------------------
-  paramP = (Param2D){
+  paramP = (Param2D) {
 
     .type = FrameCuboid,
     .orig = {0.5, 0.5},
     .comp = {{1.0, 0.0}, {0.0, 1.0}}
 
     };
-  paramQ = (Param2D){
+  paramQ = (Param2D) {
 
     .type = FrameTetrahedron,
     .orig = {0.0, 0.0},
@@ -668,21 +668,21 @@ void Test2D(void) {
     NULL);
 
   // ----------------------------
-  paramP = (Param2D){
+  paramP = (Param2D) {
 
     .type = FrameCuboid,
     .orig = {0.0, 0.0},
     .comp = {{1.0, 0.0}, {0.0, 1.0}}
 
     };
-  paramQ = (Param2D){
+  paramQ = (Param2D) {
 
     .type = FrameTetrahedron,
     .orig = {1.5, 1.5},
     .comp = {{-1.5, 0.0}, {0.0, -1.5}}
 
     };
-  correctBdgBox = (AABB2D){
+  correctBdgBox = (AABB2D) {
 
     .min = {0.5, 0.5},
     .max = {1.0, 1.0}
@@ -695,14 +695,14 @@ void Test2D(void) {
     &correctBdgBox);
 
   // ----------------------------
-  paramP = (Param2D){
+  paramP = (Param2D) {
 
     .type = FrameTetrahedron,
     .orig = {0.0, 0.0},
     .comp = {{1.0, 0.0}, {0.0, 1.0}}
 
     };
-  paramQ = (Param2D){
+  paramQ = (Param2D) {
 
     .type = FrameTetrahedron,
     .orig = {1.01, 1.01},
@@ -716,21 +716,21 @@ void Test2D(void) {
     NULL);
 
   // ----------------------------
-  paramP = (Param2D){
+  paramP = (Param2D) {
 
     .type = FrameTetrahedron,
     .orig = {0.0, 0.0},
     .comp = {{1.0, 0.5}, {0.5, 1.0}}
 
     };
-  paramQ = (Param2D){
+  paramQ = (Param2D) {
 
     .type = FrameTetrahedron,
     .orig = {1.0, 1.0},
     .comp = {{-0.5, -0.5}, {0.0, -1.0}}
 
     };
-  correctBdgBox = (AABB2D){
+  correctBdgBox = (AABB2D) {
 
     .min = {0.5, 0.5 - 1.0 / 6.0},
     .max = {1.0, 0.75}
@@ -743,14 +743,14 @@ void Test2D(void) {
     &correctBdgBox);
 
   // ----------------------------
-  paramP = (Param2D){
+  paramP = (Param2D) {
 
     .type = FrameTetrahedron,
     .orig = {0.0, 0.0},
     .comp = {{1.0, 0.5}, {0.5, 1.0}}
 
    };
-  paramQ = (Param2D){
+  paramQ = (Param2D) {
 
     .type = FrameTetrahedron,
     .orig = {1.01, 1.5},

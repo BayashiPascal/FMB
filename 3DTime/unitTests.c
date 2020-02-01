@@ -168,7 +168,7 @@ void Test3DTime(void) {
   // Execute the unit test on various cases
 
   // ----------------------------
-  paramP = (Param3DTime){
+  paramP = (Param3DTime) {
 
       .type = FrameCuboid,
       .orig = {0.0, 0.0, 0.0},
@@ -176,7 +176,7 @@ void Test3DTime(void) {
       .speed = {0.0, 0.0, 0.0}
 
     };
-  paramQ = (Param3DTime){
+  paramQ = (Param3DTime) {
 
       .type = FrameCuboid,
       .orig = {-1.0, 0.0, 0.0},
@@ -191,7 +191,7 @@ void Test3DTime(void) {
     NULL);
 
   // ----------------------------
-  paramP = (Param3DTime){
+  paramP = (Param3DTime) {
 
       .type = FrameCuboid,
       .orig = {0.0, 0.0, 0.0},
@@ -199,7 +199,7 @@ void Test3DTime(void) {
       .speed = {0.0, 0.0, 0.0}
 
     };
-  paramQ = (Param3DTime){
+  paramQ = (Param3DTime) {
 
       .type = FrameCuboid,
       .orig = {-1.01, -1.01, 0.0},
@@ -214,7 +214,7 @@ void Test3DTime(void) {
     NULL);
 
   // ----------------------------
-  paramP = (Param3DTime){
+  paramP = (Param3DTime) {
 
       .type = FrameCuboid,
       .orig = {0.0, 0.0, 0.0},
@@ -222,7 +222,7 @@ void Test3DTime(void) {
       .speed = {0.0, 0.0, 0.0}
 
     };
-  paramQ = (Param3DTime){
+  paramQ = (Param3DTime) {
 
       .type = FrameCuboid,
       .orig = {-1.0, 0.0, 0.0},
@@ -230,7 +230,7 @@ void Test3DTime(void) {
       .speed = {1.0, 0.0, 0.0}
 
     };
-  correctBdgBox = (AABB3DTime){
+  correctBdgBox = (AABB3DTime) {
 
       .min = {0.0, 0.0, 0.0, 0.0},
       .max = {1.0, 1.0, 1.0, 1.0}
@@ -243,7 +243,7 @@ void Test3DTime(void) {
     &correctBdgBox);
 
   // ----------------------------
-  paramP = (Param3DTime){
+  paramP = (Param3DTime) {
 
       .type = FrameCuboid,
       .orig = {0.0, 0.0, 0.0},
@@ -251,7 +251,7 @@ void Test3DTime(void) {
       .speed = {0.0, 0.0, 0.0}
 
     };
-  paramQ = (Param3DTime){
+  paramQ = (Param3DTime) {
 
       .type = FrameCuboid,
       .orig = {-1.0, 0.25, 0.0},
@@ -259,7 +259,7 @@ void Test3DTime(void) {
       .speed = {4.0, 0.0, 0.0}
 
     };
-  correctBdgBox = (AABB3DTime){
+  correctBdgBox = (AABB3DTime) {
 
     .min = {0.0, 0.25, 0.0, 0.125},
     .max = {1.0, 0.75, 1.0, 0.5}
@@ -272,7 +272,7 @@ void Test3DTime(void) {
     &correctBdgBox);
 
   // ----------------------------
-  paramP = (Param3DTime){
+  paramP = (Param3DTime) {
 
       .type = FrameCuboid,
       .orig = {0.0, 0.0, 0.0},
@@ -280,7 +280,7 @@ void Test3DTime(void) {
       .speed = {0.0, 0.0, 0.0}
 
     };
-  paramQ = (Param3DTime){
+  paramQ = (Param3DTime) {
 
       .type = FrameCuboid,
       .orig = {0.25, -1.0, 0.0},
@@ -288,7 +288,7 @@ void Test3DTime(void) {
       .speed = {0.0, 4.0, 0.0}
 
     };
-  correctBdgBox = (AABB3DTime){
+  correctBdgBox = (AABB3DTime) {
 
       .min = {0.25, 0.0, 0.0, 0.125},
       .max = {0.75, 1.0, 1.0, 0.5}
@@ -301,7 +301,7 @@ void Test3DTime(void) {
     &correctBdgBox);
 
   // ----------------------------
-  paramP = (Param3DTime){
+  paramP = (Param3DTime) {
 
       .type = FrameCuboid,
       .orig = {0.0, 0.0, 0.0},
@@ -309,7 +309,7 @@ void Test3DTime(void) {
       .speed = {0.0, 0.0, 0.0}
 
     };
-  paramQ = (Param3DTime){
+  paramQ = (Param3DTime) {
 
       .type = FrameCuboid,
       .orig = {0.9, -1.0, 0.0},
@@ -317,7 +317,7 @@ void Test3DTime(void) {
       .speed = {0.0, 4.0, 0.0}
 
     };
-  correctBdgBox = (AABB3DTime){
+  correctBdgBox = (AABB3DTime) {
 
       .min = {0.9, 0.0, 0.0, 0.125},
       .max = {1.0, 1.0, 1.0, 0.5}
