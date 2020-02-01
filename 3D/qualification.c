@@ -11,12 +11,16 @@
 
 // Epsilon to detect degenerated triangles
 #define EPSILON 0.1
+
 // Range of values for the random generation of Frames
 #define RANGE_AXIS 100.0
+
 // Nb of run
 #define NB_RUNS 9
+
 // Nb of tests per run
 #define NB_TESTS 500000
+
 // Nb of times the test is run on one pair of frame, used to
 // slow down the processus and be able to measure time
 #define NB_REPEAT_3D 800

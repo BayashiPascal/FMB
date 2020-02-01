@@ -59,8 +59,10 @@ typedef struct {
   FrameType type;
   double orig[2];
   double comp[2][2];
+
   // AABB of the frame
   AABB2D bdgBox;
+
   // Inverted components used during computation
   double invComp[2][2];
 
@@ -71,8 +73,10 @@ typedef struct {
   FrameType type;
   double orig[3];
   double comp[3][3];
+
   // AABB of the frame
   AABB3D bdgBox;
+
   // Inverted components used during computation
   double invComp[3][3];
 
@@ -83,8 +87,10 @@ typedef struct {
   FrameType type;
   double orig[2];
   double comp[2][2];
+
   // AABB of the frame
   AABB2DTime bdgBox;
+
   // Inverted components used during computation
   double invComp[2][2];
   double speed[2];
@@ -96,8 +102,10 @@ typedef struct {
   FrameType type;
   double orig[3];
   double comp[3][3];
+
   // AABB of the frame
   AABB3DTime bdgBox;
+
   // Inverted components used during computation
   double invComp[3][3];
   double speed[3];

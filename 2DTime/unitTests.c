@@ -95,6 +95,7 @@ void UnitTest2DTime(
           tho,
           &bdgBoxLocal,
           &bdgBox);
+
         // Check the bounding box
         bool flag = true;
         for (int i = 3;

@@ -11,6 +11,7 @@ int main(int argc, char** argv) {
 
   // Create the two objects to be tested for intersection
   double origP2D[2] = {0.0, 0.0};
+
   // {First component, Second component}
   double compP2D[2][2] = {{1.0, 0.0}, {0.0, 1.0}};
   Frame2D P2D =
