@@ -19,19 +19,21 @@ void Frame3DTimeUpdateInv(Frame3DTime* const that);
 // arrangement is comp[iComp][iAxis]
 Frame2D Frame2DCreateStatic(
   const FrameType type,
-     const double orig[2],
-     const double comp[2][2]) {
+  const double orig[2],
+  const double comp[2][2]) {
 
   // Create the new Frame
   Frame2D that;
   that.type = type;
-  for (int iAxis = 2;
-       iAxis--;) {
+  for (
+    int iAxis = 2;
+    iAxis--;) {
 
     that.orig[iAxis] = orig[iAxis];
 
-    for (int iComp = 2;
-         iComp--;) {
+    for (
+      int iComp = 2;
+      iComp--;) {
 
       that.comp[iComp][iAxis] = comp[iComp][iAxis];
 
@@ -40,14 +42,16 @@ Frame2D Frame2DCreateStatic(
   }
 
   // Create the bounding box
-  for (int iAxis = 2;
-       iAxis--;) {
+  for (
+    int iAxis = 2;
+    iAxis--;) {
 
     double min = orig[iAxis];
     double max = orig[iAxis];
 
-    for (int iComp = 2;
-         iComp--;) {
+    for (
+      int iComp = 2;
+      iComp--;) {
 
       if (that.type == FrameCuboid) {
 
@@ -65,14 +69,16 @@ Frame2D Frame2DCreateStatic(
 
       } else if (that.type == FrameTetrahedron) {
 
-        if (that.comp[iComp][iAxis] < 0.0 &&
+        if (
+          that.comp[iComp][iAxis] < 0.0 &&
           min > orig[iAxis] + that.comp[iComp][iAxis]) {
 
           min = orig[iAxis] + that.comp[iComp][iAxis];
 
         }
 
-        if (that.comp[iComp][iAxis] > 0.0 &&
+        if (
+          that.comp[iComp][iAxis] > 0.0 &&
           max < orig[iAxis] + that.comp[iComp][iAxis]) {
 
           max = orig[iAxis] + that.comp[iComp][iAxis];
@@ -98,19 +104,21 @@ Frame2D Frame2DCreateStatic(
 
 Frame3D Frame3DCreateStatic(
   const FrameType type,
-     const double orig[3],
-     const double comp[3][3]) {
+  const double orig[3],
+  const double comp[3][3]) {
 
   // Create the new Frame
   Frame3D that;
   that.type = type;
-  for (int iAxis = 3;
-       iAxis--;) {
+  for (
+    int iAxis = 3;
+    iAxis--;) {
 
     that.orig[iAxis] = orig[iAxis];
 
-    for (int iComp = 3;
-         iComp--;) {
+    for (
+      int iComp = 3;
+      iComp--;) {
 
       that.comp[iComp][iAxis] = comp[iComp][iAxis];
 
@@ -119,14 +127,16 @@ Frame3D Frame3DCreateStatic(
   }
 
   // Create the bounding box
-  for (int iAxis = 3;
-       iAxis--;) {
+  for (
+    int iAxis = 3;
+    iAxis--;) {
 
     double min = orig[iAxis];
     double max = orig[iAxis];
 
-    for (int iComp = 3;
-         iComp--;) {
+    for (
+      int iComp = 3;
+      iComp--;) {
 
       if (that.type == FrameCuboid) {
 
@@ -144,14 +154,16 @@ Frame3D Frame3DCreateStatic(
 
       } else if (that.type == FrameTetrahedron) {
 
-        if (that.comp[iComp][iAxis] < 0.0 &&
+        if (
+          that.comp[iComp][iAxis] < 0.0 &&
           min > orig[iAxis] + that.comp[iComp][iAxis]) {
 
           min = orig[iAxis] + that.comp[iComp][iAxis];
 
         }
 
-        if (that.comp[iComp][iAxis] > 0.0 &&
+        if (
+          that.comp[iComp][iAxis] > 0.0 &&
           max < orig[iAxis] + that.comp[iComp][iAxis]) {
 
           max = orig[iAxis] + that.comp[iComp][iAxis];
@@ -177,21 +189,23 @@ Frame3D Frame3DCreateStatic(
 
 Frame2DTime Frame2DTimeCreateStatic(
   const FrameType type,
-     const double orig[2],
-     const double speed[2],
-     const double comp[2][2]) {
+  const double orig[2],
+  const double speed[2],
+  const double comp[2][2]) {
 
   // Create the new Frame
   Frame2DTime that;
   that.type = type;
-  for (int iAxis = 2;
-       iAxis--;) {
+  for (
+    int iAxis = 2;
+    iAxis--;) {
 
     that.orig[iAxis] = orig[iAxis];
     that.speed[iAxis] = speed[iAxis];
 
-    for (int iComp = 2;
-         iComp--;) {
+    for (
+      int iComp = 2;
+      iComp--;) {
 
       that.comp[iComp][iAxis] = comp[iComp][iAxis];
 
@@ -200,14 +214,16 @@ Frame2DTime Frame2DTimeCreateStatic(
   }
 
   // Create the bounding box
-  for (int iAxis = 2;
-       iAxis--;) {
+  for (
+    int iAxis = 2;
+    iAxis--;) {
 
     double min = orig[iAxis];
     double max = orig[iAxis];
 
-    for (int iComp = 2;
-         iComp--;) {
+    for (
+      int iComp = 2;
+      iComp--;) {
 
       if (that.type == FrameCuboid) {
 
@@ -225,14 +241,16 @@ Frame2DTime Frame2DTimeCreateStatic(
 
       } else if (that.type == FrameTetrahedron) {
 
-        if (that.comp[iComp][iAxis] < 0.0 &&
+        if (
+          that.comp[iComp][iAxis] < 0.0 &&
           min > orig[iAxis] + that.comp[iComp][iAxis]) {
 
           min = orig[iAxis] + that.comp[iComp][iAxis];
 
         }
 
-        if (that.comp[iComp][iAxis] > 0.0 &&
+        if (
+          that.comp[iComp][iAxis] > 0.0 &&
           max < orig[iAxis] + that.comp[iComp][iAxis]) {
 
           max = orig[iAxis] + that.comp[iComp][iAxis];
@@ -273,21 +291,23 @@ Frame2DTime Frame2DTimeCreateStatic(
 
 Frame3DTime Frame3DTimeCreateStatic(
   const FrameType type,
-     const double orig[3],
-     const double speed[3],
-     const double comp[3][3]) {
+  const double orig[3],
+  const double speed[3],
+  const double comp[3][3]) {
 
   // Create the new Frame
   Frame3DTime that;
   that.type = type;
-  for (int iAxis = 3;
-       iAxis--;) {
+  for (
+    int iAxis = 3;
+    iAxis--;) {
 
     that.orig[iAxis] = orig[iAxis];
     that.speed[iAxis] = speed[iAxis];
 
-    for (int iComp = 3;
-         iComp--;) {
+    for (
+      int iComp = 3;
+      iComp--;) {
 
       that.comp[iComp][iAxis] = comp[iComp][iAxis];
 
@@ -296,14 +316,16 @@ Frame3DTime Frame3DTimeCreateStatic(
   }
 
   // Create the bounding box
-  for (int iAxis = 3;
-       iAxis--;) {
+  for (
+    int iAxis = 3;
+    iAxis--;) {
 
     double min = orig[iAxis];
     double max = orig[iAxis];
 
-    for (int iComp = 3;
-         iComp--;) {
+    for (
+      int iComp = 3;
+      iComp--;) {
 
       if (that.type == FrameCuboid) {
 
@@ -321,14 +343,16 @@ Frame3DTime Frame3DTimeCreateStatic(
 
       } else if (that.type == FrameTetrahedron) {
 
-        if (that.comp[iComp][iAxis] < 0.0 &&
+        if (
+          that.comp[iComp][iAxis] < 0.0 &&
           min > orig[iAxis] + that.comp[iComp][iAxis]) {
 
           min = orig[iAxis] + that.comp[iComp][iAxis];
 
         }
 
-        if (that.comp[iComp][iAxis] > 0.0 &&
+        if (
+          that.comp[iComp][iAxis] > 0.0 &&
           max < orig[iAxis] + that.comp[iComp][iAxis]) {
 
           max = orig[iAxis] + that.comp[iComp][iAxis];
@@ -377,7 +401,8 @@ void Frame2DUpdateInv(Frame2D* const that) {
   double det = tc[0][0] * tc[1][1] - tc[1][0] * tc[0][1];
   if (fabs(det) < EPSILON) {
 
-    fprintf(stderr,
+    fprintf(
+      stderr,
       "FrameUpdateInv: det == 0.0\n");
     exit(1);
 
@@ -403,7 +428,8 @@ void Frame3DUpdateInv(Frame3D* const that) {
     tc[2][0] * (tc[0][1] * tc[1][2] - tc[0][2] * tc[1][1]);
   if (fabs(det) < EPSILON) {
 
-    fprintf(stderr,
+    fprintf(
+      stderr,
       "FrameUpdateInv: det == 0.0\n");
     exit(1);
 
@@ -431,7 +457,8 @@ void Frame2DTimeUpdateInv(Frame2DTime* const that) {
   double det = tc[0][0] * tc[1][1] - tc[1][0] * tc[0][1];
   if (fabs(det) < EPSILON) {
 
-    fprintf(stderr,
+    fprintf(
+      stderr,
       "FrameUpdateInv: det == 0.0\n");
     exit(1);
 
@@ -457,7 +484,8 @@ void Frame3DTimeUpdateInv(Frame3DTime* const that) {
     tc[2][0] * (tc[0][1] * tc[1][2] - tc[0][2] * tc[1][1]);
   if (fabs(det) < EPSILON) {
 
-    fprintf(stderr,
+    fprintf(
+      stderr,
       "FrameUpdateInv: det == 0.0\n");
     exit(1);
 
@@ -480,39 +508,43 @@ void Frame3DTimeUpdateInv(Frame3DTime* const that) {
 void Frame2DImportFrame(
   const Frame2D* const P,
   const Frame2D* const Q,
-        Frame2D* const Qp) {
+  Frame2D* const Qp) {
 
   // Shortcuts
   const double*  qo  = Q->orig;
-        double*  qpo = Qp->orig;
+  double*  qpo = Qp->orig;
   const double*  po  = P->orig;
 
   const double  (*pi)[2] = P->invComp;
-        double (*qpc)[2] = Qp->comp;
+  double (*qpc)[2] = Qp->comp;
   const double  (*qc)[2] = Q->comp;
 
   // Calculate the projection
   double v[2];
-  for (int i = 2;
-       i--;) {
+  for (
+    int i = 2;
+    i--;) {
 
     v[i] = qo[i] - po[i];
 
   }
 
-  for (int i = 2;
-       i--;) {
+  for (
+    int i = 2;
+    i--;) {
 
     qpo[i] = 0.0;
 
-    for (int j = 2;
-         j--;) {
+    for (
+      int j = 2;
+      j--;) {
 
       qpo[i] += pi[j][i] * v[j];
       qpc[j][i] = 0.0;
 
-      for (int k = 2;
-           k--;) {
+      for (
+        int k = 2;
+        k--;) {
 
         qpc[j][i] += pi[k][i] * qc[j][k];
 
@@ -527,39 +559,43 @@ void Frame2DImportFrame(
 void Frame3DImportFrame(
   const Frame3D* const P,
   const Frame3D* const Q,
-        Frame3D* const Qp) {
+  Frame3D* const Qp) {
 
   // Shortcuts
   const double*  qo  = Q->orig;
-        double*  qpo = Qp->orig;
+  double*  qpo = Qp->orig;
   const double*  po  = P->orig;
 
   const double  (*pi)[3] = P->invComp;
-        double (*qpc)[3] = Qp->comp;
+  double (*qpc)[3] = Qp->comp;
   const double  (*qc)[3] = Q->comp;
 
   // Calculate the projection
   double v[3];
-  for (int i = 3;
-       i--;) {
+  for (
+    int i = 3;
+    i--;) {
 
     v[i] = qo[i] - po[i];
 
   }
 
-  for (int i = 3;
-       i--;) {
+  for (
+    int i = 3;
+    i--;) {
 
     qpo[i] = 0.0;
 
-    for (int j = 3;
-         j--;) {
+    for (
+      int j = 3;
+      j--;) {
 
       qpo[i] += pi[j][i] * v[j];
       qpc[j][i] = 0.0;
 
-      for (int k = 3;
-           k--;) {
+      for (
+        int k = 3;
+        k--;) {
 
         qpc[j][i] += pi[k][i] * qc[j][k];
 
@@ -574,47 +610,51 @@ void Frame3DImportFrame(
 void Frame2DTimeImportFrame(
   const Frame2DTime* const P,
   const Frame2DTime* const Q,
-        Frame2DTime* const Qp) {
+  Frame2DTime* const Qp) {
 
   // Shortcuts
   const double*  qo  = Q->orig;
-        double*  qpo = Qp->orig;
+  double*  qpo = Qp->orig;
   const double*  po  = P->orig;
 
   const double*  qs  = Q->speed;
-        double*  qps = Qp->speed;
+  double*  qps = Qp->speed;
   const double*  ps  = P->speed;
 
   const double  (*pi)[2] = P->invComp;
-        double (*qpc)[2] = Qp->comp;
+  double (*qpc)[2] = Qp->comp;
   const double  (*qc)[2] = Q->comp;
 
   // Calculate the projection
   double v[2];
   double s[2];
-  for (int i = 2;
-       i--;) {
+  for (
+    int i = 2;
+    i--;) {
 
     v[i] = qo[i] - po[i];
     s[i] = qs[i] - ps[i];
 
   }
 
-  for (int i = 2;
-       i--;) {
+  for (
+    int i = 2;
+    i--;) {
 
     qpo[i] = 0.0;
     qps[i] = 0.0;
 
-    for (int j = 2;
-         j--;) {
+    for (
+      int j = 2;
+      j--;) {
 
       qpo[i] += pi[j][i] * v[j];
       qps[i] += pi[j][i] * s[j];
       qpc[j][i] = 0.0;
 
-      for (int k = 2;
-           k--;) {
+      for (
+        int k = 2;
+        k--;) {
 
         qpc[j][i] += pi[k][i] * qc[j][k];
 
@@ -629,47 +669,51 @@ void Frame2DTimeImportFrame(
 void Frame3DTimeImportFrame(
   const Frame3DTime* const P,
   const Frame3DTime* const Q,
-        Frame3DTime* const Qp) {
+  Frame3DTime* const Qp) {
 
   // Shortcuts
   const double*  qo  = Q->orig;
-        double*  qpo = Qp->orig;
+  double*  qpo = Qp->orig;
   const double*  po  = P->orig;
 
   const double*  qs  = Q->speed;
-        double*  qps = Qp->speed;
+  double*  qps = Qp->speed;
   const double*  ps  = P->speed;
 
   const double  (*pi)[3] = P->invComp;
-        double (*qpc)[3] = Qp->comp;
+  double (*qpc)[3] = Qp->comp;
   const double  (*qc)[3] = Q->comp;
 
   // Calculate the projection
   double v[3];
   double s[3];
-  for (int i = 3;
-       i--;) {
+  for (
+    int i = 3;
+    i--;) {
 
     v[i] = qo[i] - po[i];
     s[i] = qs[i] - ps[i];
 
   }
 
-  for (int i = 3;
-       i--;) {
+  for (
+    int i = 3;
+    i--;) {
 
     qpo[i] = 0.0;
     qps[i] = 0.0;
 
-    for (int j = 3;
-         j--;) {
+    for (
+      int j = 3;
+      j--;) {
 
       qpo[i] += pi[j][i] * v[j];
       qps[i] += pi[j][i] * s[j];
       qpc[j][i] = 0.0;
 
-      for (int k = 3;
-           k--;) {
+      for (
+        int k = 3;
+        k--;) {
 
         qpc[j][i] += pi[k][i] * qc[j][k];
 
@@ -686,27 +730,29 @@ void Frame3DTimeImportFrame(
 // AABB
 void Frame2DExportBdgBox(
   const Frame2D* const that,
-   const AABB2D* const bdgBox,
-         AABB2D* const bdgBoxProj) {
+  const AABB2D* const bdgBox,
+  AABB2D* const bdgBoxProj) {
 
   // Shortcuts
   const double* to    = that->orig;
   const double* bbmi  = bdgBox->min;
   const double* bbma  = bdgBox->max;
-        double* bbpmi = bdgBoxProj->min;
-        double* bbpma = bdgBoxProj->max;
+  double* bbpmi = bdgBoxProj->min;
+  double* bbpma = bdgBoxProj->max;
 
   const double (*tc)[2] = that->comp;
 
   // Initialise the coordinates of the result AABB with the projection
   // of the first corner of the AABB in argument
-  for (int i = 2;
-       i--;) {
+  for (
+    int i = 2;
+    i--;) {
 
     bbpma[i] = to[i];
 
-    for (int j = 2;
-         j--;) {
+    for (
+      int j = 2;
+      j--;) {
 
       bbpma[i] += tc[j][i] * bbmi[j];
 
@@ -719,8 +765,9 @@ void Frame2DExportBdgBox(
   // Loop on vertices of the AABB
   // skip the first vertex which is the origin already computed above
   int nbVertices = powi(2, 2);
-  for (int iVertex = nbVertices;
-       iVertex-- && iVertex;) {
+  for (
+    int iVertex = nbVertices;
+    iVertex-- && iVertex;) {
 
     // Declare a variable to memorize the coordinates of the vertex in
     // 'that' 's coordinates system
@@ -728,8 +775,9 @@ void Frame2DExportBdgBox(
 
     // Calculate the coordinates of the vertex in
     // 'that' 's coordinates system
-    for (int i = 2;
-         i--;) {
+    for (
+      int i = 2;
+      i--;) {
 
       v[i] = ((iVertex & (1 << i)) ? bbma[i] : bbmi[i]);
 
@@ -740,13 +788,15 @@ void Frame2DExportBdgBox(
     double w[2];
 
     // Project the vertex to real coordinates system
-    for (int i = 2;
-         i--;) {
+    for (
+      int i = 2;
+      i--;) {
 
       w[i] = to[i];
 
-      for (int j = 2;
-           j--;) {
+      for (
+        int j = 2;
+        j--;) {
 
         w[i] += tc[j][i] * v[j];
 
@@ -755,8 +805,9 @@ void Frame2DExportBdgBox(
     }
 
     // Update the coordinates of the result AABB
-    for (int i = 2;
-         i--;) {
+    for (
+      int i = 2;
+      i--;) {
 
       if (bbpmi[i] > w[i]) {
 
@@ -778,27 +829,29 @@ void Frame2DExportBdgBox(
 
 void Frame3DExportBdgBox(
   const Frame3D* const that,
-   const AABB3D* const bdgBox,
-         AABB3D* const bdgBoxProj) {
+  const AABB3D* const bdgBox,
+  AABB3D* const bdgBoxProj) {
 
   // Shortcuts
   const double* to    = that->orig;
   const double* bbmi  = bdgBox->min;
   const double* bbma  = bdgBox->max;
-        double* bbpmi = bdgBoxProj->min;
-        double* bbpma = bdgBoxProj->max;
+  double* bbpmi = bdgBoxProj->min;
+  double* bbpma = bdgBoxProj->max;
 
   const double (*tc)[3] = that->comp;
 
   // Initialise the coordinates of the result AABB with the projection
   // of the first corner of the AABB in argument
-  for (int i = 3;
-       i--;) {
+  for (
+    int i = 3;
+    i--;) {
 
     bbpma[i] = to[i];
 
-    for (int j = 3;
-         j--;) {
+    for (
+      int j = 3;
+      j--;) {
 
       bbpma[i] += tc[j][i] * bbmi[j];
 
@@ -811,8 +864,9 @@ void Frame3DExportBdgBox(
   // Loop on vertices of the AABB
   // skip the first vertex which is the origin already computed above
   int nbVertices = powi(2, 3);
-  for (int iVertex = nbVertices;
-       iVertex-- && iVertex;) {
+  for (
+    int iVertex = nbVertices;
+    iVertex-- && iVertex;) {
 
     // Declare a variable to memorize the coordinates of the vertex in
     // 'that' 's coordinates system
@@ -820,8 +874,9 @@ void Frame3DExportBdgBox(
 
     // Calculate the coordinates of the vertex in
     // 'that' 's coordinates system
-    for (int i = 3;
-         i--;) {
+    for (
+      int i = 3;
+      i--;) {
 
       v[i] = ((iVertex & (1 << i)) ? bbma[i] : bbmi[i]);
 
@@ -832,13 +887,15 @@ void Frame3DExportBdgBox(
     double w[3];
 
     // Project the vertex to real coordinates system
-    for (int i = 3;
-         i--;) {
+    for (
+      int i = 3;
+      i--;) {
 
       w[i] = to[i];
 
-      for (int j = 3;
-           j--;) {
+      for (
+        int j = 3;
+        j--;) {
 
         w[i] += tc[j][i] * v[j];
 
@@ -847,8 +904,9 @@ void Frame3DExportBdgBox(
     }
 
     // Update the coordinates of the result AABB
-    for (int i = 3;
-         i--;) {
+    for (
+      int i = 3;
+      i--;) {
 
       if (bbpmi[i] > w[i]) {
 
@@ -870,16 +928,16 @@ void Frame3DExportBdgBox(
 
 void Frame2DTimeExportBdgBox(
   const Frame2DTime* const that,
-   const AABB2DTime* const bdgBox,
-         AABB2DTime* const bdgBoxProj) {
+  const AABB2DTime* const bdgBox,
+  AABB2DTime* const bdgBoxProj) {
 
   // Shortcuts
   const double* to    = that->orig;
   const double* ts    = that->speed;
   const double* bbmi  = bdgBox->min;
   const double* bbma  = bdgBox->max;
-        double* bbpmi = bdgBoxProj->min;
-        double* bbpma = bdgBoxProj->max;
+  double* bbpmi = bdgBoxProj->min;
+  double* bbpma = bdgBoxProj->max;
   const double (*tc)[2] = that->comp;
 
   // The time component is not affected
@@ -888,13 +946,15 @@ void Frame2DTimeExportBdgBox(
 
   // Initialise the coordinates of the result AABB with the projection
   // of the first corner of the AABB in argument
-  for (int i = 2;
-       i--;) {
+  for (
+    int i = 2;
+    i--;) {
 
     bbpma[i] = to[i] + ts[i] * bbmi[2];
 
-    for (int j = 2;
-         j--;) {
+    for (
+      int j = 2;
+      j--;) {
 
       bbpma[i] += tc[j][i] * bbmi[j];
 
@@ -907,8 +967,9 @@ void Frame2DTimeExportBdgBox(
   // Loop on vertices of the AABB
   // skip the first vertex which is the origin already computed above
   int nbVertices = powi(2, 2);
-  for (int iVertex = nbVertices;
-       iVertex-- && iVertex;) {
+  for (
+    int iVertex = nbVertices;
+    iVertex-- && iVertex;) {
 
     // Declare a variable to memorize the coordinates of the vertex in
     // 'that' 's coordinates system
@@ -916,8 +977,9 @@ void Frame2DTimeExportBdgBox(
 
     // Calculate the coordinates of the vertex in
     // 'that' 's coordinates system
-    for (int i = 2;
-         i--;) {
+    for (
+      int i = 2;
+      i--;) {
 
       v[i] = ((iVertex & (1 << i)) ? bbma[i] : bbmi[i]);
 
@@ -928,13 +990,15 @@ void Frame2DTimeExportBdgBox(
     double w[2];
 
     // Project the vertex to real coordinates system
-    for (int i = 2;
-         i--;) {
+    for (
+      int i = 2;
+      i--;) {
 
       w[i] = to[i];
 
-      for (int j = 2;
-           j--;) {
+      for (
+        int j = 2;
+        j--;) {
 
         w[i] += tc[j][i] * v[j];
 
@@ -943,8 +1007,9 @@ void Frame2DTimeExportBdgBox(
     }
 
     // Update the coordinates of the result AABB
-    for (int i = 2;
-         i--;) {
+    for (
+      int i = 2;
+      i--;) {
 
       if (bbpmi[i] > w[i] + ts[i] * bbmi[2]) {
 
@@ -978,16 +1043,16 @@ void Frame2DTimeExportBdgBox(
 
 void Frame3DTimeExportBdgBox(
   const Frame3DTime* const that,
-   const AABB3DTime* const bdgBox,
-         AABB3DTime* const bdgBoxProj) {
+  const AABB3DTime* const bdgBox,
+  AABB3DTime* const bdgBoxProj) {
 
   // Shortcuts
   const double* to    = that->orig;
   const double* ts    = that->speed;
   const double* bbmi  = bdgBox->min;
   const double* bbma  = bdgBox->max;
-        double* bbpmi = bdgBoxProj->min;
-        double* bbpma = bdgBoxProj->max;
+  double* bbpmi = bdgBoxProj->min;
+  double* bbpma = bdgBoxProj->max;
   const double (*tc)[3] = that->comp;
 
   // The time component is not affected
@@ -996,13 +1061,15 @@ void Frame3DTimeExportBdgBox(
 
   // Initialise the coordinates of the result AABB with the projection
   // of the first corner of the AABB in argument
-  for (int i = 3;
-       i--;) {
+  for (
+    int i = 3;
+    i--;) {
 
     bbpma[i] = to[i] + ts[i] * bbmi[3];
 
-    for (int j = 3;
-         j--;) {
+    for (
+      int j = 3;
+      j--;) {
 
       bbpma[i] += tc[j][i] * bbmi[j];
 
@@ -1015,8 +1082,9 @@ void Frame3DTimeExportBdgBox(
   // Loop on vertices of the AABB
   // skip the first vertex which is the origin already computed above
   int nbVertices = powi(2, 3);
-  for (int iVertex = nbVertices;
-       iVertex-- && iVertex;) {
+  for (
+    int iVertex = nbVertices;
+    iVertex-- && iVertex;) {
 
     // Declare a variable to memorize the coordinates of the vertex in
     // 'that' 's coordinates system
@@ -1024,8 +1092,9 @@ void Frame3DTimeExportBdgBox(
 
     // Calculate the coordinates of the vertex in
     // 'that' 's coordinates system
-    for (int i = 3;
-         i--;) {
+    for (
+      int i = 3;
+      i--;) {
 
       v[i] = ((iVertex & (1 << i)) ? bbma[i] : bbmi[i]);
 
@@ -1036,13 +1105,15 @@ void Frame3DTimeExportBdgBox(
     double w[3];
 
     // Project the vertex to real coordinates system
-    for (int i = 3;
-         i--;) {
+    for (
+      int i = 3;
+      i--;) {
 
       w[i] = to[i];
 
-      for (int j = 3;
-           j--;) {
+      for (
+        int j = 3;
+        j--;) {
 
         w[i] += tc[j][i] * v[j];
 
@@ -1051,8 +1122,9 @@ void Frame3DTimeExportBdgBox(
     }
 
     // Update the coordinates of the result AABB
-    for (int i = 3;
-         i--;) {
+    for (
+      int i = 3;
+      i--;) {
 
       if (bbpmi[i] > w[i] + ts[i] * bbmi[3]) {
 
@@ -1089,24 +1161,24 @@ void Frame3DTimeExportBdgBox(
 void AABB2DPrint(const AABB2D* const that) {
 
   printf("minXY(");
-  for (int i = 0;
-       i < 2;
-       ++i) {
+  for (
+    int i = 0;
+    i < 2;
+    ++i) {
 
     printf("%f", that->min[i]);
-    if (i < 1)
-      printf(",");
+    if (i < 1) printf(",");
 
   }
 
   printf(")-maxXY(");
-  for (int i = 0;
-       i < 2;
-       ++i) {
+  for (
+    int i = 0;
+    i < 2;
+    ++i) {
 
     printf("%f", that->max[i]);
-    if (i < 1)
-      printf(",");
+    if (i < 1) printf(",");
 
   }
 
@@ -1117,24 +1189,24 @@ void AABB2DPrint(const AABB2D* const that) {
 void AABB3DPrint(const AABB3D* const that) {
 
   printf("minXYZ(");
-  for (int i = 0;
-       i < 3;
-       ++i) {
+  for (
+    int i = 0;
+    i < 3;
+    ++i) {
 
     printf("%f", that->min[i]);
-    if (i < 2)
-      printf(",");
+    if (i < 2) printf(",");
 
   }
 
   printf(")-maxXYZ(");
-  for (int i = 0;
-       i < 3;
-       ++i) {
+  for (
+    int i = 0;
+    i < 3;
+    ++i) {
 
     printf("%f", that->max[i]);
-    if (i < 2)
-      printf(",");
+    if (i < 2) printf(",");
 
   }
 
@@ -1145,24 +1217,24 @@ void AABB3DPrint(const AABB3D* const that) {
 void AABB2DTimePrint(const AABB2DTime* const that) {
 
   printf("minXYT(");
-  for (int i = 0;
-       i < 3;
-       ++i) {
+  for (
+    int i = 0;
+    i < 3;
+    ++i) {
 
     printf("%f", that->min[i]);
-    if (i < 2)
-      printf(",");
+    if (i < 2) printf(",");
 
   }
 
   printf(")-maxXYT(");
-  for (int i = 0;
-       i < 3;
-       ++i) {
+  for (
+    int i = 0;
+    i < 3;
+    ++i) {
 
     printf("%f", that->max[i]);
-    if (i < 2)
-      printf(",");
+    if (i < 2) printf(",");
 
   }
 
@@ -1173,24 +1245,24 @@ void AABB2DTimePrint(const AABB2DTime* const that) {
 void AABB3DTimePrint(const AABB3DTime* const that) {
 
   printf("minXYZT(");
-  for (int i = 0;
-       i < 4;
-       ++i) {
+  for (
+    int i = 0;
+    i < 4;
+    ++i) {
 
     printf("%f", that->min[i]);
-    if (i < 3)
-      printf(",");
+    if (i < 3) printf(",");
 
   }
 
   printf(")-maxXYZT(");
-  for (int i = 0;
-       i < 4;
-       ++i) {
+  for (
+    int i = 0;
+    i < 4;
+    ++i) {
 
     printf("%f", that->max[i]);
-    if (i < 3)
-      printf(",");
+    if (i < 3) printf(",");
 
   }
 
@@ -1219,29 +1291,30 @@ void Frame2DPrint(const Frame2D* const that) {
   }
 
   printf("o(");
-  for (int i = 0;
-       i < 2;
-       ++i) {
+  for (
+    int i = 0;
+    i < 2;
+    ++i) {
 
     printf("%f", that->orig[i]);
-    if (i < 1)
-      printf(",");
+    if (i < 1) printf(",");
 
   }
 
   char comp[2] = {'x', 'y'};
-  for (int j = 0;
-       j < 2;
-       ++j) {
+  for (
+    int j = 0;
+    j < 2;
+    ++j) {
 
     printf(") %c(", comp[j]);
-    for (int i = 0;
-         i < 2;
-         ++i) {
+    for (
+      int i = 0;
+      i < 2;
+      ++i) {
 
       printf("%f", that->comp[j][i]);
-      if (i < 1)
-        printf(",");
+      if (i < 1) printf(",");
 
     }
 
@@ -1264,29 +1337,30 @@ void Frame3DPrint(const Frame3D* const that) {
   }
 
   printf("o(");
-  for (int i = 0;
-       i < 3;
-       ++i) {
+  for (
+    int i = 0;
+    i < 3;
+    ++i) {
 
     printf("%f", that->orig[i]);
-    if (i < 2)
-      printf(",");
+    if (i < 2) printf(",");
 
   }
 
   char comp[3] = {'x', 'y', 'z'};
-  for (int j = 0;
-       j < 3;
-       ++j) {
+  for (
+    int j = 0;
+    j < 3;
+    ++j) {
 
     printf(") %c(", comp[j]);
-    for (int i = 0;
-         i < 3;
-         ++i) {
+    for (
+      int i = 0;
+      i < 3;
+      ++i) {
 
       printf("%f", that->comp[j][i]);
-      if (i < 2)
-        printf(",");
+      if (i < 2) printf(",");
 
     }
 
@@ -1309,40 +1383,41 @@ void Frame2DTimePrint(const Frame2DTime* const that) {
   }
 
   printf("o(");
-  for (int i = 0;
-       i < 2;
-       ++i) {
+  for (
+    int i = 0;
+    i < 2;
+    ++i) {
 
     printf("%f", that->orig[i]);
-    if (i < 1)
-      printf(",");
+    if (i < 1) printf(",");
 
   }
 
   printf(") s(");
-  for (int i = 0;
-       i < 2;
-       ++i) {
+  for (
+    int i = 0;
+    i < 2;
+    ++i) {
 
     printf("%f", that->speed[i]);
-    if (i < 1)
-      printf(",");
+    if (i < 1) printf(",");
 
   }
 
   char comp[2] = {'x', 'y'};
-  for (int j = 0;
-       j < 2;
-       ++j) {
+  for (
+    int j = 0;
+    j < 2;
+    ++j) {
 
     printf(") %c(", comp[j]);
-    for (int i = 0;
-         i < 2;
-         ++i) {
+    for (
+      int i = 0;
+      i < 2;
+      ++i) {
 
       printf("%f", that->comp[j][i]);
-      if (i < 1)
-        printf(",");
+      if (i < 1) printf(",");
 
     }
 
@@ -1365,40 +1440,41 @@ void Frame3DTimePrint(const Frame3DTime* const that) {
   }
 
   printf("o(");
-  for (int i = 0;
-       i < 3;
-       ++i) {
+  for (
+    int i = 0;
+    i < 3;
+    ++i) {
 
     printf("%f", that->orig[i]);
-    if (i < 2)
-      printf(",");
+    if (i < 2) printf(",");
 
   }
 
   printf(") s(");
-  for (int i = 0;
-       i < 3;
-       ++i) {
+  for (
+    int i = 0;
+    i < 3;
+    ++i) {
 
     printf("%f", that->speed[i]);
-    if (i < 2)
-      printf(",");
+    if (i < 2) printf(",");
 
   }
 
   char comp[3] = {'x', 'y', 'z'};
-  for (int j = 0;
-       j < 3;
-       ++j) {
+  for (
+    int j = 0;
+    j < 3;
+    ++j) {
 
     printf(") %c(", comp[j]);
-    for (int i = 0;
-         i < 3;
-         ++i) {
+    for (
+      int i = 0;
+      i < 3;
+      ++i) {
 
       printf("%f", that->comp[j][i]);
-      if (i < 2)
-        printf(",");
+      if (i < 2) printf(",");
 
     }
 
@@ -1411,18 +1487,12 @@ void Frame3DTimePrint(const Frame3DTime* const that) {
 // Power function for integer base and exponent
 // Return base^exp
 int powi(
-           int base,
+  int base,
   unsigned int exp) {
 
-    int res = 1;
-    for (;
-         exp;
-         --exp) {
+  int res = 1;
+  for (; exp; --exp) res *= base;
 
-      res *= base;
-
-    }
-
-    return res;
+  return res;
 
 }

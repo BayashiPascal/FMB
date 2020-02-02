@@ -27,11 +27,11 @@ int main(int argc, char** argv) {
   double origQ3D[3] = {0.0, 0.0, 0.0};
   double compQ3D[3][3] = {
 
-      {1.0, 0.0, 0.0},
-      {0.0, 1.0, 0.0},
-      {0.0, 0.0, 1.0}
+    {1.0, 0.0, 0.0},
+    {0.0, 1.0, 0.0},
+    {0.0, 0.0, 1.0}
 
-    };
+  };
   Frame3D Q3D =
     Frame3DCreateStatic(
       FrameTetrahedron,
@@ -63,8 +63,9 @@ int main(int argc, char** argv) {
       &bdgBox3D);
 
     // Clip with the AABB of 'Q3D' and 'P3D' to improve results
-    for (int iAxis = 3;
-         iAxis--;) {
+    for (
+      int iAxis = 3;
+      iAxis--;) {
 
       if (bdgBox3D.min[iAxis] < P3D.bdgBox.min[iAxis]) {
 

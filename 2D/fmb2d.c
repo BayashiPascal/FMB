@@ -24,11 +24,11 @@
 bool ElimVar2D(
   const double (*M)[2],
   const double* Y,
-     const int nbRows,
-     const int nbCols,
-        double (*Mp)[2],
-        double* Yp,
-    int* const nbRemainRows);
+  const int nbRows,
+  const int nbCols,
+  double (*Mp)[2],
+  double* Yp,
+  int* const nbRemainRows);
 
 // Get the bounds of the iVar-th variable in the nbRows rows
 // system M.X<=Y which has been reduced to only one variable
@@ -38,23 +38,23 @@ bool ElimVar2D(
 // May return inconsistent values (max < min), which would
 // mean the system has no solution
 void GetBoundLastVar2D(
-     const int iVar,
+  const int iVar,
   const double (*M)[2],
   const double* Y,
-     const int nbRows,
-   AABB2D* const bdgBox);
+  const int nbRows,
+  AABB2D* const bdgBox);
 
 // Get the bounds of the iVar-th variable in the nbRows rows
 // system M.X<=Y where the iVar-th variable is on the first column
 // and store them in the iVar-th axis of the AABB bdgBox
 // (M arrangement is [iRow][iCol])
 void GetBoundVar2D(
-     const int iVar,
+  const int iVar,
   const double (*M)[2],
   const double* Y,
-     const int nbRows,
-     const int nbCols,
-   AABB2D* const bdgBox);
+  const int nbRows,
+  const int nbCols,
+  AABB2D* const bdgBox);
 
 // ------------- Functions implementation -------------
 
@@ -68,21 +68,21 @@ void GetBoundVar2D(
 bool ElimVar2D(
   const double (*M)[2],
   const double* Y,
-     const int nbRows,
-     const int nbCols,
-        double (*Mp)[2],
-        double* Yp,
-    int* const nbRemainRows) {
+  const int nbRows,
+  const int nbCols,
+  double (*Mp)[2],
+  double* Yp,
+  int* const nbRemainRows) {
 
   // Initialize the number of rows in the result system
   int nbResRows = 0;
 
   // First we process the rows where the eliminated variable is not null
-
   // For each row except the last one
-  for (int iRow = 0;
-       iRow < nbRows - 1;
-       ++iRow) {
+  for (
+    int iRow = 0;
+    iRow < nbRows - 1;
+    ++iRow) {
 
     // Shortcuts
     const double fabsMIRowIVar = fabs(M[iRow][0]);
@@ -97,14 +97,16 @@ bool ElimVar2D(
       const double YIRowDivideByFabsMIRowIVar = Y[iRow] / fabsMIRowIVar;
 
       // For each following rows
-      for (int jRow = iRow + 1;
-           jRow < nbRows;
-           ++jRow) {
+      for (
+        int jRow = iRow + 1;
+        jRow < nbRows;
+        ++jRow) {
 
         // If coefficients of the eliminated variable in the two rows have
         // different signs and are not null
-        if (sgnMIRowIVar != sgn(M[jRow][0]) &&
-            fabs(M[jRow][0]) > EPSILON) {
+        if (
+          sgnMIRowIVar != sgn(M[jRow][0]) &&
+          fabs(M[jRow][0]) > EPSILON) {
 
           // Shortcuts
           const double* MjRow = M[jRow];
@@ -118,9 +120,10 @@ bool ElimVar2D(
           // variable) rows into the result system. This actually
           // eliminate the variable while keeping the constraints on
           // others variables
-          for (int iCol = 1;
-               iCol < nbCols;
-               ++iCol ) {
+          for (
+            int iCol = 1;
+            iCol < nbCols;
+            ++iCol ) {
 
             Mp[nbResRows][iCol - 1] =
               MiRow[iCol] / fabsMIRowIVar +
@@ -159,11 +162,11 @@ bool ElimVar2D(
 
   // Then we copy and compress the rows where the eliminated
   // variable is null
-
   // Loop on rows of the input system
-  for (int iRow = 0;
-       iRow < nbRows;
-       ++iRow) {
+  for (
+    int iRow = 0;
+    iRow < nbRows;
+    ++iRow) {
 
     // Shortcut
     const double* MiRow = M[iRow];
@@ -177,9 +180,10 @@ bool ElimVar2D(
 
       // Copy this row into the result system excluding the eliminated
       // variable
-      for (int iCol = 1;
-           iCol < nbCols;
-           ++iCol) {
+      for (
+        int iCol = 1;
+        iCol < nbCols;
+        ++iCol) {
 
         MpnbResRows[iCol - 1] = MiRow[iCol];
 
@@ -210,11 +214,11 @@ bool ElimVar2D(
 // May return inconsistent values (max < min), which would
 // mean the system has no solution
 void GetBoundLastVar2D(
-     const int iVar,
+  const int iVar,
   const double (*M)[2],
   const double* Y,
-     const int nbRows,
-   AABB2D* const bdgBox) {
+  const int nbRows,
+  AABB2D* const bdgBox) {
 
   // Shortcuts
   double* min = bdgBox->min + iVar;
@@ -225,9 +229,10 @@ void GetBoundLastVar2D(
   *max = 1.0;
 
   // Loop on rows
-  for (int jRow = 0;
-       jRow < nbRows;
-       ++jRow) {
+  for (
+    int jRow = 0;
+    jRow < nbRows;
+    ++jRow) {
 
     // Shortcut
     double MjRowiVar = M[jRow][0];
@@ -273,12 +278,12 @@ void GetBoundLastVar2D(
 // and store them in the iVar-th axis of the AABB bdgBox
 // (M arrangement is [iRow][iCol])
 void GetBoundVar2D(
-     const int iVar,
+  const int iVar,
   const double (*M)[2],
   const double* Y,
-     const int nbRows,
-     const int nbCols,
-   AABB2D* const bdgBox) {
+  const int nbRows,
+  const int nbCols,
+  AABB2D* const bdgBox) {
 
   // Shortcuts
   double* bdgBoxMin = bdgBox->min;
@@ -289,9 +294,10 @@ void GetBoundVar2D(
   bdgBoxMax[iVar] = 1.0;
 
   // Loop on the rows
-  for (int iRow = 0;
-       iRow < nbRows;
-       ++iRow) {
+  for (
+    int iRow = 0;
+    iRow < nbRows;
+    ++iRow) {
 
     // Shortcuts
     const double* MIRow = M[iRow];
@@ -307,9 +313,10 @@ void GetBoundVar2D(
 
       // Loop on columns except the first one which is the one of the
       // requested variable
-      for (int iCol = 1;
-           iCol < nbCols;
-           ++iCol) {
+      for (
+        int iCol = 1;
+        iCol < nbCols;
+        ++iCol) {
 
         if (MIRow[iCol] > EPSILON) {
 
@@ -358,7 +365,7 @@ void GetBoundVar2D(
 bool FMBTestIntersection2D(
   const Frame2D* const that,
   const Frame2D* const tho,
-         AABB2D* const bdgBox) {
+  AABB2D* const bdgBox) {
 
   // Get the projection of the Frame 'tho' in Frame 'that' coordinates
   // system
@@ -371,19 +378,24 @@ bool FMBTestIntersection2D(
   double Y[8];
 
   // Create the inequality system
-
   // -sum_iC_j,iX_i<=O_j
   M[0][0] = -thoProj.comp[0][0];
   M[0][1] = -thoProj.comp[1][0];
   Y[0] = thoProj.orig[0];
-  if (Y[0] < neg(M[0][0]) + neg(M[0][1]))
+  if (Y[0] < neg(M[0][0]) + neg(M[0][1])) {
+
     return false;
+
+  }
 
   M[1][0] = -thoProj.comp[0][1];
   M[1][1] = -thoProj.comp[1][1];
   Y[1] = thoProj.orig[1];
-  if (Y[1] < neg(M[1][0]) + neg(M[1][1]))
+  if (Y[1] < neg(M[1][0]) + neg(M[1][1])) {
+
     return false;
+
+  }
 
   // Variable to memorise the nb of rows in the system
   int nbRows = 2;
@@ -394,15 +406,23 @@ bool FMBTestIntersection2D(
     M[nbRows][0] = thoProj.comp[0][0];
     M[nbRows][1] = thoProj.comp[1][0];
     Y[nbRows] = 1.0 - thoProj.orig[0];
-    if (Y[nbRows] < neg(M[nbRows][0]) + neg(M[nbRows][1]))
+    if (Y[nbRows] < neg(M[nbRows][0]) + neg(M[nbRows][1])) {
+
       return false;
+
+    }
+
     ++nbRows;
 
     M[nbRows][0] = thoProj.comp[0][1];
     M[nbRows][1] = thoProj.comp[1][1];
     Y[nbRows] = 1.0 - thoProj.orig[1];
-    if (Y[nbRows] < neg(M[nbRows][0]) + neg(M[nbRows][1]))
+    if (Y[nbRows] < neg(M[nbRows][0]) + neg(M[nbRows][1])) {
+
       return false;
+
+    }
+
     ++nbRows;
 
   } else {
@@ -411,8 +431,12 @@ bool FMBTestIntersection2D(
     M[nbRows][0] = thoProj.comp[0][0] + thoProj.comp[0][1];
     M[nbRows][1] = thoProj.comp[1][0] + thoProj.comp[1][1];
     Y[nbRows] = 1.0 - thoProj.orig[0] - thoProj.orig[1];
-    if (Y[nbRows] < neg(M[nbRows][0]) + neg(M[nbRows][1]))
+    if (Y[nbRows] < neg(M[nbRows][0]) + neg(M[nbRows][1])) {
+
       return false;
+
+    }
+
     ++nbRows;
 
   }
@@ -452,7 +476,6 @@ bool FMBTestIntersection2D(
   ++nbRows;
 
   // Solve the system
-
   // Declare a AABB to memorize the bounding box of the intersection
   // in the coordinates system of tho
   AABB2D bdgBoxLocal = {
@@ -513,14 +536,13 @@ bool FMBTestIntersection2D(
 
     // Get the bounds of the first variable from the bounds of the
     // second one
-
     GetBoundVar2D(
-       FST_VAR,
-       M,
-       Y,
-       nbRows,
-       2,
-       &bdgBoxLocal);
+      FST_VAR,
+      M,
+      Y,
+      nbRows,
+      2,
+      &bdgBoxLocal);
 
     // Memorize the result
     *bdgBox = bdgBoxLocal;

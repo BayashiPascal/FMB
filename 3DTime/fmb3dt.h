@@ -19,6 +19,6 @@
 bool FMBTestIntersection3DTime(
   const Frame3DTime* const that,
   const Frame3DTime* const tho,
-         AABB3DTime* const bdgBox);
+  AABB3DTime* const bdgBox);
 
 #endif

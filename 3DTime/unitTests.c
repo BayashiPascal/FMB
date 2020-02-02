@@ -25,9 +25,9 @@ typedef struct {
 // Run the FMB intersection detection alogirhtm on the Frames
 // and check against the correct results
 void UnitTest3DTime(
-        const Param3DTime paramP,
-        const Param3DTime paramQ,
-         const bool correctAnswer,
+  const Param3DTime paramP,
+  const Param3DTime paramQ,
+  const bool correctAnswer,
   const AABB3DTime* const correctBdgBox) {
 
   // Create the two Frames
@@ -48,13 +48,14 @@ void UnitTest3DTime(
   // Declare a variable to memorize the resulting bounding box
   AABB3DTime bdgBoxLocal;
 
-  // Helper variables to loop on the pair (that, tho) and (tho, that)
+  // Helper variables to loop on the pairs (that, tho) and (tho, that)
   Frame3DTime* that = &P;
   Frame3DTime* tho = &Q;
 
   // Loop on pairs of Frames
-  for (int iPair = 2;
-       iPair--;) {
+  for (
+    int iPair = 2;
+    iPair--;) {
 
     // Display the tested frames
     Frame3DTimePrint(that);
@@ -75,12 +76,10 @@ void UnitTest3DTime(
       // Display information about the failure
       printf(" Failed\n");
       printf("Expected : ");
-      if (correctAnswer == false)
-        printf("no ");
+      if (correctAnswer == false) printf("no ");
       printf("intersection\n");
       printf("Got : ");
-      if (isIntersecting == false)
-        printf("no ");
+      if (isIntersecting == false) printf("no ");
       printf("intersection\n");
       exit(0);
 
@@ -98,11 +97,13 @@ void UnitTest3DTime(
 
         // Check the bounding box
         bool flag = true;
-        for (int i = 4;
-             i--;) {
+        for (
+          int i = 4;
+          i--;) {
 
-          if (bdgBox.min[i] > correctBdgBox->min[i] + EPSILON ||
-              bdgBox.max[i] < correctBdgBox->max[i] - EPSILON) {
+          if (
+            bdgBox.min[i] > correctBdgBox->min[i] + EPSILON ||
+            bdgBox.max[i] < correctBdgBox->max[i] - EPSILON) {
 
             flag = false;
 
@@ -167,24 +168,23 @@ void Test3DTime(void) {
   AABB3DTime correctBdgBox;
 
   // Execute the unit test on various cases
-
   // ----------------------------
   paramP = (Param3DTime) {
 
-      .type = FrameCuboid,
-      .orig = {0.0, 0.0, 0.0},
-      .comp = {{1.0, 0.0, 0.0}, {0.0, 1.0, 0.0}, {0.0, 0.0, 1.0}},
-      .speed = {0.0, 0.0, 0.0}
+    .type = FrameCuboid,
+    .orig = {0.0, 0.0, 0.0},
+    .comp = {{1.0, 0.0, 0.0}, {0.0, 1.0, 0.0}, {0.0, 0.0, 1.0}},
+    .speed = {0.0, 0.0, 0.0}
 
-    };
+  };
   paramQ = (Param3DTime) {
 
-      .type = FrameCuboid,
-      .orig = {-1.0, 0.0, 0.0},
-      .comp = {{1.0, 0.0, 0.0}, {0.0, 1.0, 0.0}, {0.0, 0.0, 1.0}},
-      .speed = {-1.0, 0.0, 0.0}
+    .type = FrameCuboid,
+    .orig = {-1.0, 0.0, 0.0},
+    .comp = {{1.0, 0.0, 0.0}, {0.0, 1.0, 0.0}, {0.0, 0.0, 1.0}},
+    .speed = {-1.0, 0.0, 0.0}
 
-    };
+  };
   UnitTest3DTime(
     paramP,
     paramQ,
@@ -194,20 +194,20 @@ void Test3DTime(void) {
   // ----------------------------
   paramP = (Param3DTime) {
 
-      .type = FrameCuboid,
-      .orig = {0.0, 0.0, 0.0},
-      .comp = {{1.0, 0.0, 0.0}, {0.0, 1.0, 0.0}, {0.0, 0.0, 1.0}},
-      .speed = {0.0, 0.0, 0.0}
+    .type = FrameCuboid,
+    .orig = {0.0, 0.0, 0.0},
+    .comp = {{1.0, 0.0, 0.0}, {0.0, 1.0, 0.0}, {0.0, 0.0, 1.0}},
+    .speed = {0.0, 0.0, 0.0}
 
-    };
+  };
   paramQ = (Param3DTime) {
 
-      .type = FrameCuboid,
-      .orig = {-1.01, -1.01, 0.0},
-      .comp = {{1.0, 0.0, 0.0}, {0.0, 1.0, 0.0}, {0.0, 0.0, 1.0}},
-      .speed = {1.0, 0.0, 0.0}
+    .type = FrameCuboid,
+    .orig = {-1.01, -1.01, 0.0},
+    .comp = {{1.0, 0.0, 0.0}, {0.0, 1.0, 0.0}, {0.0, 0.0, 1.0}},
+    .speed = {1.0, 0.0, 0.0}
 
-    };
+  };
   UnitTest3DTime(
     paramP,
     paramQ,
@@ -217,26 +217,26 @@ void Test3DTime(void) {
   // ----------------------------
   paramP = (Param3DTime) {
 
-      .type = FrameCuboid,
-      .orig = {0.0, 0.0, 0.0},
-      .comp = {{1.0, 0.0, 0.0}, {0.0, 1.0, 0.0}, {0.0, 0.0, 1.0}},
-      .speed = {0.0, 0.0, 0.0}
+    .type = FrameCuboid,
+    .orig = {0.0, 0.0, 0.0},
+    .comp = {{1.0, 0.0, 0.0}, {0.0, 1.0, 0.0}, {0.0, 0.0, 1.0}},
+    .speed = {0.0, 0.0, 0.0}
 
-    };
+  };
   paramQ = (Param3DTime) {
 
-      .type = FrameCuboid,
-      .orig = {-1.0, 0.0, 0.0},
-      .comp = {{1.0, 0.0, 0.0}, {0.0, 1.0, 0.0}, {0.0, 0.0, 1.0}},
-      .speed = {1.0, 0.0, 0.0}
+    .type = FrameCuboid,
+    .orig = {-1.0, 0.0, 0.0},
+    .comp = {{1.0, 0.0, 0.0}, {0.0, 1.0, 0.0}, {0.0, 0.0, 1.0}},
+    .speed = {1.0, 0.0, 0.0}
 
-    };
+  };
   correctBdgBox = (AABB3DTime) {
 
-      .min = {0.0, 0.0, 0.0, 0.0},
-      .max = {1.0, 1.0, 1.0, 1.0}
+    .min = {0.0, 0.0, 0.0, 0.0},
+    .max = {1.0, 1.0, 1.0, 1.0}
 
-    };
+  };
   UnitTest3DTime(
     paramP,
     paramQ,
@@ -246,26 +246,26 @@ void Test3DTime(void) {
   // ----------------------------
   paramP = (Param3DTime) {
 
-      .type = FrameCuboid,
-      .orig = {0.0, 0.0, 0.0},
-      .comp = {{1.0, 0.0, 0.0}, {0.0, 1.0, 0.0}, {0.0, 0.0, 1.0}},
-      .speed = {0.0, 0.0, 0.0}
+    .type = FrameCuboid,
+    .orig = {0.0, 0.0, 0.0},
+    .comp = {{1.0, 0.0, 0.0}, {0.0, 1.0, 0.0}, {0.0, 0.0, 1.0}},
+    .speed = {0.0, 0.0, 0.0}
 
-    };
+  };
   paramQ = (Param3DTime) {
 
-      .type = FrameCuboid,
-      .orig = {-1.0, 0.25, 0.0},
-      .comp = {{0.5, 0.0, 0.0}, {0.0, 0.5, 0.0}, {0.0, 0.0, 1.0}},
-      .speed = {4.0, 0.0, 0.0}
+    .type = FrameCuboid,
+    .orig = {-1.0, 0.25, 0.0},
+    .comp = {{0.5, 0.0, 0.0}, {0.0, 0.5, 0.0}, {0.0, 0.0, 1.0}},
+    .speed = {4.0, 0.0, 0.0}
 
-    };
+  };
   correctBdgBox = (AABB3DTime) {
 
     .min = {0.0, 0.25, 0.0, 0.125},
     .max = {1.0, 0.75, 1.0, 0.5}
 
-    };
+  };
   UnitTest3DTime(
     paramP,
     paramQ,
@@ -275,26 +275,26 @@ void Test3DTime(void) {
   // ----------------------------
   paramP = (Param3DTime) {
 
-      .type = FrameCuboid,
-      .orig = {0.0, 0.0, 0.0},
-      .comp = {{1.0, 0.0, 0.0}, {0.0, 1.0, 0.0}, {0.0, 0.0, 1.0}},
-      .speed = {0.0, 0.0, 0.0}
+    .type = FrameCuboid,
+    .orig = {0.0, 0.0, 0.0},
+    .comp = {{1.0, 0.0, 0.0}, {0.0, 1.0, 0.0}, {0.0, 0.0, 1.0}},
+    .speed = {0.0, 0.0, 0.0}
 
-    };
+  };
   paramQ = (Param3DTime) {
 
-      .type = FrameCuboid,
-      .orig = {0.25, -1.0, 0.0},
-      .comp = {{0.5, 0.0, 0.0}, {0.0, 0.5, 0.0}, {0.0, 0.0, 1.0}},
-      .speed = {0.0, 4.0, 0.0}
+    .type = FrameCuboid,
+    .orig = {0.25, -1.0, 0.0},
+    .comp = {{0.5, 0.0, 0.0}, {0.0, 0.5, 0.0}, {0.0, 0.0, 1.0}},
+    .speed = {0.0, 4.0, 0.0}
 
-    };
+  };
   correctBdgBox = (AABB3DTime) {
 
-      .min = {0.25, 0.0, 0.0, 0.125},
-      .max = {0.75, 1.0, 1.0, 0.5}
+    .min = {0.25, 0.0, 0.0, 0.125},
+    .max = {0.75, 1.0, 1.0, 0.5}
 
-    };
+  };
   UnitTest3DTime(
     paramP,
     paramQ,
@@ -304,26 +304,26 @@ void Test3DTime(void) {
   // ----------------------------
   paramP = (Param3DTime) {
 
-      .type = FrameCuboid,
-      .orig = {0.0, 0.0, 0.0},
-      .comp = {{1.0, 0.0, 0.0}, {0.0, 1.0, 0.0}, {0.0, 0.0, 1.0}},
-      .speed = {0.0, 0.0, 0.0}
+    .type = FrameCuboid,
+    .orig = {0.0, 0.0, 0.0},
+    .comp = {{1.0, 0.0, 0.0}, {0.0, 1.0, 0.0}, {0.0, 0.0, 1.0}},
+    .speed = {0.0, 0.0, 0.0}
 
-    };
+  };
   paramQ = (Param3DTime) {
 
-      .type = FrameCuboid,
-      .orig = {0.9, -1.0, 0.0},
-      .comp = {{0.5, 0.0, 0.0}, {0.0, 0.5, 0.0}, {0.0, 0.0, 1.0}},
-      .speed = {0.0, 4.0, 0.0}
+    .type = FrameCuboid,
+    .orig = {0.9, -1.0, 0.0},
+    .comp = {{0.5, 0.0, 0.0}, {0.0, 0.5, 0.0}, {0.0, 0.0, 1.0}},
+    .speed = {0.0, 4.0, 0.0}
 
-    };
+  };
   correctBdgBox = (AABB3DTime) {
 
-      .min = {0.9, 0.0, 0.0, 0.125},
-      .max = {1.0, 1.0, 1.0, 0.5}
+    .min = {0.9, 0.0, 0.0, 0.125},
+    .max = {1.0, 1.0, 1.0, 0.5}
 
-    };
+  };
   UnitTest3DTime(
     paramP,
     paramQ,

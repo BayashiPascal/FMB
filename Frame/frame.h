@@ -140,66 +140,66 @@ void Frame3DTimePrint(const Frame3DTime* const that);
 // and speed
 Frame2D Frame2DCreateStatic(
   const FrameType type,
-     const double orig[2],
-     const double comp[2][2]);
+  const double orig[2],
+  const double comp[2][2]);
 Frame3D Frame3DCreateStatic(
   const FrameType type,
-     const double orig[3],
-     const double comp[3][3]);
+  const double orig[3],
+  const double comp[3][3]);
 Frame2DTime Frame2DTimeCreateStatic(
   const FrameType type,
-     const double orig[2],
-     const double speed[2],
-     const double comp[2][2]);
+  const double orig[2],
+  const double speed[2],
+  const double comp[2][2]);
 Frame3DTime Frame3DTimeCreateStatic(
   const FrameType type,
-     const double orig[3],
-     const double speed[3],
-     const double comp[3][3]);
+  const double orig[3],
+  const double speed[3],
+  const double comp[3][3]);
 
 // Project the Frame Q in the Frame P's coordinates system and
 // memorize the result in the Frame Qp
 void Frame2DImportFrame(
   const Frame2D* const P,
   const Frame2D* const Q,
-        Frame2D* const Qp);
+  Frame2D* const Qp);
 void Frame3DImportFrame(
   const Frame3D* const P,
   const Frame3D* const Q,
-        Frame3D* const Qp);
+  Frame3D* const Qp);
 void Frame2DTimeImportFrame(
   const Frame2DTime* const P,
   const Frame2DTime* const Q,
-        Frame2DTime* const Qp);
+  Frame2DTime* const Qp);
 void Frame3DTimeImportFrame(
   const Frame3DTime* const P,
   const Frame3DTime* const Q,
-        Frame3DTime* const Qp);
+  Frame3DTime* const Qp);
 
 // Export the AABB bdgBox from that's coordinates system to
 // the real coordinates system and update bdgBoxProj with the resulting
 // AABB
 void Frame2DExportBdgBox(
   const Frame2D* const that,
-   const AABB2D* const bdgBox,
-         AABB2D* const bdgBoxProj);
+  const AABB2D* const bdgBox,
+  AABB2D* const bdgBoxProj);
 void Frame3DExportBdgBox(
   const Frame3D* const that,
-   const AABB3D* const bdgBox,
-         AABB3D* const bdgBoxProj);
+  const AABB3D* const bdgBox,
+  AABB3D* const bdgBoxProj);
 void Frame2DTimeExportBdgBox(
   const Frame2DTime* const that,
-   const AABB2DTime* const bdgBox,
-         AABB2DTime* const bdgBoxProj);
+  const AABB2DTime* const bdgBox,
+  AABB2DTime* const bdgBoxProj);
 void Frame3DTimeExportBdgBox(
   const Frame3DTime* const that,
-   const AABB3DTime* const bdgBox,
-         AABB3DTime* const bdgBoxProj);
+  const AABB3DTime* const bdgBox,
+  AABB3DTime* const bdgBoxProj);
 
 // Power function for integer base and exponent
 // Return base^exp
 int powi(
-           int base,
+  int base,
   unsigned int exp);
 
 #endif

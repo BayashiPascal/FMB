@@ -32,8 +32,9 @@ bool SATTestIntersection2D(
 
   // Loop to commonalize code when checking SAT based on that's edges
   // and then tho's edges
-  for (int iFrame = 2;
-       iFrame--;) {
+  for (
+    int iFrame = 2;
+    iFrame--;) {
 
     // Shortcuts
     FrameType frameEdgeType = frameEdge->type;
@@ -60,8 +61,9 @@ bool SATTestIntersection2D(
     }
 
     // Loop on the frame's edges
-    for (int iEdge = nbEdges;
-         iEdge--;) {
+    for (
+      int iEdge = nbEdges;
+      iEdge--;) {
 
       // Get the current edge
       const double* edge =
@@ -77,8 +79,9 @@ bool SATTestIntersection2D(
       double* bdgBox = bdgBoxA;
 
       // Loop on Frames
-      for (int iFrame = 2;
-           iFrame--;) {
+      for (
+        int iFrame = 2;
+        iFrame--;) {
 
         // Shortcuts
         const double* frameOrig = frame->orig;
@@ -94,8 +97,9 @@ bool SATTestIntersection2D(
         bool firstVertex = true;
 
         // Loop on vertices of the frame
-        for (int iVertex = nbVertices;
-             iVertex--;) {
+        for (
+          int iVertex = nbVertices;
+          iVertex--;) {
 
           // Get the vertex
           double vertex[2];
@@ -128,24 +132,30 @@ bool SATTestIntersection2D(
           // If it's the first vertex
           if (firstVertex == true) {
 
-              // Initialize the boundaries of the projection of the
-              // Frame on the edge
-              bdgBox[0] = proj;
-              bdgBox[1] = proj;
+            // Initialize the boundaries of the projection of the
+            // Frame on the edge
+            bdgBox[0] = proj;
+            bdgBox[1] = proj;
 
-              // Update the flag to memorize we did the first vertex
-              firstVertex = false;
+            // Update the flag to memorize we did the first vertex
+            firstVertex = false;
 
           // Else, it's not the first vertex
           } else {
 
             // Update the boundaries of the projection of the Frame on
             // the edge
-            if (bdgBox[0] > proj)
+            if (bdgBox[0] > proj) {
+
               bdgBox[0] = proj;
 
-            if (bdgBox[1] < proj)
+            }
+
+            if (bdgBox[1] < proj) {
+
               bdgBox[1] = proj;
+
+            }
 
           }
 
@@ -159,12 +169,13 @@ bool SATTestIntersection2D(
 
       // If the projections of the two frames on the edge are
       // not intersecting
-      if (bdgBoxB[1] < bdgBoxA[0] ||
-          bdgBoxA[1] < bdgBoxB[0]) {
+      if (
+        bdgBoxB[1] < bdgBoxA[0] ||
+        bdgBoxA[1] < bdgBoxB[0]) {
 
-         // There exists an axis which separates the Frames,
-         // thus they are not in intersection
-         return false;
+        // There exists an axis which separates the Frames,
+        // thus they are not in intersection
+        return false;
 
       }
 
@@ -197,8 +208,9 @@ bool SATTestIntersection2DTime(
 
   // Loop to commonalize code when checking SAT based on that's edges
   // and then tho's edges
-  for (int iFrame = 2;
-       iFrame--;) {
+  for (
+    int iFrame = 2;
+    iFrame--;) {
 
     // Shortcuts
     FrameType frameEdgeType = frameEdge->type;
@@ -234,15 +246,34 @@ bool SATTestIntersection2DTime(
     }
 
     // Loop on the frame's edges
-    for (int iEdge = nbEdges;
-         iEdge--;) {
+    for (
+      int iEdge = nbEdges;
+      iEdge--;) {
 
       // Get the current edge
-      const double* edge =
-        (iEdge == 3 ? relSpeed :
-          (iEdge == 2 ?
-            (frameEdgeType == FrameTetrahedron ? thirdEdge : relSpeed) :
-            frameEdge->comp[iEdge]));
+      const double* edge = 0;
+
+      if (iEdge == 3) {
+
+        edge = relSpeed;
+
+      } else if (iEdge == 2) {
+
+        if (frameEdgeType == FrameTetrahedron) {
+
+          edge = thirdEdge;
+
+        } else {
+
+          edge = relSpeed;
+
+        }
+
+      } else {
+
+        edge = frameEdge->comp[iEdge];
+
+      }
 
       // Declare variables to memorize the boundaries of projection
       // of the two frames on the current edge
@@ -254,8 +285,9 @@ bool SATTestIntersection2DTime(
       double* bdgBox = bdgBoxA;
 
       // Loop on Frames
-      for (int iFrame = 2;
-           iFrame--;) {
+      for (
+        int iFrame = 2;
+        iFrame--;) {
 
         // Shortcuts
         const double* frameOrig = frame->orig;
@@ -271,8 +303,9 @@ bool SATTestIntersection2DTime(
         bool firstVertex = true;
 
         // Loop on vertices of the frame
-        for (int iVertex = nbVertices;
-             iVertex--;) {
+        for (
+          int iVertex = nbVertices;
+          iVertex--;) {
 
           // Get the vertex
           double vertex[2];
@@ -305,24 +338,30 @@ bool SATTestIntersection2DTime(
           // If it's the first vertex
           if (firstVertex == true) {
 
-              // Initialize the boundaries of the projection of the
-              // Frame on the edge
-              bdgBox[0] = proj;
-              bdgBox[1] = proj;
+            // Initialize the boundaries of the projection of the
+            // Frame on the edge
+            bdgBox[0] = proj;
+            bdgBox[1] = proj;
 
-              // Update the flag to memorize we did the first vertex
-              firstVertex = false;
+            // Update the flag to memorize we did the first vertex
+            firstVertex = false;
 
           // Else, it's not the first vertex
           } else {
 
             // Update the boundaries of the projection of the Frame on
             // the edge
-            if (bdgBox[0] > proj)
+            if (bdgBox[0] > proj) {
+
               bdgBox[0] = proj;
 
-            if (bdgBox[1] < proj)
+            }
+
+            if (bdgBox[1] < proj) {
+
               bdgBox[1] = proj;
+
+            }
 
           }
 
@@ -335,11 +374,17 @@ bool SATTestIntersection2DTime(
 
             proj = vertex[0] * edge[1] - vertex[1] * edge[0];
 
-            if (bdgBox[0] > proj)
+            if (bdgBox[0] > proj) {
+
               bdgBox[0] = proj;
 
-            if (bdgBox[1] < proj)
+            }
+
+            if (bdgBox[1] < proj) {
+
               bdgBox[1] = proj;
+
+            }
 
           }
 
@@ -353,12 +398,13 @@ bool SATTestIntersection2DTime(
 
       // If the projections of the two frames on the edge are
       // not intersecting
-      if (bdgBoxB[1] < bdgBoxA[0] ||
-          bdgBoxA[1] < bdgBoxB[0]) {
+      if (
+        bdgBoxB[1] < bdgBoxA[0] ||
+        bdgBoxA[1] < bdgBoxB[0]) {
 
-         // There exists an axis which separates the Frames,
-         // thus they are not in intersection
-         return false;
+        // There exists an axis which separates the Frames,
+        // thus they are not in intersection
+        return false;
 
       }
 
@@ -447,8 +493,9 @@ bool SATTestIntersection3D(
 
   // Loop to commonalize code when checking SAT based on that's edges
   // and then tho's edges
-  for (int iFrame = 2;
-       iFrame--;) {
+  for (
+    int iFrame = 2;
+    iFrame--;) {
 
     // Shortcuts
     FrameType frameType = frame->type;
@@ -518,8 +565,9 @@ bool SATTestIntersection3D(
     }
 
     // Loop on the frame's faces
-    for (int iFace = nbFaces;
-         iFace--;) {
+    for (
+      int iFace = nbFaces;
+      iFace--;) {
 
       // Check against the current face's normal
       bool isIntersection =
@@ -546,23 +594,37 @@ bool SATTestIntersection3D(
   }
 
   // Loop on the pair of edges between the two frames
-  for (int iEdgeThat = nbEdgesThat;
-       iEdgeThat--;) {
+  for (
+    int iEdgeThat = nbEdgesThat;
+    iEdgeThat--;) {
 
     // Get the first edge
-    const double* edgeThat =
-      (iEdgeThat < 3 ?
-        that->comp[iEdgeThat] :
-        oppEdgesThat[iEdgeThat - 3]);
+    const double* edgeThat = NULL;
+    if (iEdgeThat < 3) {
 
-    for (int iEdgeTho = nbEdgesTho;
-         iEdgeTho--;) {
+      edgeThat = that->comp[iEdgeThat];
+
+    } else {
+
+      edgeThat = oppEdgesThat[iEdgeThat - 3];
+
+    }
+
+    for (
+      int iEdgeTho = nbEdgesTho;
+      iEdgeTho--;) {
 
       // Get the second edge
-      const double* edgeTho =
-        (iEdgeTho < 3 ?
-          tho->comp[iEdgeTho] :
-          oppEdgesTho[iEdgeTho - 3]);
+      const double* edgeTho = NULL;
+      if (iEdgeTho < 3) {
+
+        edgeTho = tho->comp[iEdgeTho];
+
+      } else {
+
+        edgeTho = oppEdgesTho[iEdgeTho - 3];
+
+      }
 
       // Get the cross product of the two edges
       double axis[3];
@@ -675,8 +737,9 @@ bool SATTestIntersection3DTime(
 
   // Loop to commonalize code when checking SAT based on that's edges
   // and then tho's edges
-  for (int iFrame = 2;
-       iFrame--;) {
+  for (
+    int iFrame = 2;
+    iFrame--;) {
 
     // Shortcuts
     FrameType frameType = frame->type;
@@ -750,7 +813,6 @@ bool SATTestIntersection3DTime(
 
       // Add the normal to the virtual faces created by the speed
       // of tho relative to that
-
       normFaces[nbFaces][0] =
         relSpeed[1] * frameCompA[2] -
         relSpeed[2] * frameCompA[1];
@@ -760,10 +822,14 @@ bool SATTestIntersection3DTime(
       normFaces[nbFaces][2] =
         relSpeed[0] * frameCompA[1] -
         relSpeed[1] * frameCompA[0];
-      if (fabs(normFaces[nbFaces][0]) > EPSILON ||
-          fabs(normFaces[nbFaces][1]) > EPSILON ||
-          fabs(normFaces[nbFaces][2]) > EPSILON)
+      if (
+        fabs(normFaces[nbFaces][0]) > EPSILON ||
+        fabs(normFaces[nbFaces][1]) > EPSILON ||
+        fabs(normFaces[nbFaces][2]) > EPSILON) {
+
         ++nbFaces;
+
+      }
 
       normFaces[nbFaces][0] =
         relSpeed[1] * frameCompB[2] -
@@ -774,10 +840,14 @@ bool SATTestIntersection3DTime(
       normFaces[nbFaces][2] =
         relSpeed[0] * frameCompB[1] -
         relSpeed[1] * frameCompB[0];
-      if (fabs(normFaces[nbFaces][0]) > EPSILON ||
-          fabs(normFaces[nbFaces][1]) > EPSILON ||
-          fabs(normFaces[nbFaces][2]) > EPSILON)
+      if (
+        fabs(normFaces[nbFaces][0]) > EPSILON ||
+        fabs(normFaces[nbFaces][1]) > EPSILON ||
+        fabs(normFaces[nbFaces][2]) > EPSILON) {
+
         ++nbFaces;
+
+      }
 
       normFaces[nbFaces][0] =
         relSpeed[1] * frameCompC[2] -
@@ -788,10 +858,14 @@ bool SATTestIntersection3DTime(
       normFaces[nbFaces][2] =
         relSpeed[0] * frameCompC[1] -
         relSpeed[1] * frameCompC[0];
-      if (fabs(normFaces[nbFaces][0]) > EPSILON ||
-          fabs(normFaces[nbFaces][1]) > EPSILON ||
-          fabs(normFaces[nbFaces][2]) > EPSILON)
+      if (
+        fabs(normFaces[nbFaces][0]) > EPSILON ||
+        fabs(normFaces[nbFaces][1]) > EPSILON ||
+        fabs(normFaces[nbFaces][2]) > EPSILON) {
+
         ++nbFaces;
+
+      }
 
       if (frameType == FrameTetrahedron) {
 
@@ -808,10 +882,14 @@ bool SATTestIntersection3DTime(
         normFaces[nbFaces][2] =
           relSpeed[0] * oppEdgeA[1] -
           relSpeed[1] * oppEdgeA[0];
-        if (fabs(normFaces[nbFaces][0]) > EPSILON ||
-            fabs(normFaces[nbFaces][1]) > EPSILON ||
-            fabs(normFaces[nbFaces][2]) > EPSILON)
+        if (
+          fabs(normFaces[nbFaces][0]) > EPSILON ||
+          fabs(normFaces[nbFaces][1]) > EPSILON ||
+          fabs(normFaces[nbFaces][2]) > EPSILON) {
+
           ++nbFaces;
+
+        }
 
         normFaces[nbFaces][0] =
           relSpeed[1] * oppEdgeB[2] -
@@ -822,10 +900,14 @@ bool SATTestIntersection3DTime(
         normFaces[nbFaces][2] =
           relSpeed[0] * oppEdgeB[1] -
           relSpeed[1] * oppEdgeB[0];
-        if (fabs(normFaces[nbFaces][0]) > EPSILON ||
-            fabs(normFaces[nbFaces][1]) > EPSILON ||
-            fabs(normFaces[nbFaces][2]) > EPSILON)
+        if (
+          fabs(normFaces[nbFaces][0]) > EPSILON ||
+          fabs(normFaces[nbFaces][1]) > EPSILON ||
+          fabs(normFaces[nbFaces][2]) > EPSILON) {
+
           ++nbFaces;
+
+        }
 
         normFaces[nbFaces][0] =
           relSpeed[1] * oppEdgeC[2] -
@@ -836,18 +918,23 @@ bool SATTestIntersection3DTime(
         normFaces[nbFaces][2] =
           relSpeed[0] * oppEdgeC[1] -
           relSpeed[1] * oppEdgeC[0];
-        if (fabs(normFaces[nbFaces][0]) > EPSILON ||
-            fabs(normFaces[nbFaces][1]) > EPSILON ||
-            fabs(normFaces[nbFaces][2]) > EPSILON)
+        if (
+          fabs(normFaces[nbFaces][0]) > EPSILON ||
+          fabs(normFaces[nbFaces][1]) > EPSILON ||
+          fabs(normFaces[nbFaces][2]) > EPSILON) {
+
           ++nbFaces;
+
+        }
 
       }
 
     }
 
     // Loop on the frame's faces
-    for (int iFace = nbFaces;
-         iFace--;) {
+    for (
+      int iFace = nbFaces;
+      iFace--;) {
 
       // Check against the current face's normal
       bool isIntersection =
@@ -875,25 +962,41 @@ bool SATTestIntersection3DTime(
   }
 
   // Loop on the pair of edges between the two frames
-  for (int iEdgeThat = nbEdgesThat;
-       iEdgeThat--;) {
+  for (
+    int iEdgeThat = nbEdgesThat;
+    iEdgeThat--;) {
 
     // Get the first edge
-    const double* edgeThat =
-      (iEdgeThat < 3 ?
-        that->comp[iEdgeThat] :
-        oppEdgesThat[iEdgeThat - 3]);
+    const double* edgeThat = NULL;
+    if (iEdgeThat < 3) {
 
-    for (int iEdgeTho = nbEdgesTho + 1;
-         iEdgeTho--;) {
+      edgeThat = that->comp[iEdgeThat];
+
+    } else {
+
+      edgeThat = oppEdgesThat[iEdgeThat - 3];
+
+    }
+
+    for (
+      int iEdgeTho = nbEdgesTho + 1;
+      iEdgeTho--;) {
 
       // Get the second edge
-      const double* edgeTho =
-        (iEdgeTho == nbEdgesTho ?
-          relSpeed :
-          (iEdgeTho < 3 ?
-            tho->comp[iEdgeTho] :
-            oppEdgesTho[iEdgeTho - 3]));
+      const double* edgeTho = NULL;
+      if (iEdgeTho == nbEdgesTho) {
+
+        edgeTho = relSpeed;
+
+      } else if (iEdgeTho < 3) {
+
+        edgeTho = tho->comp[iEdgeTho];
+
+      } else {
+
+        edgeTho = oppEdgesTho[iEdgeTho - 3];
+
+      }
 
       // Get the cross product of the two edges
       double axis[3];
@@ -944,8 +1047,9 @@ bool CheckAxis3D(
   double* bdgBox = bdgBoxA;
 
   // Loop on Frames
-  for (int iFrame = 2;
-       iFrame--;) {
+  for (
+    int iFrame = 2;
+    iFrame--;) {
 
     // Shortcuts
     const double* frameOrig = frame->orig;
@@ -962,8 +1066,9 @@ bool CheckAxis3D(
     bool firstVertex = true;
 
     // Loop on vertices of the frame
-    for (int iVertex = nbVertices;
-         iVertex--;) {
+    for (
+      int iVertex = nbVertices;
+      iVertex--;) {
 
       // Get the vertex
       double vertex[3];
@@ -1024,24 +1129,30 @@ bool CheckAxis3D(
       // If it's the first vertex
       if (firstVertex == true) {
 
-          // Initialize the boundaries of the projection of the
-          // Frame on the edge
-          bdgBox[0] = proj;
-          bdgBox[1] = proj;
+        // Initialize the boundaries of the projection of the
+        // Frame on the edge
+        bdgBox[0] = proj;
+        bdgBox[1] = proj;
 
-          // Update the flag to memorize we did the first vertex
-          firstVertex = false;
+        // Update the flag to memorize we did the first vertex
+        firstVertex = false;
 
       // Else, it's not the first vertex
       } else {
 
         // Update the boundaries of the projection of the Frame on
         // the edge
-        if (bdgBox[0] > proj)
+        if (bdgBox[0] > proj) {
+
           bdgBox[0] = proj;
 
-        if (bdgBox[1] < proj)
+        }
+
+        if (bdgBox[1] < proj) {
+
           bdgBox[1] = proj;
+
+        }
 
       }
 
@@ -1055,12 +1166,13 @@ bool CheckAxis3D(
 
   // If the projections of the two frames on the edge are
   // not intersecting
-  if (bdgBoxB[1] < bdgBoxA[0] ||
-      bdgBoxA[1] < bdgBoxB[0]) {
+  if (
+    bdgBoxB[1] < bdgBoxA[0] ||
+    bdgBoxA[1] < bdgBoxB[0]) {
 
-     // There exists an axis which separates the Frames,
-     // thus they are not in intersection
-     return false;
+    // There exists an axis which separates the Frames,
+    // thus they are not in intersection
+    return false;
 
   }
 
@@ -1087,8 +1199,9 @@ bool CheckAxis3DTime(
   double* bdgBox = bdgBoxA;
 
   // Loop on Frames
-  for (int iFrame = 2;
-       iFrame--;) {
+  for (
+    int iFrame = 2;
+    iFrame--;) {
 
     // Shortcuts
     const double* frameOrig = frame->orig;
@@ -1105,8 +1218,9 @@ bool CheckAxis3DTime(
     bool firstVertex = true;
 
     // Loop on vertices of the frame
-    for (int iVertex = nbVertices;
-         iVertex--;) {
+    for (
+      int iVertex = nbVertices;
+      iVertex--;) {
 
       // Get the vertex
       double vertex[3];
@@ -1167,24 +1281,30 @@ bool CheckAxis3DTime(
       // If it's the first vertex
       if (firstVertex == true) {
 
-          // Initialize the boundaries of the projection of the
-          // Frame on the edge
-          bdgBox[0] = proj;
-          bdgBox[1] = proj;
+        // Initialize the boundaries of the projection of the
+        // Frame on the edge
+        bdgBox[0] = proj;
+        bdgBox[1] = proj;
 
-          // Update the flag to memorize we did the first vertex
-          firstVertex = false;
+        // Update the flag to memorize we did the first vertex
+        firstVertex = false;
 
       // Else, it's not the first vertex
       } else {
 
         // Update the boundaries of the projection of the Frame on
         // the edge
-        if (bdgBox[0] > proj)
+        if (bdgBox[0] > proj) {
+
           bdgBox[0] = proj;
 
-        if (bdgBox[1] < proj)
+        }
+
+        if (bdgBox[1] < proj) {
+
           bdgBox[1] = proj;
+
+        }
 
       }
 
@@ -1196,16 +1316,22 @@ bool CheckAxis3DTime(
         vertex[1] += relSpeed[1];
         vertex[2] += relSpeed[2];
 
-      proj =
-        vertex[0] * axis[0] +
-        vertex[1] * axis[1] +
-        vertex[2] * axis[2];
+        proj =
+          vertex[0] * axis[0] +
+          vertex[1] * axis[1] +
+          vertex[2] * axis[2];
 
-        if (bdgBox[0] > proj)
+        if (bdgBox[0] > proj) {
+
           bdgBox[0] = proj;
 
-        if (bdgBox[1] < proj)
+        }
+
+        if (bdgBox[1] < proj) {
+
           bdgBox[1] = proj;
+
+        }
 
       }
 
@@ -1219,12 +1345,13 @@ bool CheckAxis3DTime(
 
   // If the projections of the two frames on the edge are
   // not intersecting
-  if (bdgBoxB[1] < bdgBoxA[0] ||
-      bdgBoxA[1] < bdgBoxB[0]) {
+  if (
+    bdgBoxB[1] < bdgBoxA[0] ||
+    bdgBoxA[1] < bdgBoxB[0]) {
 
-     // There exists an axis which separates the Frames,
-     // thus they are not in intersection
-     return false;
+    // There exists an axis which separates the Frames,
+    // thus they are not in intersection
+    return false;
 
   }
 

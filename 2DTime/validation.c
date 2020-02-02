@@ -62,8 +62,9 @@ void ValidationOnePair2DTime(
   Frame2DTime* tho = &Q;
 
   // Loop on pairs of Frames
-  for (int iPair = 2;
-       iPair--;) {
+  for (
+    int iPair = 2;
+    iPair--;) {
 
     // Test intersection with FMB
     bool isIntersectingFMB =
@@ -88,12 +89,10 @@ void ValidationOnePair2DTime(
       Frame2DTimePrint(tho);
       printf("\n");
       printf("FMB : ");
-      if (isIntersectingFMB == false)
-        printf("no ");
+      if (isIntersectingFMB == false) printf("no ");
       printf("intersection\n");
       printf("SAT : ");
-      if (isIntersectingSAT == false)
-        printf("no ");
+      if (isIntersectingSAT == false) printf("no ");
       printf("intersection\n");
 
       // Stop the validation
@@ -138,28 +137,37 @@ void Validate2DTime(void) {
   nbNoInter = 0;
 
   // Loop on the tests
-  for (unsigned long iTest = NB_TESTS;
-       iTest--;) {
+  for (
+    unsigned long iTest = NB_TESTS;
+    iTest--;) {
 
     // Create two random Frame definitions
     Param2DTime* param = &paramP;
-    for (int iParam = 2;
-         iParam--;) {
+    for (
+      int iParam = 2;
+      iParam--;) {
 
       // 50% chance of being a Cuboid or a Tetrahedron
-      if (rnd() < 0.5)
+      if (rnd() < 0.5) {
+
         param->type = FrameCuboid;
-      else
+
+      } else {
+
         param->type = FrameTetrahedron;
 
-      for (int iAxis = 2;
-           iAxis--;) {
+      }
+
+      for (
+        int iAxis = 2;
+        iAxis--;) {
 
         param->orig[iAxis] = -RANGE_AXIS + 2.0 * rnd() * RANGE_AXIS;
         param->speed[iAxis] = -RANGE_AXIS + 2.0 * rnd() * RANGE_AXIS;
 
-        for (int iComp = 2;
-             iComp--;) {
+        for (
+          int iComp = 2;
+          iComp--;) {
 
           param->comp[iComp][iAxis] =
             -RANGE_AXIS + 2.0 * rnd() * RANGE_AXIS;

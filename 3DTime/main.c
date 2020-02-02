@@ -59,8 +59,9 @@ int main(int argc, char** argv) {
       &bdgBox3DTime);
 
     // Clip with the AABB of 'Q3DTime' and 'P3DTime' to improve results
-    for (int iAxis = 3;
-         iAxis--;) {
+    for (
+      int iAxis = 3;
+      iAxis--;) {
 
       if (bdgBox3DTime.min[iAxis] < P3DTime.bdgBox.min[iAxis]) {
 

@@ -57,8 +57,9 @@ int main(int argc, char** argv) {
       &bdgBox2DTime);
 
     // Clip with the AABB of 'Q2DTime' and 'P2DTime' to improve results
-    for (int iAxis = 3;
-         iAxis--;) {
+    for (
+      int iAxis = 3;
+      iAxis--;) {
 
       if (bdgBox2DTime.min[iAxis] < P2DTime.bdgBox.min[iAxis]) {
 

@@ -26,11 +26,11 @@
 bool ElimVar3DTime(
   const double (*M)[4],
   const double* Y,
-     const int nbRows,
-     const int nbCols,
-        double (*Mp)[4],
-        double* Yp,
-    int* const nbRemainRows);
+  const int nbRows,
+  const int nbCols,
+  double (*Mp)[4],
+  double* Yp,
+  int* const nbRemainRows);
 
 // Get the bounds of the iVar-th variable in the nbRows rows
 // system M.X<=Y which has been reduced to only one variable
@@ -40,23 +40,23 @@ bool ElimVar3DTime(
 // May return inconsistent values (max < min), which would
 // mean the system has no solution
 void GetBoundLastVar3DTime(
-     const int iVar,
+  const int iVar,
   const double (*M)[4],
   const double* Y,
-     const int nbRows,
-   AABB3DTime* const bdgBox);
+  const int nbRows,
+  AABB3DTime* const bdgBox);
 
 // Get the bounds of the iVar-th variable in the nbRows rows
 // system M.X<=Y where the iVar-th variable is on the first column
 // and store them in the iVar-th axis of the AABB bdgBox
 // (M arrangement is [iRow][iCol])
 void GetBoundVar3DTime(
-     const int iVar,
+  const int iVar,
   const double (*M)[4],
   const double* Y,
-     const int nbRows,
-     const int nbCols,
-   AABB3DTime* const bdgBox);
+  const int nbRows,
+  const int nbCols,
+  AABB3DTime* const bdgBox);
 
 // ------------- Functions implementation -------------
 
@@ -70,21 +70,21 @@ void GetBoundVar3DTime(
 bool ElimVar3DTime(
   const double (*M)[4],
   const double* Y,
-     const int nbRows,
-     const int nbCols,
-        double (*Mp)[4],
-        double* Yp,
-    int* const nbRemainRows) {
+  const int nbRows,
+  const int nbCols,
+  double (*Mp)[4],
+  double* Yp,
+  int* const nbRemainRows) {
 
   // Initialize the number of rows in the result system
   int nbResRows = 0;
 
   // First we process the rows where the eliminated variable is not null
-
   // For each row except the last one
-  for (int iRow = 0;
-       iRow < nbRows - 1;
-       ++iRow) {
+  for (
+    int iRow = 0;
+    iRow < nbRows - 1;
+    ++iRow) {
 
     // Shortcuts
     const double fabsMIRowIVar = fabs(M[iRow][0]);
@@ -99,14 +99,16 @@ bool ElimVar3DTime(
       const double YIRowDivideByFabsMIRowIVar = Y[iRow] / fabsMIRowIVar;
 
       // For each following rows
-      for (int jRow = iRow + 1;
-           jRow < nbRows;
-           ++jRow) {
+      for (
+        int jRow = iRow + 1;
+        jRow < nbRows;
+        ++jRow) {
 
         // If coefficients of the eliminated variable in the two rows have
         // different signs and are not null
-        if (sgnMIRowIVar != sgn(M[jRow][0]) &&
-            fabs(M[jRow][0]) > EPSILON) {
+        if (
+          sgnMIRowIVar != sgn(M[jRow][0]) &&
+          fabs(M[jRow][0]) > EPSILON) {
 
           // Shortcuts
           const double* MjRow = M[jRow];
@@ -120,9 +122,10 @@ bool ElimVar3DTime(
           // variable) rows into the result system. This actually
           // eliminate the variable while keeping the constraints on
           // others variables
-          for (int iCol = 1;
-               iCol < nbCols;
-               ++iCol ) {
+          for (
+            int iCol = 1;
+            iCol < nbCols;
+            ++iCol ) {
 
             Mp[nbResRows][iCol - 1] =
               MiRow[iCol] / fabsMIRowIVar +
@@ -161,11 +164,11 @@ bool ElimVar3DTime(
 
   // Then we copy and compress the rows where the eliminated
   // variable is null
-
   // Loop on rows of the input system
-  for (int iRow = 0;
-       iRow < nbRows;
-       ++iRow) {
+  for (
+    int iRow = 0;
+    iRow < nbRows;
+    ++iRow) {
 
     // Shortcut
     const double* MiRow = M[iRow];
@@ -179,9 +182,10 @@ bool ElimVar3DTime(
 
       // Copy this row into the result system excluding the eliminated
       // variable
-      for (int iCol = 1;
-           iCol < nbCols;
-           ++iCol) {
+      for (
+        int iCol = 1;
+        iCol < nbCols;
+        ++iCol) {
 
         MpnbResRows[iCol - 1] = MiRow[iCol];
 
@@ -213,11 +217,11 @@ bool ElimVar3DTime(
 // May return inconsistent values (max < min), which would
 // mean the system has no solution
 void GetBoundLastVar3DTime(
-     const int iVar,
+  const int iVar,
   const double (*M)[4],
   const double* Y,
-     const int nbRows,
-   AABB3DTime* const bdgBox) {
+  const int nbRows,
+  AABB3DTime* const bdgBox) {
 
   // Shortcuts
   double* min = bdgBox->min + iVar;
@@ -228,9 +232,10 @@ void GetBoundLastVar3DTime(
   *max = 1.0;
 
   // Loop on rows
-  for (int jRow = 0;
-       jRow < nbRows;
-       ++jRow) {
+  for (
+    int jRow = 0;
+    jRow < nbRows;
+    ++jRow) {
 
     // Shortcut
     double MjRowiVar = M[jRow][0];
@@ -276,12 +281,12 @@ void GetBoundLastVar3DTime(
 // and store them in the iVar-th axis of the AABB bdgBox
 // (M arrangement is [iRow][iCol])
 void GetBoundVar3DTime(
-     const int iVar,
+  const int iVar,
   const double (*M)[4],
   const double* Y,
-     const int nbRows,
-     const int nbCols,
-   AABB3DTime* const bdgBox) {
+  const int nbRows,
+  const int nbCols,
+  AABB3DTime* const bdgBox) {
 
   // Shortcuts
   double* bdgBoxMin = bdgBox->min;
@@ -292,9 +297,10 @@ void GetBoundVar3DTime(
   bdgBoxMax[iVar] = 1.0;
 
   // Loop on the rows
-  for (int iRow = 0;
-       iRow < nbRows;
-       ++iRow) {
+  for (
+    int iRow = 0;
+    iRow < nbRows;
+    ++iRow) {
 
     // Shortcuts
     const double* MIRow = M[iRow];
@@ -310,9 +316,10 @@ void GetBoundVar3DTime(
 
       // Loop on columns except the first one which is the one of the
       // requested variable
-      for (int iCol = 1;
-           iCol < nbCols;
-           ++iCol) {
+      for (
+        int iCol = 1;
+        iCol < nbCols;
+        ++iCol) {
 
         if (MIRow[iCol] > EPSILON) {
 
@@ -361,7 +368,7 @@ void GetBoundVar3DTime(
 bool FMBTestIntersection3DTime(
   const Frame3DTime* const that,
   const Frame3DTime* const tho,
-         AABB3DTime* const bdgBox) {
+  AABB3DTime* const bdgBox) {
 
   // Get the projection of the Frame 'tho' in Frame 'that' coordinates
   // system
@@ -374,31 +381,39 @@ bool FMBTestIntersection3DTime(
   double Y[14];
 
   // Create the inequality system
-
   // -V_jT-sum_iC_j,iX_i<=O_j
   M[0][0] = -thoProj.comp[0][0];
   M[0][1] = -thoProj.comp[1][0];
   M[0][2] = -thoProj.comp[2][0];
   M[0][3] = -thoProj.speed[0];
   Y[0] = thoProj.orig[0];
-  if (Y[0] < neg(M[0][0]) + neg(M[0][1]) + neg(M[0][2]) + neg(M[0][3]))
+  if (Y[0] < neg(M[0][0]) + neg(M[0][1]) + neg(M[0][2]) + neg(M[0][3])) {
+
     return false;
+
+  }
 
   M[1][0] = -thoProj.comp[0][1];
   M[1][1] = -thoProj.comp[1][1];
   M[1][2] = -thoProj.comp[2][1];
   M[1][3] = -thoProj.speed[1];
   Y[1] = thoProj.orig[1];
-  if (Y[1] < neg(M[1][0]) + neg(M[1][1]) + neg(M[1][2]) + neg(M[1][3]))
+  if (Y[1] < neg(M[1][0]) + neg(M[1][1]) + neg(M[1][2]) + neg(M[1][3])) {
+
     return false;
+
+  }
 
   M[2][0] = -thoProj.comp[0][2];
   M[2][1] = -thoProj.comp[1][2];
   M[2][2] = -thoProj.comp[2][2];
   M[2][3] = -thoProj.speed[2];
   Y[2] = thoProj.orig[2];
-  if (Y[2] < neg(M[2][0]) + neg(M[2][1]) + neg(M[2][2]) + neg(M[2][3]))
+  if (Y[2] < neg(M[2][0]) + neg(M[2][1]) + neg(M[2][2]) + neg(M[2][3])) {
+
     return false;
+
+  }
 
   // Variable to memorize the nb of rows in the system
   int nbRows = 3;
@@ -411,9 +426,14 @@ bool FMBTestIntersection3DTime(
     M[nbRows][2] = thoProj.comp[2][0];
     M[nbRows][3] = thoProj.speed[0];
     Y[nbRows] = 1.0 - thoProj.orig[0];
-    if (Y[nbRows] < neg(M[nbRows][0]) + neg(M[nbRows][1]) +
-                    neg(M[nbRows][2]) + neg(M[nbRows][3]))
+    if (
+      Y[nbRows] < neg(M[nbRows][0]) + neg(M[nbRows][1]) +
+      neg(M[nbRows][2]) + neg(M[nbRows][3])) {
+
       return false;
+
+    }
+
     ++nbRows;
 
     M[nbRows][0] = thoProj.comp[0][1];
@@ -421,9 +441,14 @@ bool FMBTestIntersection3DTime(
     M[nbRows][2] = thoProj.comp[2][1];
     M[nbRows][3] = thoProj.speed[1];
     Y[nbRows] = 1.0 - thoProj.orig[1];
-    if (Y[nbRows] < neg(M[nbRows][0]) + neg(M[nbRows][1]) +
-                    neg(M[nbRows][2]) + neg(M[nbRows][3]))
+    if (
+      Y[nbRows] < neg(M[nbRows][0]) + neg(M[nbRows][1]) +
+      neg(M[nbRows][2]) + neg(M[nbRows][3])) {
+
       return false;
+
+    }
+
     ++nbRows;
 
     M[nbRows][0] = thoProj.comp[0][2];
@@ -431,9 +456,14 @@ bool FMBTestIntersection3DTime(
     M[nbRows][2] = thoProj.comp[2][2];
     M[nbRows][3] = thoProj.speed[2];
     Y[nbRows] = 1.0 - thoProj.orig[2];
-    if (Y[nbRows] < neg(M[nbRows][0]) + neg(M[nbRows][1]) +
-                    neg(M[nbRows][2]) + neg(M[nbRows][3]))
+    if (
+      Y[nbRows] < neg(M[nbRows][0]) + neg(M[nbRows][1]) +
+      neg(M[nbRows][2]) + neg(M[nbRows][3])) {
+
       return false;
+
+    }
+
     ++nbRows;
 
   } else {
@@ -447,9 +477,14 @@ bool FMBTestIntersection3DTime(
       thoProj.comp[2][0] + thoProj.comp[2][1] + thoProj.comp[2][2];
     M[nbRows][3] = thoProj.speed[0] + thoProj.speed[1] + thoProj.speed[2];
     Y[nbRows] = 1.0 - thoProj.orig[0] - thoProj.orig[1] - thoProj.orig[2];
-    if (Y[nbRows] < neg(M[nbRows][0]) + neg(M[nbRows][1]) +
-                    neg(M[nbRows][2]) + neg(M[nbRows][3]))
+    if (
+      Y[nbRows] < neg(M[nbRows][0]) + neg(M[nbRows][1]) +
+      neg(M[nbRows][2]) + neg(M[nbRows][3])) {
+
       return false;
+
+    }
+
     ++nbRows;
 
   }
@@ -528,7 +563,6 @@ bool FMBTestIntersection3DTime(
   ++nbRows;
 
   // Solve the system
-
   // Declare a AABB to memorize the bounding box of the intersection
   // in the coordinates system of that
   AABB3DTime bdgBoxLocal = {
@@ -648,30 +682,29 @@ bool FMBTestIntersection3DTime(
   } else if (bdgBox != NULL) {
 
     // Get the bounds of the other variables
+    GetBoundVar3DTime(
+      THD_VAR,
+      Mpp,
+      Ypp,
+      nbRowsPP,
+      2,
+      &bdgBoxLocal);
 
     GetBoundVar3DTime(
-       THD_VAR,
-       Mpp,
-       Ypp,
-       nbRowsPP,
-       2,
-       &bdgBoxLocal);
+      SND_VAR,
+      Mp,
+      Yp,
+      nbRowsP,
+      3,
+      &bdgBoxLocal);
 
     GetBoundVar3DTime(
-       SND_VAR,
-       Mp,
-       Yp,
-       nbRowsP,
-       3,
-       &bdgBoxLocal);
-
-    GetBoundVar3DTime(
-       FST_VAR,
-       M,
-       Y,
-       nbRows,
-       4,
-       &bdgBoxLocal);
+      FST_VAR,
+      M,
+      Y,
+      nbRows,
+      4,
+      &bdgBoxLocal);
 
     // Memorize the result
     *bdgBox = bdgBoxLocal;

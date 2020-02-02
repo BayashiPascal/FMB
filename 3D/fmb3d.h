@@ -19,6 +19,6 @@
 bool FMBTestIntersection3D(
   const Frame3D* const that,
   const Frame3D* const tho,
-         AABB3D* const bdgBox);
+  AABB3D* const bdgBox);
 
 #endif

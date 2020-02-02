@@ -24,9 +24,9 @@ typedef struct {
 // Run the FMB intersection detection alogirhtm on the Frames
 // and check against the correct results
 void UnitTest2D(
-        const Param2D paramP,
-        const Param2D paramQ,
-         const bool correctAnswer,
+  const Param2D paramP,
+  const Param2D paramQ,
+  const bool correctAnswer,
   const AABB2D* const correctBdgBox) {
 
   // Create the two Frames
@@ -50,8 +50,9 @@ void UnitTest2D(
   Frame2D* tho = &Q;
 
   // Loop on pairs of Frames
-  for (int iPair = 2;
-       iPair--;) {
+  for (
+    int iPair = 2;
+    iPair--;) {
 
     // Display the tested frames
     Frame2DPrint(that);
@@ -72,12 +73,10 @@ void UnitTest2D(
       // Display information about the failure
       printf(" Failed\n");
       printf("Expected : ");
-      if (correctAnswer == false)
-        printf("no ");
+      if (correctAnswer == false) printf("no ");
       printf("intersection\n");
       printf("Got : ");
-      if (isIntersecting == false)
-        printf("no ");
+      if (isIntersecting == false) printf("no ");
       printf("intersection\n");
       exit(0);
 
@@ -93,8 +92,9 @@ void UnitTest2D(
           &bdgBoxLocal,
           &bdgBox);
 
-        for (int iAxis = 2;
-             iAxis--;) {
+        for (
+          int iAxis = 2;
+          iAxis--;) {
 
           if (bdgBox.min[iAxis] < that->bdgBox.min[iAxis]) {
 
@@ -124,11 +124,13 @@ void UnitTest2D(
 
         // Check the bounding box
         bool flag = true;
-        for (int i = 2;
-             i--;) {
+        for (
+          int i = 2;
+          i--;) {
 
-          if (bdgBox.min[i] > correctBdgBox->min[i] + EPSILON ||
-              bdgBox.max[i] < correctBdgBox->max[i] - EPSILON) {
+          if (
+            bdgBox.min[i] > correctBdgBox->min[i] + EPSILON ||
+            bdgBox.max[i] < correctBdgBox->max[i] - EPSILON) {
 
             flag = false;
 
@@ -192,7 +194,6 @@ void Test2D(void) {
   AABB2D correctBdgBox;
 
   // Execute the unit test on various cases
-
   // ----------------------------
   paramP = (Param2D) {
 
@@ -200,20 +201,20 @@ void Test2D(void) {
     .orig = {0.0, 0.0},
     .comp = {{1.0, 0.0}, {0.0, 1.0}}
 
-    };
+  };
   paramQ = (Param2D) {
 
     .type = FrameCuboid,
     .orig = {0.0, 0.0},
     .comp = {{1.0, 0.0}, {0.0, 1.0}}
 
-    };
+  };
   correctBdgBox = (AABB2D) {
 
     .min = {0.0, 0.0},
     .max = {1.0, 1.0}
 
-    };
+  };
   UnitTest2D(
     paramP,
     paramQ,
@@ -227,20 +228,20 @@ void Test2D(void) {
     .orig = {0.0, 0.0},
     .comp = {{1.0, 0.0}, {0.0, 1.0}}
 
-    };
+  };
   paramQ = (Param2D) {
 
     .type = FrameCuboid,
     .orig = {0.5, 0.5},
     .comp = {{1.0, 0.0}, {0.0, 1.0}}
 
-    };
+  };
   correctBdgBox = (AABB2D) {
 
     .min = {0.5, 0.5},
     .max = {1.0, 1.0}
 
-    };
+  };
   UnitTest2D(
     paramP,
     paramQ,
@@ -254,14 +255,14 @@ void Test2D(void) {
     .orig = {-0.5, -0.5},
     .comp = {{1.0, 0.0}, {0.0, 1.0}}
 
-    };
+  };
   paramQ = (Param2D) {
 
     .type = FrameCuboid,
     .orig = {0.5, 0.5},
     .comp = {{1.0, 0.0}, {0.0, 1.0}}
 
-    };
+  };
   UnitTest2D(
     paramP,
     paramQ,
@@ -275,20 +276,20 @@ void Test2D(void) {
     .orig = {0.0, 0.0},
     .comp = {{1.0, 0.0}, {0.0, 1.0}}
 
-    };
+  };
   paramQ = (Param2D) {
 
     .type = FrameCuboid,
     .orig = {0.25, -0.25},
     .comp = {{0.5, 0.0}, {0.0, 2.0}}
 
-    };
+  };
   correctBdgBox = (AABB2D) {
 
     .min = {0.25, 0.0},
     .max = {0.75, 1.0}
 
-    };
+  };
   UnitTest2D(
     paramP,
     paramQ,
@@ -302,20 +303,20 @@ void Test2D(void) {
     .orig = {0.0, 0.0},
     .comp = {{1.0, 0.0}, {0.0, 1.0}}
 
-    };
+  };
   paramQ = (Param2D) {
 
     .type = FrameCuboid,
     .orig = {-0.25, 0.25},
     .comp = {{2.0, 0.0}, {0.0, 0.5}}
 
-    };
+  };
   correctBdgBox = (AABB2D) {
 
     .min = {0.0, 0.25},
     .max = {1.0, 0.75}
 
-    };
+  };
   UnitTest2D(
     paramP,
     paramQ,
@@ -329,20 +330,20 @@ void Test2D(void) {
     .orig = {0.0, 0.0},
     .comp = {{1.0, 1.0}, {-1.0, 1.0}}
 
-    };
+  };
   paramQ = (Param2D) {
 
     .type = FrameCuboid,
     .orig = {0.0, 0.0},
     .comp = {{1.0, 0.0}, {0.0, 1.0}}
 
-    };
+  };
   correctBdgBox = (AABB2D) {
 
     .min = {0.0, 0.0},
     .max = {1.0, 1.0}
 
-    };
+  };
   UnitTest2D(
     paramP,
     paramQ,
@@ -356,20 +357,20 @@ void Test2D(void) {
     .orig = {-0.5, -0.5},
     .comp = {{1.0, 1.0}, {-1.0, 1.0}}
 
-    };
+  };
   paramQ = (Param2D) {
 
     .type = FrameCuboid,
     .orig = {0.0, 0.0},
     .comp = {{1.0, 0.0}, {0.0, 1.0}}
 
-    };
+  };
   correctBdgBox = (AABB2D) {
 
     .min = {0.0, 0.0},
     .max = {0.5, 1.0}
 
-    };
+  };
   UnitTest2D(
     paramP,
     paramQ,
@@ -383,20 +384,20 @@ void Test2D(void) {
     .orig = {1.5, 1.5},
     .comp = {{1.0, -1.0}, {-1.0, -1.0}}
 
-    };
+  };
   paramQ = (Param2D) {
 
     .type = FrameCuboid,
     .orig = {1.0, 0.0},
     .comp = {{-1.0, 0.0}, {0.0, 1.0}}
 
-    };
+  };
   correctBdgBox = (AABB2D) {
 
     .min = {0.5, 0.0},
     .max = {1.0, 1.0}
 
-    };
+  };
   UnitTest2D(
     paramP,
     paramQ,
@@ -410,20 +411,20 @@ void Test2D(void) {
     .orig = {1.0, 0.5},
     .comp = {{-0.5, 0.5}, {-0.5, -0.5}}
 
-    };
+  };
   paramQ = (Param2D) {
 
     .type = FrameCuboid,
     .orig = {0.0, 1.0},
     .comp = {{1.0, 0.0}, {0.0, -1.0}}
 
-    };
+  };
   correctBdgBox = (AABB2D) {
 
     .min = {0.0, 0.0},
     .max = {1.0, 1.0}
 
-    };
+  };
   UnitTest2D(
     paramP,
     paramQ,
@@ -437,20 +438,20 @@ void Test2D(void) {
     .orig = {0.0, 0.0},
     .comp = {{1.0, 0.0}, {1.0, 1.0}}
 
-    };
+  };
   paramQ = (Param2D) {
 
     .type = FrameCuboid,
     .orig = {2.0, -1.0},
     .comp = {{0.0, 1.0}, {-0.5, 1.0}}
 
-    };
+  };
   correctBdgBox = (AABB2D) {
 
     .min = {1.5, 0.5},
     .max = {1.5 + 0.5 / 3.0, 1.0}
 
-    };
+  };
   UnitTest2D(
     paramP,
     paramQ,
@@ -464,20 +465,20 @@ void Test2D(void) {
     .orig = {0.0, 0.0},
     .comp = {{1.0, 0.5}, {0.5, 1.0}}
 
-    };
+  };
   paramQ = (Param2D) {
 
     .type = FrameCuboid,
     .orig = {1.0, 1.0},
     .comp = {{-0.5, -0.5}, {0.0, -1.0}}
 
-    };
+  };
   correctBdgBox = (AABB2D) {
 
     .min = {0.5, 0.25},
     .max = {1.0, 1.0}
 
-    };
+  };
   UnitTest2D(
     paramP,
     paramQ,
@@ -491,20 +492,20 @@ void Test2D(void) {
     .orig = {0.0, 0.0},
     .comp = {{1.0, 0.5}, {0.5, 1.0}}
 
-    };
+  };
   paramQ = (Param2D) {
 
     .type = FrameCuboid,
     .orig = {1.0, 2.0},
     .comp = {{-0.5, -0.5}, {0.0, -1.0}}
 
-    };
+  };
   correctBdgBox = (AABB2D) {
 
     .min = {0.5, 0.75},
     .max = {1.0, 1.25}
 
-    };
+  };
   UnitTest2D(
     paramP,
     paramQ,
@@ -518,20 +519,20 @@ void Test2D(void) {
     .orig = {0.0, 0.0},
     .comp = {{1.0, 0.5}, {0.5, 1.0}}
 
-    };
+  };
   paramQ = (Param2D) {
 
     .type = FrameCuboid,
     .orig = {1.0, 2.0},
     .comp = {{-0.5, -0.5}, {0.0, -1.0}}
 
-    };
+  };
   correctBdgBox = (AABB2D) {
 
     .min = {0.5, 0.5},
     .max = {0.75, 1.0}
 
-    };
+  };
   UnitTest2D(
     paramP,
     paramQ,
@@ -545,20 +546,20 @@ void Test2D(void) {
     .orig = {0.0, 0.0},
     .comp = {{1.0, 0.5}, {0.5, 1.0}}
 
-    };
+  };
   paramQ = (Param2D) {
 
     .type = FrameTetrahedron,
     .orig = {1.0, 2.0},
     .comp = {{-0.5, -0.5}, {0.0, -1.0}}
 
-    };
+  };
   correctBdgBox = (AABB2D) {
 
     .min = {0.5 + 1.0 / 3.0, 1.0},
     .max = {1.0, 1.0 + 1.0 / 3.0}
 
-    };
+  };
   UnitTest2D(
     paramP,
     paramQ,
@@ -572,20 +573,20 @@ void Test2D(void) {
     .orig = {0.0, 0.0},
     .comp = {{1.0, 0.0}, {0.0, 1.0}}
 
-    };
+  };
   paramQ = (Param2D) {
 
     .type = FrameTetrahedron,
     .orig = {0.0, 0.0},
     .comp = {{1.0, 0.0}, {0.0, 1.0}}
 
-    };
+  };
   correctBdgBox = (AABB2D) {
 
     .min = {0.0, 0.0},
     .max = {1.0, 1.0}
 
-    };
+  };
   UnitTest2D(
     paramP,
     paramQ,
@@ -599,20 +600,20 @@ void Test2D(void) {
     .orig = {0.0, 0.0},
     .comp = {{1.0, 0.0}, {0.0, 1.0}}
 
-    };
+  };
   paramQ = (Param2D) {
 
     .type = FrameTetrahedron,
     .orig = {0.0, -0.5},
     .comp = {{1.0, 0.0}, {0.0, 1.0}}
 
-    };
+  };
   correctBdgBox = (AABB2D) {
 
     .min = {0.0, 0.0},
     .max = {0.5, 0.5}
 
-    };
+  };
   UnitTest2D(
     paramP,
     paramQ,
@@ -626,20 +627,20 @@ void Test2D(void) {
     .orig = {0.5, 0.5},
     .comp = {{-0.5, 0.0}, {0.0, -0.5}}
 
-    };
+  };
   paramQ = (Param2D) {
 
     .type = FrameTetrahedron,
     .orig = {0.0, -0.5},
     .comp = {{1.0, 0.0}, {0.0, 1.0}}
 
-    };
+  };
   correctBdgBox = (AABB2D) {
 
     .min = {0.0, 0.0},
     .max = {0.5, 0.5}
 
-    };
+  };
   UnitTest2D(
     paramP,
     paramQ,
@@ -653,14 +654,14 @@ void Test2D(void) {
     .orig = {0.5, 0.5},
     .comp = {{1.0, 0.0}, {0.0, 1.0}}
 
-    };
+  };
   paramQ = (Param2D) {
 
     .type = FrameTetrahedron,
     .orig = {0.0, 0.0},
     .comp = {{1.0, 0.0}, {0.0, 1.0}}
 
-    };
+  };
   UnitTest2D(
     paramP,
     paramQ,
@@ -674,20 +675,20 @@ void Test2D(void) {
     .orig = {0.0, 0.0},
     .comp = {{1.0, 0.0}, {0.0, 1.0}}
 
-    };
+  };
   paramQ = (Param2D) {
 
     .type = FrameTetrahedron,
     .orig = {1.5, 1.5},
     .comp = {{-1.5, 0.0}, {0.0, -1.5}}
 
-    };
+  };
   correctBdgBox = (AABB2D) {
 
     .min = {0.5, 0.5},
     .max = {1.0, 1.0}
 
-    };
+  };
   UnitTest2D(
     paramP,
     paramQ,
@@ -701,14 +702,14 @@ void Test2D(void) {
     .orig = {0.0, 0.0},
     .comp = {{1.0, 0.0}, {0.0, 1.0}}
 
-    };
+  };
   paramQ = (Param2D) {
 
     .type = FrameTetrahedron,
     .orig = {1.01, 1.01},
     .comp = {{-1.0, 0.0}, {0.0, -1.0}}
 
-    };
+  };
   UnitTest2D(
     paramP,
     paramQ,
@@ -722,20 +723,20 @@ void Test2D(void) {
     .orig = {0.0, 0.0},
     .comp = {{1.0, 0.5}, {0.5, 1.0}}
 
-    };
+  };
   paramQ = (Param2D) {
 
     .type = FrameTetrahedron,
     .orig = {1.0, 1.0},
     .comp = {{-0.5, -0.5}, {0.0, -1.0}}
 
-    };
+  };
   correctBdgBox = (AABB2D) {
 
     .min = {0.5, 0.5 - 1.0 / 6.0},
     .max = {1.0, 0.75}
 
-    };
+  };
   UnitTest2D(
     paramP,
     paramQ,
@@ -749,14 +750,14 @@ void Test2D(void) {
     .orig = {0.0, 0.0},
     .comp = {{1.0, 0.5}, {0.5, 1.0}}
 
-   };
+  };
   paramQ = (Param2D) {
 
     .type = FrameTetrahedron,
     .orig = {1.01, 1.5},
     .comp = {{-0.5, -0.5}, {0.0, -1.0}}
 
-    };
+  };
   UnitTest2D(
     paramP,
     paramQ,

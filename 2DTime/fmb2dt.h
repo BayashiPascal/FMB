@@ -19,6 +19,6 @@
 bool FMBTestIntersection2DTime(
   const Frame2DTime* const that,
   const Frame2DTime* const tho,
-         AABB2DTime* const bdgBox);
+  AABB2DTime* const bdgBox);
 
 #endif

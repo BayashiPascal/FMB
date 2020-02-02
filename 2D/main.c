@@ -53,8 +53,9 @@ int main(int argc, char** argv) {
       &bdgBox2D);
 
     // Clip with the AABB of 'Q2D' and 'P2D' to improve results
-    for (int iAxis = 2;
-         iAxis--;) {
+    for (
+      int iAxis = 2;
+      iAxis--;) {
 
       if (bdgBox2D.min[iAxis] < P2D.bdgBox.min[iAxis]) {
 

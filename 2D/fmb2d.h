@@ -19,6 +19,6 @@
 bool FMBTestIntersection2D(
   const Frame2D* const that,
   const Frame2D* const tho,
-         AABB2D* const bdgBox);
+  AABB2D* const bdgBox);
 
 #endif

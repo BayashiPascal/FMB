@@ -25,11 +25,11 @@
 bool ElimVar2DTime(
   const double (*M)[3],
   const double* Y,
-     const int nbRows,
-     const int nbCols,
-        double (*Mp)[3],
-        double* Yp,
-    int* const nbRemainRows);
+  const int nbRows,
+  const int nbCols,
+  double (*Mp)[3],
+  double* Yp,
+  int* const nbRemainRows);
 
 // Get the bounds of the iVar-th variable in the nbRows rows
 // system M.X<=Y which has been reduced to only one variable
@@ -39,23 +39,23 @@ bool ElimVar2DTime(
 // May return inconsistent values (max < min), which would
 // mean the system has no solution
 void GetBoundLastVar2DTime(
-     const int iVar,
+  const int iVar,
   const double (*M)[3],
   const double* Y,
-     const int nbRows,
-   AABB2DTime* const bdgBox);
+  const int nbRows,
+  AABB2DTime* const bdgBox);
 
 // Get the bounds of the iVar-th variable in the nbRows rows
 // system M.X<=Y where the iVar-th variable is on the first column
 // and store them in the iVar-th axis of the AABB bdgBox
 // (M arrangement is [iRow][iCol])
 void GetBoundVar2DTime(
-     const int iVar,
+  const int iVar,
   const double (*M)[3],
   const double* Y,
-     const int nbRows,
-     const int nbCols,
-   AABB2DTime* const bdgBox);
+  const int nbRows,
+  const int nbCols,
+  AABB2DTime* const bdgBox);
 
 // ------------- Functions implementation -------------
 
@@ -69,21 +69,21 @@ void GetBoundVar2DTime(
 bool ElimVar2DTime(
   const double (*M)[3],
   const double* Y,
-     const int nbRows,
-     const int nbCols,
-        double (*Mp)[3],
-        double* Yp,
-    int* const nbRemainRows) {
+  const int nbRows,
+  const int nbCols,
+  double (*Mp)[3],
+  double* Yp,
+  int* const nbRemainRows) {
 
   // Initialize the number of rows in the result system
   int nbResRows = 0;
 
   // First we process the rows where the eliminated variable is not null
-
   // For each row except the last one
-  for (int iRow = 0;
-       iRow < nbRows - 1;
-       ++iRow) {
+  for (
+    int iRow = 0;
+    iRow < nbRows - 1;
+    ++iRow) {
 
     // Shortcuts
     const double fabsMIRowIVar = fabs(M[iRow][0]);
@@ -98,14 +98,16 @@ bool ElimVar2DTime(
       const double YIRowDivideByFabsMIRowIVar = Y[iRow] / fabsMIRowIVar;
 
       // For each following rows
-      for (int jRow = iRow + 1;
-           jRow < nbRows;
-           ++jRow) {
+      for (
+        int jRow = iRow + 1;
+        jRow < nbRows;
+        ++jRow) {
 
         // If coefficients of the eliminated variable in the two rows have
         // different signs and are not null
-        if (sgnMIRowIVar != sgn(M[jRow][0]) &&
-            fabs(M[jRow][0]) > EPSILON) {
+        if (
+          sgnMIRowIVar != sgn(M[jRow][0]) &&
+          fabs(M[jRow][0]) > EPSILON) {
 
           // Shortcuts
           const double* MjRow = M[jRow];
@@ -119,9 +121,10 @@ bool ElimVar2DTime(
           // variable) rows into the result system. This actually
           // eliminate the variable while keeping the constraints on
           // others variables
-          for (int iCol = 1;
-               iCol < nbCols;
-               ++iCol ) {
+          for (
+            int iCol = 1;
+            iCol < nbCols;
+            ++iCol ) {
 
             Mp[nbResRows][iCol - 1] =
               MiRow[iCol] / fabsMIRowIVar +
@@ -160,11 +163,11 @@ bool ElimVar2DTime(
 
   // Then we copy and compress the rows where the eliminated
   // variable is null
-
   // Loop on rows of the input system
-  for (int iRow = 0;
-       iRow < nbRows;
-       ++iRow) {
+  for (
+    int iRow = 0;
+    iRow < nbRows;
+    ++iRow) {
 
     // Shortcut
     const double* MiRow = M[iRow];
@@ -178,9 +181,10 @@ bool ElimVar2DTime(
 
       // Copy this row into the result system excluding the eliminated
       // variable
-      for (int iCol = 1;
-           iCol < nbCols;
-           ++iCol) {
+      for (
+        int iCol = 1;
+        iCol < nbCols;
+        ++iCol) {
 
         MpnbResRows[iCol - 1] = MiRow[iCol];
 
@@ -211,11 +215,11 @@ bool ElimVar2DTime(
 // May return inconsistent values (max < min), which would
 // mean the system has no solution
 void GetBoundLastVar2DTime(
-     const int iVar,
+  const int iVar,
   const double (*M)[3],
   const double* Y,
-     const int nbRows,
-   AABB2DTime* const bdgBox) {
+  const int nbRows,
+  AABB2DTime* const bdgBox) {
 
   // Shortcuts
   double* min = bdgBox->min + iVar;
@@ -226,9 +230,10 @@ void GetBoundLastVar2DTime(
   *max = 1.0;
 
   // Loop on rows
-  for (int jRow = 0;
-       jRow < nbRows;
-       ++jRow) {
+  for (
+    int jRow = 0;
+    jRow < nbRows;
+    ++jRow) {
 
     // Shortcut
     double MjRowiVar = M[jRow][0];
@@ -274,12 +279,12 @@ void GetBoundLastVar2DTime(
 // and store them in the iVar-th axis of the AABB bdgBox
 // (M arrangement is [iRow][iCol])
 void GetBoundVar2DTime(
-     const int iVar,
+  const int iVar,
   const double (*M)[3],
   const double* Y,
-     const int nbRows,
-     const int nbCols,
-   AABB2DTime* const bdgBox) {
+  const int nbRows,
+  const int nbCols,
+  AABB2DTime* const bdgBox) {
 
   // Shortcuts
   double* bdgBoxMin = bdgBox->min;
@@ -290,9 +295,10 @@ void GetBoundVar2DTime(
   bdgBoxMax[iVar] = 1.0;
 
   // Loop on the rows
-  for (int iRow = 0;
-       iRow < nbRows;
-       ++iRow) {
+  for (
+    int iRow = 0;
+    iRow < nbRows;
+    ++iRow) {
 
     // Shortcuts
     const double* MIRow = M[iRow];
@@ -308,9 +314,10 @@ void GetBoundVar2DTime(
 
       // Loop on columns except the first one which is the one of the
       // requested variable
-      for (int iCol = 1;
-           iCol < nbCols;
-           ++iCol) {
+      for (
+        int iCol = 1;
+        iCol < nbCols;
+        ++iCol) {
 
         if (MIRow[iCol] > EPSILON) {
 
@@ -359,7 +366,7 @@ void GetBoundVar2DTime(
 bool FMBTestIntersection2DTime(
   const Frame2DTime* const that,
   const Frame2DTime* const tho,
-         AABB2DTime* const bdgBox) {
+  AABB2DTime* const bdgBox) {
 
   // Get the projection of the Frame 'tho' in Frame 'that' coordinates
   // system
@@ -372,21 +379,26 @@ bool FMBTestIntersection2DTime(
   double Y[10];
 
   // Create the inequality system
-
   // -V_jT-sum_iC_j,iX_i<=O_j
   M[0][0] = -thoProj.comp[0][0];
   M[0][1] = -thoProj.comp[1][0];
   M[0][2] = -thoProj.speed[0];
   Y[0] = thoProj.orig[0];
-  if (Y[0] < neg(M[0][0]) + neg(M[0][1]) + neg(M[0][2]))
+  if (Y[0] < neg(M[0][0]) + neg(M[0][1]) + neg(M[0][2])) {
+
     return false;
+
+  }
 
   M[1][0] = -thoProj.comp[0][1];
   M[1][1] = -thoProj.comp[1][1];
   M[1][2] = -thoProj.speed[1];
   Y[1] = thoProj.orig[1];
-  if (Y[1] < neg(M[1][0]) + neg(M[1][1]) + neg(M[1][2]))
+  if (Y[1] < neg(M[1][0]) + neg(M[1][1]) + neg(M[1][2])) {
+
     return false;
+
+  }
 
   // Variable to memorise the nb of rows in the system
   int nbRows = 2;
@@ -398,18 +410,28 @@ bool FMBTestIntersection2DTime(
     M[nbRows][1] = thoProj.comp[1][0];
     M[nbRows][2] = thoProj.speed[0];
     Y[nbRows] = 1.0 - thoProj.orig[0];
-    if (Y[nbRows] < neg(M[nbRows][0]) + neg(M[nbRows][1]) +
-                    neg(M[nbRows][2]))
+    if (
+      Y[nbRows] < neg(M[nbRows][0]) + neg(M[nbRows][1]) +
+      neg(M[nbRows][2])) {
+
       return false;
+
+    }
+
     ++nbRows;
 
     M[nbRows][0] = thoProj.comp[0][1];
     M[nbRows][1] = thoProj.comp[1][1];
     M[nbRows][2] = thoProj.speed[1];
     Y[nbRows] = 1.0 - thoProj.orig[1];
-    if (Y[nbRows] < neg(M[nbRows][0]) + neg(M[nbRows][1]) +
-                    neg(M[nbRows][2]))
+    if (
+      Y[nbRows] < neg(M[nbRows][0]) + neg(M[nbRows][1]) +
+      neg(M[nbRows][2])) {
+
       return false;
+
+    }
+
     ++nbRows;
 
   } else {
@@ -419,9 +441,14 @@ bool FMBTestIntersection2DTime(
     M[nbRows][1] = thoProj.comp[1][0] + thoProj.comp[1][1];
     M[nbRows][2] = thoProj.speed[0] + thoProj.speed[1];
     Y[nbRows] = 1.0 - thoProj.orig[0] - thoProj.orig[1];
-    if (Y[nbRows] < neg(M[nbRows][0]) + neg(M[nbRows][1]) +
-                    neg(M[nbRows][2]))
+    if (
+      Y[nbRows] < neg(M[nbRows][0]) + neg(M[nbRows][1]) +
+      neg(M[nbRows][2])) {
+
       return false;
+
+    }
+
     ++nbRows;
 
   }
@@ -479,7 +506,6 @@ bool FMBTestIntersection2DTime(
   ++nbRows;
 
   // Solve the system
-
   // Declare a AABB to memorize the bounding box of the intersection
   // in the coordinates system of tho
   AABB2DTime bdgBoxLocal = {
@@ -569,22 +595,21 @@ bool FMBTestIntersection2DTime(
   } else if (bdgBox != NULL) {
 
     // Get the bounds of the other variables
+    GetBoundVar2DTime(
+      SND_VAR,
+      Mp,
+      Yp,
+      nbRowsP,
+      2,
+      &bdgBoxLocal);
 
     GetBoundVar2DTime(
-       SND_VAR,
-       Mp,
-       Yp,
-       nbRowsP,
-       2,
-       &bdgBoxLocal);
-
-    GetBoundVar2DTime(
-       FST_VAR,
-       M,
-       Y,
-       nbRows,
-       3,
-       &bdgBoxLocal);
+      FST_VAR,
+      M,
+      Y,
+      nbRows,
+      3,
+      &bdgBoxLocal);
 
     // Memorize the result
     *bdgBox = bdgBoxLocal;

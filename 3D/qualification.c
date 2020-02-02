@@ -88,8 +88,8 @@ unsigned long countNoInterTT;
 // Takes two Frame definition as input, run the intersection test on
 // them with FMB and SAT, and measure the time of execution of each
 void Qualification3DStatic(
-        const Param3D paramP,
-        const Param3D paramQ) {
+  const Param3D paramP,
+  const Param3D paramQ) {
 
   // Create the two Frames
   Frame3D P =
@@ -109,8 +109,9 @@ void Qualification3DStatic(
   Frame3D* tho = &Q;
 
   // Loop on pairs of Frames
-  for (int iPair = 2;
-       iPair--;) {
+  for (
+    int iPair = 2;
+    iPair--;) {
 
     // Declare an array to memorize the results of the repeated
     // test on the same pair,
@@ -122,8 +123,9 @@ void Qualification3DStatic(
     gettimeofday(&start, NULL);
 
     // Run the FMB intersection test
-    for (int i = NB_REPEAT_3D;
-         i--;) {
+    for (
+      int i = NB_REPEAT_3D;
+      i--;) {
 
       isIntersectingFMB[i] =
         FMBTestIntersection3D(
@@ -173,8 +175,9 @@ void Qualification3DStatic(
     gettimeofday(&start, NULL);
 
     // Run the FMB intersection test
-    for (int i = NB_REPEAT_3D;
-         i--;) {
+    for (
+      int i = NB_REPEAT_3D;
+      i--;) {
 
       isIntersectingSAT[i] =
         SATTestIntersection3D(
@@ -225,12 +228,10 @@ void Qualification3DStatic(
         Frame3DPrint(tho);
         printf("\n");
         printf("FMB : ");
-        if (isIntersectingFMB[0] == false)
-          printf("no ");
+        if (isIntersectingFMB[0] == false) printf("no ");
         printf("intersection\n");
         printf("SAT : ");
-        if (isIntersectingSAT[0] == false)
-          printf("no ");
+        if (isIntersectingSAT[0] == false) printf("no ");
         printf("intersection\n");
 
         // Stop the qualification test
@@ -252,18 +253,17 @@ void Qualification3DStatic(
 
         } else {
 
-          if (minInter > ratio)
-            minInter = ratio;
-          if (maxInter < ratio)
-            maxInter = ratio;
+          if (minInter > ratio) minInter = ratio;
+          if (maxInter < ratio) maxInter = ratio;
 
         }
 
         sumInter += ratio;
         ++countInter;
 
-        if (paramP.type == FrameCuboid &&
-            paramQ.type == FrameCuboid) {
+        if (
+          paramP.type == FrameCuboid &&
+          paramQ.type == FrameCuboid) {
 
           if (countInterCC == 0) {
 
@@ -272,18 +272,17 @@ void Qualification3DStatic(
 
           } else {
 
-            if (minInterCC > ratio)
-              minInterCC = ratio;
-            if (maxInterCC < ratio)
-              maxInterCC = ratio;
+            if (minInterCC > ratio) minInterCC = ratio;
+            if (maxInterCC < ratio) maxInterCC = ratio;
 
           }
 
           sumInterCC += ratio;
           ++countInterCC;
 
-        } else if (paramP.type == FrameCuboid &&
-                   paramQ.type == FrameTetrahedron) {
+        } else if (
+          paramP.type == FrameCuboid &&
+          paramQ.type == FrameTetrahedron) {
 
           if (countInterCT == 0) {
 
@@ -292,18 +291,17 @@ void Qualification3DStatic(
 
           } else {
 
-            if (minInterCT > ratio)
-              minInterCT = ratio;
-            if (maxInterCT < ratio)
-              maxInterCT = ratio;
+            if (minInterCT > ratio) minInterCT = ratio;
+            if (maxInterCT < ratio) maxInterCT = ratio;
 
           }
 
           sumInterCT += ratio;
           ++countInterCT;
 
-        } else if (paramP.type == FrameTetrahedron &&
-                   paramQ.type == FrameCuboid) {
+        } else if (
+          paramP.type == FrameTetrahedron &&
+          paramQ.type == FrameCuboid) {
 
           if (countInterTC == 0) {
 
@@ -312,18 +310,17 @@ void Qualification3DStatic(
 
           } else {
 
-            if (minInterTC > ratio)
-              minInterTC = ratio;
-            if (maxInterTC < ratio)
-              maxInterTC = ratio;
+            if (minInterTC > ratio) minInterTC = ratio;
+            if (maxInterTC < ratio) maxInterTC = ratio;
 
           }
 
           sumInterTC += ratio;
           ++countInterTC;
 
-        } else if (paramP.type == FrameTetrahedron &&
-                   paramQ.type == FrameTetrahedron) {
+        } else if (
+          paramP.type == FrameTetrahedron &&
+          paramQ.type == FrameTetrahedron) {
 
           if (countInterTT == 0) {
 
@@ -332,10 +329,8 @@ void Qualification3DStatic(
 
           } else {
 
-            if (minInterTT > ratio)
-              minInterTT = ratio;
-            if (maxInterTT < ratio)
-              maxInterTT = ratio;
+            if (minInterTT > ratio) minInterTT = ratio;
+            if (maxInterTT < ratio) maxInterTT = ratio;
 
           }
 
@@ -355,18 +350,17 @@ void Qualification3DStatic(
 
         } else {
 
-          if (minNoInter > ratio)
-            minNoInter = ratio;
-          if (maxNoInter < ratio)
-            maxNoInter = ratio;
+          if (minNoInter > ratio) minNoInter = ratio;
+          if (maxNoInter < ratio) maxNoInter = ratio;
 
         }
 
         sumNoInter += ratio;
         ++countNoInter;
 
-        if (paramP.type == FrameCuboid &&
-            paramQ.type == FrameCuboid) {
+        if (
+          paramP.type == FrameCuboid &&
+          paramQ.type == FrameCuboid) {
 
           if (countNoInterCC == 0) {
 
@@ -375,18 +369,17 @@ void Qualification3DStatic(
 
           } else {
 
-            if (minNoInterCC > ratio)
-              minNoInterCC = ratio;
-            if (maxNoInterCC < ratio)
-              maxNoInterCC = ratio;
+            if (minNoInterCC > ratio) minNoInterCC = ratio;
+            if (maxNoInterCC < ratio) maxNoInterCC = ratio;
 
           }
 
           sumNoInterCC += ratio;
           ++countNoInterCC;
 
-        } else if (paramP.type == FrameCuboid &&
-                   paramQ.type == FrameTetrahedron) {
+        } else if (
+          paramP.type == FrameCuboid &&
+          paramQ.type == FrameTetrahedron) {
 
           if (countNoInterCT == 0) {
 
@@ -395,18 +388,17 @@ void Qualification3DStatic(
 
           } else {
 
-            if (minNoInterCT > ratio)
-              minNoInterCT = ratio;
-            if (maxNoInterCT < ratio)
-              maxNoInterCT = ratio;
+            if (minNoInterCT > ratio) minNoInterCT = ratio;
+            if (maxNoInterCT < ratio) maxNoInterCT = ratio;
 
           }
 
           sumNoInterCT += ratio;
           ++countNoInterCT;
 
-        } else if (paramP.type == FrameTetrahedron &&
-                   paramQ.type == FrameCuboid) {
+        } else if (
+          paramP.type == FrameTetrahedron &&
+          paramQ.type == FrameCuboid) {
 
           if (countNoInterTC == 0) {
 
@@ -415,18 +407,17 @@ void Qualification3DStatic(
 
           } else {
 
-            if (minNoInterTC > ratio)
-              minNoInterTC = ratio;
-            if (maxNoInterTC < ratio)
-              maxNoInterTC = ratio;
+            if (minNoInterTC > ratio) minNoInterTC = ratio;
+            if (maxNoInterTC < ratio) maxNoInterTC = ratio;
 
           }
 
           sumNoInterTC += ratio;
           ++countNoInterTC;
 
-        } else if (paramP.type == FrameTetrahedron &&
-                   paramQ.type == FrameTetrahedron) {
+        } else if (
+          paramP.type == FrameTetrahedron &&
+          paramQ.type == FrameTetrahedron) {
 
           if (countNoInterTT == 0) {
 
@@ -435,10 +426,8 @@ void Qualification3DStatic(
 
           } else {
 
-            if (minNoInterTT > ratio)
-              minNoInterTT = ratio;
-            if (maxNoInterTT < ratio)
-              maxNoInterTT = ratio;
+            if (minNoInterTT > ratio) minNoInterTT = ratio;
+            if (maxNoInterTT < ratio) maxNoInterTT = ratio;
 
           }
 
@@ -484,9 +473,10 @@ void Qualify3DStatic(void) {
   FILE* fpTT = fopen("../Results/qualification3DTT.txt", "w");
 
   // Loop on runs
-  for (int iRun = 0;
-       iRun < NB_RUNS;
-       ++iRun) {
+  for (
+    int iRun = 0;
+    iRun < NB_RUNS;
+    ++iRun) {
 
     // Ratio intersection/no intersection for the displayed results
     double ratioInter = 0.1 + 0.8 * (double)iRun / (double)(NB_RUNS - 1);
@@ -543,27 +533,36 @@ void Qualify3DStatic(void) {
     Param3D paramQ;
 
     // Loop on the number of tests
-    for (unsigned long iTest = NB_TESTS;
-         iTest--;) {
+    for (
+      unsigned long iTest = NB_TESTS;
+      iTest--;) {
 
       // Create two random Frame definitions
       Param3D* param = &paramP;
-      for (int iParam = 2;
-           iParam--;) {
+      for (
+        int iParam = 2;
+        iParam--;) {
 
         // 50% chance of being a Cuboid or a Tetrahedron
-        if (rnd() < 0.5)
+        if (rnd() < 0.5) {
+
           param->type = FrameCuboid;
-        else
+
+        } else {
+
           param->type = FrameTetrahedron;
 
-        for (int iAxis = 3;
-             iAxis--;) {
+        }
+
+        for (
+          int iAxis = 3;
+          iAxis--;) {
 
           param->orig[iAxis] = -RANGE_AXIS + 2.0 * rnd() * RANGE_AXIS;
 
-          for (int iComp = 3;
-               iComp--;) {
+          for (
+            int iComp = 3;
+            iComp--;) {
 
             param->comp[iComp][iAxis] =
               -RANGE_AXIS + 2.0 * rnd() * RANGE_AXIS;
@@ -578,19 +577,19 @@ void Qualify3DStatic(void) {
 
       // Calculate the determinant of the Frames' components matrix
       double detP =
-        paramP.comp[0][0] * (paramP.comp[1][1] * paramP.comp[2][2]-
+        paramP.comp[0][0] * (paramP.comp[1][1] * paramP.comp[2][2] -
         paramP.comp[1][2] * paramP.comp[2][1]) -
-        paramP.comp[1][0] * (paramP.comp[0][1] * paramP.comp[2][2]-
+        paramP.comp[1][0] * (paramP.comp[0][1] * paramP.comp[2][2] -
         paramP.comp[0][2] * paramP.comp[2][1]) +
-        paramP.comp[2][0] * (paramP.comp[0][1] * paramP.comp[1][2]-
+        paramP.comp[2][0] * (paramP.comp[0][1] * paramP.comp[1][2] -
         paramP.comp[0][2] * paramP.comp[1][1]);
 
       double detQ =
-        paramQ.comp[0][0] * (paramQ.comp[1][1] * paramQ.comp[2][2]-
+        paramQ.comp[0][0] * (paramQ.comp[1][1] * paramQ.comp[2][2] -
         paramQ.comp[1][2] * paramQ.comp[2][1]) -
-        paramQ.comp[1][0] * (paramQ.comp[0][1] * paramQ.comp[2][2]-
+        paramQ.comp[1][0] * (paramQ.comp[0][1] * paramQ.comp[2][2] -
         paramQ.comp[0][2] * paramQ.comp[2][1]) +
-        paramQ.comp[2][0] * (paramQ.comp[0][1] * paramQ.comp[1][2]-
+        paramQ.comp[2][0] * (paramQ.comp[0][1] * paramQ.comp[1][2] -
         paramQ.comp[0][2] * paramQ.comp[1][1]);
 
       // If the determinants are not null, ie the Frame are not degenerate
@@ -640,15 +639,34 @@ void Qualify3DStatic(void) {
 
     }
 
-    fprintf(fp, "%.1f,", ratioInter);
-    fprintf(fp, "%lu,%lu,", countInter, countNoInter);
+    fprintf(
+      fp,
+      "%.1f,",
+      ratioInter);
+    fprintf(
+      fp,
+      "%lu,%lu,",
+      countInter,
+      countNoInter);
     double avgInter = sumInter / (double)countInter;
-    fprintf(fp, "%f,%f,%f,", minInter, avgInter, maxInter);
+    fprintf(
+      fp,
+      "%f,%f,%f,",
+      minInter,
+      avgInter,
+      maxInter);
     double avgNoInter = sumNoInter / (double)countNoInter;
-    fprintf(fp, "%f,%f,%f,", minNoInter, avgNoInter, maxNoInter);
+    fprintf(
+      fp,
+      "%f,%f,%f,",
+      minNoInter,
+      avgNoInter,
+      maxNoInter);
     double avg =
       ratioInter * avgInter + (1.0 - ratioInter) * avgNoInter;
-    fprintf(fp, "%f,%f,%f",
+    fprintf(
+      fp,
+      "%f,%f,%f",
       (minNoInter < minInter ? minNoInter : minInter),
       avg,
       (maxNoInter > maxInter ? maxNoInter : maxInter));
@@ -658,15 +676,34 @@ void Qualify3DStatic(void) {
 
     }
 
-    fprintf(fpCC, "%.1f,", ratioInter);
-    fprintf(fpCC, "%lu,%lu,", countInterCC, countNoInterCC);
+    fprintf(
+      fpCC,
+      "%.1f,",
+      ratioInter);
+    fprintf(
+      fpCC,
+      "%lu,%lu,",
+      countInterCC,
+      countNoInterCC);
     double avgInterCC = sumInterCC / (double)countInterCC;
-    fprintf(fpCC, "%f,%f,%f,", minInterCC, avgInterCC, maxInterCC);
+    fprintf(
+      fpCC,
+      "%f,%f,%f,",
+      minInterCC,
+      avgInterCC,
+      maxInterCC);
     double avgNoInterCC = sumNoInterCC / (double)countNoInterCC;
-    fprintf(fpCC, "%f,%f,%f,", minNoInterCC, avgNoInterCC, maxNoInterCC);
+    fprintf(
+      fpCC,
+      "%f,%f,%f,",
+      minNoInterCC,
+      avgNoInterCC,
+      maxNoInterCC);
     double avgCC =
       ratioInter * avgInterCC + (1.0 - ratioInter) * avgNoInterCC;
-    fprintf(fpCC, "%f,%f,%f",
+    fprintf(
+      fpCC,
+      "%f,%f,%f",
       (minNoInterCC < minInterCC ? minNoInterCC : minInterCC),
       avgCC,
       (maxNoInterCC > maxInterCC ? maxNoInterCC : maxInterCC));
@@ -676,15 +713,34 @@ void Qualify3DStatic(void) {
 
     }
 
-    fprintf(fpCT, "%.1f,", ratioInter);
-    fprintf(fpCT, "%lu,%lu,", countInterCT, countNoInterCT);
+    fprintf(
+      fpCT,
+      "%.1f,",
+      ratioInter);
+    fprintf(
+      fpCT,
+      "%lu,%lu,",
+      countInterCT,
+      countNoInterCT);
     double avgInterCT = sumInterCT / (double)countInterCT;
-    fprintf(fpCT, "%f,%f,%f,", minInterCT, avgInterCT, maxInterCT);
+    fprintf(
+      fpCT,
+      "%f,%f,%f,",
+      minInterCT,
+      avgInterCT,
+      maxInterCT);
     double avgNoInterCT = sumNoInterCT / (double)countNoInterCT;
-    fprintf(fpCT, "%f,%f,%f,", minNoInterCT, avgNoInterCT, maxNoInterCT);
+    fprintf(
+      fpCT,
+      "%f,%f,%f,",
+      minNoInterCT,
+      avgNoInterCT,
+      maxNoInterCT);
     double avgCT =
       ratioInter * avgInterCT + (1.0 - ratioInter) * avgNoInterCT;
-    fprintf(fpCT, "%f,%f,%f",
+    fprintf(
+      fpCT,
+      "%f,%f,%f",
       (minNoInterCT < minInterCT ? minNoInterCT : minInterCT),
       avgCT,
       (maxNoInterCT > maxInterCT ? maxNoInterCT : maxInterCT));
@@ -694,15 +750,34 @@ void Qualify3DStatic(void) {
 
     }
 
-    fprintf(fpTC, "%.1f,", ratioInter);
-    fprintf(fpTC, "%lu,%lu,", countInterTC, countNoInterTC);
+    fprintf(
+      fpTC,
+      "%.1f,",
+      ratioInter);
+    fprintf(
+      fpTC,
+      "%lu,%lu,",
+      countInterTC,
+      countNoInterTC);
     double avgInterTC = sumInterTC / (double)countInterTC;
-    fprintf(fpTC, "%f,%f,%f,", minInterTC, avgInterTC, maxInterTC);
+    fprintf(
+      fpTC,
+      "%f,%f,%f,",
+      minInterTC,
+      avgInterTC,
+      maxInterTC);
     double avgNoInterTC = sumNoInterTC / (double)countNoInterTC;
-    fprintf(fpTC, "%f,%f,%f,", minNoInterTC, avgNoInterTC, maxNoInterTC);
+    fprintf(
+      fpTC,
+      "%f,%f,%f,",
+      minNoInterTC,
+      avgNoInterTC,
+      maxNoInterTC);
     double avgTC =
       ratioInter * avgInterTC + (1.0 - ratioInter) * avgNoInterTC;
-    fprintf(fpTC, "%f,%f,%f",
+    fprintf(
+      fpTC,
+      "%f,%f,%f",
       (minNoInterTC < minInterTC ? minNoInterTC : minInterTC),
       avgTC,
       (maxNoInterTC > maxInterTC ? maxNoInterTC : maxInterTC));
@@ -712,15 +787,34 @@ void Qualify3DStatic(void) {
 
     }
 
-    fprintf(fpTT, "%.1f,", ratioInter);
-    fprintf(fpTT, "%lu,%lu,", countInterTT, countNoInterTT);
+    fprintf(
+      fpTT,
+      "%.1f,",
+      ratioInter);
+    fprintf(
+      fpTT,
+      "%lu,%lu,",
+      countInterTT,
+      countNoInterTT);
     double avgInterTT = sumInterTT / (double)countInterTT;
-    fprintf(fpTT, "%f,%f,%f,", minInterTT, avgInterTT, maxInterTT);
+    fprintf(
+      fpTT,
+      "%f,%f,%f,",
+      minInterTT,
+      avgInterTT,
+      maxInterTT);
     double avgNoInterTT = sumNoInterTT / (double)countNoInterTT;
-    fprintf(fpTT, "%f,%f,%f,", minNoInterTT, avgNoInterTT, maxNoInterTT);
+    fprintf(
+      fpTT,
+      "%f,%f,%f,",
+      minNoInterTT,
+      avgNoInterTT,
+      maxNoInterTT);
     double avgTT =
       ratioInter * avgInterTT + (1.0 - ratioInter) * avgNoInterTT;
-    fprintf(fpTT, "%f,%f,%f",
+    fprintf(
+      fpTT,
+      "%f,%f,%f",
       (minNoInterTT < minInterTT ? minNoInterTT : minInterTT),
       avgTT,
       (maxNoInterTT > maxInterTT ? maxNoInterTT : maxInterTT));

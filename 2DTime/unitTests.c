@@ -25,9 +25,9 @@ typedef struct {
 // Run the FMB intersection detection alogirhtm on the Frames
 // and check against the correct results
 void UnitTest2DTime(
-        const Param2DTime paramP,
-        const Param2DTime paramQ,
-         const bool correctAnswer,
+  const Param2DTime paramP,
+  const Param2DTime paramQ,
+  const bool correctAnswer,
   const AABB2DTime* const correctBdgBox) {
 
   // Create the two Frames
@@ -53,8 +53,9 @@ void UnitTest2DTime(
   Frame2DTime* tho = &Q;
 
   // Loop on pairs of Frames
-  for (int iPair = 2;
-       iPair--;) {
+  for (
+    int iPair = 2;
+    iPair--;) {
 
     // Display the tested frames
     Frame2DTimePrint(that);
@@ -75,12 +76,10 @@ void UnitTest2DTime(
       // Display information about the failure
       printf(" Failed\n");
       printf("Expected : ");
-      if (correctAnswer == false)
-        printf("no ");
+      if (correctAnswer == false) printf("no ");
       printf("intersection\n");
       printf("Got : ");
-      if (isIntersecting == false)
-        printf("no ");
+      if (isIntersecting == false) printf("no ");
       printf("intersection\n");
       exit(0);
 
@@ -98,11 +97,13 @@ void UnitTest2DTime(
 
         // Check the bounding box
         bool flag = true;
-        for (int i = 3;
-             i--;) {
+        for (
+          int i = 3;
+          i--;) {
 
-          if (bdgBox.min[i] > correctBdgBox->min[i] + EPSILON ||
-              bdgBox.max[i] < correctBdgBox->max[i] - EPSILON) {
+          if (
+            bdgBox.min[i] > correctBdgBox->min[i] + EPSILON ||
+            bdgBox.max[i] < correctBdgBox->max[i] - EPSILON) {
 
             flag = false;
 
@@ -167,24 +168,23 @@ void Test2DTime(void) {
   AABB2DTime correctBdgBox;
 
   // Execute the unit test on various cases
-
   // ----------------------------
   paramP = (Param2DTime) {
 
-      .type = FrameCuboid,
-      .orig = {0.0, 0.0},
-      .comp = {{1.0, 0.0}, {0.0, 1.0}},
-      .speed = {0.0, 0.0}
+    .type = FrameCuboid,
+    .orig = {0.0, 0.0},
+    .comp = {{1.0, 0.0}, {0.0, 1.0}},
+    .speed = {0.0, 0.0}
 
-    };
+  };
   paramQ = (Param2DTime) {
 
-      .type = FrameCuboid,
-      .orig = {-1.0, 0.0},
-      .comp = {{1.0, 0.0}, {0.0, 1.0}},
-      .speed = {-1.0, 0.0}
+    .type = FrameCuboid,
+    .orig = {-1.0, 0.0},
+    .comp = {{1.0, 0.0}, {0.0, 1.0}},
+    .speed = {-1.0, 0.0}
 
-    };
+  };
   UnitTest2DTime(
     paramP,
     paramQ,
@@ -194,20 +194,20 @@ void Test2DTime(void) {
   // ----------------------------
   paramP = (Param2DTime) {
 
-      .type = FrameCuboid,
-      .orig = {0.0, 0.0},
-      .comp = {{1.0, 0.0}, {0.0, 1.0}},
-      .speed = {0.0, 0.0}
+    .type = FrameCuboid,
+    .orig = {0.0, 0.0},
+    .comp = {{1.0, 0.0}, {0.0, 1.0}},
+    .speed = {0.0, 0.0}
 
-    };
+  };
   paramQ = (Param2DTime) {
 
-      .type = FrameCuboid,
-      .orig = {-1.01, -1.01},
-      .comp = {{1.0, 0.0}, {0.0, 1.0}},
-      .speed = {1.0, 0.0}
+    .type = FrameCuboid,
+    .orig = {-1.01, -1.01},
+    .comp = {{1.0, 0.0}, {0.0, 1.0}},
+    .speed = {1.0, 0.0}
 
-    };
+  };
   UnitTest2DTime(
     paramP,
     paramQ,
@@ -217,26 +217,26 @@ void Test2DTime(void) {
   // ----------------------------
   paramP = (Param2DTime) {
 
-      .type = FrameCuboid,
-      .orig = {0.0, 0.0},
-      .comp = {{1.0, 0.0}, {0.0, 1.0}},
-      .speed = {0.0, 0.0}
+    .type = FrameCuboid,
+    .orig = {0.0, 0.0},
+    .comp = {{1.0, 0.0}, {0.0, 1.0}},
+    .speed = {0.0, 0.0}
 
-    };
+  };
   paramQ = (Param2DTime) {
 
-      .type = FrameCuboid,
-      .orig = {-1.0, 0.0},
-      .comp = {{1.0, 0.0}, {0.0, 1.0}},
-      .speed = {1.0, 0.0}
+    .type = FrameCuboid,
+    .orig = {-1.0, 0.0},
+    .comp = {{1.0, 0.0}, {0.0, 1.0}},
+    .speed = {1.0, 0.0}
 
-    };
+  };
   correctBdgBox = (AABB2DTime) {
 
-      .min = {0.0, 0.0, 0.0},
-      .max = {1.0, 1.0, 1.0}
+    .min = {0.0, 0.0, 0.0},
+    .max = {1.0, 1.0, 1.0}
 
-    };
+  };
   UnitTest2DTime(
     paramP,
     paramQ,
@@ -246,26 +246,26 @@ void Test2DTime(void) {
   // ----------------------------
   paramP = (Param2DTime) {
 
-      .type = FrameCuboid,
-      .orig = {0.0, 0.0},
-      .comp = {{1.0, 0.0}, {0.0, 1.0}},
-      .speed = {0.0, 0.0}
+    .type = FrameCuboid,
+    .orig = {0.0, 0.0},
+    .comp = {{1.0, 0.0}, {0.0, 1.0}},
+    .speed = {0.0, 0.0}
 
-    };
+  };
   paramQ = (Param2DTime) {
 
-      .type = FrameCuboid,
-      .orig = {-1.0, 0.25},
-      .comp = {{0.5, 0.0}, {0.0, 0.5}},
-      .speed = {4.0, 0.0}
+    .type = FrameCuboid,
+    .orig = {-1.0, 0.25},
+    .comp = {{0.5, 0.0}, {0.0, 0.5}},
+    .speed = {4.0, 0.0}
 
-    };
+  };
   correctBdgBox = (AABB2DTime) {
 
-      .min = {0.0, 0.25, 0.125},
-      .max = {1.0, 0.75, 0.5}
+    .min = {0.0, 0.25, 0.125},
+    .max = {1.0, 0.75, 0.5}
 
-    };
+  };
   UnitTest2DTime(
     paramP,
     paramQ,
@@ -275,26 +275,26 @@ void Test2DTime(void) {
   // ----------------------------
   paramP = (Param2DTime) {
 
-      .type = FrameCuboid,
-      .orig = {0.0, 0.0},
-      .comp = {{1.0, 0.0}, {0.0, 1.0}},
-      .speed = {0.0, 0.0}
+    .type = FrameCuboid,
+    .orig = {0.0, 0.0},
+    .comp = {{1.0, 0.0}, {0.0, 1.0}},
+    .speed = {0.0, 0.0}
 
-    };
+  };
   paramQ = (Param2DTime) {
 
-      .type = FrameCuboid,
-      .orig = {0.25, -1.0},
-      .comp = {{0.5, 0.0}, {0.0, 0.5}},
-      .speed = {0.0, 4.0}
+    .type = FrameCuboid,
+    .orig = {0.25, -1.0},
+    .comp = {{0.5, 0.0}, {0.0, 0.5}},
+    .speed = {0.0, 4.0}
 
-    };
+  };
   correctBdgBox = (AABB2DTime) {
 
-      .min = {0.25, 0.0, 0.125},
-      .max = {0.75, 1.0, 0.5}
+    .min = {0.25, 0.0, 0.125},
+    .max = {0.75, 1.0, 0.5}
 
-    };
+  };
   UnitTest2DTime(
     paramP,
     paramQ,
@@ -304,26 +304,26 @@ void Test2DTime(void) {
   // ----------------------------
   paramP = (Param2DTime) {
 
-      .type = FrameCuboid,
-      .orig = {0.0, 0.0},
-      .comp = {{1.0, 0.0}, {0.0, 1.0}},
-      .speed = {0.0, 0.0}
+    .type = FrameCuboid,
+    .orig = {0.0, 0.0},
+    .comp = {{1.0, 0.0}, {0.0, 1.0}},
+    .speed = {0.0, 0.0}
 
-    };
+  };
   paramQ = (Param2DTime) {
 
-      .type = FrameCuboid,
-      .orig = {0.9, -1.0},
-      .comp = {{0.5, 0.0}, {0.0, 0.5}},
-      .speed = {0.0, 4.0}
+    .type = FrameCuboid,
+    .orig = {0.9, -1.0},
+    .comp = {{0.5, 0.0}, {0.0, 0.5}},
+    .speed = {0.0, 4.0}
 
-    };
+  };
   correctBdgBox = (AABB2DTime) {
 
-      .min = {0.9, 0.0, 0.125},
-      .max = {1.0, 1.0, 0.5}
+    .min = {0.9, 0.0, 0.125},
+    .max = {1.0, 1.0, 0.5}
 
-    };
+  };
   UnitTest2DTime(
     paramP,
     paramQ,
