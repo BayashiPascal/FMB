@@ -6,7 +6,7 @@
 // Include the FMB algorithm library
 #include "fmb3dt.h"
 
-// Epslon for numerical precision
+// Epsilon for numerical precision
 #define EPSILON 0.0001
 
 // Helper structure to pass arguments to the UnitTest function
@@ -22,7 +22,7 @@ typedef struct {
 // Unit test function
 // Takes two Frame definitions, the correct answer in term of
 // intersection/no intersection and the correct bounding box
-// Run the FMB intersection detection alogirhtm on the Frames
+// Run the FMB intersection detection algorihtm on the Frames
 // and check against the correct results
 void UnitTest3DTime(
   const Param3DTime paramP,
@@ -159,7 +159,7 @@ void UnitTest3DTime(
 
 void Test3DTime(void) {
 
-  // Declare two variables to memozie the arguments to the
+  // Declare two variables to memorize the arguments to the
   // Validation function
   Param3DTime paramP;
   Param3DTime paramQ;

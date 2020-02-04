@@ -88,7 +88,7 @@ bool ElimVar3D(
     // Shortcuts
     const double fabsMIRowIVar = fabs(M[iRow][0]);
 
-    // If the coefficient for the eliminated vairable is not null
+    // If the coefficient for the eliminated variable is not null
     // in this row
     if (fabsMIRowIVar > EPSILON) {
 
@@ -140,7 +140,7 @@ bool ElimVar3D(
             YIRowDivideByFabsMIRowIVar +
             Y[jRow] / fabsMjRow;
 
-          // If the right side of the inequality if lower than the sum of
+          // If the right side of the inequality is lower than the sum of
           // negative coefficients in the row
           // (Add epsilon for numerical imprecision)
           if (Yp[nbResRows] < sumNegCoeff - EPSILON) {
@@ -368,7 +368,7 @@ bool FMBTestIntersection3D(
   const Frame3D* const tho,
   AABB3D* const bdgBox) {
 
-  // Get the projection of the Frame 'tho' in Frame 'that' coordinates
+  // Get the projection of the Frame tho in Frame that coordinates
   // system
   Frame3D thoProj;
   Frame3DImportFrame(that, tho, &thoProj);
@@ -410,7 +410,7 @@ bool FMBTestIntersection3D(
 
   }
 
-  // Variable to memorise the nb of rows in the system
+  // Variable to memorize the nb of rows in the system
   int nbRows = 3;
 
   if (that->type == FrameCuboid) {

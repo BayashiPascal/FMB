@@ -197,7 +197,7 @@ void Validate2D(void) {
 
   }
 
-  // If we reached it means the validation was successfull
+  // If we reached here it means the validation was successfull
   // Print results
   printf("Validation2D has succeed.\n");
   printf("Tested %lu intersections ", nbInter);

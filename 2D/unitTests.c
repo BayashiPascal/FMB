@@ -6,7 +6,7 @@
 // Include the FMB algorithm library
 #include "fmb2d.h"
 
-// Epslon for numerical precision
+// Epsilon for numerical precision
 #define EPSILON 0.0001
 
 // Helper structure to pass arguments to the UnitTest function
@@ -21,7 +21,7 @@ typedef struct {
 // Unit test function
 // Takes two Frame definitions, the correct answer in term of
 // intersection/no intersection and the correct bounding box
-// Run the FMB intersection detection alogirhtm on the Frames
+// Run the FMB intersection detection algorihtm on the Frames
 // and check against the correct results
 void UnitTest2D(
   const Param2D paramP,
@@ -185,7 +185,7 @@ void UnitTest2D(
 
 void Test2D(void) {
 
-  // Declare two variables to memozie the arguments to the
+  // Declare two variables to memorize the arguments to the
   // Validation function
   Param2D paramP;
   Param2D paramQ;

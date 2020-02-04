@@ -763,18 +763,18 @@ void Frame2DExportBdgBox(
   }
 
   // Loop on vertices of the AABB
-  // skip the first vertex which is the origin already computed above
+  // Skip the first vertex which is the origin already computed above
   int nbVertices = powi(2, 2);
   for (
     int iVertex = nbVertices;
     iVertex-- && iVertex;) {
 
     // Declare a variable to memorize the coordinates of the vertex in
-    // 'that' 's coordinates system
+    // that's coordinates system
     double v[2];
 
     // Calculate the coordinates of the vertex in
-    // 'that' 's coordinates system
+    // that's coordinates system
     for (
       int i = 2;
       i--;) {
@@ -869,11 +869,11 @@ void Frame3DExportBdgBox(
     iVertex-- && iVertex;) {
 
     // Declare a variable to memorize the coordinates of the vertex in
-    // 'that' 's coordinates system
+    // that's coordinates system
     double v[3];
 
     // Calculate the coordinates of the vertex in
-    // 'that' 's coordinates system
+    // that's coordinates system
     for (
       int i = 3;
       i--;) {
@@ -1087,11 +1087,11 @@ void Frame3DTimeExportBdgBox(
     iVertex-- && iVertex;) {
 
     // Declare a variable to memorize the coordinates of the vertex in
-    // 'that' 's coordinates system
+    // that's coordinates system
     double v[3];
 
     // Calculate the coordinates of the vertex in
-    // 'that' 's coordinates system
+    // that's coordinates system
     for (
       int i = 3;
       i--;) {

@@ -6,7 +6,7 @@
 // Include the FMB algorithm library
 #include "fmb3d.h"
 
-// Epslon for numerical precision
+// Epsilon for numerical precision
 #define EPSILON 0.0001
 
 // Helper structure to pass arguments to the UnitTest function
@@ -186,7 +186,7 @@ void UnitTest3D(
 
 void Test3D(void) {
 
-  // Declare two variables to memozie the arguments to the
+  // Declare two variables to memorize the arguments to the
   // Validation function
   Param3D paramP;
   Param3D paramQ;

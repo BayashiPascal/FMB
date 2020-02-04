@@ -89,7 +89,7 @@ bool ElimVar3DTime(
     // Shortcuts
     const double fabsMIRowIVar = fabs(M[iRow][0]);
 
-    // If the coefficient for the eliminated vairable is not null
+    // If the coefficient for the eliminated variable is not null
     // in this row
     if (fabsMIRowIVar > EPSILON) {
 
@@ -141,7 +141,7 @@ bool ElimVar3DTime(
             YIRowDivideByFabsMIRowIVar +
             Y[jRow] / fabsMjRow;
 
-          // If the right side of the inequality if lower than the sum of
+          // If the right side of the inequality is lower than the sum of
           // negative coefficients in the row
           // (Add epsilon for numerical imprecision)
           if (Yp[nbResRows] < sumNegCoeff - EPSILON) {
@@ -370,7 +370,7 @@ bool FMBTestIntersection3DTime(
   const Frame3DTime* const tho,
   AABB3DTime* const bdgBox) {
 
-  // Get the projection of the Frame 'tho' in Frame 'that' coordinates
+  // Get the projection of the Frame tho in Frame that coordinates
   // system
   Frame3DTime thoProj;
   Frame3DTimeImportFrame(that, tho, &thoProj);

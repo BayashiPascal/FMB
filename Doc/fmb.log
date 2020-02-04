@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.10.17)  3 FEB 2020 07:26
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.10.17)  4 FEB 2020 23:32
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -830,18 +830,19 @@ Underfull \hbox (badness 10000) in paragraph at lines 827--828
  []
 
 (../2D/unitTests.c [123] [124] [125] [126] [127] [128] [129] [130] [131]
-[132] [133] [134]) [135] (../3D/unitTests.c [136] [137] [138] [139] [140]
-[141] [142] [143]) (../2DTime/unitTests.c [144] [145] [146] [147] [148])
-(../3DTime/unitTests.c [149] [150] [151] [152] [153] [154])
+[132] [133] [134] [135]) (../3D/unitTests.c [136] [137] [138] [139] [140]
+[141] [142] [143]) (../2DTime/unitTests.c [144] [145] [146] [147] [148]
+[149]) (../3DTime/unitTests.c [150] [151] [152] [153] [154])
 (../Results/unitTests2D.txt [155] [156] [157] [158])
-(../Results/unitTests3D.txt [159] [160] [161]) (../Results/unitTests2DTime.txt
-[162] [163]) (../Results/unitTests3DTime.txt [164] [165])
+(../Results/unitTests3D.txt [159] [160] [161]) [162]
+(../Results/unitTests2DTime.txt [163]) (../Results/unitTests3DTime.txt [164]
+[165])
 Underfull \hbox (badness 10000) in paragraph at lines 899--900
 
  []
 
 (../2D/validation.c [166] [167] [168] [169]) (../3D/validation.c [170] [171]
-[172]) (../2DTime/validation.c [173] [174] [175] [176]) (../3DTime/validation.c
+[172] [173]) (../2DTime/validation.c [174] [175] [176]) (../3DTime/validation.c
 [177] [178] [179] [180])
 Underfull \hbox (badness 10000) in paragraph at lines 939--940
 
@@ -863,19 +864,19 @@ File: ./degeneratedFrame.png Graphic file (type png)
 <use ./degeneratedFrame.png>
 Package pdftex.def Info: ./degeneratedFrame.png  used on input line 953.
 (pdftex.def)             Requested size: 284.52756pt x 166.05998pt.
-[181 <./degeneratedFrame.png>] (../Results/validation2D.txt)
-(../Results/validation2DTime.txt) (../Results/validation3D.txt)
-(../Results/validation3DTime.txt)
+[181] (../Results/validation2D.txt) (../Results/validation2DTime.txt)
+(../Results/validation3D.txt) (../Results/validation3DTime.txt)
 Underfull \hbox (badness 10000) in paragraph at lines 993--994
 
  []
 
-(../2D/qualification.c [182] [183] [184] [185] [186] [187] [188] [189] [190]
-[191] [192] [193] [194] [195]) (../3D/qualification.c [196] [197] [198]
-[199] [200] [201] [202] [203] [204] [205] [206] [207] [208]) [209]
-(../2DTime/qualification.c [210] [211] [212] [213] [214] [215] [216] [217]
-[218] [219] [220] [221] [222]) (../3DTime/qualification.c [223] [224] [225]
-[226] [227] [228] [229] [230] [231] [232] [233] [234] [235] [236])
+[182 <./degeneratedFrame.png>] (../2D/qualification.c [183] [184] [185]
+[186] [187] [188] [189] [190] [191] [192] [193] [194] [195])
+(../3D/qualification.c [196] [197] [198] [199] [200] [201] [202] [203] [204]
+[205] [206] [207] [208] [209]) (../2DTime/qualification.c [210] [211] [212]
+[213] [214] [215] [216] [217] [218] [219] [220] [221] [222]) [223]
+(../3DTime/qualification.c [224] [225] [226] [227] [228] [229] [230] [231]
+[232] [233] [234] [235] [236])
 Underfull \hbox (badness 10000) in paragraph at lines 1031--1032
 
  []
@@ -1531,7 +1532,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 1325--1326
 Here is how much of TeX's memory you used:
  15055 strings out of 493765
  294907 string characters out of 6151500
- 564804 words of memory out of 5000000
+ 564805 words of memory out of 5000000
  18088 multiletter control sequences out of 15000+600000
  14339 words of font info for 56 fonts, out of 8000000 for 9000
  622 hyphenation exceptions out of 8191
@@ -1555,7 +1556,7 @@ sr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm7.pfb>
 
 pdfTeX warning: pdflatex: no GlyphToUnicode entry has been inserted yet!
-Output written on fmb.pdf (314 pages, 1375888 bytes).
+Output written on fmb.pdf (314 pages, 1375392 bytes).
 PDF statistics:
  1137 PDF objects out of 1200 (max. 8388607)
  749 compressed objects within 8 object streams

@@ -205,7 +205,7 @@ void Validate3D(void) {
 
   }
 
-  // If we reached it means the validation was successfull
+  // If we reached here it means the validation was successfull
   // Print results
   printf("Validation3D has succeed.\n");
   printf("Tested %lu intersections ", nbInter);

@@ -441,13 +441,13 @@ void Qualification3DDynamic(
 
       }
 
-    // Else, if time of execution for FMB was less than a 10ms
+    // Else, if time of execution for FMB was less than 10ms
     } else if (deltausFMB < 10) {
 
       printf("deltausFMB < 10ms, increase NB_REPEAT\n");
       exit(0);
 
-    // Else, if time of execution for SAT was less than a 10ms
+    // Else, if time of execution for SAT was less than 10ms
     } else if (deltausSAT < 10) {
 
       printf("deltausSAT < 10ms, increase NB_REPEAT\n");
@@ -608,7 +608,7 @@ void Qualify3DDynamic(void) {
 
     }
 
-    // Display the results
+    // Save the results
     if (iRun == 0) {
 
       fprintf(fp, "percPairInter,");
