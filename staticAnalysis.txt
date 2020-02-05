@@ -1,0 +1,66 @@
+make[1]: Entering directory '/home/bayashi/GitHub/FMB'
+cd 2D; make cppcheck; cd -
+make[2]: Entering directory '/home/bayashi/GitHub/FMB/2D'
+cppcheck --enable=all ./
+Checking fmb2d.c ...
+1/5 files checked 20% done
+Checking main.c ...
+2/5 files checked 40% done
+Checking qualification.c ...
+3/5 files checked 60% done
+Checking unitTests.c ...
+4/5 files checked 80% done
+Checking validation.c ...
+5/5 files checked 100% done
+(information) Cppcheck cannot find all the include files (use --check-config for details)
+make[2]: Leaving directory '/home/bayashi/GitHub/FMB/2D'
+/home/bayashi/GitHub/FMB
+cd 2DTime; make cppcheck; cd -
+make[2]: Entering directory '/home/bayashi/GitHub/FMB/2DTime'
+cppcheck --enable=all ./
+Checking fmb2dt.c ...
+1/5 files checked 20% done
+Checking main.c ...
+2/5 files checked 40% done
+Checking qualification.c ...
+3/5 files checked 60% done
+Checking unitTests.c ...
+4/5 files checked 80% done
+Checking validation.c ...
+5/5 files checked 100% done
+(information) Cppcheck cannot find all the include files (use --check-config for details)
+make[2]: Leaving directory '/home/bayashi/GitHub/FMB/2DTime'
+/home/bayashi/GitHub/FMB
+cd 3D; make cppcheck; cd -
+make[2]: Entering directory '/home/bayashi/GitHub/FMB/3D'
+cppcheck --enable=all ./
+Checking fmb3d.c ...
+1/5 files checked 20% done
+Checking main.c ...
+2/5 files checked 40% done
+Checking qualification.c ...
+3/5 files checked 60% done
+Checking unitTests.c ...
+4/5 files checked 80% done
+Checking validation.c ...
+5/5 files checked 100% done
+(information) Cppcheck cannot find all the include files (use --check-config for details)
+make[2]: Leaving directory '/home/bayashi/GitHub/FMB/3D'
+/home/bayashi/GitHub/FMB
+cd 3DTime; make cppcheck; cd -
+make[2]: Entering directory '/home/bayashi/GitHub/FMB/3DTime'
+cppcheck --enable=all ./
+Checking fmb3dt.c ...
+1/5 files checked 20% done
+Checking main.c ...
+2/5 files checked 40% done
+Checking qualification.c ...
+3/5 files checked 60% done
+Checking unitTests.c ...
+4/5 files checked 80% done
+Checking validation.c ...
+5/5 files checked 100% done
+(information) Cppcheck cannot find all the include files (use --check-config for details)
+make[2]: Leaving directory '/home/bayashi/GitHub/FMB/3DTime'
+/home/bayashi/GitHub/FMB
+make[1]: Leaving directory '/home/bayashi/GitHub/FMB'

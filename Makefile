@@ -92,6 +92,20 @@ valgrind3D:
 valgrind3DTime:
 	cd 3DTime; make valgrind; cd -
 
+cppcheck : cppcheck2D cppcheck2DTime cppcheck3D cppcheck3DTime
+
+cppcheck2D:
+	cd 2D; make cppcheck; cd -
+
+cppcheck2DTime:
+	cd 2DTime; make cppcheck; cd -
+
+cppcheck3D:
+	cd 3D; make cppcheck; cd -
+
+cppcheck3DTime:
+	cd 3DTime; make cppcheck; cd -
+
 run : run2D run2DTime run3D run3DTime
 
 run2D: 
@@ -131,3 +145,6 @@ getRuntimeEnvironment:
 
 dynamicAnalysis:
 	make valgrind 1> dynamicAnalysis.txt 2> dynamicAnalysis.txt
+
+staticAnalysis:
+	make cppcheck 1> staticAnalysis.txt 2> staticAnalysis.txt
