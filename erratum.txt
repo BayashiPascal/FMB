@@ -1,0 +1,7 @@
+p.13
+
+One can get the equivalent coordinates S' , or (S, t)
+
+should be
+
+One can get the equivalent coordinates S' , or (S', t)
