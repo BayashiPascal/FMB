@@ -56,6 +56,12 @@ typedef struct {
 
 } Param2D;
 
+// Type of qualification
+typedef enum {
+  typeQualif_all,
+  typeQualif_nearCaseOnly
+} TypeQualif;
+
 // Global variables to count nb of tests resulting in intersection
 // and no intersection, and min/max/total time of execution for each
 double minInter;
@@ -108,7 +114,8 @@ unsigned long countNoInterTT;
 // them with FMB and SAT, and measure the time of execution of each
 void Qualification2DStatic(
   const Param2D paramP,
-  const Param2D paramQ) {
+  const Param2D paramQ,
+  TypeQualif typeQualif) {
 
   // Create the two Frames
   Frame2D P =
@@ -126,6 +133,25 @@ void Qualification2DStatic(
   // Helper variables to loop on the pair (that, tho) and (tho, that)
   Frame2D* that = &P;
   Frame2D* tho = &Q;
+
+  // If the type of qualifiction is nearCaseOnly
+  if (typeQualif == typeQualif_nearCaseOnly) {
+
+    // If the AABBs of the two Frame are not in intersection
+    bool isIntersectingAABB =
+      AABBTestIntersection2D(
+        &(that->bdgBox),
+        &(tho->bdgBox));
+    if (isIntersectingAABB == false) {
+
+      // Skip the test on this pair to simulate pruning of pairs
+      // of distant Frame by a prior step in a real collision
+      // detection system.
+      return;
+
+    }
+
+  }
 
   // Loop on pairs of Frames
   for (
@@ -479,17 +505,39 @@ void Qualification2DStatic(
 
 }
 
-void Qualify2DStatic(void) {
+void Qualify2DStatic(TypeQualif typeQualif) {
 
   // Initialise the random generator
   srandom(time(NULL));
 
   // Open the files to save the results
-  FILE* fp = fopen("../Results/qualification2D.txt", "w");
-  FILE* fpCC = fopen("../Results/qualification2DCC.txt", "w");
-  FILE* fpCT = fopen("../Results/qualification2DCT.txt", "w");
-  FILE* fpTC = fopen("../Results/qualification2DTC.txt", "w");
-  FILE* fpTT = fopen("../Results/qualification2DTT.txt", "w");
+  FILE* fp = NULL;
+  FILE* fpCC = NULL;
+  FILE* fpCT = NULL;
+  FILE* fpTC = NULL;
+  FILE* fpTT = NULL;
+  if (typeQualif == typeQualif_all) {
+
+    fp = fopen("../Results/qualification2D.txt", "w");
+    fpCC = fopen("../Results/qualification2DCC.txt", "w");
+    fpCT = fopen("../Results/qualification2DCT.txt", "w");
+    fpTC = fopen("../Results/qualification2DTC.txt", "w");
+    fpTT = fopen("../Results/qualification2DTT.txt", "w");
+
+  } else if (typeQualif == typeQualif_nearCaseOnly) {
+
+    fp = fopen("../Results/qualification2Dnearcaseonly.txt", "w");
+    fpCC = fopen("../Results/qualification2DCCnearcaseonly.txt", "w");
+    fpCT = fopen("../Results/qualification2DCTnearcaseonly.txt", "w");
+    fpTC = fopen("../Results/qualification2DTCnearcaseonly.txt", "w");
+    fpTT = fopen("../Results/qualification2DTTnearcaseonly.txt", "w");
+
+  } else {
+
+    printf("Unimplemented typeQualif in Qualifiy2DStatic\n");
+    exit(1);
+
+  }
 
   // Loop on runs
   for (
@@ -609,7 +657,8 @@ void Qualify2DStatic(void) {
         // Run the validation on the two Frames
         Qualification2DStatic(
           paramP,
-          paramQ);
+          paramQ,
+          typeQualif);
 
       }
 
@@ -848,7 +897,22 @@ void Qualify2DStatic(void) {
 
 int main(int argc, char** argv) {
 
-  Qualify2DStatic();
+  TypeQualif typeQualif = typeQualif_all;
+
+  for (
+    int iArg = 0;
+    iArg < argc;
+    ++iArg) {
+
+    if (strcmp(argv[iArg], "-nearCaseOnly") == 0) {
+
+      typeQualif = typeQualif_nearCaseOnly;
+
+    }
+
+  }
+
+  Qualify2DStatic(typeQualif);
 
   return 0;
 

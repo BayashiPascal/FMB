@@ -1503,6 +1503,45 @@ void Frame3DTimePrint(const Frame3DTime* const that) {
 
 }
 
+// Check the intersection between two static AABB that and tho
+bool AABBTestIntersection2D(
+  const AABB2D* const that,
+  const AABB2D* const tho) {
+
+  if (
+    that->min[0] > tho->max[0] ||
+    that->min[1] > tho->max[1] ||
+    tho->min[0] > that->max[0] ||
+    tho->min[1] > that->max[1]) {
+
+    return false;
+
+  }
+
+  return true;
+
+}
+
+bool AABBTestIntersection3D(
+  const AABB3D* const that,
+  const AABB3D* const tho) {
+
+  if (
+    that->min[0] > tho->max[0] ||
+    that->min[1] > tho->max[1] ||
+    that->min[2] > tho->max[2] ||
+    tho->min[0] > that->max[0] ||
+    tho->min[1] > that->max[1] ||
+    tho->min[2] > that->max[2]) {
+
+    return false;
+
+  }
+
+  return true;
+
+}
+
 // Power function for integer base and exponent
 // Return base^exp
 int powi(

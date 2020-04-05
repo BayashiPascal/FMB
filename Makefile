@@ -106,7 +106,7 @@ cppcheck3D:
 cppcheck3DTime:
 	cd 3DTime; make cppcheck; cd -
 
-run : run2D run2DTime run3D run3DTime
+run : run2D run2DNearCaseOnly run2DTime run3D run3DNearCaseOnly run3DTime
 
 run2D: 
 	cd 2D; ./main > ../Results/main2D.txt; ./unitTests > ../Results/unitTests2D.txt; ./validation > ../Results/validation2D.txt; ./qualification; cd - 
@@ -114,13 +114,19 @@ run2D:
 run3D: 
 	cd 3D; ./main > ../Results/main3D.txt; ./unitTests > ../Results/unitTests3D.txt; ./validation > ../Results/validation3D.txt; ./qualification; cd - 
 
+run2DNearCaseOnly: 
+	cd 2D; ./qualification -nearCaseOnly; cd - 
+
+run3DNearCaseOnly: 
+	cd 3D; ./qualification -nearCaseOnly; cd - 
+
 run2DTime: 
 	cd 2DTime; ./main > ../Results/main2DTime.txt; ./unitTests > ../Results/unitTests2DTime.txt; ./validation > ../Results/validation2DTime.txt; ./qualification; cd - 
 
 run3DTime: 
 	cd 3DTime; ./main > ../Results/main3DTime.txt; ./unitTests > ../Results/unitTests3DTime.txt; ./validation > ../Results/validation3DTime.txt; ./qualification; cd - 
 
-plot: cleanPlot plot2D plot2DTime plot3D plot3DTime
+plot: cleanPlot plot2D plot2DNearCaseOnly plot2DTime plot3D plot3DNearCaseOnly plot3DTime
 
 cleanPlot:
 	rm -f Results/*.png
@@ -128,11 +134,17 @@ cleanPlot:
 plot2D:
 	cd Results; gnuplot qualification2D.gnu; cd -
 
+plot2DNearCaseOnly:
+	cd Results; gnuplot qualification2DNearCaseOnly.gnu; cd -
+
 plot2DTime:
 	cd Results; gnuplot qualification2DTime.gnu; cd -
 
 plot3D:
 	cd Results; gnuplot qualification3D.gnu; cd -
+
+plot3DNearCaseOnly:
+	cd Results; gnuplot qualification3DNearCaseOnly.gnu; cd -
 
 plot3DTime:
 	cd Results; gnuplot qualification3DTime.gnu; cd -

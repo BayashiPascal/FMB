@@ -25,6 +25,7 @@
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 // ------------- Macros -------------
 
@@ -214,6 +215,14 @@ void Frame3DTimeExportBdgBox(
   const Frame3DTime* const that,
   const AABB3DTime* const bdgBox,
   AABB3DTime* const bdgBoxProj);
+
+// Check the intersection between two static AABB that and tho
+bool AABBTestIntersection2D(
+  const AABB2D* const that,
+  const AABB2D* const tho);
+bool AABBTestIntersection3D(
+  const AABB3D* const that,
+  const AABB3D* const tho);
 
 // Power function for integer base and exponent
 // Return base^exp

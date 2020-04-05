@@ -22,6 +22,7 @@
 \author{Pascal Baillehache\\bayashipascal@gmail.com}
 \date{\today}
 \maketitle
+\thispagestyle{empty}
 
 \begin{abstract}
 This paper introduces how to perform intersection detection of pair of static/dynamic cuboid/tetrahedron in 2D/3D by using the Fourier-Motzkin elimination method.\\
@@ -541,7 +542,7 @@ If this inequality has no solution, then neither the system $\mathcal{I}$. If it
 
 The Fourier-Motzkin method can be directly applied to the inequality systems of the previous section, to obtain the bounding box of the intersection, if the system has a solution. If the system has no solution, the method will eventually reach an inconsistent inequality, meaning there is no intersection between the two Frames.\\
 
-One coordinate $\overrightarrow{S}$, or $(\overrightarrow{S}, t)$ in dynamic case, within the bounds obtained by the resolution of the system is expressed in the Frame $\mathbb{B}$'s coordinates system. One can get the equivalent coordinates $\overrightarrow{S'}$, or $(\overrightarrow{S}, t)$, in the real world's coordinates system as follow:
+One coordinate $\overrightarrow{S}$, or $(\overrightarrow{S}, t)$ in dynamic case, within the bounds obtained by the resolution of the system is expressed in the Frame $\mathbb{B}$'s coordinates system. One can get the equivalent coordinates $\overrightarrow{S'}$, or $(\overrightarrow{S'}, t)$, in the real world's coordinates system as follow:
 \begin{equation}
 \overrightarrow{S'}=\overrightarrow{O_\mathbb{B}}+C_\mathbb{B}.\overrightarrow{S}
 \end{equation}
@@ -707,7 +708,7 @@ In this section I introduce an implementation of the algorithms of the previous 
 
 \begin{scriptsize}
 \begin{ttfamily}
-\lstinputlisting[breaklines]{../Frame/frame.h}
+\lstinputlisting[breaklines,firstline=19]{../Frame/frame.h}
 \end{ttfamily}
 \end{scriptsize}
 
@@ -715,7 +716,7 @@ In this section I introduce an implementation of the algorithms of the previous 
 
 \begin{scriptsize}
 \begin{ttfamily}
-\lstinputlisting[breaklines]{../Frame/frame.c}
+\lstinputlisting[breaklines,firstline=19]{../Frame/frame.c}
 \end{ttfamily}
 \end{scriptsize}
 
@@ -727,7 +728,7 @@ In this section I introduce an implementation of the algorithms of the previous 
 
 \begin{scriptsize}
 \begin{ttfamily}
-\lstinputlisting[breaklines]{../2D/fmb2d.h}
+\lstinputlisting[breaklines,firstline=19]{../2D/fmb2d.h}
 \end{ttfamily}
 \end{scriptsize}
 
@@ -735,7 +736,7 @@ In this section I introduce an implementation of the algorithms of the previous 
 
 \begin{scriptsize}
 \begin{ttfamily}
-\lstinputlisting[breaklines]{../2D/fmb2d.c}
+\lstinputlisting[breaklines,firstline=19]{../2D/fmb2d.c}
 \end{ttfamily}
 \end{scriptsize}
 
@@ -745,7 +746,7 @@ In this section I introduce an implementation of the algorithms of the previous 
 
 \begin{scriptsize}
 \begin{ttfamily}
-\lstinputlisting[breaklines]{../3D/fmb3d.h}
+\lstinputlisting[breaklines,firstline=19]{../3D/fmb3d.h}
 \end{ttfamily}
 \end{scriptsize}
 
@@ -753,7 +754,7 @@ In this section I introduce an implementation of the algorithms of the previous 
 
 \begin{scriptsize}
 \begin{ttfamily}
-\lstinputlisting[breaklines]{../3D/fmb3d.c}
+\lstinputlisting[breaklines,firstline=19]{../3D/fmb3d.c}
 \end{ttfamily}
 \end{scriptsize}
 
@@ -763,7 +764,7 @@ In this section I introduce an implementation of the algorithms of the previous 
 
 \begin{scriptsize}
 \begin{ttfamily}
-\lstinputlisting[breaklines]{../2DTime/fmb2dt.h}
+\lstinputlisting[breaklines,firstline=19]{../2DTime/fmb2dt.h}
 \end{ttfamily}
 \end{scriptsize}
 
@@ -771,7 +772,7 @@ In this section I introduce an implementation of the algorithms of the previous 
 
 \begin{scriptsize}
 \begin{ttfamily}
-\lstinputlisting[breaklines]{../2DTime/fmb2dt.c}
+\lstinputlisting[breaklines,firstline=19]{../2DTime/fmb2dt.c}
 \end{ttfamily}
 \end{scriptsize}
 
@@ -781,7 +782,7 @@ In this section I introduce an implementation of the algorithms of the previous 
 
 \begin{scriptsize}
 \begin{ttfamily}
-\lstinputlisting[breaklines]{../3DTime/fmb3dt.h}
+\lstinputlisting[breaklines,firstline=19]{../3DTime/fmb3dt.h}
 \end{ttfamily}
 \end{scriptsize}
 
@@ -789,7 +790,7 @@ In this section I introduce an implementation of the algorithms of the previous 
 
 \begin{scriptsize}
 \begin{ttfamily}
-\lstinputlisting[breaklines]{../3DTime/fmb3dt.c}
+\lstinputlisting[breaklines,firstline=19]{../3DTime/fmb3dt.c}
 \end{ttfamily}
 \end{scriptsize}
 
@@ -801,7 +802,7 @@ In this section I give a minimal example for each case of how to use the code gi
 
 \begin{scriptsize}
 \begin{ttfamily}
-\lstinputlisting[breaklines]{../2D/main.c}
+\lstinputlisting[breaklines,firstline=19]{../2D/main.c}
 \end{ttfamily}
 \end{scriptsize}
 
@@ -809,7 +810,7 @@ In this section I give a minimal example for each case of how to use the code gi
 
 \begin{scriptsize}
 \begin{ttfamily}
-\lstinputlisting[breaklines]{../3D/main.c}
+\lstinputlisting[breaklines,firstline=19]{../3D/main.c}
 \end{ttfamily}
 \end{scriptsize}
 
@@ -817,7 +818,7 @@ In this section I give a minimal example for each case of how to use the code gi
 
 \begin{scriptsize}
 \begin{ttfamily}
-\lstinputlisting[breaklines]{../2DTime/main.c}
+\lstinputlisting[breaklines,firstline=19]{../2DTime/main.c}
 \end{ttfamily}
 \end{scriptsize}
 
@@ -825,7 +826,7 @@ In this section I give a minimal example for each case of how to use the code gi
 
 \begin{scriptsize}
 \begin{ttfamily}
-\lstinputlisting[breaklines]{../3DTime/main.c}
+\lstinputlisting[breaklines,firstline=19]{../3DTime/main.c}
 \end{ttfamily}
 \end{scriptsize}
 
@@ -839,7 +840,7 @@ In this section I introduce the code I've used to test the algorithm and its imp
 
 \begin{scriptsize}
 \begin{ttfamily}
-\lstinputlisting[breaklines]{../2D/unitTests.c}
+\lstinputlisting[breaklines,firstline=19]{../2D/unitTests.c}
 \end{ttfamily}
 \end{scriptsize}
 
@@ -847,7 +848,7 @@ In this section I introduce the code I've used to test the algorithm and its imp
 
 \begin{scriptsize}
 \begin{ttfamily}
-\lstinputlisting[breaklines]{../3D/unitTests.c}
+\lstinputlisting[breaklines,firstline=19]{../3D/unitTests.c}
 \end{ttfamily}
 \end{scriptsize}
 
@@ -855,7 +856,7 @@ In this section I introduce the code I've used to test the algorithm and its imp
 
 \begin{scriptsize}
 \begin{ttfamily}
-\lstinputlisting[breaklines]{../2DTime/unitTests.c}
+\lstinputlisting[breaklines,firstline=19]{../2DTime/unitTests.c}
 \end{ttfamily}
 \end{scriptsize}
 
@@ -863,7 +864,7 @@ In this section I introduce the code I've used to test the algorithm and its imp
 
 \begin{scriptsize}
 \begin{ttfamily}
-\lstinputlisting[breaklines]{../3DTime/unitTests.c}
+\lstinputlisting[breaklines,firstline=19]{../3DTime/unitTests.c}
 \end{ttfamily}
 \end{scriptsize}
 
@@ -911,7 +912,7 @@ In this section I introduce the code I've used to validate the algorithm and its
 
 \begin{scriptsize}
 \begin{ttfamily}
-\lstinputlisting[breaklines]{../2D/validation.c}
+\lstinputlisting[breaklines,firstline=19]{../2D/validation.c}
 \end{ttfamily}
 \end{scriptsize}
 
@@ -919,7 +920,7 @@ In this section I introduce the code I've used to validate the algorithm and its
 
 \begin{scriptsize}
 \begin{ttfamily}
-\lstinputlisting[breaklines]{../3D/validation.c}
+\lstinputlisting[breaklines,firstline=19]{../3D/validation.c}
 \end{ttfamily}
 \end{scriptsize}
 
@@ -927,7 +928,7 @@ In this section I introduce the code I've used to validate the algorithm and its
 
 \begin{scriptsize}
 \begin{ttfamily}
-\lstinputlisting[breaklines]{../2DTime/validation.c}
+\lstinputlisting[breaklines,firstline=19]{../2DTime/validation.c}
 \end{ttfamily}
 \end{scriptsize}
 
@@ -935,7 +936,7 @@ In this section I introduce the code I've used to validate the algorithm and its
 
 \begin{scriptsize}
 \begin{ttfamily}
-\lstinputlisting[breaklines]{../3DTime/validation.c}
+\lstinputlisting[breaklines,firstline=19]{../3DTime/validation.c}
 \end{ttfamily}
 \end{scriptsize}
 
@@ -1005,7 +1006,7 @@ In this section I introduce the code I've used to qualify the algorithm and its 
 
 \begin{scriptsize}
 \begin{ttfamily}
-\lstinputlisting[breaklines]{../2D/qualification.c}
+\lstinputlisting[breaklines,firstline=19]{../2D/qualification.c}
 \end{ttfamily}
 \end{scriptsize}
 
@@ -1013,7 +1014,7 @@ In this section I introduce the code I've used to qualify the algorithm and its 
 
 \begin{scriptsize}
 \begin{ttfamily}
-\lstinputlisting[breaklines]{../3D/qualification.c}
+\lstinputlisting[breaklines,firstline=19]{../3D/qualification.c}
 \end{ttfamily}
 \end{scriptsize}
 
@@ -1021,7 +1022,7 @@ In this section I introduce the code I've used to qualify the algorithm and its 
 
 \begin{scriptsize}
 \begin{ttfamily}
-\lstinputlisting[breaklines]{../2DTime/qualification.c}
+\lstinputlisting[breaklines,firstline=19]{../2DTime/qualification.c}
 \end{ttfamily}
 \end{scriptsize}
 
@@ -1029,7 +1030,7 @@ In this section I introduce the code I've used to qualify the algorithm and its 
 
 \begin{scriptsize}
 \begin{ttfamily}
-\lstinputlisting[breaklines]{../3DTime/qualification.c}
+\lstinputlisting[breaklines,firstline=19]{../3DTime/qualification.c}
 \end{ttfamily}
 \end{scriptsize}
 
@@ -1084,6 +1085,53 @@ In this subsection I give the results of the qualification for each case. These 
 \end{figure}
 \end{center}
 
+\subsubsection{2D static (near case only)}
+
+\begin{turn}{-90}
+%\begin{adjustwidth}{-3cm}{-3.5cm}
+\vbox{
+\begin{tiny}
+\begin{ttfamily}
+\csvautotabular{../Results/qualification2Dnearcaseonly.txt}\\
+\csvautotabular{../Results/qualification2DCCnearcaseonly.txt}\\
+\csvautotabular{../Results/qualification2DCTnearcaseonly.txt}\\
+\csvautotabular{../Results/qualification2DTCnearcaseonly.txt}\\
+\csvautotabular{../Results/qualification2DTTnearcaseonly.txt}\\
+\end{ttfamily}
+\end{scriptsize}
+}
+%\end{adjustwidth}
+\end{turn}
+
+\begin{center}
+\begin{figure}[H]
+\centering\includegraphics[width=12cm]{../Results/qualification2DNearCaseOnly.png}\\
+\end{figure}
+\end{center}
+
+\begin{center}
+\begin{figure}[H]
+\centering\includegraphics[width=12cm]{../Results/qualification2DinterNearCaseOnly.png}\\
+\centering\includegraphics[width=12cm]{../Results/qualification2DnointerNearCaseOnly.png}\\
+\end{figure}
+\end{center}
+\begin{center}
+\begin{figure}[H]
+\centering\includegraphics[width=7cm]{../Results/qualification2DCCinterNearCaseOnly.png}
+\centering\includegraphics[width=7cm]{../Results/qualification2DCTinterNearCaseOnly.png}
+\centering\includegraphics[width=7cm]{../Results/qualification2DTCinterNearCaseOnly.png}
+\centering\includegraphics[width=7cm]{../Results/qualification2DTTinterNearCaseOnly.png}
+\end{figure}
+\end{center}
+\begin{center}
+\begin{figure}[H]
+\centering\includegraphics[width=7cm]{../Results/qualification2DCCnointerNearCaseOnly.png}
+\centering\includegraphics[width=7cm]{../Results/qualification2DCTnointerNearCaseOnly.png}
+\centering\includegraphics[width=7cm]{../Results/qualification2DTCnointerNearCaseOnly.png}
+\centering\includegraphics[width=7cm]{../Results/qualification2DTTnointerNearCaseOnly.png}
+\end{figure}
+\end{center}
+
 \subsubsection{3D static}
 
 \begin{turn}{-90}
@@ -1128,6 +1176,53 @@ In this subsection I give the results of the qualification for each case. These 
 \centering\includegraphics[width=7cm]{../Results/qualification3DCTnointer.png}
 \centering\includegraphics[width=7cm]{../Results/qualification3DTCnointer.png}
 \centering\includegraphics[width=7cm]{../Results/qualification3DTTnointer.png}
+\end{figure}
+\end{center}
+
+\subsubsection{3D static (near case only)}
+
+\begin{turn}{-90}
+%\begin{adjustwidth}{-3cm}{-3.5cm}
+\vbox{
+\begin{tiny}
+\begin{ttfamily}
+\csvautotabular{../Results/qualification3Dnearcaseonly.txt}\\
+\csvautotabular{../Results/qualification3DCCnearcaseonly.txt}\\
+\csvautotabular{../Results/qualification3DCTnearcaseonly.txt}\\
+\csvautotabular{../Results/qualification3DTCnearcaseonly.txt}\\
+\csvautotabular{../Results/qualification3DTTnearcaseonly.txt}\\
+\end{ttfamily}
+\end{scriptsize}
+}
+%\end{adjustwidth}
+\end{turn}
+
+\begin{center}
+\begin{figure}[H]
+\centering\includegraphics[width=12cm]{../Results/qualification3DNearCaseOnly.png}\\
+\end{figure}
+\end{center}
+
+\begin{center}
+\begin{figure}[H]
+\centering\includegraphics[width=12cm]{../Results/qualification3DinterNearCaseOnly.png}\\
+\centering\includegraphics[width=12cm]{../Results/qualification3DnointerNearCaseOnly.png}\\
+\end{figure}
+\end{center}
+\begin{center}
+\begin{figure}[H]
+\centering\includegraphics[width=7cm]{../Results/qualification3DCCinterNearCaseOnly.png}
+\centering\includegraphics[width=7cm]{../Results/qualification3DCTinterNearCaseOnly.png}
+\centering\includegraphics[width=7cm]{../Results/qualification3DTCinterNearCaseOnly.png}
+\centering\includegraphics[width=7cm]{../Results/qualification3DTTinterNearCaseOnly.png}
+\end{figure}
+\end{center}
+\begin{center}
+\begin{figure}[H]
+\centering\includegraphics[width=7cm]{../Results/qualification3DCCnointerNearCaseOnly.png}
+\centering\includegraphics[width=7cm]{../Results/qualification3DCTnointerNearCaseOnly.png}
+\centering\includegraphics[width=7cm]{../Results/qualification3DTCnointerNearCaseOnly.png}
+\centering\includegraphics[width=7cm]{../Results/qualification3DTTnointerNearCaseOnly.png}
 \end{figure}
 \end{center}
 
@@ -1269,6 +1364,28 @@ FMB is then in average always faster than SAT for a set of Tetrahedron, and fast
 
 Overall, FMB is faster than SAT, at least if the percentage of intersecting Frames is low, for all cases but the 2D dynamic one. In practice, for example in applications where the Frames represents real world objects supposedly normally not in intersection, FMB would be a better choice than SAT.\\
 
+In a real world collision detection system the pair of Frames would be pruned by first applying a rough but fast detection algorithm. The slower but accurate SAT and FMB algorithms would be then only applied to pairs of Frames closed together. To ensure the results stay valid on this subset of possible cases, I've also run the qualification for 2D and 3D static cases in 'near case only' mode. In this mode, only pairs of Frames whose AABBs are intersecting are used. The results are as follow.\\
+
+For the 2D static near only case:\\
+
+\begin{itemize}
+\item FMB is in average 1.2 times slower than SAT to detect intersection between Tetrahedrons, and as fast to detect non intersection.\\
+\item FMB is in average 1.6 times slower than SAT to detect intersection between a Tetrahedron and a Cuboid, and 1.1 times faster to detect non intersection.\\
+\item FMB is in average 2.1 times slower than SAT to detect intersection between Cuboids, and 1.2 times faster to detect non intersection.\\
+\end{itemize}
+
+FMB is then in average always slower (from 0.0 to 2.0 times).\\ 
+
+For the 3D static near only case:\\
+
+\begin{itemize}
+\item FMB is in average 4.4 times faster than SAT to detect intersection between Tetrahedrons, and 1.4 times faster to detect non intersection.\\
+\item FMB is in average 2.5 times faster than SAT to detect intersection between a Tetrahedron and a Cuboid, and 1.7 times faster to detect non intersection.\\
+\item FMB is in average 1.3 times faster than SAT to detect intersection between Cuboids, and 2.3 times faster to detect non intersection.\\
+\end{itemize}
+
+FMB is then in average always faster (from 3.7 times to 1.4 times) than SAT whatever the combinaison of Tetrahedron and Cuboid and the percentage of intersection. In comparison to the general case, in 'near only mode' the FMB algorithm stays faster than the SAT algorithm for the 3D static case, but is same or slower in the 2D static case.\\
+
 SAT and FMB follows the same strategy: assume that the pair of Frames is in intersection and try to prove it is false by checking a list of conditions. These conditions are the difference between the two algorithms. The results of the qualification show that in average the conditions used by FMB allows to detect a non intersection faster than those of SAT.\\
 
 For one given pair in intersection, all the conditions must be checked before the algorithms give their answer. The algorithm with the smallest execution time of all these conditions is then the fastest, and the results shows that this is in general SAT (the exceptions are the 3D static case and 3D dynamic case for Tetrahedrons pairs). This is shown in the results by the low variability of the ratio timeFMB/timeSAT for intersecting pairs.\\
@@ -1315,7 +1432,7 @@ In this section I introduce the code of the implementation of the SAT algorithm,
 
 \begin{scriptsize}
 \begin{ttfamily}
-\lstinputlisting[breaklines]{../SAT/sat.h}
+\lstinputlisting[breaklines,firstline=19]{../SAT/sat.h}
 \end{ttfamily}
 \end{scriptsize}
 
@@ -1323,7 +1440,7 @@ In this section I introduce the code of the implementation of the SAT algorithm,
 
 \begin{scriptsize}
 \begin{ttfamily}
-\lstinputlisting[breaklines]{../SAT/sat.c}
+\lstinputlisting[breaklines,firstline=19]{../SAT/sat.c}
 \end{ttfamily}
 \end{scriptsize}
 
