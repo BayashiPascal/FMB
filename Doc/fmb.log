@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.10.17)  5 APR 2020 17:48
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.10.17)  5 APR 2020 18:05
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -1828,12 +1828,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 1397--1398
  []
 
 [275]
-Underfull \hbox (badness 10000) in paragraph at lines 1402--1403
+Underfull \hbox (badness 10000) in paragraph at lines 1399--1400
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1406--1407
+Underfull \hbox (badness 10000) in paragraph at lines 1404--1405
 
  []
 
@@ -1847,32 +1847,37 @@ Underfull \hbox (badness 10000) in paragraph at lines 1410--1411
 
  []
 
+
+Underfull \hbox (badness 10000) in paragraph at lines 1412--1413
+
+ []
+
 [276]
-Underfull \hbox (badness 10000) in paragraph at lines 1417--1418
+Underfull \hbox (badness 10000) in paragraph at lines 1419--1420
 
  []
 
 (../runtimeEnv.txt [277] [278])
-Underfull \hbox (badness 10000) in paragraph at lines 1429--1430
+Underfull \hbox (badness 10000) in paragraph at lines 1431--1432
 
  []
 
 (../SAT/sat.h [279]) (../SAT/sat.c [280] [281] [282] [283] [284] [285] [286]
 [287] [288] [289] [290] [291] [292] [293] [294] [295] [296] [297] [298]
 [299] [300] [301])
-Underfull \hbox (badness 10000) in paragraph at lines 1449--1450
+Underfull \hbox (badness 10000) in paragraph at lines 1451--1452
 
  []
 
 (../Makefile [302] [303] [304]) (../2D/Makefile [305]) (../3D/Makefile [306])
-(../2DTime/Makefile) (../3DTime/Makefile [307]) (../Doc/Makefile)
+(../2DTime/Makefile) [307] (../3DTime/Makefile) (../Doc/Makefile)
 (../dynamicAnalysis.txt [308] [309] [310] [311] [312] [313] [314] [315]
 [316] [317] [318] [319] [320] [321] [322] [323] [324] [325] [326] [327]
 [328] [329]) (../staticAnalysis.txt [330]) [331] (./fmb.aux) ) 
 Here is how much of TeX's memory you used:
  15178 strings out of 493765
  300805 string characters out of 6151500
- 562805 words of memory out of 5000000
+ 561805 words of memory out of 5000000
  18176 multiletter control sequences out of 15000+600000
  14339 words of font info for 56 fonts, out of 8000000 for 9000
  622 hyphenation exceptions out of 8191
@@ -1897,7 +1902,7 @@ lic/amsfonts/symbols/msbm10.pfb></usr/share/texlive/texmf-dist/fonts/type1/publ
 ic/amsfonts/symbols/msbm7.pfb>
 
 pdfTeX warning: pdflatex: no GlyphToUnicode entry has been inserted yet!
-Output written on fmb.pdf (331 pages, 1750181 bytes).
+Output written on fmb.pdf (331 pages, 1750192 bytes).
 PDF statistics:
  1214 PDF objects out of 1440 (max. 8388607)
  787 compressed objects within 8 object streams

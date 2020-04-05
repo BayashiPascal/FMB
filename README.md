@@ -253,6 +253,20 @@ For the 3D static case:
 
 FMB is then in average always faster (from 4.8 times to 1.5 times) than SAT whatever the combinaison of Tetrahedron and Cuboid and the percentage of intersection.
 
+For the 2D static near only case:
+* FMB is in average 1.2 times slower than SAT to detect intersection between Tetrahedrons, and as fast to detect non intersection.
+* FMB is in average 1.6 times slower than SAT to detect intersection between a Tetrahedron and a Cuboid, and 1.1 times faster to detect non intersection.
+* FMB is in average 2.1 times slower than SAT to detect intersection between Cuboids, and 1.2 times faster to detect non intersection.
+
+FMB is then in average 1.2 faster to 2.1 slower than SAT.
+
+For the 3D static near only case:
+* FMB is in average 4.4 times faster than SAT to detect intersection between Tetrahedrons, and 1.4 times faster to detect non intersection.
+* FMB is in average 2.5 times faster than SAT to detect intersection between a Tetrahedron and a Cuboid, and 1.7 times faster to detect non intersection.
+* FMB is in average 1.3 times faster than SAT to detect intersection between Cuboids, and 2.3 times faster to detect non intersection.
+
+FMB is then in average always faster (from 4.4 times to 1.3 times) than SAT whatever the combinaison of Tetrahedron and Cuboid and the percentage of intersection.
+
 For the 2D dynamic case:
 * FMB is in average 1.6 times slower than SAT to detect intersection between Tetrahedrons, and 1.2 times slower to detect non intersection.
 * FMB is in average 2.0 times slower than SAT to detect intersection between a Tetrahedron and a Cuboid, and 1.1 times slower to detect non intersection.
