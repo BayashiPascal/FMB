@@ -26,10 +26,10 @@
 // ------------- Functions declaration -------------
 
 // Update the inverse components of the Frame that
-void Frame2DUpdateInv(Frame2D* const that);
-void Frame3DUpdateInv(Frame3D* const that);
-void Frame2DTimeUpdateInv(Frame2DTime* const that);
-void Frame3DTimeUpdateInv(Frame3DTime* const that);
+static inline void Frame2DUpdateInv(Frame2D* const that);
+static inline void Frame3DUpdateInv(Frame3D* const that);
+static inline void Frame2DTimeUpdateInv(Frame2DTime* const that);
+static inline void Frame3DTimeUpdateInv(Frame3DTime* const that);
 
 // ------------- Functions implementation -------------
 
@@ -411,21 +411,21 @@ Frame3DTime Frame3DTimeCreateStatic(
 }
 
 // Update the inverse components of the Frame that
-void Frame2DUpdateInv(Frame2D* const that) {
+static inline void Frame2DUpdateInv(Frame2D* const that) {
 
   // Shortcuts
   double (*tc)[2] = that->comp;
   double (*tic)[2] = that->invComp;
 
   double det = tc[0][0] * tc[1][1] - tc[1][0] * tc[0][1];
-  if (fabs(det) < EPSILON) {
+  /*if (fabs(det) < EPSILON) {
 
     fprintf(
       stderr,
       "FrameUpdateInv: det == 0.0\n");
     exit(1);
 
-  }
+  }*/
 
   tic[0][0] = tc[1][1] / det;
   tic[0][1] = -tc[0][1] / det;
@@ -434,7 +434,7 @@ void Frame2DUpdateInv(Frame2D* const that) {
 
 }
 
-void Frame3DUpdateInv(Frame3D* const that) {
+static inline void Frame3DUpdateInv(Frame3D* const that) {
 
   // Shortcuts
   double (*tc)[3] = that->comp;
@@ -445,14 +445,14 @@ void Frame3DUpdateInv(Frame3D* const that) {
     tc[0][0] * (tc[1][1] * tc[2][2] - tc[1][2] * tc[2][1]) -
     tc[1][0] * (tc[0][1] * tc[2][2] - tc[0][2] * tc[2][1]) +
     tc[2][0] * (tc[0][1] * tc[1][2] - tc[0][2] * tc[1][1]);
-  if (fabs(det) < EPSILON) {
+  /*if (fabs(det) < EPSILON) {
 
     fprintf(
       stderr,
       "FrameUpdateInv: det == 0.0\n");
     exit(1);
 
-  }
+  }*/
 
   tic[0][0] = (tc[1][1] * tc[2][2] - tc[2][1] * tc[1][2]) / det;
   tic[0][1] = (tc[2][1] * tc[0][2] - tc[2][2] * tc[0][1]) / det;
@@ -467,21 +467,21 @@ void Frame3DUpdateInv(Frame3D* const that) {
 }
 
 // Update the inverse components of the Frame that
-void Frame2DTimeUpdateInv(Frame2DTime* const that) {
+static inline void Frame2DTimeUpdateInv(Frame2DTime* const that) {
 
   // Shortcuts
   double (*tc)[2] = that->comp;
   double (*tic)[2] = that->invComp;
 
   double det = tc[0][0] * tc[1][1] - tc[1][0] * tc[0][1];
-  if (fabs(det) < EPSILON) {
+  /*if (fabs(det) < EPSILON) {
 
     fprintf(
       stderr,
       "FrameUpdateInv: det == 0.0\n");
     exit(1);
 
-  }
+  }*/
 
   tic[0][0] = tc[1][1] / det;
   tic[0][1] = -tc[0][1] / det;
@@ -490,7 +490,7 @@ void Frame2DTimeUpdateInv(Frame2DTime* const that) {
 
 }
 
-void Frame3DTimeUpdateInv(Frame3DTime* const that) {
+static inline void Frame3DTimeUpdateInv(Frame3DTime* const that) {
 
   // Shortcuts
   double (*tc)[3] = that->comp;
@@ -501,14 +501,14 @@ void Frame3DTimeUpdateInv(Frame3DTime* const that) {
     tc[0][0] * (tc[1][1] * tc[2][2] - tc[1][2] * tc[2][1]) -
     tc[1][0] * (tc[0][1] * tc[2][2] - tc[0][2] * tc[2][1]) +
     tc[2][0] * (tc[0][1] * tc[1][2] - tc[0][2] * tc[1][1]);
-  if (fabs(det) < EPSILON) {
+  /*if (fabs(det) < EPSILON) {
 
     fprintf(
       stderr,
       "FrameUpdateInv: det == 0.0\n");
     exit(1);
 
-  }
+  }*/
 
   tic[0][0] = (tc[1][1] * tc[2][2] - tc[2][1] * tc[1][2]) / det;
   tic[0][1] = (tc[2][1] * tc[0][2] - tc[2][2] * tc[0][1]) / det;

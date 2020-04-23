@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.10.17)  22 APR 2020 23:27
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.10.17)  23 APR 2020 21:20
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -1901,7 +1901,7 @@ lic/amsfonts/symbols/msbm10.pfb></usr/share/texlive/texmf-dist/fonts/type1/publ
 ic/amsfonts/symbols/msbm7.pfb>
 
 pdfTeX warning: pdflatex: no GlyphToUnicode entry has been inserted yet!
-Output written on fmb.pdf (331 pages, 1776781 bytes).
+Output written on fmb.pdf (331 pages, 1776876 bytes).
 PDF statistics:
  1214 PDF objects out of 1440 (max. 8388607)
  787 compressed objects within 8 object streams
