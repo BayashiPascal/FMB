@@ -385,7 +385,7 @@ void GetBoundVar3DTime(
 // of the resulting AABB of FMBTestIntersection(B,A)
 // The resulting AABB is given in tho's local coordinates system
 bool FMBTestIntersection3DTime(
-  const Frame3DTime* const that,
+  Frame3DTime* const that,
   const Frame3DTime* const tho,
   AABB3DTime* const bdgBox) {
 

@@ -383,7 +383,7 @@ void GetBoundVar3D(
 // of the resulting AABB of FMBTestIntersection(B,A)
 // The resulting AABB is given in tho's local coordinates system
 bool FMBTestIntersection3D(
-  const Frame3D* const that,
+  Frame3D* const that,
   const Frame3D* const tho,
   AABB3D* const bdgBox) {
 

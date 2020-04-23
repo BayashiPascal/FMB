@@ -382,7 +382,7 @@ void GetBoundVar2D(
 // of the resulting AABB of FMBTestIntersection(B,A)
 // The resulting AABB is given in tho's local coordinates system
 bool FMBTestIntersection2D(
-  const Frame2D* const that,
+  Frame2D* const that,
   const Frame2D* const tho,
   AABB2D* const bdgBox) {
 

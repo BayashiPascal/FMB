@@ -525,9 +525,12 @@ void Frame3DTimeUpdateInv(Frame3DTime* const that) {
 // Project the Frame Q in the Frame P's coordinates system and
 // memorize the result in the Frame Qp
 void Frame2DImportFrame(
-  const Frame2D* const P,
+  Frame2D* const P,
   const Frame2D* const Q,
   Frame2D* const Qp) {
+
+  // Update the inverse matrix of P
+  Frame2DUpdateInv(P);
 
   // Shortcuts
   const double*  qo  = Q->orig;
@@ -576,9 +579,12 @@ void Frame2DImportFrame(
 }
 
 void Frame3DImportFrame(
-  const Frame3D* const P,
+  Frame3D* const P,
   const Frame3D* const Q,
   Frame3D* const Qp) {
+
+  // Update the inverse matrix of P
+  Frame3DUpdateInv(P);
 
   // Shortcuts
   const double*  qo  = Q->orig;
@@ -627,9 +633,12 @@ void Frame3DImportFrame(
 }
 
 void Frame2DTimeImportFrame(
-  const Frame2DTime* const P,
+  Frame2DTime* const P,
   const Frame2DTime* const Q,
   Frame2DTime* const Qp) {
+
+  // Update the inverse matrix of P
+  Frame2DTimeUpdateInv(P);
 
   // Shortcuts
   const double*  qo  = Q->orig;
@@ -686,9 +695,12 @@ void Frame2DTimeImportFrame(
 }
 
 void Frame3DTimeImportFrame(
-  const Frame3DTime* const P,
+  Frame3DTime* const P,
   const Frame3DTime* const Q,
   Frame3DTime* const Qp) {
+
+  // Update the inverse matrix of P
+  Frame3DTimeUpdateInv(P);
 
   // Shortcuts
   const double*  qo  = Q->orig;
