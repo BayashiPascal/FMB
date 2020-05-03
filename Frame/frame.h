@@ -100,6 +100,9 @@ typedef struct {
   // Inverted components used during computation
   double invComp[3][3];
 
+  // Flag to memorize if it's a face
+  bool isFace;
+
 } Frame3D;
 
 typedef struct {
@@ -129,6 +132,9 @@ typedef struct {
   // Inverted components used during computation
   double invComp[3][3];
   double speed[3];
+
+  // Flag to memorize if it's a face
+  bool isFace;
 
 } Frame3DTime;
 
@@ -206,6 +212,10 @@ void Frame2DExportBdgBox(
 void Frame3DExportBdgBox(
   const Frame3D* const that,
   const AABB3D* const bdgBox,
+  AABB3D* const bdgBoxProj);
+void Frame3DFaceExportBdgBox(
+  const Frame3D* const that,
+  const AABB2D* const bdgBox,
   AABB3D* const bdgBoxProj);
 void Frame2DTimeExportBdgBox(
   const Frame2DTime* const that,

@@ -52,4 +52,11 @@ bool SATTestIntersection3DTime(
   const Frame3DTime* const that,
   const Frame3DTime* const tho);
 
+// Test for intersection between 3D Frame that and 3D Frame tho,
+// both faces
+// Return true if the two Frames are intersecting, else false
+bool SATTestIntersection3DFace(
+  const Frame3D* const that,
+  const Frame3D* const tho);
+
 #endif

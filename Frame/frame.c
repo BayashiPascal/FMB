@@ -957,6 +957,105 @@ void Frame3DExportBdgBox(
 
 }
 
+void Frame3DFaceExportBdgBox(
+  const Frame3D* const that,
+  const AABB2D* const bdgBox,
+  AABB3D* const bdgBoxProj) {
+
+  // Shortcuts
+  const double* to    = that->orig;
+  const double* bbmi  = bdgBox->min;
+  const double* bbma  = bdgBox->max;
+  double* bbpmi = bdgBoxProj->min;
+  double* bbpma = bdgBoxProj->max;
+
+  const double (*tc)[3] = that->comp;
+
+  // Initialise the coordinates of the result AABB with the projection
+  // of the first corner of the AABB in argument
+  for (
+    int i = 3;
+    i--;) {
+
+    bbpma[i] = to[i];
+
+    for (
+      int j = 2;
+      j--;) {
+
+      bbpma[i] += tc[j][i] * bbmi[j];
+
+    }
+
+    bbpmi[i] = bbpma[i];
+
+  }
+
+  // Loop on vertices of the AABB
+  // skip the first vertex which is the origin already computed above
+  int nbVertices = powi(2, 3);
+  for (
+    int iVertex = nbVertices;
+    iVertex-- && iVertex;) {
+
+    // Declare a variable to memorize the coordinates of the vertex in
+    // that's coordinates system
+    double v[3];
+
+    // Calculate the coordinates of the vertex in
+    // that's coordinates system
+    for (
+      int i = 2;
+      i--;) {
+
+      v[i] = ((iVertex & (1 << i)) ? bbma[i] : bbmi[i]);
+
+    }
+
+    // Declare a variable to memorize the projected coordinates
+    // in real coordinates system
+    double w[3];
+
+    // Project the vertex to real coordinates system
+    for (
+      int i = 3;
+      i--;) {
+
+      w[i] = to[i];
+
+      for (
+        int j = 2;
+        j--;) {
+
+        w[i] += tc[j][i] * v[j];
+
+      }
+
+    }
+
+    // Update the coordinates of the result AABB
+    for (
+      int i = 3;
+      i--;) {
+
+      if (bbpmi[i] > w[i]) {
+
+        bbpmi[i] = w[i];
+
+      }
+
+      if (bbpma[i] < w[i]) {
+
+        bbpma[i] = w[i];
+
+      }
+
+    }
+
+  }
+
+}
+
 void Frame2DTimeExportBdgBox(
   const Frame2DTime* const that,
   const AABB2DTime* const bdgBox,
@@ -1367,6 +1466,12 @@ void Frame3DPrint(const Frame3D* const that) {
 
   }
 
+  if (that->isFace == true) {
+
+    printf("f");
+
+  }
+
   printf("o(");
   for (
     int i = 0;
@@ -1467,6 +1572,12 @@ void Frame3DTimePrint(const Frame3DTime* const that) {
   } else if (that->type == FrameCuboid) {
 
     printf("C");
+
+  }
+
+  if (that->isFace == true) {
+
+    printf("f");
 
   }
 

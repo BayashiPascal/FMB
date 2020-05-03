@@ -31,6 +31,13 @@ bool CheckAxis3D(
   const Frame3D* const tho,
   const double* const axis);
 
+// Check the intersection constraint for Frames that and tho,
+// both faces, relatively to axis
+bool CheckAxis3DFace(
+  const Frame3D* const that,
+  const Frame3D* const tho,
+  const double* const axis);
+
 // Check the intersection constraint along one axis for moving 3D Frames
 bool CheckAxis3DTime(
   const Frame3DTime* const that,
@@ -1049,6 +1056,152 @@ bool SATTestIntersection3DTime(
 
 }
 
+// Test for intersection between 3D Frame that and 3D Frame tho,
+// both faces
+// Return true if the two Frames are intersecting, else false
+bool SATTestIntersection3DFace(
+  const Frame3D* const that,
+  const Frame3D* const tho) {
+
+  // Check against that's normal
+  bool isIntersection =
+    CheckAxis3DFace(
+      that,
+      tho,
+      that->comp[2]);
+
+  // If the axis is separating the Frames
+  if (isIntersection == false) {
+
+    // The Frames are not in intersection,
+    // terminate the test
+    return false;
+
+  }
+
+  // Check against tho's normal
+  isIntersection =
+    CheckAxis3DFace(
+      that,
+      tho,
+      tho->comp[2]);
+
+  // If the axis is separating the Frames
+  if (isIntersection == false) {
+
+    // The Frames are not in intersection,
+    // terminate the test
+    return false;
+
+  }
+
+  // Declare two variables to memorize the opposite edges in case
+  // of tetrahedron
+  double oppEdgeThat[3];
+  double oppEdgeTho[3];
+
+  // Declare two variables to memorize the number of edges, by default 3
+  int nbEdgesThat = 2;
+  int nbEdgesTho = 2;
+
+  // If the first Frame is a tetrahedron
+  if (that->type == FrameTetrahedron) {
+
+    // Shortcuts
+    const double* frameCompA = that->comp[0];
+    const double* frameCompB = that->comp[1];
+
+    // Initialise the opposite edges
+    oppEdgeThat[0] = frameCompB[0] - frameCompA[0];
+    oppEdgeThat[1] = frameCompB[1] - frameCompA[1];
+    oppEdgeThat[2] = frameCompB[2] - frameCompA[2];
+
+    // Correct the number of edges
+    nbEdgesThat = 3;
+
+  }
+
+  // If the second Frame is a tetrahedron
+  if (tho->type == FrameTetrahedron) {
+
+    // Shortcuts
+    const double* frameCompA = tho->comp[0];
+    const double* frameCompB = tho->comp[1];
+
+    // Initialise the opposite edges
+    oppEdgeTho[0] = frameCompB[0] - frameCompA[0];
+    oppEdgeTho[1] = frameCompB[1] - frameCompA[1];
+    oppEdgeTho[2] = frameCompB[2] - frameCompA[2];
+
+    // Correct the number of edges
+    nbEdgesTho = 3;
+
+  }
+
+  // Loop on the pair of edges between the two frames
+  for (
+    int iEdgeThat = nbEdgesThat;
+    iEdgeThat--;) {
+
+    // Get the first edge
+    const double* edgeThat = NULL;
+    if (iEdgeThat < 2) {
+
+      edgeThat = that->comp[iEdgeThat];
+
+    } else {
+
+      edgeThat = oppEdgeThat;
+
+    }
+
+    for (
+      int iEdgeTho = nbEdgesTho;
+      iEdgeTho--;) {
+
+      // Get the second edge
+      const double* edgeTho = NULL;
+      if (iEdgeTho < 2) {
+
+        edgeTho = tho->comp[iEdgeTho];
+
+      } else {
+
+        edgeTho = oppEdgeTho;
+
+      }
+
+      // Get the cross product of the two edges
+      double axis[3];
+      axis[0] = edgeThat[1] * edgeTho[2] - edgeThat[2] * edgeTho[1];
+      axis[1] = edgeThat[2] * edgeTho[0] - edgeThat[0] * edgeTho[2];
+      axis[2] = edgeThat[0] * edgeTho[1] - edgeThat[1] * edgeTho[0];
+
+      // Check against the cross product of the two edges
+      bool isIntersection =
+        CheckAxis3DFace(
+          that,
+          tho,
+          axis);
+
+      // If the axis is separating the Frames
+      if (isIntersection == false) {
+
+        // The Frames are not in intersection,
+        // terminate the test
+        return false;
+
+      }
+
+    }
+
+  }
+
+  // If we reaches here, it means the two Frames are intersecting
+  return true;
+
+}
+
 // Check the intersection constraint for Frames that and tho
 // relatively to axis
 bool CheckAxis3D(
@@ -1123,6 +1276,136 @@ bool CheckAxis3D(
           vertex[0] += frameCompC[0];
           vertex[1] += frameCompC[1];
           vertex[2] += frameCompC[2];
+          break;
+        case 2:
+          vertex[0] += frameCompB[0];
+          vertex[1] += frameCompB[1];
+          vertex[2] += frameCompB[2];
+          break;
+        case 1:
+          vertex[0] += frameCompA[0];
+          vertex[1] += frameCompA[1];
+          vertex[2] += frameCompA[2];
+          break;
+        default:
+          break;
+
+      }
+
+      // Get the projection of the vertex on the axis
+      double proj =
+        vertex[0] * axis[0] +
+        vertex[1] * axis[1] +
+        vertex[2] * axis[2];
+
+      // If it's the first vertex
+      if (firstVertex == true) {
+
+        // Initialize the boundaries of the projection of the
+        // Frame on the edge
+        bdgBox[0] = proj;
+        bdgBox[1] = proj;
+
+        // Update the flag to memorize we did the first vertex
+        firstVertex = false;
+
+      // Else, it's not the first vertex
+      } else {
+
+        // Update the boundaries of the projection of the Frame on
+        // the edge
+        if (bdgBox[0] > proj) {
+
+          bdgBox[0] = proj;
+
+        }
+
+        if (bdgBox[1] < proj) {
+
+          bdgBox[1] = proj;
+
+        }
+
+      }
+
+    }
+
+    // Switch the frame to check the vertices of the second Frame
+    frame = tho;
+    bdgBox = bdgBoxB;
+
+  }
+
+  // If the projections of the two frames on the edge are
+  // not intersecting
+  if (
+    bdgBoxB[1] < bdgBoxA[0] ||
+    bdgBoxA[1] < bdgBoxB[0]) {
+
+    // There exists an axis which separates the Frames,
+    // thus they are not in intersection
+    return false;
+
+  }
+
+  // If we reaches here the two Frames are in intersection
+  return true;
+
+}
+
+// Check the intersection constraint for Frames that and tho,
+// both faces, relatively to axis
+bool CheckAxis3DFace(
+  const Frame3D* const that,
+  const Frame3D* const tho,
+  const double* const axis) {
+
+  // Declare variables to memorize the boundaries of projection
+  // of the two frames on the current edge
+  double bdgBoxA[2];
+  double bdgBoxB[2];
+
+  // Declare two variables to loop on Frames and commonalize code
+  const Frame3D* frame = that;
+  double* bdgBox = bdgBoxA;
+
+  // Loop on Frames
+  for (
+    int iFrame = 2;
+    iFrame--;) {
+
+    // Shortcuts
+    const double* frameOrig = frame->orig;
+    const double* frameCompA = frame->comp[0];
+    const double* frameCompB = frame->comp[1];
+    FrameType frameType = frame->type;
+
+    // Get the number of vertices of frame
+    int nbVertices = (frameType == FrameTetrahedron ? 3 : 4);
+
+    // Declare a variable to memorize if the current vertex is
+    // the first in the loop, used to initialize the boundaries
+    bool firstVertex = true;
+
+    // Loop on vertices of the frame
+    for (
+      int iVertex = nbVertices;
+      iVertex--;) {
+
+      // Get the vertex
+      double vertex[3];
+      vertex[0] = frameOrig[0];
+      vertex[1] = frameOrig[1];
+      vertex[2] = frameOrig[2];
+      switch (iVertex) {
+
+        case 3:
+          vertex[0] +=
+            frameCompA[0] +  frameCompB[0];
+          vertex[1] +=
+            frameCompA[1] +  frameCompB[1];
+          vertex[2] +=
+            frameCompA[2] +  frameCompB[2];
           break;
         case 2:
           vertex[0] += frameCompB[0];

@@ -1,0 +1,447 @@
+ENUM FrameType
+  FrameCuboid,
+  FrameTetrahedron
+END ENUM
+
+STRUCT AABB3D
+  // x,y,z
+  real min[3]
+  real max[3]
+END STRUCT
+
+STRUCT Frame3D
+  FrameType type
+  real orig[3]
+  // comp[iComp][iAxis]
+  real comp[3][3]
+  AABB3D bdgBox
+  real invComp[3][3]
+END STRUCT
+
+FUNCTION powi(base, exp)
+  res = 1 
+  FOR i=0 TO (exp - 1)
+    res = res * base  
+  END FOR
+  RETURN res 
+END FUNCTION
+
+FUNCTION Frame3DPrint(that)
+  IF that.type == FrameTetrahedron
+    PRINT "T" 
+  ELSE IF that.type == FrameCuboid
+    PRINT "C" 
+  END IF
+  PRINT "o(" 
+  FOR i = 0 TO 2
+    PRINT that.orig[i]
+    IF i < 2
+      PRINT "," 
+    END IF
+  END FOR
+  comp = ["x","y","z"]
+  FOR j = 0 TO 2
+    PRINT ") ", comp[j], "(" 
+    FOR i = 0 TO 2
+      PRINT that.comp[j][i]
+      IF i < 2
+        PRINT "," 
+      END IF
+    END FOR
+  END FOR
+  PRINT ")" 
+END FUNCTION
+
+FUNCTION AABB3DPrint(that)
+  PRINT "minXYZ(" 
+  FOR i = 0 TO 2
+    PRINT that.min[i]
+    IF i < 2
+      PRINT "," 
+    END IF
+  END FOR
+  PRINT ")-maxXYZ(" 
+  FOR i = 0 TO 2
+    PRINT that.max[i]
+    IF i < 2
+      PRINT "," 
+    END IF
+  END FOR
+  PRINT ")" 
+END FUNCTION
+
+FUNCTION Frame3DExportBdgBox(that, bdgBox, bdgBoxProj)
+  FOR i = 0 TO 2
+    bdgBoxProj.max[i] = that.orig[i]
+    FOR j = 0 TO 2
+      bdgBoxProj.max[i] = 
+        bdgBoxProj.max[i] + that.comp[j][i] * bdgBox.min[j] 
+    END FOR
+    bdgBoxProj.min[i] = bdgBoxProj.max[i] 
+  END FOR
+  nbVertices = powi(2, 3) 
+  FOR iVertex = 1 TO (nbVertices - 1) 
+    FOR i = 0 TO 2
+      IF BITWISEAND(iVertex, powi(2, i)) <> 0
+        v[i] = bdgBox.max[i]
+      ELSE
+        v[i] = bdgBox.min[i]
+      END IF
+    END FOR
+    FOR i = 0 TO 2
+      w[i] = that.orig[i] 
+      FOR j = 0 TO 2
+        w[i] = w[i] + that.comp[j][i] * v[j] 
+      END FOR
+    END FOR
+    FOR i = 0 TO 2
+      IF bdgBoxProj.min[i] > w[i]
+        bdgBoxProj.min[i] = w[i] 
+      END IF
+      IF bdgBoxProj.max[i] < w[i]
+        bdgBoxProj.max[i] = w[i] 
+      END IF
+    END FOR
+  END FOR
+END FUNCTION
+
+FUNCTION Frame3DImPortFrame(P, Q, Qp)
+  FOR i = 0 TO 2
+    v[i] = Q.orig[i] - P.orig[i] 
+  END FOR
+  FOR i = 0 TO 2
+    Qp.orig[i] = 0.0 
+    FOR j = 0 TO 2
+      Qp.orig[i] = Qp.orig[i] + P.invComp[j][i] * v[j] 
+      Qp.comp[j][i] = 0.0 
+      FOR k = 0 TO 2
+        Qp.comp[j][i] = Qp.comp[j][i] + P.invComp[k][i] * Q.comp[j][k] 
+      END FOR
+    END FOR
+  END FOR
+END FUNCTION
+
+FUNCTION Frame3DUpdateInv(that)
+  det = 
+    that.comp[0][0] * (that.comp[1][1] * that.comp[2][2] - 
+    that.comp[1][2] * that.comp[2][1]) -
+    that.comp[1][0] * (that.comp[0][1] * that.comp[2][2] - 
+    that.comp[0][2] * that.comp[2][1]) +
+    that.comp[2][0] * (that.comp[0][1] * that.comp[1][2] - 
+    that.comp[0][2] * that.comp[1][1]) 
+  that.invComp[0][0] = (that.comp[1][1] * that.comp[2][2] - 
+    that.comp[2][1] * that.comp[1][2]) / det 
+  that.invComp[0][1] = (that.comp[2][1] * that.comp[0][2] - 
+    that.comp[2][2] * that.comp[0][1]) / det 
+  that.invComp[0][2] = (that.comp[0][1] * that.comp[1][2] - 
+    that.comp[0][2] * that.comp[1][1]) / det 
+  that.invComp[1][0] = (that.comp[2][0] * that.comp[1][2] - 
+    that.comp[2][2] * that.comp[1][0]) / det 
+  that.invComp[1][1] = (that.comp[0][0] * that.comp[2][2] - 
+    that.comp[2][0] * that.comp[0][2]) / det 
+  that.invComp[1][2] = (that.comp[0][2] * that.comp[1][0] - 
+    that.comp[1][2] * that.comp[0][0]) / det 
+  that.invComp[2][0] = (that.comp[1][0] * that.comp[2][1] - 
+    that.comp[2][0] * that.comp[1][1]) / det 
+  that.invComp[2][1] = (that.comp[0][1] * that.comp[2][0] - 
+    that.comp[2][1] * that.comp[0][0]) / det 
+  that.invComp[2][2] = (that.comp[0][0] * that.comp[1][1] - 
+    that.comp[1][0] * that.comp[0][1]) / det 
+END FUNCTION
+
+FUNCTION Frame3DCreateStatic(type, orig, comp)
+  that.type = type 
+  FOR iAxis = 0 TO 2
+    that.orig[iAxis] = orig[iAxis] 
+    FOR iComp = 0 TO 2
+      that.comp[iComp][iAxis] = comp[iComp][iAxis] 
+    END FOR
+  END FOR
+  FOR iAxis = 0 TO 2
+    min = orig[iAxis] 
+    max = orig[iAxis] 
+    FOR iComp = 0 TO 2
+      IF that.type == FrameCuboid
+        IF that.comp[iComp][iAxis] < 0.0
+          min = min + that.comp[iComp][iAxis] 
+        END IF
+        IF that.comp[iComp][iAxis] > 0.0
+          max = max + that.comp[iComp][iAxis] 
+        END IF
+      ELSE IF that.type == FrameTetrahedron
+        IF that.comp[iComp][iAxis] < 0.0 AND
+          min > orig[iAxis] + that.comp[iComp][iAxis]
+          min = orig[iAxis] + that.comp[iComp][iAxis] 
+        END IF
+        IF that.comp[iComp][iAxis] > 0.0 AND
+          max < orig[iAxis] + that.comp[iComp][iAxis]
+          max = orig[iAxis] + that.comp[iComp][iAxis] 
+        END IF
+      END IF
+    END FOR
+    that.bdgBox.min[iAxis] = min 
+    that.bdgBox.max[iAxis] = max 
+  END FOR
+  Frame3DUpdateInv(that) 
+  RETURN that 
+END FUNCTION
+
+FUNCTION Sgn(v)
+  IF 0.0 < v
+    a = 1
+  ELSE
+    a = 0
+  END IF
+  IF v < 0.0
+    b = 1
+  ELSE
+    b = 0
+  END IF
+  RETURN A - B
+END FUNCTION
+
+FUNCTION Neg(x)
+  IF x < 0.0
+    RETURN x
+  ELSE
+    RETURN 0.0
+  END IF
+END FUNCTION
+
+FST_VAR = 0
+SND_VAR = 1
+THD_VAR = 2
+
+FUNCTION ElimVar3D(M, Y, nbRows, nbCols, Mp, Yp, nbRemainRows)
+  nbRemainRows = 0 
+  FOR iRow = 0 TO (nbRows - 2)
+    IF M[iRow][0] <> 0.0
+      FOR jRow = (iRow + 1) TO (nbRows - 1)
+        IF sgn(M[iRow][0]) <> sgn(M[jRow][0]) AND 
+            M[jRow][0] <> 0.0
+          sumNegCoeff = 0.0 
+          jCol = 0
+          FOR iCol = 1 TO (nbCols - 1)
+            Mp[nbRemainRows][jCol] = 
+              M[iRow][iCol] / ABS(M[iRow][0]) + 
+              M[jRow][iCol] / ABS(M[jRow][0]) 
+            sumNegCoeff = sumNegCoeff + neg(Mp[nbRemainRows][jCol]) 
+            jCol = jCol + 1 
+          END FOR
+          Yp[nbRemainRows] = 
+            Y[iRow] / ABS(M[iRow][0]) +
+            Y[jRow] / ABS(M[jRow][0]) 
+          IF Yp[nbRemainRows] < sumNegCoeff
+            RETURN TRUE 
+          END IF
+          nbRemainRows = nbRemainRows + 1 
+        END IF
+      END FOR
+    END IF
+  END FOR
+  FOR iRow = 0 TO (nbRows - 1)
+    IF M[iRow][0] == 0.0
+      jCol = 0
+      FOR iCol = 1 TO (nbCols - 1)
+        Mp[nbRemainRows][jCol] = M[iRow][iCol] 
+        jCol = jCol + 1
+      END FOR
+      Yp[nbRemainRows] = Y[iRow] 
+      nbRemainRows = nbRemainRows + 1 
+    END IF
+  END FOR
+  RETURN FALSE 
+END FUNCTION
+
+FUNCTION GetBoundLastVar3D(iVar, M, Y, nbRows, bdgBox)
+  bdgBox.min[iVar] = 0.0 
+  bdgBox.max[iVar] = 1.0 
+  FOR jRow = 0 TO (nbRows - 1)
+    IF M[jRow][0] > 0.0
+      y = Y[jRow] / M[jRow][0] 
+      IF bdgBox.max[iVar] > y
+        bdgBox.max[iVar] = y 
+      END IF
+    ELSE IF M[jRow][0] < 0.0
+      y = Y[jRow] / M[jRow][0]
+      IF bdgBox.min[iVar] < y
+        bdgBox.min[iVar] = y 
+      END IF
+    END IF
+  END FOR
+END FUNCTION
+
+FUNCTION GetBoundVar3D(iVar, M, Y, nbRows, nbCols, bdgBox)
+  bdgBox.min[iVar] = 0.0
+  bdgBox.max[iVar] = 1.0
+  FOR iRow = 0 .. TO (nbRows - 1)
+    IF M[iRow][0] <> 0.0
+      min = -1.0 * Y[iRow]
+      max = Y[iRow]
+      FOR iCol = 1 .. TO (nbCols - 1)
+        IF M[iRow][iCol] > 0.0
+          min = min + M[iRow][iCol] * bdgBox.min[iCol + iVar]
+          max = max - M[iRow][iCol] * bdgBox.min[iCol + iVar]
+        ELSE IF M[iRow][iCol] < 0.0
+          min = min + M[iRow][iCol] * bdgBox.max[iCol + iVar]
+          max = max - M[iRow][iCol] * bdgBox.max[iCol + iVar]
+        END IF
+      END FOR
+      min = min / (-1.0 * M[iRow][0])
+      max = max / M[iRow][0]
+      IF bdgBox.min[iVar] > min
+        bdgBox.min[iVar] = min
+      END IF
+      IF bdgBox.max[iVar] < max
+        bdgBox.max[iVar] = max
+      END IF
+    END IF
+  END FOR
+END FUNCTION
+
+FUNCTION FMBTestIntersection3D(that, tho, bdgBox)
+  Frame3DImportFrame(that, tho, thoProj) 
+  M[0][0] = -thoProj.comp[0][0] 
+  M[0][1] = -thoProj.comp[1][0] 
+  M[0][2] = -thoProj.comp[2][0] 
+  Y[0] = thoProj.orig[0] 
+  IF Y[0] < neg(M[0][0]) + neg(M[0][1]) + neg(M[0][2])
+    RETURN FALSE 
+  END IF
+  M[1][0] = -thoProj.comp[0][1] 
+  M[1][1] = -thoProj.comp[1][1] 
+  M[1][2] = -thoProj.comp[2][1] 
+  Y[1] = thoProj.orig[1] 
+  IF Y[1] < neg(M[1][0]) + neg(M[1][1]) + neg(M[1][2])
+    RETURN FALSE 
+  END IF
+  M[2][0] = -thoProj.comp[0][2] 
+  M[2][1] = -thoProj.comp[1][2] 
+  M[2][2] = -thoProj.comp[2][2] 
+  Y[2] = thoProj.orig[2] 
+  IF Y[2] < neg(M[2][0]) + neg(M[2][1]) + neg(M[2][2])
+    RETURN FALSE 
+  END IF
+  nbRows = 3 
+  IF that.type == FrameCuboid
+    M[nbRows][0] = thoProj.comp[0][0] 
+    M[nbRows][1] = thoProj.comp[1][0] 
+    M[nbRows][2] = thoProj.comp[2][0] 
+    Y[nbRows] = 1.0 - thoProj.orig[0] 
+    IF Y[nbRows] < neg(M[nbRows][0]) + neg(M[nbRows][1]) + 
+                    neg(M[nbRows][2])
+      RETURN FALSE 
+    END IF
+    nbRows = nbRows + 1
+    M[nbRows][0] = thoProj.comp[0][1] 
+    M[nbRows][1] = thoProj.comp[1][1] 
+    M[nbRows][2] = thoProj.comp[2][1] 
+    Y[nbRows] = 1.0 - thoProj.orig[1] 
+    IF Y[nbRows] < neg(M[nbRows][0]) + neg(M[nbRows][1]) + 
+                    neg(M[nbRows][2])
+      RETURN FALSE 
+    END IF
+    nbRows = nbRows + 1
+    M[nbRows][0] = thoProj.comp[0][2] 
+    M[nbRows][1] = thoProj.comp[1][2] 
+    M[nbRows][2] = thoProj.comp[2][2] 
+    Y[nbRows] = 1.0 - thoProj.orig[2] 
+    IF Y[nbRows] < neg(M[nbRows][0]) + neg(M[nbRows][1]) + 
+                    neg(M[nbRows][2])
+      RETURN FALSE 
+    END IF
+    nbRows = nbRows + 1
+  ELSE
+    M[nbRows][0] = 
+      thoProj.comp[0][0] + thoProj.comp[0][1] + thoProj.comp[0][2] 
+    M[nbRows][1] = 
+      thoProj.comp[1][0] + thoProj.comp[1][1] + thoProj.comp[1][2] 
+    M[nbRows][2] = 
+      thoProj.comp[2][0] + thoProj.comp[2][1] + thoProj.comp[2][2] 
+    Y[nbRows] = 
+      1.0 - thoProj.orig[0] - thoProj.orig[1] - thoProj.orig[2] 
+    IF Y[nbRows] < neg(M[nbRows][0]) + neg(M[nbRows][1]) + 
+                    neg(M[nbRows][2])
+      RETURN FALSE 
+    END IF
+    nbRows = nbRows + 1
+  END IF
+  IF tho.type == FrameCuboid
+    M[nbRows][0] = 1.0 
+    M[nbRows][1] = 0.0 
+    M[nbRows][2] = 0.0 
+    Y[nbRows] = 1.0 
+    nbRows = nbRows + 1
+    M[nbRows][0] = 0.0 
+    M[nbRows][1] = 1.0 
+    M[nbRows][2] = 0.0 
+    Y[nbRows] = 1.0 
+    nbRows = nbRows + 1
+    M[nbRows][0] = 0.0 
+    M[nbRows][1] = 0.0 
+    M[nbRows][2] = 1.0 
+    Y[nbRows] = 1.0 
+    nbRows = nbRows + 1
+  ELSE
+    M[nbRows][0] = 1.0 
+    M[nbRows][1] = 1.0 
+    M[nbRows][2] = 1.0 
+    Y[nbRows] = 1.0 
+    nbRows = nbRows + 1
+  END IF
+  M[nbRows][0] = -1.0 
+  M[nbRows][1] = 0.0 
+  M[nbRows][2] = 0.0 
+  Y[nbRows] = 0.0 
+  nbRows = nbRows + 1
+  M[nbRows][0] = 0.0 
+  M[nbRows][1] = -1.0 
+  M[nbRows][2] = 0.0 
+  Y[nbRows] = 0.0 
+  nbRows = nbRows + 1
+  M[nbRows][0] = 0.0 
+  M[nbRows][1] = 0.0 
+  M[nbRows][2] = -1.0 
+  Y[nbRows] = 0.0 
+  nbRows = nbRows + 1
+  inconsistency = 
+    ElimVar3D(M, Y, nbRows, 3, Mp, Yp, nbRowsP) 
+  IF inconsistency == TRUE
+    RETURN FALSE 
+  END IF
+  inconsistency = 
+    ElimVar3D(Mp, Yp, nbRowsP, 2, Mpp, Ypp, nbRowsPP) 
+  IF inconsistency == TRUE
+    RETURN FALSE 
+  END IF
+  GetBoundLastVar3D(THD_VAR, Mpp, Ypp, nbRowsPP, bdgBoxLocal) 
+  IF bdgBoxLocal.min[THD_VAR] >= bdgBoxLocal.max[THD_VAR]
+    RETURN FALSE 
+  ELSE
+    GetBoundVar3D(SND_VAR, Mp, Yp, nbRowsP, 2, bdgBoxLocal) 
+    GetBoundVar3D(FST_VAR, M, Y, nbRows, 3, bdgBoxLocal) 
+    bdgBox = bdgBoxLocal 
+  END IF
+  RETURN TRUE 
+END FUNCTION
+
+origP3D = [0.0, 0.0, 0.0]
+compP3D = [
+  [1.0, 0.0, 0.0],
+  [0.0, 1.0, 0.0],
+  [0.0, 0.0, 1.0]]
+P3D = Frame3DCreateStatic(FrameTetrahedron, origP3D, compP3D)
+origQ3D = [0.0, 0.0, 0.0]
+compQ3D = [
+  [1.0, 0.0, 0.0],
+  [0.0, 1.0, 0.0],
+  [0.0, 0.0, 1.0]]
+Q3D = Frame3DCreateStatic(FrameTetrahedron, origQ3D, compQ3D)
+isIntersecting3D = FMBTestIntersection3D(P3D, Q3D, bdgBox3DLocal)
+IF isIntersecting3D == TRUE
+  PRINT "Intersection detected."
+  Frame3DExportBdgBox(Q3D, bdgBox3DLocal, bdgBox3D)
+  AABB3DPrint(bdgBox3D)
+ELSE
+  PRINT "No intersection."
+END IF
