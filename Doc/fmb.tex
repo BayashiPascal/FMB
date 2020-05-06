@@ -55,6 +55,7 @@ All the algorithms, the code, the results and this doc are available on GitHub a
 \begin{center}
 https://github.com/BayashiPascal/FMB
  \end{center}
+Please, make sure you have the most recent version of this paper by referring to the master branch of this repository.
  
 \section{The problem as a system of linear inequations}
 
@@ -203,12 +204,12 @@ If $\mathbb{A}$ and $\mathbb{B}$ are two cuboids:
 -\left[X\right]_0&\le&0.0\\
 ...\\
 -\left[X\right]_{D-1}&\le&0.0\\
-\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{0,i}.\left[X\right]_i&\le&1.0-\left[O_{\mathbb{B}_\mathbb{A}}\right]_0\\
+\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{i,0}.\left[X\right]_i&\le&1.0-\left[O_{\mathbb{B}_\mathbb{A}}\right]_0\\
 ...\\
-\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{D-1,i}.\left[X\right]_i&\le&1.0-\left[O_{\mathbb{B}_\mathbb{A}}\right]_{D-1}\\
--\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{0,i}.\left[X\right]_i&\le&\left[O_{\mathbb{B}_\mathbb{A}}\right]_0\\
+\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{i,D-1}.\left[X\right]_i&\le&1.0-\left[O_{\mathbb{B}_\mathbb{A}}\right]_{D-1}\\
+-\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{i,0}.\left[X\right]_i&\le&\left[O_{\mathbb{B}_\mathbb{A}}\right]_0\\
 ...\\
--\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{D-1,i}.\left[X\right]_i&\le&\left[O_{\mathbb{B}_\mathbb{A}}\right]_{D-1}
+-\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{i,D-1}.\left[X\right]_i&\le&\left[O_{\mathbb{B}_\mathbb{A}}\right]_{D-1}
 \end{array}
 \right.
 \end{equation}
@@ -220,12 +221,12 @@ If $\mathbb{A}$ is a cuboid and $\mathbb{B}$ is a tetrahedron:
 -\left[X\right]_0&\le&0.0\\
 ...\\
 -\left[X\right]_{D-1}&\le&0.0\\
-\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{0,i}.\left[X\right]_i&\le&1.0-\left[O_{\mathbb{B}_\mathbb{A}}\right]_0\\
+\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{i,0}.\left[X\right]_i&\le&1.0-\left[O_{\mathbb{B}_\mathbb{A}}\right]_0\\
 ...\\
-\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{D-1,i}.\left[X\right]_i&\le&1.0-\left[O_{\mathbb{B}_\mathbb{A}}\right]_{D-1}\\
--\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{0,i}.\left[X\right]_i&\le&\left[O_{\mathbb{B}_\mathbb{A}}\right]_0\\
+\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{i,D-1}.\left[X\right]_i&\le&1.0-\left[O_{\mathbb{B}_\mathbb{A}}\right]_{D-1}\\
+-\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{i,0}.\left[X\right]_i&\le&\left[O_{\mathbb{B}_\mathbb{A}}\right]_0\\
 ...\\
--\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{D-1,i}.\left[X\right]_i&\le&\left[O_{\mathbb{B}_\mathbb{A}}\right]_{D-1}\\
+-\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{i,D-1}.\left[X\right]_i&\le&\left[O_{\mathbb{B}_\mathbb{A}}\right]_{D-1}\\
 \sum_{i=0}^{D-1}\left[X\right]_i&\le&1.0
 \end{array}
 \right.
@@ -241,10 +242,10 @@ If $\mathbb{A}$ is a tetrahedron and $\mathbb{B}$ is a cuboid:
 -\left[X\right]_0&\le&0.0\\
 ...\\
 -\left[X\right]_{D-1}&\le&0.0\\
--\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{0,i}.\left[X\right]_i&\le&\left[O_{\mathbb{B}_\mathbb{A}}\right]_0\\
+-\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{i,0}.\left[X\right]_i&\le&\left[O_{\mathbb{B}_\mathbb{A}}\right]_0\\
 ...\\
--\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{D-1,i}.\left[X\right]_i&\le&\left[O_{\mathbb{B}_\mathbb{A}}\right]_{D-1}\\
-\sum_{j=0}^{D-1}\left(\left(\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{j,i}\right).\left[X\right]_i\right)&\le&1.0-\sum_{j=0}^{D-1}\left[O_{\mathbb{B}_\mathbb{A}}\right]_j
+-\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{i,D-1}.\left[X\right]_i&\le&\left[O_{\mathbb{B}_\mathbb{A}}\right]_{D-1}\\
+\sum_{j=0}^{D-1}\left(\left(\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{i,j}\right).\left[X\right]_i\right)&\le&1.0-\sum_{j=0}^{D-1}\left[O_{\mathbb{B}_\mathbb{A}}\right]_j
 \end{array}
 \right.
 \end{equation}
@@ -256,11 +257,11 @@ If $\mathbb{A}$ and $\mathbb{B}$ are two tetrahedrons:
 -\left[X\right]_0&\le&0.0\\
 ...\\
 -\left[X\right]_{D-1}&\le&0.0\\
--\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{0,i}.\left[X\right]_i&\le&\left[O_{\mathbb{B}_\mathbb{A}}\right]_0\\
+-\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{i,0}.\left[X\right]_i&\le&\left[O_{\mathbb{B}_\mathbb{A}}\right]_0\\
 ...\\
--\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{D-1,i}.\left[X\right]_i&\le&\left[O_{\mathbb{B}_\mathbb{A}}\right]_{D-1}\\
+-\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{i,D-1}.\left[X\right]_i&\le&\left[O_{\mathbb{B}_\mathbb{A}}\right]_{D-1}\\
 \sum_{i=0}^{D-1}\left[X\right]_i&\le&1.0\\
-\sum_{j=0}^{D-1}\left(\left(\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{j,i}\right).\left[X\right]_i\right)&\le&1.0-\sum_{j=0}^{D-1}\left[O_{\mathbb{B}_\mathbb{A}}\right]_j
+\sum_{j=0}^{D-1}\left(\left(\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{i,j}\right).\left[X\right]_i\right)&\le&1.0-\sum_{j=0}^{D-1}\left[O_{\mathbb{B}_\mathbb{A}}\right]_j
 \end{array}
 \right.
 \end{equation}
@@ -413,12 +414,12 @@ t&\le&1.0\\
 -\left[X\right]_0&\le&0.0\\
 ...\\
 -\left[X\right]_{D-1}&\le&0.0\\
-\left[V_{\mathbb{B}_\mathbb{A}}\right]_0.t+\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{0,i}\left[X\right]_i&\le&1.0-\left[O_{\mathbb{B}_\mathbb{A}}\right]_0\\
+\left[V_{\mathbb{B}_\mathbb{A}}\right]_0.t+\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{i,0}\left[X\right]_i&\le&1.0-\left[O_{\mathbb{B}_\mathbb{A}}\right]_0\\
 ...\\
-\left[V_{\mathbb{B}_\mathbb{A}}\right]_{D-1}.t+\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{D-1,i}\left[X\right]_i&\le&1.0-\left[O_{\mathbb{B}_\mathbb{A}}\right]_{D-1}\\
--\left[V_{\mathbb{B}_\mathbb{A}}\right]_0.t-\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{0,i}\left[X\right]_i&\le&\left[O_{\mathbb{B}_\mathbb{A}}\right]_0\\
+\left[V_{\mathbb{B}_\mathbb{A}}\right]_{D-1}.t+\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{i,D-1}\left[X\right]_i&\le&1.0-\left[O_{\mathbb{B}_\mathbb{A}}\right]_{D-1}\\
+-\left[V_{\mathbb{B}_\mathbb{A}}\right]_0.t-\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{i,0}\left[X\right]_i&\le&\left[O_{\mathbb{B}_\mathbb{A}}\right]_0\\
 ...\\
--\left[V_{\mathbb{B}_\mathbb{A}}\right]_{D-1}.t-\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{D-1,i}\left[X\right]_i&\le&\left[O_{\mathbb{B}_\mathbb{A}}\right]_{D-1}
+-\left[V_{\mathbb{B}_\mathbb{A}}\right]_{D-1}.t-\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{i,D-1}\left[X\right]_i&\le&\left[O_{\mathbb{B}_\mathbb{A}}\right]_{D-1}
 \end{array}
 \right.
 \end{equation}
@@ -432,12 +433,12 @@ t&\le&1.0\\
 -\left[X\right]_0&\le&0.0\\
 ...\\
 -\left[X\right]_{D-1}&\le&0.0\\
-\left[V_{\mathbb{B}_\mathbb{A}}\right]_0.t+\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{0,i}\left[X\right]_i&\le&1.0-\left[O_{\mathbb{B}_\mathbb{A}}\right]_0\\
+\left[V_{\mathbb{B}_\mathbb{A}}\right]_0.t+\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{i,0}\left[X\right]_i&\le&1.0-\left[O_{\mathbb{B}_\mathbb{A}}\right]_0\\
 ...\\
-\left[V_{\mathbb{B}_\mathbb{A}}\right]_{D-1}.t+\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{D-1,i}\left[X\right]_i&\le&1.0-\left[O_{\mathbb{B}_\mathbb{A}}\right]_{D-1}\\
--\left[V_{\mathbb{B}_\mathbb{A}}\right]_0.t-\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{0,i}\left[X\right]_i&\le&\left[O_{\mathbb{B}_\mathbb{A}}\right]_0\\
+\left[V_{\mathbb{B}_\mathbb{A}}\right]_{D-1}.t+\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{i,D-1}\left[X\right]_i&\le&1.0-\left[O_{\mathbb{B}_\mathbb{A}}\right]_{D-1}\\
+-\left[V_{\mathbb{B}_\mathbb{A}}\right]_0.t-\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{i,0}\left[X\right]_i&\le&\left[O_{\mathbb{B}_\mathbb{A}}\right]_0\\
 ...\\
--\left[V_{\mathbb{B}_\mathbb{A}}\right]_{D-1}.t-\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{D-1,i}\left[X\right]_i&\le&\left[O_{\mathbb{B}_\mathbb{A}}\right]_{D-1}\\
+-\left[V_{\mathbb{B}_\mathbb{A}}\right]_{D-1}.t-\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{i,D-1}\left[X\right]_i&\le&\left[O_{\mathbb{B}_\mathbb{A}}\right]_{D-1}\\
 \sum_{i=0}^{D-1}\left[X\right]_i&\le&1.0
 \end{array}
 \right.
@@ -455,10 +456,10 @@ t&\le&1.0\\
 -\left[X\right]_0&\le&0.0\\
 ...\\
 -\left[X\right]_{D-1}&\le&0.0\\
--\left[V_{\mathbb{B}_\mathbb{A}}\right]_0.t-\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{0,i}\left[X\right]_i&\le&\left[O_{\mathbb{B}_\mathbb{A}}\right]_0\\
+-\left[V_{\mathbb{B}_\mathbb{A}}\right]_0.t-\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{i,0}\left[X\right]_i&\le&\left[O_{\mathbb{B}_\mathbb{A}}\right]_0\\
 ...\\
--\left[V_{\mathbb{B}_\mathbb{A}}\right]_{D-1}.t-\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{D-1,i}\left[X\right]_i&\le&\left[O_{\mathbb{B}_\mathbb{A}}\right]_{D-1}\\
-\sum_{j=0}^{D-1}\left(\left[V_{\mathbb{B}_\mathbb{A}}\right]_j.t+\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{j,i}\left[X\right]_i\right)&\le&1.0-\sum_{j=0}^{D-1}\left[O_{\mathbb{B}_\mathbb{A}}\right]_{j}
+-\left[V_{\mathbb{B}_\mathbb{A}}\right]_{D-1}.t-\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{i,D-1}\left[X\right]_i&\le&\left[O_{\mathbb{B}_\mathbb{A}}\right]_{D-1}\\
+\sum_{j=0}^{D-1}\left(\left[V_{\mathbb{B}_\mathbb{A}}\right]_j.t+\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{i,j}\left[X\right]_i\right)&\le&1.0-\sum_{j=0}^{D-1}\left[O_{\mathbb{B}_\mathbb{A}}\right]_{j}
 \end{array}
 \right.
 \end{equation}
@@ -472,11 +473,11 @@ t&\le&1.0\\
 -\left[X\right]_0&\le&0.0\\
 ...\\
 -\left[X\right]_{D-1}&\le&0.0\\
--\left[V_{\mathbb{B}_\mathbb{A}}\right]_0.t-\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{0,i}\left[X\right]_i&\le&\left[O_{\mathbb{B}_\mathbb{A}}\right]_{0}\\
+-\left[V_{\mathbb{B}_\mathbb{A}}\right]_0.t-\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{i,0}\left[X\right]_i&\le&\left[O_{\mathbb{B}_\mathbb{A}}\right]_{0}\\
 ...\\
--\left[V_{\mathbb{B}_\mathbb{A}}\right]_{D-1}.t-\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{D-1,i}\left[X\right]_i&\le&\left[O_{\mathbb{B}_\mathbb{A}}\right]_{D-1}\\
+-\left[V_{\mathbb{B}_\mathbb{A}}\right]_{D-1}.t-\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{i,D-1}\left[X\right]_i&\le&\left[O_{\mathbb{B}_\mathbb{A}}\right]_{D-1}\\
 \sum_{i=0}^{D-1}\left[X\right]_i&\le&1.0\\
-\sum_{j=0}^{D-1}\left(\left[V_{\mathbb{B}_\mathbb{A}}\right]_j.t+\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{j,i}\left[X\right]_i\right)&\le&1.0-\sum_{j=0}^{D-1}\left[O_{\mathbb{B}_\mathbb{A}}\right]_{j}
+\sum_{j=0}^{D-1}\left(\left[V_{\mathbb{B}_\mathbb{A}}\right]_j.t+\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{i,j}\left[X\right]_i\right)&\le&1.0-\sum_{j=0}^{D-1}\left[O_{\mathbb{B}_\mathbb{A}}\right]_{j}
 \end{array}
 \right.
 \end{equation}
@@ -1516,14 +1517,15 @@ In this section I introduce the Makefile used to compile the code given in the p
 \end{ttfamily}
 \end{scriptsize}
 
-\section{Versions of this paper}
+\subsection{Versions of this paper}
 
 This paper has been revised has follow:
 
 \begin{itemize}
-\item February 5, 2020 : Original version
-\item April 5, 2020 : Addition of the 'near-case only' results in qualification.
-\item April 25, 2020 : Update of the qualification results after moving the computation of the inverse of components matrix from outside to inside the intersection detection test for a better comparison with SAT.
+\item February 5th, 2020 : Original version
+\item April 5th, 2020 : Addition of the 'near-case only' results in qualification.
+\item April 25th, 2020 : Update of the qualification results after moving the computation of the inverse of components matrix from outside to inside the intersection detection test for a better comparison with SAT.
+\item May 6th, 2020 : Add image on the first page. Correct erroneous indices notation in the formulation of the problem.
 \end{itemize}
 
 \begin{thebibliography}{9}
