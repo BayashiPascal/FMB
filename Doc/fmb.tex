@@ -16,6 +16,15 @@
 \usepackage{changepage}
 \pdfgentounicode=1
 
+\lstset{
+        basicstyle=\ttfamily\scriptsize,
+        keywordstyle=\bfseries,
+        showspaces=false,
+        showstringspaces=false,
+        morekeywords={*,IF,FOR, STRUCT, FUNCTION, INT, FLOAT, ELSE, RETURN, STOP, Frame, FMB, PROJ, ELIM_VAR},
+        mathescape=true
+    }
+
 \begin{document}
 
 \title{The FMB Algorithm}
@@ -703,6 +712,163 @@ Algorithms are also given independantly from each other. Code commonalization ma
 \lstinputlisting[breaklines]{../3DTime/algorithm.txt}
 \end{ttfamily}
 \end{scriptsize}
+
+
+\subsection{Generic algorithm}
+
+In this subsection I give the generic algorithm valid for all cases and dimensions.\\
+
+\begin{lstlisting}[breaklines]
+DIM is the space dimension
+
+STRUCT Frame
+  FLOAT orig[DIM]
+  FLOAT comp[DIM][DIM]    <- comp[i-th component][j-th axis]
+  FLOAT invComp[DIM][DIM] <- inverse matrix of comp
+  IF DYNAMIC CASE
+    FLOAT speed[DIM]
+
+FUNCTION FMB(Frame A, Frame B)
+  Frame Ba := PROJ(A, B)
+  INT nbVars := DIM
+  IF DYNAMIC CASE
+    nbVars := DIM + 1
+  FLOAT M[][nbVars]
+  FLOAT Y[]
+  FOR j IN 0..DIM-1
+    FOR i IN 0..DIM-1
+      M[j][i] := -Ba.comp[i][j] 
+    IF DYNAMIC CASE
+      M[j][DIM] := -Ba.speed[j] 
+    Y[j] := Ba.orig[j] 
+    IF Y[j] < SUM OF NEGATIVE VALUES IN M[j][0..nbVars-1]
+      A AND B ARE NOT INTERSECTING, STOP
+  nbRows := DIM
+  IF A IS A CUBOID
+    FOR j IN 0..DIM-1
+      FOR i IN 0..DIM-1
+        M[nbRows][i] := Ba.comp[i][j] 
+      IF DYNAMIC CASE
+        M[nbRows][DIM] := Ba.speed[j] 
+      Y[nbRows] := 1 - Ba.orig[j] 
+      IF Y[nbRows] < 
+          SUM OF NEGATIVE VALUES IN M[nbRows][0..nbVars-1]
+        A AND B ARE NOT INTERSECTING, STOP
+      nbRows := nbRows + 1
+  ELSE
+    FOR i IN 0..DIM-1
+      M[nbRows][i] := SUM OF Ba.comp[i][0..DIM-1]
+    IF DYNAMIC CASE
+      M[nbRows][DIM] := SUM OF Ba.speed[0..DIM-1]
+    Y[nbRows] = 1 - (SUM OF Ba.orig[0..DIM-1]) 
+    IF Y[nbRows] < SUM OF NEGATIVE VALUES IN M[nbRows][0..nbVars-1]
+      A AND B ARE NOT INTERSECTING, STOP
+    nbRows := nbRows + 1
+  IF B IS A CUBOID
+    FOR j IN 0..DIM-1
+      FOR i IN 0..nbVars-1
+        IF i = j
+          M[nbRows][i] := 1
+        ELSE
+          M[nbRows][i] := 0
+      Y[nbRows] := 1
+      nbRows := nbRows + 1
+  ELSE
+    FOR i IN 0..DIM-1
+      M[nbRows][0] := 1 
+    IF DYNAMIC CASE
+      M[nbRows][DIM] := 0
+    Y[nbRows] := 1 
+    nbRows := nbRows + 1
+  FOR j IN 0..DIM-1
+    FOR i IN 0..nbVars-1
+      IF i = j
+        M[nbRows][i] := -1
+      ELSE
+        M[nbRows][i] := 0
+    Y[nbRows] := 0
+    nbRows := nbRows + 1
+  IF DYNAMIC CASE
+    FOR i IN 0..nbVars-1
+      IF i = nbVars - 1
+        M[nbRows][i] := 1
+        M[nbRows+1][i] := -1
+      ELSE
+        M[nbRows][i] := 0
+        M[nbRows+1][i] := 0
+    Y[nbRows] := 1
+    Y[nbRows+1] := 0
+    nbRows := nbRows + 2
+  FOR i IN 0..nbVars-2
+    M, Y, nbRows := ELIM_VAR(M, Y, nbVars - i, nbRows)
+  FLOAT bounds[2] := [0, 1]
+  FOR i IN 0..nbRows-1
+    IF M[i][0] > 0
+      y := Y[i] / M[i][0]
+      IF bounds[1] > y
+        bounds[1] := y
+    ELSE IF M[i][0] < 0
+      y := Y[i] / M[i][0]
+      IF bounds[0] < y
+        bounds[0] := y
+  IF bounds[0] >= bounds[1]
+    A AND B ARE NOT INTERSECTING, STOP
+  ELSE
+    A AND B ARE INTERSECTING, STOP
+
+FUNCTION PROJ(Frame A, Frame B)
+  Frame Ba
+  FLOAT v[DIM]
+  IF NOT ALREADY COMPUTED
+    A.invComp := INVERSE MATRIX OF A.comp
+  IF DYNAMIC CASE
+    FLOAT s[DIM]
+  FOR i IN 0..DIM-1
+    v[i] := B.orig[i] - A.orig[i] 
+    IF DYNAMIC CASE
+      s[i] := B.speed[i] - A.speed[i] 
+  FOR i IN 0..DIM-1
+    Ba.orig[i] := 0
+    IF DYNAMIC CASE
+      Ba.speed[i] := 0 
+    FOR j IN 0..DIM-1
+      Ba.orig[i] := Ba.orig[i] + A.invComp[j][i] * v[j] 
+      IF DYNAMIC CASE
+        Ba.speed[i] := Ba.speed[i] + A.invComp[j][i] * s[j] 
+      Ba.comp[j][i] = 0 
+      FOR k IN 0..DIM-1
+        Ba.comp[j][i] :=
+          Ba.comp[j][i] + A.invComp[k][i] * B.comp[j][k] 
+  RETURN Ba
+
+FUNCTION ELIM_VAR(FLOAT M[][], FLOAT Y[], INT nbVars, INT nbRows)
+  INT nbRowsP := 0 
+  FLOAT Mp[][nbVars-1]
+  FLOAT Yp[]
+  FOR iRow IN 0..nbRows-2
+    IF M[iRow][0] <> 0
+      FOR jRow IN iRow+1..nbRows-1
+        IF M[jRow][0] <> 0 AND M[iRow][0] * M[jRow][0] < 0
+          FOR iCol IN 1..nbCols-1
+            Mp[nbRowsP][iCol-1] := 
+              M[iRow][iCol] / ABS(M[iRow][0]) + 
+              M[jRow][iCol] / ABS(M[jRow][0]) 
+          Yp[nbRowsP] := 
+            Y[iRow] / ABS(M[iRow][0]) +
+            Y[jRow] / ABS(M[jRow][0]) 
+          IF Yp[nbRowsP] < 
+              SUM OF NEGATIVE VALUES IN Mp[nbRowsP][0..nbCols-2]
+            A AND B ARE NOT INTERSECTING, STOP
+          nbRowsP := nbRowsP + 1 
+  FOR iRow IN 0..nbRows-1
+    IF M[iRow][0] = 0
+      FOR iCol IN 1..nbCols-1
+        Mp[nbRowsP][iCol-1] := M[iRow][iCol] 
+      Yp[nbRowsP] := Y[iRow] 
+      nbRowsP := nbRowsP + 1 
+  RETURN Mp, Yp, nbRowsP
+\end{lstlisting}
+
 
 \section{Implementation of the algorithms in C}
 
@@ -1525,7 +1691,7 @@ This paper has been revised has follow:
 \item February 5th, 2020 : Original version
 \item April 5th, 2020 : Addition of the 'near-case only' results in qualification.
 \item April 25th, 2020 : Update of the qualification results after moving the computation of the inverse of components matrix from outside to inside the intersection detection test for a better comparison with SAT.
-\item May 6th, 2020 : Add image on the first page. Correct erroneous indices notation in the formulation of the problem.
+\item May 6th, 2020 : Add image on the first page. Correct erroneous indices notation in the formulation of the problem. Add generic algorithm.
 \end{itemize}
 
 \begin{thebibliography}{9}
