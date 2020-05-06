@@ -39,11 +39,11 @@
 #define NB_RUNS 9
 
 // Nb of tests per run
-#define NB_TESTS 500000
+#define NB_TESTS 5000 //500000
 
 // Nb of times the test is run on one pair of frame, used to
 // slow down the processus and be able to measure time
-#define NB_REPEAT_3D 1000
+#define NB_REPEAT_3D 1500 //1000
 
 // Helper macro to generate random number in [0.0, 1.0]
 #define rnd() (double)(rand())/(double)(RAND_MAX)
@@ -177,6 +177,7 @@ void Qualification3DStatic(
 
       isIntersectingFMB[i] =
         FMBTestIntersection3DFace(
+        //FMBHybridTestIntersection3DFace(
           that,
           tho,
           NULL);

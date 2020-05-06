@@ -22,6 +22,7 @@
 
 #include <stdbool.h>
 #include "frame.h"
+#include "sat.h"
 
 // ------------- Functions declaration -------------
 
@@ -36,6 +37,11 @@
 // of the resulting AABB of FMBTestIntersection(B, A)
 // The resulting AABB is given in tho's local coordinates system
 bool FMBTestIntersection3DFace(
+  Frame3D* const that,
+  const Frame3D* const tho,
+  AABB2D* const bdgBox);
+
+bool FMBHybridTestIntersection3DFace(
   Frame3D* const that,
   const Frame3D* const tho,
   AABB2D* const bdgBox);

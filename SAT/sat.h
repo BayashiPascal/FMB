@@ -59,4 +59,11 @@ bool SATTestIntersection3DFace(
   const Frame3D* const that,
   const Frame3D* const tho);
 
+// Check the intersection constraint for Frames that and tho,
+// both faces, relatively to axis
+bool CheckAxis3DFace(
+  const Frame3D* const that,
+  const Frame3D* const tho,
+  const double* const axis);
+
 #endif

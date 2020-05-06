@@ -48,7 +48,7 @@ It includes the mathematical definition of the problem, its mathematical resolut
 
 \section*{Introduction}
 
-This paper introduces the FMB (Fourier-Motzkin-Baillehache) algorithm which can be used to perform intersection detection of moving and resting parallelepipeds and triangles in 2D, and cuboids and tetrahedrons in 3D.\\
+This paper introduces the FMB (Fourier-Motzkin-Baillehache) algorithm which can be used to perform intersection detection of moving and resting parallelepipeds and triangles in 2D, parallelepipeds and triangles in 3D, and cuboids and tetrahedrons in 3D.\\
 
 The detection result is returned has a boolean (intersection / no intersection), and if there is intersection, a bounding box of the intersection.\\
 
@@ -254,7 +254,7 @@ If $\mathbb{A}$ is a tetrahedron and $\mathbb{B}$ is a cuboid:
 -\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{i,0}.\left[X\right]_i&\le&\left[O_{\mathbb{B}_\mathbb{A}}\right]_0\\
 ...\\
 -\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{i,D-1}.\left[X\right]_i&\le&\left[O_{\mathbb{B}_\mathbb{A}}\right]_{D-1}\\
-\sum_{j=0}^{D-1}\left(\left(\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{i,j}\right).\left[X\right]_i\right)&\le&1.0-\sum_{j=0}^{D-1}\left[O_{\mathbb{B}_\mathbb{A}}\right]_j
+\sum_{j=0}^{D-1}\left(\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{i,j}.\left[X\right]_i\right)&\le&1.0-\sum_{j=0}^{D-1}\left[O_{\mathbb{B}_\mathbb{A}}\right]_j
 \end{array}
 \right.
 \end{equation}
@@ -270,7 +270,85 @@ If $\mathbb{A}$ and $\mathbb{B}$ are two tetrahedrons:
 ...\\
 -\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{i,D-1}.\left[X\right]_i&\le&\left[O_{\mathbb{B}_\mathbb{A}}\right]_{D-1}\\
 \sum_{i=0}^{D-1}\left[X\right]_i&\le&1.0\\
-\sum_{j=0}^{D-1}\left(\left(\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{i,j}\right).\left[X\right]_i\right)&\le&1.0-\sum_{j=0}^{D-1}\left[O_{\mathbb{B}_\mathbb{A}}\right]_j
+\sum_{j=0}^{D-1}\left(\sum_{i=0}^{D-1}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{i,j}.\left[X\right]_i\right)&\le&1.0-\sum_{j=0}^{D-1}\left[O_{\mathbb{B}_\mathbb{A}}\right]_j
+\end{array}
+\right.
+\end{equation}
+
+If one wants to consider faces (parallelepipeds and triangles) in 3D, by assuming the third component of cuboid and tetrahedron is the normal of the faces, she can simply modifies the inequations above to express the constraint $X_2=0$ and obtain the relevant systems as follow.
+
+If $\mathbb{A}$ and $\mathbb{B}$ are two cuboids:
+\begin{equation}
+\left\lbrace
+\begin{array}{rcl}
+\left[X\right]_0&\le&1.0\\
+...\\
+\left[X\right]_{D-2}&\le&1.0\\
+-\left[X\right]_0&\le&0.0\\
+...\\
+-\left[X\right]_{D-2}&\le&0.0\\
+\sum_{i=0}^{D-2}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{i,0}.\left[X\right]_i&\le&1.0-\left[O_{\mathbb{B}_\mathbb{A}}\right]_0\\
+...\\
+\sum_{i=0}^{D-2}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{i,D-2}.\left[X\right]_i&\le&1.0-\left[O_{\mathbb{B}_\mathbb{A}}\right]_{D-2}\\
+\sum_{i=0}^{D-2}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{i,D-1}.\left[X\right]_i&\le&-\left[O_{\mathbb{B}_\mathbb{A}}\right]_{D-1}\\
+-\sum_{i=0}^{D-2}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{i,0}.\left[X\right]_i&\le&\left[O_{\mathbb{B}_\mathbb{A}}\right]_0\\
+...\\
+-\sum_{i=0}^{D-2}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{i,D-1}.\left[X\right]_i&\le&\left[O_{\mathbb{B}_\mathbb{A}}\right]_{D-1}
+\end{array}
+\right.
+\end{equation}
+
+If $\mathbb{A}$ is a cuboid and $\mathbb{B}$ is a tetrahedron:
+\begin{equation}
+\left\lbrace
+\begin{array}{rcl}
+-\left[X\right]_0&\le&0.0\\
+...\\
+-\left[X\right]_{D-2}&\le&0.0\\
+\sum_{i=0}^{D-2}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{i,0}.\left[X\right]_i&\le&1.0-\left[O_{\mathbb{B}_\mathbb{A}}\right]_0\\
+...\\
+\sum_{i=0}^{D-2}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{i,D-2}.\left[X\right]_i&\le&1.0-\left[O_{\mathbb{B}_\mathbb{A}}\right]_{D-2}\\
+\sum_{i=0}^{D-2}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{i,D-1}.\left[X\right]_i&\le&-\left[O_{\mathbb{B}_\mathbb{A}}\right]_{D-1}\\
+-\sum_{i=0}^{D-2}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{i,0}.\left[X\right]_i&\le&\left[O_{\mathbb{B}_\mathbb{A}}\right]_0\\
+...\\
+-\sum_{i=0}^{D-2}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{i,D-1}.\left[X\right]_i&\le&\left[O_{\mathbb{B}_\mathbb{A}}\right]_{D-1}\\
+\sum_{i=0}^{D-2}\left[X\right]_i&\le&1.0
+\end{array}
+\right.
+\end{equation}
+
+If $\mathbb{A}$ is a tetrahedron and $\mathbb{B}$ is a cuboid:
+\begin{equation}
+\left\lbrace
+\begin{array}{rcl}
+\left[X\right]_0&\le&1.0\\
+...\\
+\left[X\right]_{D-2}&\le&1.0\\
+-\left[X\right]_0&\le&0.0\\
+...\\
+-\left[X\right]_{D-2}&\le&0.0\\
+-\sum_{i=0}^{D-2}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{i,0}.\left[X\right]_i&\le&\left[O_{\mathbb{B}_\mathbb{A}}\right]_0\\
+...\\
+-\sum_{i=0}^{D-2}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{i,D-1}.\left[X\right]_i&\le&\left[O_{\mathbb{B}_\mathbb{A}}\right]_{D-1}\\
+\sum_{j=0}^{D-2}\left(\sum_{i=0}^{D-2}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{i,j}.\left[X\right]_i\right)&\le&1.0-\sum_{j=0}^{D-2}\left[O_{\mathbb{B}_\mathbb{A}}\right]_j\\
+\sum_{i=0}^{D-2}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{i,D-1}.\left[X\right]_i&\le&-\left[O_{\mathbb{B}_\mathbb{A}}\right]_{D-1}
+\end{array}
+\right.
+\end{equation}
+
+If $\mathbb{A}$ and $\mathbb{B}$ are two tetrahedrons:
+\begin{equation}
+\left\lbrace
+\begin{array}{rcl}
+-\left[X\right]_0&\le&0.0\\
+...\\
+-\left[X\right]_{D-2}&\le&0.0\\
+-\sum_{i=0}^{D-2}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{i,0}.\left[X\right]_i&\le&\left[O_{\mathbb{B}_\mathbb{A}}\right]_0\\
+...\\
+-\sum_{i=0}^{D-2}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{i,D-1}.\left[X\right]_i&\le&\left[O_{\mathbb{B}_\mathbb{A}}\right]_{D-1}\\
+\sum_{i=0}^{D-2}\left[X\right]_i&\le&1.0\\
+\sum_{j=0}^{D-2}\left(\sum_{i=0}^{D-2}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{i,j}.\left[X\right]_i\right)&\le&1.0-\sum_{j=0}^{D-2}\left[O_{\mathbb{B}_\mathbb{A}}\right]_j\\
+\sum_{i=0}^{D-2}\left[C_{\mathbb{B}_\mathbb{A}}\right]_{i,D-1}.\left[X\right]_i&\le&-\left[O_{\mathbb{B}_\mathbb{A}}\right]_{D-1}
 \end{array}
 \right.
 \end{equation}

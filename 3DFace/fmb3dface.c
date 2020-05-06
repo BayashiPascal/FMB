@@ -602,3 +602,58 @@ bool FMBTestIntersection3DFace(
   return true;
 
 }
+
+bool FMBHybridTestIntersection3DFace(
+  Frame3D* const that,
+  const Frame3D* const tho,
+  AABB2D* const bdgBox) {
+
+  // Test the intersection using the two first tests of the SAT algorithm
+
+  // Check against that's normal
+  bool isIntersection =
+    CheckAxis3DFace(
+      that,
+      tho,
+      that->comp[2]);
+
+  // If the axis is separating the Frames
+  if (isIntersection == false) {
+
+    // The Frames are not in intersection,
+    // terminate the test
+    return false;
+
+  }
+
+  // Check against tho's normal
+  isIntersection =
+    CheckAxis3DFace(
+      that,
+      tho,
+      tho->comp[2]);
+
+  // If the axis is separating the Frames
+  if (isIntersection == false) {
+
+    // The Frames are not in intersection,
+    // terminate the test
+    return false;
+
+  }
+
+  // If it thinks there is an intersection, confirm with FMB
+  if (isIntersection == true) {
+
+    isIntersection =
+      FMBTestIntersection3DFace(
+        that,
+        tho,
+        bdgBox);
+
+  }
+
+  return isIntersection;
+
+}
+

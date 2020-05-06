@@ -31,13 +31,6 @@ bool CheckAxis3D(
   const Frame3D* const tho,
   const double* const axis);
 
-// Check the intersection constraint for Frames that and tho,
-// both faces, relatively to axis
-bool CheckAxis3DFace(
-  const Frame3D* const that,
-  const Frame3D* const tho,
-  const double* const axis);
-
 // Check the intersection constraint along one axis for moving 3D Frames
 bool CheckAxis3DTime(
   const Frame3DTime* const that,

@@ -5,14 +5,14 @@ OPTIMIZATION?=-O3
 BUILD_ARG=$(OPTIMIZATION) -I../SAT -I../Frame
 LINK_ARG=-lm
 
-main : main.o fmb3dface.o frame.o Makefile
-	$(COMPILER) -o main main.o fmb3dface.o frame.o
+main : main.o fmb3dface.o frame.o sat.o Makefile
+	$(COMPILER) -o main main.o fmb3dface.o frame.o sat.o
 
 main.o : main.c fmb3dface.h ../Frame/frame.h Makefile
 	$(COMPILER) -c main.c $(BUILD_ARG)
 
-unitTests : unitTests.o fmb3dface.o frame.o Makefile
-	$(COMPILER) -o unitTests unitTests.o fmb3dface.o frame.o $(LINK_ARG)
+unitTests : unitTests.o fmb3dface.o frame.o sat.o Makefile
+	$(COMPILER) -o unitTests unitTests.o fmb3dface.o frame.o sat.o $(LINK_ARG)
 
 unitTests.o : unitTests.c fmb3dface.h ../Frame/frame.h Makefile
 	$(COMPILER) -c unitTests.c $(BUILD_ARG)

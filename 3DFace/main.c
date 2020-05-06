@@ -23,7 +23,7 @@
 #include <stdbool.h>
 
 // Include the FMB algorithm library
-#include "fmb3d.h"
+#include "fmb3dface.h"
 
 // Main function
 int main(int argc, char** argv) {
@@ -59,61 +59,19 @@ int main(int argc, char** argv) {
 
   // Declare a variable to memorize the result of the intersection
   // detection
-  AABB3D bdgBox3DLocal;
+  AABB2D bdgBox2DLocal;
 
   // Test for intersection between P and Q
   bool isIntersecting3D =
-    FMBTestIntersection3D(
+    FMBTestIntersection3DFace(
       &P3D,
       &Q3D,
-      &bdgBox3DLocal);
+      &bdgBox2DLocal);
 
   // If the two objects are intersecting
   if (isIntersecting3D) {
 
     printf("Intersection detected in AABB ");
-
-    // Export the local bounding box toward the real coordinates
-    // system
-    AABB3D bdgBox3D;
-    Frame3DExportBdgBox(
-      &Q3D,
-      &bdgBox3DLocal,
-      &bdgBox3D);
-
-    // Clip with the AABB of 'Q3D' and 'P3D' to improve results
-    for (
-      int iAxis = 3;
-      iAxis--;) {
-
-      if (bdgBox3D.min[iAxis] < P3D.bdgBox.min[iAxis]) {
-
-        bdgBox3D.min[iAxis] = P3D.bdgBox.min[iAxis];
-
-      }
-
-      if (bdgBox3D.max[iAxis] > P3D.bdgBox.max[iAxis]) {
-
-        bdgBox3D.max[iAxis] = P3D.bdgBox.max[iAxis];
-
-      }
-
-      if (bdgBox3D.min[iAxis] < Q3D.bdgBox.min[iAxis]) {
-
-        bdgBox3D.min[iAxis] = Q3D.bdgBox.min[iAxis];
-
-      }
-
-      if (bdgBox3D.max[iAxis] > Q3D.bdgBox.max[iAxis]) {
-
-        bdgBox3D.max[iAxis] = Q3D.bdgBox.max[iAxis];
-
-      }
-
-    }
-
-    AABB3DPrint(&bdgBox3D);
-    printf("\n");
 
   // Else, the two objects are not intersecting
   } else {
