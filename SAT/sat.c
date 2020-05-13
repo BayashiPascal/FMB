@@ -99,8 +99,8 @@ bool SATTestIntersection2D(
 
       // Loop on Frames
       for (
-        int iFrame = 2;
-        iFrame--;) {
+        int jFrame = 2;
+        jFrame--;) {
 
         // Shortcuts
         const double* frameOrig = frame->orig;
@@ -305,8 +305,8 @@ bool SATTestIntersection2DTime(
 
       // Loop on Frames
       for (
-        int iFrame = 2;
-        iFrame--;) {
+        int jFrame = 2;
+        jFrame--;) {
 
         // Shortcuts
         const double* frameOrig = frame->orig;
