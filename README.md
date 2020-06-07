@@ -8,6 +8,10 @@ The implementation is divided into 4 folders, 2D for the 2D static case, 2DTime 
 
 Each of the 4 cases' folder include the header and body of the FMB algorithm implementation for that case, a minimal example of how to use it, and the code for the validation and qualification of the algorithm.
 
+## Article
+
+The article about this work is available as a pdflatex generated PDF file ini the Article folder.
+
 ## Example of use
 
 Below are examples of how to use the FMB algorithm in the 3D static and dynamic case.
