@@ -1,0 +1,3 @@
+Using FMB
+352.40user 0.01system 5:52.43elapsed 99%CPU (0avgtext+0avgdata 4372maxresident)k
+0inputs+15384outputs (0major+703minor)pagefaults 0swaps

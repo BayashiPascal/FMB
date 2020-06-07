@@ -1,0 +1,3 @@
+Using SAT
+463.12user 0.00system 7:43.13elapsed 99%CPU (0avgtext+0avgdata 4236maxresident)k
+0inputs+15384outputs (0major+699minor)pagefaults 0swaps
