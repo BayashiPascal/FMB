@@ -10,7 +10,7 @@ Each of the 4 cases' folder include the header and body of the FMB algorithm imp
 
 ## Article
 
-The article about this work is available as a pdflatex generated PDF file ini the Article folder.
+The article about this work is available as a pdflatex generated PDF file in the Article folder.
 
 ## Example of use
 
